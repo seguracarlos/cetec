@@ -1,0 +1,80 @@
+	<p class="botReturnUp"><a href="<?php echo $this->url(array('controller'=>'invoices','action'=>'index'));?>"><img style="opacity:0.4;filter:alpha(opacity=40)" onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseout="this.style.opacity=0.4;this.filters.alpha.opacity=40" src="<?php echo $this->baseUrl('/public/img/returnIOF.png') ?>" title="Regresar al men&uacute; anterior" style="width: 50px; height: 50px; text-align: right;"></a></p>
+
+    <div style="width:660px; height:500px; overflow:scroll;">
+<div style="text-align: center">
+	</div>
+	<div style="text-align: center">
+<p>
+<h4>FACTURAS</h4>
+</p>
+
+</div>
+<div>
+<table>
+<tr> 
+
+<th>Folio</th> 
+  <th>Cliente</th> 
+	<th>Proyecto</th>
+	<th>Status</th>
+	<th>Fecha Inicio</th>
+	<th>Fecha Termino</th>
+	    <th>Fecha</th>
+	    <th>Concepto</th>
+	    <th>Importe</th>
+	    <th>Iva</th>
+	    <th>% de Impuesto</th>
+	     <th>Total</th>
+        
+        
+
+
+</tr> 
+<?php foreach($this->payments as $pay) : ?> 
+
+<tr> 
+
+  <td>
+<?php		 	echo "{$pay['facturas_ID']}";?>
+  </td>
+  <td>
+<?php		 	echo "{$pay['name_company']}";?>
+  </td>
+      <td>
+<?php		 	echo "{$pay['name_project']}";?>
+  </td>
+      <td>
+<?php		 	echo "{$pay['status']}";?>
+  </td>
+      <td>
+<?php		 	echo "{$pay['start_date']}";?>
+  </td>
+      <td>
+<?php		 	echo "{$pay['end_date']}";?>
+  </td>
+    <td>
+<?php		 	echo "{$pay['date_invoice']}"; ?>
+  </td>
+    <td>
+<?php		 	echo "{$pay['concept']}"; ?>
+  </td>
+    <td>
+<?php		 	echo "{$pay['amount']}"; ?>
+  </td>
+        <td>
+<?php		 	echo "{$pay['tax']}"; ?>
+  </td>
+
+      <td>
+<?php		 	echo "{$pay['taxpercentage']}"; ?>
+  </td>
+      <td>
+<?php		 	echo "{$pay['total']}"; ?>
+  </td>
+
+  
+</tr> 
+<?php endforeach; ?> 
+</table>
+</div>
+</div>

@@ -1,0 +1,146 @@
+<?php $this->headLink()
+->appendStylesheet($this->baseUrl('/public/css/popupCustomerDetails.css'));
+	  $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js')); 
+	  $helpUser = $this->helps->supplierHistorysupplier;
+	  ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#supplierHistory', 10);	
+});
+</script>	
+	
+<h3 class="centerOut">Historial</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/index') ?>"> 
+				<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconsupp.png');?>" title="Proveedores"> 
+			</a>
+		</li>
+		<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index/')?>">
+					<img title="Ver contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" />
+				</a>
+		</li>
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/detalle')?>" >
+				<img title="Informaci&oacute;n detallada de Proveedores" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondet.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/historysupplier')?>" >
+				<img title="Historial" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="supplierHistory" class="display">
+	<thead>
+		<tr>
+			<th>Cliente</th>
+			<th>RFC</th>
+			<th>Estado</th>
+			<th>Delegaci&oacute;n</th>
+			<th>Colonia</th>
+			<th>Calle</th>
+			<th>C&oacute;digo postal</th>
+			<th># Exterior</th>
+			<th># Interior</th>
+			<th>Actividad</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody> 
+        <?php foreach ($this->dataSuppliers as $proveedor) : ?>
+            <tr>
+				<td class="alpha">
+                    <?php echo $proveedor['name_company']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['rfc']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['state']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['name']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['colony']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['street']; ?>
+                </td>
+				<td class="number">
+                    <?php echo $proveedor['postalcode']; ?>
+                </td>
+				<td class="number">
+                    <?php echo $proveedor['number']; ?>
+                </td>
+				<td class="number">
+                    <?php echo $proveedor['interior']; ?>
+                </td>
+	
+                <?php if ($proveedor['company_isactive']): ?>
+                <td class="alpha">
+                    <?php echo 'Activo'; ?>
+                </td>
+				<td>
+					<a href="<?php echo $this->baseUrl('/Out/supplier/update/id/'.$proveedor['id_company'].'/state/'.$proveedor['state_id'].'/district/'.$proveedor['district'])?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Editar detalles" alt="Editar detalles">
+					</a> 
+					 <a class="viewContact" onclick="viewContact('<?php echo ($proveedor['id_company'])?>')"> 
+					 	<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" title="Datos de contacto" alt="Datos de contacto">
+					</a>
+				</td>
+                <?php else:?>
+                <td class="alpha">
+                    <?php echo 'Inactivo'; ?>
+                </td>
+				<td>
+					<a href="<?php echo $this->baseUrl('/Out/supplier/update/id/'.$proveedor['id_company'].'/state/'.$proveedor['state_id'].'/district/'.$proveedor['district'])?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Editar detalles" alt="Editar detalles">
+					</a>
+					<a href="<?php echo $this->baseUrl("/customers/enable/id/ ". $proveedor['id_company']); ?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/thumb_down.png')?>" title="Habilitar cliente" alt="Habilitar cliente">
+					</a> 
+					<a class="viewContact" onclick="viewContact('<?php echo ($proveedor['id_company'])?>')"> 
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" title="Datos de contacto" alt="Datos de contacto">
+					</a>
+					<a class="viewEarnings" onclick="viewEarnings('<?php echo ($proveedor['id_company'])?>')"> 
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('img/money.png')?>" title="Ganancias" alt="Ganancias">
+					</a>
+				</td>
+                <?php endif;?>                
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+</table>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDetails" class="popHorus">
+			<div id="btnClose" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<div id="content">
+			<div id="data">
+				<div id="layer">
+					<div class="center">
+						<img id="load" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundDetails"></div>
+<!-- 
+    termina popup
+-->

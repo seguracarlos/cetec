@@ -1,0 +1,213 @@
+<script type="text/javascript">
+	var oTable = "";
+	var oTableCar = "";
+	var ok = "url(" + BASE_URL + "/public/img/ok.png) no-repeat top";
+	var position = " right";
+</script>
+
+<?php
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/masonry/style.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/SalesFunctions.js'))
+						->appendFile($this->baseUrl('/public/masonry/loadItem.js'))
+						->appendFile($this->baseUrl('/public/masonry/loadService.js')); 
+	
+	$layout = Zend_Layout::getMvcInstance();
+ 	$view = $layout->getView();
+?>
+
+<div  id="fieldsetForm" class="forms">
+<?=$this->element->getElement('idsProds'); ?>
+<?=$this->element->getElement('hiden'); ?>
+<?=$this->element->getElement('salesTable'); ?>
+<?=$this->element->getElement('id_prods'); ?>
+
+	<table>
+		<tr>
+			<td>
+				<fieldset>
+					<legend>Cliente</legend>
+						Nombre: <?=$this->element->getElement('nameclient'); ?>
+				</fieldset>
+			</td>
+			<td class="center"><h2><?php echo Application_Util_Tools::showDateForHuman(date('Y-m-d'));?></h2></td>
+		</tr>
+	</table>
+	
+		<div id="tabSection"  class="tabbable" style="margin-left: 10px; margin-right: 10px; width: 45%; float: left;"> <!-- Only required for left/right tabs -->
+			<input type="hidden" id="tabActiveTabs"> 
+				<ul class="nav nav-tabs">
+			      	<li class="active"><a id="tabP1" class="tab" href="#tabProd1" data-toggle="tab">Cat&aacute;logo de Productos</a></li>
+			     	 <li><a class="tab" id="tabS2" href="#tabServ2" data-toggle="tab">Cat&aacute;logo de Servicios</a></li>
+		    	</ul>
+		     	<div class="tab-content"> 
+			    	 <div class="tab-pane active" id="tabProd1">
+				     				<fieldset>
+										<span>Clave: <?=$this->element->getElement('article'); ?></span>
+										<img id="addArticle" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconplus.png');?>">
+										
+										<span id="SectionSearchCatalog">
+											<?=$this->element->getElement('search1'); ?>
+											<input type="button" value="Buscar" id="searchbuttonProd">
+											<a href="<?php echo $this->baseUrl("/In/catalog/index");?>"><img title="abrir cat&aacute;logo" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconcatalog.png')?>"> Abrir Cat&aacute;logo</a>
+										</span>
+										<span id="carSection">
+										 	<div id="imgShop" style="float: none;">
+											 	<img onclick="showShopCar();" id="shop" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconcart.png'); ?>"> <span id="myCar">Carrito de compras (0)</span>
+												<input id="prodIncar" type="hidden" >
+											</div>
+											<a id="addCarLink" href="javascript:;" onclick="addShopToSale();">Agregar Carrito</a>
+										</span>
+									</fieldset>
+									
+			    	 	</div>
+			     		<div class="tab-pane" id="tabServ2"> 
+		     	 				<fieldset>
+									<span>Clave: <?=$this->element->getElement('service'); ?></span>
+									<img id="addArticle" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconplus.png');?>">
+									
+									<span id="SectionSearchCatalog">
+										<?=$this->element->getElement('search2'); ?>
+										<input type="button" value="Buscar" id="searchbuttonServ">
+										<a href="<?php echo $this->baseUrl("/In/services/catalog");?>"><img title="abrir cat&aacute;logo" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconcatalog.png')?>"> Abrir Cat&aacute;logo</a>
+									</span>
+									<span id="carSection">
+									 	<div id="imgShop" style="float: none;">
+										 	<img onclick="showShopCarService();" id="shop" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconcart.png'); ?>"> <span id="myCarServ">Carrito de compras (0)</span>
+											<input id="prodIncar" type="hidden" >
+										</div>
+										<a id="addCarServLink" href="javascript:;" onclick="addServiceToSale();">Agregar Carrito</a>
+									</span>
+								</fieldset>
+								
+			     		</div>     
+		     	</div>	     
+			</div>
+						
+	<table>
+		<tr>
+			<td colspan="3">
+				<table id="buysTable" class="display" align="center" style="text-align: center;">
+					<thead>
+						<th>Clave</th>
+						<th>Nombre</th>
+						<th>Cantidad</th>
+						<th>Importe</th>
+						<th></th>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<div style=" width: 100%;">
+		<table id="mounts" style="width: 25%; float: left;">
+			<tr>
+				<td align="right">Subtotal: </td>
+				<td><?=$this->element->getElement('subtotal'); ?></td>
+			</tr>
+			<tr>
+				<td align="right">IVA: </td>
+				<td><?=$this->element->getElement('tax'); ?></td>
+			</tr>
+			<tr>
+				<td align="right">Total: </td>
+				<td><?=$this->element->getElement('total'); ?></td>
+			</tr>
+		 </table>
+		<div id="buttonSale" style="margin-left: 10px; float: left;">
+			<span><?=$this->element->getElement('payment'); ?></span>
+			<br />
+			<span><?=$this->element->getElement('invoiceSales'); ?></span>
+		</div>
+			
+		<div  class="tabbable" style="margin-left: 10px; margin-right: 10px; width: 45%; float: left;"> <!-- Only required for left/right tabs -->
+		    <input type="hidden" id="tabActive"> 
+		    <ul class="nav nav-tabs">
+		      <li class="active"><a id="tabL1" class="tab" href="#tab1" data-toggle="tab">Efectivo</a></li>
+		      <li><a class="tab" id="tabL2" href="#tab2" data-toggle="tab">Tarjeta</a></li>
+		      <li><a class="tab" id="tabL3" href="#tab3" data-toggle="tab">Cheque</a></li>
+		      <li><a class="tab" id="tabL4" href="#tab4" data-toggle="tab">Cuenta del Cliente</a></li>
+		    </ul>
+		    <div class="tab-content">
+			    <div class="tab-pane active" id="tab1">
+			      <span>
+			      	Efectivo: <?=$this->element->getElement('cash'); ?>
+			      </span>
+			      <span>
+			      	Cambio: <?=$this->element->getElement('change'); ?>
+			      </span>
+			    </div>
+			    <div class="tab-pane" id="tab2">
+			    	<table>
+			    		<tr>
+			    			<td>Tarjeta:</td>
+			    			<td><?=$this->element->getElement('card'); ?></td>
+			    		</tr>
+			    		<tr>
+			    			<td>Autorizaci&oacute;n:</td>
+			    			<td><?=$this->element->getElement('autorization'); ?></td>
+			    		</tr>
+			    		<tr>
+			    			<td>&Uacute;ltimos 4 n&uacute;meros de la TC:</td>
+			    			<td><?=$this->element->getElement('last4NumberTc'); ?></td>
+			    		</tr>
+			    	</table>
+		    	</div>
+		    	<div class="tab-pane" id="tab3">
+			      <span>
+			      	Folio de Cheque: <?=$this->element->getElement('checkSheet'); ?>
+			      </span>
+			      <br />
+			      <span>
+			      	Fecha de cobro: <?=$this->element->getElement('collectionDate'); ?>
+			      </span>
+		    	</div>
+		    	<div class="tab-pane" id="tab4">
+			      <p>El total se sumara a la cuenta del cliente</p>
+			      <span>cuentas de Clientes: <?=$this->element->getElement('accountClient'); ?></span>
+			      <div id="tacc" style="display:none;">El total en la cuenta del cliente es de <span id="totalAccount"></span></div>
+			      <img id="load" style="display:none;" src="<?php echo $this->baseUrl('/public/img/loadtd.gif')?>">
+		    	</div>
+	    	</div>
+		</div>
+		<div>
+			<span><?=$this->element->getElement('Cancelar'); ?></span>
+		</div>
+	</div>
+</div> 
+
+<!-- 
+    Inicia popup
+-->
+	<div id="shopcarPop" class="popHorus">
+		<div id="btnXtablecar" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+			<div id="tableCar" >
+	    		<table class="display" id="carTableShop">
+	    			<thead>
+	    				<tr>
+	    					<th>Clave</th>
+	    					<th>Nombre</th>
+	    					<th>Cantidad</th>
+	    					<th>Precio</th>
+	    					<!-- <th>Fecha</th> -->
+	    					<th></th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    			</tbody>
+	    		</table>	
+		     </div>
+		 
+		     <div>
+		     	<button type="button" id="btnAcceptar">Aceptar</button>
+		     </div>
+	     </div>
+	</div>
+	<div id="shopcarBack"></div>
+<!-- 
+    termina popup
+-->

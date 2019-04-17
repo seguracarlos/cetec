@@ -1,0 +1,148 @@
+<?php  
+	$this->headScript()
+	->appendFile($this->baseUrl('/public/js/AjaxUpload.2.0.min.js'))
+	->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getPreferences.js')); 
+	
+	$tHost = 0;
+?>
+<script>
+$(document).ready(function(){
+	$("#guardarImg").click(function(){
+		savePhoto();
+	});
+
+	 //agregar imagen logo
+	new AjaxUpload('#changeImg', {
+		action: BASE_URL + '/global/loadimageutility?imgUpload=true',
+		onSubmit : function(file , ext){
+			if (! (ext && /^(jpg|png|jpeg)$/.test(ext))){
+				alert('S�lo se permiten Imagenes .jpg, .jpeg ó .png');
+				return false;
+			} else {
+				$('#loader').show();
+				this.disable();
+			}
+		},
+		onComplete: function(file, response){
+			respuesta = $.parseJSON(response);
+			
+			if(respuesta.respuesta == 'done'){
+				$('.imgLogo').removeAttr('scr');
+				$('.imgLogo').attr('src', 'data:image/png;base64,'+respuesta.base64);
+				$('#encodeImg').val(respuesta.base64);
+				$('#guardarImg').show();
+				$('#loader').show();
+				alert("Logotipo cambiado " . respuesta.mensaje);
+			}
+			else{
+				alert(respuesta.mensaje);
+			}	
+			$('#loader').hide();	
+			this.enable();	
+		}
+	});
+});
+</script>
+<h3 class="centerHor">Mi Empresa</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Mi empresa')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+<div id="fieldsetForm" class="forms">
+	<br />
+	<br />
+	<div id="LogoDiv">
+		<?php foreach($this->preference as $preference): ?>
+			<?php //if($preference->getName() == Preferences::STRING_LOGO):?>
+				<div id="logo">
+					<div class="value" style="text-align: center">
+						<img id="loader" src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+						<input id="idLogo" type="hidden" value="<?php echo $preference->getId(); ?>" name="idLogo">
+						<input id="encodeImg" type="hidden" name="imgEncode">
+						<?php if($preference->getValue() == null): ?>
+							<img class="imgLogo" style="width: 200px; height: 260px;" src="<?php echo $this->baseUrl('/public/img/aqui_tu_logo.jpg'); ?>" title="logotipo" alt="logotipo">
+						<?php else:?>
+							<img class="imgLogo" style="width: 200px; height: 260px;" src="<?php echo "data:image/png;base64,".$preference->getValue(); ?>" title="logotipo" alt="logotipo">
+						<?php endif; ?>
+					</div>
+					<div class="link" style="margin-top:50px;">
+						<a class = "compBut" id="changeImg" href="javascript:;" >Cambiar logotipo</a>
+						<input class="subPay" id="guardarImg" type="button" name="guardar" value="Guardar" />
+					</div>
+				</div>
+			<?php //endif;?>
+		<?php endforeach; ?>
+	</div>
+	<div id="infoDiv">
+		<?php if($this->host != 0):?>
+			<?php foreach ($this->host as $host): ?>
+				<fieldset>
+					<legend>Informaci&oacute;n Comercial</legend>
+					
+					<div class="contICo"><span class="contIcoCont">Raz&oacute;n Social: </span> <?php echo ($host['name_company'] != null) ? $host['name_company']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Marca: </span> <?php echo ($host['brand'] != null) ? $host['brand']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">RFC: </span> <?php echo ($host['rfc'] != null) ? $host['rfc']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Sitio Web: </span>  <a href="<?php echo $host['website']; ?>" target="_new"> <?php echo ($host['website'] != null) ? $host['website']: "?" ; ?></a></div>
+					<div class="contICo"><span class="contIcoCont">Giro: </span> <?php echo ($host['business'] != null) ? $host['business']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Tel&eacute;fono: </span> <?php echo ($host['phone'] != null) ? $host['phone']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Extensi&oacute;n: </span> <?php echo ($host['ext'] != null) ? $host['ext']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Mapa: </span> <a href="<?php echo $host['url_map']; ?>" target="_new"> <?php echo ($host['url_map'] != null) ? $host['url_map']: "?"; ?></a></div>
+				</fieldset>
+				<fieldset>
+					<legend>Informaci&oacute;n Bancaria</legend>
+					<div class="contICo"><span class="contIcoCont">CLABE: </span> <?php echo ($host['interbank_clabe'] != null) ? $host['interbank_clabe']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">N&deg; de Cuenta: </span> <?php echo ($host['number_acount'] != null) ? $host['number_acount']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Nombre del banco: </span> <?php echo ($host['name_bank'] != null) ? $host['name_bank']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Sucursal: </span> <?php echo ($host['sucursal_name'] != null) ? $host['sucursal_name']: "?"; ?></div>
+					
+				</fieldset>
+				<fieldset>
+					<legend>Direcci&oacute;n</legend>
+					<div class="contICo"><span class="contIcoCont">Calle: </span> <?php echo ($host['street'] != null) ? $host['street']: "?"; ?> </div>
+					<div class="contICo"><span class="contIcoCont">N&uacute;mero: </span> <?php echo ($host['number'] != null) ? $host['number']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Colonia: </span> <?php echo ($host['colony'] != null) ? $host['colony']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Del. o Mpio: </span> <?php echo ($host['name'] != null) ? $host['name']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">Estado: </span> <?php echo ($host['state'] != null) ? $host['state']: "?"; ?></div>
+					<div class="contICo"><span class="contIcoCont">C&oacute;digo Postal: </span> <?php echo ($host['postalcode'] != null) ? $host['postalcode']: "?"; ?> </div>
+					
+				</fieldset>
+			<?php endforeach; ?>
+		<?php endif;?>
+		<?php if($this->user != null):?>
+			<?php foreach ($this->user as $user): ?>
+				<fieldset>
+					<legend>Usuario responsable de la cuenta</legend>
+					<div class="contICo"><span class="contIcoCont">N&uacute;mero de Empleado: </span> <?php echo ($user['numberEmployee'] != null) ? Application_Util_Tools::format($user['numberEmployee'], 4): "?";?></div>	
+					<div class="contICo"><span class="contIcoCont">RFC: </span> <?php echo ($user['rfc'] != null) ? $user['rfc']: "?";?></div>
+					<div class="contICo"><span class="contIcoCont">Nombre: </span> <?php echo ($user['real_name'] != null) ? $user['real_name']: "?";?></div>
+					<div class="contICo"><span class="contIcoCont">Apellido Paterno: </span> <?php echo ($user['surname'] != null) ? $user['surname']: "?";?></div>
+					<div class="contICo"><span class="contIcoCont">Apelido Materno: </span> <?php echo ($user['lastname'] != null) ? $user['lastname']: "?";?></div>
+					<div class="contICo"><span class="contIcoCont">Correo electr&oacute;nico: </span> <?php echo ($user['mail'] != null) ? $user['mail']: "?";?></div>
+					<div class="contICo"><span class="contIcoCont">Departamento: </span> <?php echo ($user['d_name'] != null) ? $user['d_name']: "?";?></div>
+	   		    	<div class="contICo"><span class="contIcoCont">Privilegios: </span> <?php echo ($user['role_name'] != null) ? $user['role_name']: "?";?></div>
+	   		    </fieldset>
+			<?php endforeach;?>
+			<?php else:?>
+			<fieldset>
+					<legend>Usuario Principal</legend>
+					<h1>No se asign&oacute; ning&uacute;n usuario como principal</h1>
+			</fieldset>
+		<?php endif;?>
+		<?php if($this->host != null):?>
+			<?php foreach ($this->host as $host): ?>
+				<div class="center">
+					<?php 
+						$state = ($host['state_id'] != null)?$host['state_id']:"";
+						$distr = ($host['district'] != null)?$host['district']:"";
+					?>
+					<?php $tHost = $host['id_company']; ?>
+				 </div>
+			<?php endforeach; ?>
+			<a id="subPay" href="<?php echo $this->baseUrl('/System/company/update/id/'.$tHost.'/state/'.$state.'/district/'.$distr); ?>">Actualizar Informaci&oacute;n</a>
+		<?php endif;?>
+	</div>
+</div>

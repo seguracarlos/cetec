@@ -1,0 +1,81 @@
+@CHARSET "UTF-8";
+#title{
+	margin-bottom: 10px;
+}
+
+span.title {
+	font-weight: bold;
+}
+
+span.format {
+	margin-left: 25px;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	color: #666666;	
+}
+
+span.result {
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 13;
+}
+
+
+#nameCompanyS{
+	
+/*    font-size: 20px;*/
+	
+}
+#nameProyectS{
+	
+/*    font-size: 20px;*/
+	
+}
+#descriptionS{
+	
+/*    font-size: 20px;*/
+	
+}
+#startDates{
+	
+/*    font-size: 20px;*/
+	
+}
+#endDateS{
+	
+/*    font-size: 20px;*/
+	
+}
+#statusS{
+	
+/*    font-size: 20px;*/
+	
+}
+#dsctoS{
+	
+/*    font-size: 20px;*/
+	
+}
+#numbreOfPaymentsS{
+	
+/*    font-size: 20px;*/
+	
+}
+#advanceS{
+	
+/*    font-size: 20px;*/
+	
+}
+#ivaS{
+	
+/*    font-size: 20px;*/
+	
+}
+#totalS{
+	
+/*    font-size: 20px;*/
+	
+}
+
+

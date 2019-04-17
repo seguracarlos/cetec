@@ -1,0 +1,28 @@
+<h3><p>Contenidos de los puntos.</p></h3>
+</br>
+<center>
+	<?php if($this->containts){ ?>
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="publicaciones">    
+	    <thead>
+		    <tr>
+		        <th style="color:#006400">Nombre Contenido</th>
+		        <th style="color:#006400">Author</th> 
+		        <th style="color:#006400">Date</th>
+		        <th style="color:#006400">Punto</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+	       <?php foreach ($this->containts as $containts): ?>
+	        <tr>
+    			<td><a href="../containts/containt?p=<?php echo $containts['id_containt']; ?>" style="color:#084B8A" ><?php /*echo $publications->setTile();*/ echo $containts['name_containt'];?></a></td>
+    			<td><a href="../containts/acontaint?a=<?php echo $containts['id_user']; ?>" style="color:#084B8A" ><?php echo $containts['name_user'];?></a></td>
+    			<td><?php echo $containts['create_date']; ?></td>
+    		     <td><?php echo $containts['theme_name']; ?></td>
+	        </tr>
+	    	<?php endforeach;?>
+	    </tbody>
+	</table>
+	<?php }else{ ?>
+		<h2>No hay contenidos de los puntos de este usuario.</h2>
+	<?php }?>
+</center>

@@ -1,0 +1,479 @@
+<?php 
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js')) 
+	->appendFile($this->baseUrl('/public/js/jsFunctions/addDatesOfPayment.js'))
+	->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/1000.js'))
+	 ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/projectFunctions.js'));
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/paysPop.css'));
+	
+	$layout = Zend_Layout::getMvcInstance();
+ $view = $layout->getView(); 
+?>
+<script>
+	var iconsFile = "<?php echo $view->iconset; ?>";
+	var IconSet = "<?php echo $view->iconset; ?>";
+</script>
+<div style="width:80%;margin-left:auto;margin-right:auto;">
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+	<?=$this->element->getElement('ID'); ?>
+	<?=$this->element->getElement('developersIds'); ?>
+	<?=$this->element->getElement('costtable'); ?>	
+	<?=$this->element->getElement('idcustomerselect'); ?>	
+	<?=$this->element->getElement('dates'); ?>
+	<?=$this->element->getElement('id_datePayment'); ?>
+	<?=$this->element->getElement('id_contact'); ?>
+	<?=$this->element->getElement('profitpercent'); ?>
+	<?=$this->element->getElement('discountpercent'); ?>	
+	<?=$this->element->getElement('id_references'); ?>
+	<?=$this->element->getElement('type'); ?>
+	<fieldset>
+		<legend>1) Ingresa los datos generales</legend>
+		<table>
+			<tbody>
+				<tr>
+					<td>*Cliente:</td>
+					<td>*Nombre del proyecto:</td>
+					<td>*Status:</td>
+					
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('company_ID'); ?></td>
+					<td><?=$this->element->getElement('project_name'); ?></td>
+					<td><?=$this->element->getElement('status'); ?></td>
+				</tr>
+
+				<tr>
+					<td>*Inicio:</td>
+					<td>*Fin:</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('start_date'); ?></td>
+					<td><?=$this->element->getElement('end_date'); ?></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="4" class="center">Descripci&oacute;n:</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="center"><?=$this->element->getElement('description'); ?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>
+		<fieldset id="fieldset-addteam">
+			<legend> 2) Selecciona los contactos del cliente <span id="nClient">?</span></legend>
+				<table>
+					<tbody>
+						<tr>
+							<td>Contactos:</td>				
+							<td></td>
+							<td>Contactos asignados:</td>
+						</tr>
+						<tr>
+							<td><?=$this->element->getElement('availableContacts'); ?></td>				
+							<td><?=$this->element->getElement('toContacts'); ?> <br /> <br /> <?=$this->element->getElement('toavailableContact'); ?>
+							</td>
+							<td><?=$this->element->getElement('contacts'); ?></td>
+						</tr>
+					</tbody>
+				 </table>
+			<table>
+				<tr>
+					<td>
+					 </td>
+				 </tr>
+				<tr>
+					<td>
+						<?php if($view->permissions[KeysGlobalPermissions::HORUSCONTACTADD]) :?>
+							<?=$this->element->getElement('createProjectContact'); ?>Agregar contacto nuevo
+						<?php endif; ?>
+					</td>
+					<td>
+						<img style="display: none;" id="load_contacts" alt="" height="18"
+							src="<?php echo $this->baseUrl('/public/img/load.gif') ?>">
+					</td>
+					<td>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset id="projectContact" style="display: none;" >
+			<legend> 2) Ingresa los datos de contacto del cliente
+					<label id="lbl"> [*Elige un existente o crea uno nuevo]</label>
+			</legend>
+			<table>
+				<tbody>
+					<tr>
+						<td>*Nombre:</td>
+						<td>*Ap. Paterno:</td>
+						<td>Ap. Materno:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('name_contact'); ?></td>
+						<td><?=$this->element->getElement('surname_contact'); ?></td>
+						<td><?=$this->element->getElement('lastname_contact'); ?></td>
+					</tr>
+					<tr>
+						<td>*E-Mail:</td>
+						<td>*Tel&eacute;fono local:</td>
+						<td>Extensi&oacute;n:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('mail_contact'); ?><br><span style="display: true;" id="malMail"></span></td>
+						<td><?=$this->element->getElement('phone_contact'); ?></td>
+						<td><?=$this->element->getElement('ext_phone'); ?></td>
+					</tr>
+					<tr>
+						<td>M&oacute;vil:</td>
+						<td>* Cargo: </td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('cellphone_contact'); ?><br></td>
+						<td><?=$this->element->getElement('id_job'); ?><br></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<fieldset>
+			<legend>Datos de acceso y seguridad</legend>
+		    <table>
+		        <tbody>
+		            <tr>
+		          		<td><label>* Privilegio:</label></td>  
+		            </tr>
+		            <tr>
+		            	<td><h2>Cliente</h2></td>
+		            </tr>
+		            <tr>
+		            	<td><label>* Clave de usuario:</label></td>
+		            	<td>&iquest;Puede entrar a horus?</td>
+		            </tr>            
+		            <tr>
+		               	<td>
+		               		<?=$this->element->getElement('user_name'); ?>
+		               		<img id="loaderUser" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+		               	</td>
+		               	<td><?=$this->element->getElement('canlogin'); ?></td>
+		            </tr>
+		            <tr>
+		            	<td><label>* Contrase&ntilde;a:</label></td>
+		                <td colspan="2"><label>* Confirmar contrase&ntilde;a:</label></td>
+		            </tr>
+		            <tr>
+		                <td>
+		                	<?=$this->element->getElement('password'); ?>
+		                	<div id="showErrPass" style=" padding: 3px; font-size: 10px; width: auto; height: auto; position: absolute; background-color: #FFEE7C; z-index: 1; float: right; display: none;"></div>
+		                	<img id="loaderPass" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+		                </td>
+		               	<td><?=$this->element->getElement('confirm_password'); ?><?=$this->element->getElement('subPay');?></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <table>
+		    	<tbody>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><span id="labelkey" hidden="true"> Clave  Generada:</span></td>
+		    			<td></td>
+		    		</tr>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><?=$this->element->getElement('key');?></td>
+		    			<td><input type="button" id="subPay1" name="reset" value="Limpiar"/></td>
+		    		</tr>
+		    	</tbody>
+		    </table>
+		</fieldset>
+    		<div class="center">	
+				<?=$this->element->getElement('GuardarContact'); ?>
+				<?=$this->element->getElement('CancelarContact'); ?>
+			</div>
+		</fieldset>	
+		<fieldset id="fieldset-addteam">
+			<legend> 3) Selecciona las referencias del proyecto</legend>
+				<table>
+					<tbody>
+						<tr>
+							<td>Referencias:</td>				
+							<td></td>
+							<td>Referencias asignadas:</td>
+						</tr>
+						<tr>
+							<td><?=$this->element->getElement('availableReferences'); ?></td>				
+							<td><?=$this->element->getElement('toreferences'); ?> <br /> <br /> <?=$this->element->getElement('toavailableReferences'); ?>
+							</td>
+							<td><?=$this->element->getElement('references'); ?></td>
+						</tr>
+					</tbody>
+				 </table>
+		</fieldset>	
+	<fieldset id="fieldset-addteam">
+		<legend>4) Asigna los recursos humanos</legend>
+		<table>
+			<tbody>
+				<tr>
+					<td>Recursos disponibles:</td>				
+					<td></td>
+					<td>Recursos asignados:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('availableTeam'); ?></td>				
+					<td><?=$this->element->getElement('toTeam'); ?> <br /> <br /> <?=$this->element->getElement('toavailableTeam'); ?>
+					</td>
+					<td><?=$this->element->getElement('team'); ?></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+				<tr>
+					<td>
+					 </td>
+				 </tr>
+				<tr>
+					<td>
+						<?php if($view->permissions[KeysGlobalPermissions::HORUSEMPLOYEEADD]) :?>
+							<?=$this->element->getElement('createProjectEmployee'); ?>Agregar nuevo empleado
+						<?php endif; ?>
+					</td>
+					<td>
+						<img style="display: none;" id="load_contacts" alt="" height="18"
+							src="<?php echo $this->baseUrl('/public/img/load.gif') ?>">
+					</td>
+					<td>
+					</td>
+				</tr>
+			</table>
+	</fieldset>	
+	<fieldset id="projectEmployee" style="display: none;" >
+		<legend>4)Agregar nuevo empleado</legend>
+		<table>
+				<tbody>
+					<tr>
+						<td>*Nombre:</td>
+						<td>*Ap. Paterno:</td>
+						<td>Ap. Materno:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('name_contact2'); ?></td>
+						<td><?=$this->element->getElement('surname_contact2'); ?></td>
+						<td><?=$this->element->getElement('lastname_contact2'); ?></td>
+					</tr>
+					<tr>
+						<td>*E-Mail:</td>
+						<td>*Tel&eacute;fono local:</td>
+						<td>Extensi&oacute;n:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('mail_contact2'); ?><br><span style="display: true;" id="malMail"></span></td>
+						<td><?=$this->element->getElement('phone_contact2'); ?></td>
+						<td><?=$this->element->getElement('ext_phone2'); ?></td>
+					</tr>
+					<tr>
+						<td>M&oacute;vil:</td>
+						<td>* Cargo: </td>
+						<td>* Departamento</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('cellphone_contact2'); ?><br></td>
+						<td><?=$this->element->getElement('id_job2'); ?><br></td>
+						<td><?=$this->element->getElement('id_department'); ?><br></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<fieldset>
+			<legend>Datos de acceso y seguridad</legend>
+		    <table>
+		        <tbody>
+		            <tr>
+		          		<td><label>* Privilegio:</label></td>  
+		            </tr>
+		            <tr>
+		            	<td><h2>Empleado</h2></td>
+		            </tr>
+		            <tr>
+		            	<td><label>* Clave de usuario:</label></td>
+		            	<td>&iquest;Puede entrar a horus?</td>
+		            </tr>            
+		            <tr>
+		               	<td>
+		               		<?=$this->element->getElement('user_name2'); ?>
+		               		<img id="loaderUser" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+		               	</td>
+		               	<td><?=$this->element->getElement('canlogin2'); ?></td>
+		            </tr>
+		            <tr>
+		            	<td><label>* Contrase&ntilde;a:</label></td>
+		                <td colspan="2"><label>* Confirmar contrase&ntilde;a:</label></td>
+		            </tr>
+		            <tr>
+		                <td>
+		                	<?=$this->element->getElement('password2'); ?>
+		                	<div id="showErrPass2" style=" padding: 3px; font-size: 10px; width: auto; height: auto; position: absolute; background-color: #FFEE7C; z-index: 1; float: right; display: none;"></div>
+		                	<img id="loaderPass2" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+		                </td>
+		               	<td><?=$this->element->getElement('confirm_password2'); ?><?=$this->element->getElement('subPay2');?></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    <table>
+		    	<tbody>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><span id="labelkey" hidden="true"> Clave  Generada:</span></td>
+		    			<td></td>
+		    		</tr>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><?=$this->element->getElement('key2');?></td>
+		    			<td><input type="button" id="subPay3" name="reset" value="Limpiar"/></td>
+		    		</tr>
+		    	</tbody>
+		    </table>
+		</fieldset>
+    		<div class="center">	
+				<?=$this->element->getElement('GuardarContact2'); ?>
+				<?=$this->element->getElement('CancelarContact2'); ?>
+			</div>
+	</fieldset>
+	<fieldset>
+		<legend>5) Revisa los costos</legend>
+		<div class="maininvoiceLow">
+			<div>
+				<table>
+					<tr>
+						<td><label for="quantity">* Cantidad:</label></td>
+						<td><label for="concept">* Concepto:</label></td>
+						<td><div class="center"><label for="unityPrice">* Precio:</label></div></td>
+						<td><label for="unityPrice">Importe:</label></td>
+						<td><a href="javascript:addit();"><img class="iconOpacity"
+								src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconplus.png');?>"> </a>
+							<p id="badTable"></p>
+						</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('quantity'); ?></td>
+						<td><?=$this->element->getElement('concept'); ?></td>
+						<td><div class="center"><?=$this->element->getElement('unityPrice'); ?></div></td>
+						<td><?=$this->element->getElement('price'); ?></td>
+						<td></td>
+					</tr>
+				</table>
+				<div>
+					<img id="load" src="<?php echo $this->baseUrl('/public/img/default-loader.gif')?>">
+					<table id="invoicedetail" class="display">
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>Cantidad</th>
+								<th>Concepto</th>
+								<th>Importe Unit.</th>
+								<th>Importe</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>6) Ingresa las condiciones de Pago</legend>
+		<table class="formsshorttable">
+			<tbody>
+				<tr>
+					<td>*N&uacute;mero de pagos:</td>
+					<td><?=$this->element->getElement('numberofpayments');?>
+						 <img id="paysCalendar"src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconcalendar.png');?>"
+						title="Especifique las fechas de cobro" /> <?=$this->element->getElement('value'); ?>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>*Repetir cobranza:</td>
+					<td><?=$this->element->getElement('repeat'); ?></td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+				<td colspan="2">
+					<table id="range" style="display:none;">
+						<tr>
+							<td><label for="reprange">Rango de Repetici&oacute;n:</label></td>
+							<td>&nbsp;</td>
+							<td><?=$this->element->getElement('reprange'); ?></td><td><?=$this->element->getElement('reprangedate'); ?></td>
+						</tr>
+					</table>
+				</td>
+				</tr>
+					
+				<tr>
+				<td colspan="3">
+				<fieldset>
+				<legend>Detalle</legend>
+				<table>
+					<tbody>
+					<tr>
+						<td>COSTO:</td><td><?=$this->element->getElement('cost'); ?></td>
+					</tr>
+					<tr>
+						<td>IMPORTE:<input type="hidden" id="amhid" value="0" name="amhid">
+						</td><td><?=$this->element->getElement('amount'); ?></td>
+						<th><label for="slideram">% de Utilidad:</label></th>
+						<td>0%<br><img src="<?php echo $this->baseUrl('/public/img/trian.png') ?>"/><br>
+							<div style="margin-left:5px; margin-bottom: 10px;">
+							  <div id="slideram" style="width: 100%;"></div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Anticipo:</td><td><?=$this->element->getElement('advance'); ?></td>
+					</tr>
+					<tr>
+					<td>Descuento:</td><td><?=$this->element->getElement('descto'); ?></td>
+					<th><label for="sliderper">% de Descto:</label></th>
+					<td>0%<br><img src="<?php echo $this->baseUrl('/public/img/trian.png') ?>"/><br>
+						<div style="margin-left:5px; margin-bottom: 10px;">
+						      <div id="sliderper" style="width: 100%;"></div>
+						</div>
+					</td>
+					</tr>
+					<tr>
+						<td>SUBTOTAL:</td><td><?=$this->element->getElement('subtotal'); ?></td>
+					</tr>
+					<tr>
+						<td>I.V.A:</td><td><?=$this->element->getElement('tax'); ?></td>
+					</tr>								
+					<tr>
+						<td>TOTAL:</td><td><?=$this->element->getElement('total'); ?></td>
+					</tr>
+					</tbody>
+				</table>
+				</fieldset>
+				</td>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>					
+	<div>
+
+	</div>
+
+	<div class="center">
+	    <?=$this->element->getElement('guardar'); ?>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/In/projects/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>
+</div>
+<!-- 
+    Inicia popup
+-->
+<div id="paysPop" class="popHorus">
+	<h2>Especifique las fechas de cobro.</h2>
+	<div id="btnAccept">Aceptar</div>
+	<ul id="paysArea"></ul>
+</div>
+<div id="paysBack"></div>

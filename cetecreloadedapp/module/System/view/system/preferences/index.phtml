@@ -1,0 +1,99 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/tablePreferences.css'))
+					   ->appendStylesheet($this->baseUrl('/public/js/jquery-themeSwitcher/css/jquery.ui.themeswitcher.css'));
+	  $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getPreferences.js')); 
+	  $helpUser = $this->helps->preferencesIndex;
+?>
+<h3 class="centerSis">Preferencias</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a class="tooltipcenter" title="Ayuda"><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>
+</ul>
+
+<script type="text/javascript">
+<!--
+var oTable = "";
+$(document).ready(function(){
+	loadThemeSettings(THEME);
+	oTable = jqueryTable('#preferences', 2);
+});
+//-->
+</script>
+	<div id="overflow">
+		<!-- @TODO Cambiar a un style -->
+		<div style="width:70%;margin-left:auto;margin-right:auto;">
+		<table id="preferences" class="display">
+			 <thead>
+			    <tr>
+			        <th>Preferencia</th>
+			        <th>Configuraci&oacute;n</th>
+			        <th>Guardar/Editar</th>
+			    </tr>
+			 </thead>
+			 <body>
+			 	<?php foreach($this->preferences as $preference):?>
+					<?php  if($preference->getName() == Preferences::ICONS):?>
+						<tr>
+							<td>Set de Iconos</td>
+								<td class="text-center">
+								<div class="bicon">
+							    	<input type="radio" name="min" value="minimal" id="min" <?php echo $this->min;?>/>
+							    	<label for="min"><img alt="minimal" src="<?php echo $this->baseUrl('/public/img/icons/minimal/sample.png') ?>"></label>
+								</div>
+								<div class="bicon">
+							    	<input type="radio" name="min" value="color" id="col" <?php echo $this->col;?>/>
+							    	<label for="col"><img alt="color" src="<?php echo $this->baseUrl('/public/img/icons/color/sample.png') ?>"></label>
+								</div>
+							</td>
+							<td class="text-center">
+								<a>
+		                    		<img alt="Guardar" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconsave.png') ?>" onclick="savePreference(null,'min','min')">
+		                    	</a>
+			            	</td>
+			            </tr>
+					<?php elseif($preference->getName() != Preferences::STRING_FOTOS):?>
+						<tr>
+							<td><?php echo ($preference->getName() == Preferences::TUTORIAL)? "Robot Tutorial" : $preference->getName(); ?></td>
+							<td align="center"><?php echo $preference->getValue(); ?></td>
+							<td align="center">
+								<a class="tooltip" title="Editar" href="javascript:;" onclick="changeValuePreference(this,<?php echo $preference->getId();?>, '<?php echo $preference->getName();?>');">
+		                    		<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png') ?>" title="Editar">
+		                    	</a>
+			            	</td>
+			            </tr>
+					<?php  endif;?>
+				<?php endforeach;?>
+					<tr>
+						<td>Cambiar Tema</td>
+						<td class="text-center"><span class="switcher"></span></td>
+						<td class="text-center">
+							<a>
+	                    		<img alt="Guardar" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconsave.png') ?>" onclick="saveTheme();">
+	                    	</a>
+		            	</td>
+		            </tr>
+	 		</body>
+ 		</table>
+ 		</div>
+	</div>
+
+<!-- Inicia popup -->
+	<div id="preferencesPop" class="popHorus" style="width:350px;">
+		<div id="btnXAddPay" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+			<img id="load" src="<?php echo $this->baseUrl('/public/img/loader.gif')?>">
+			<h3>Actualizar <span id="nombre"></span></h3>
+			<div id="formPreferences"></div>
+	</div>
+	<div id="preferencesPopBack"></div>
+	<div id="popWait">
+			<div class="center">
+				<label id="wait">Aplicando los cambios del tema, espere por favor...</label>
+				<hr/>
+				<img id="loader" src="<?php echo $this->baseUrl('/public/img/loader.gif')?>">
+			</div>
+	</div>
+<div id="waitBack"></div>

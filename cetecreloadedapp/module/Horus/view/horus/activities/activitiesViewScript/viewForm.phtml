@@ -1,0 +1,28 @@
+<div id="activityForm" class="forms">
+		<?=$this->element->getElement('id_activities'); ?>
+		<?=$this->element->getElement('user_id'); ?>
+		<?=$this->element->getElement('projects_ID'); ?>
+		<fieldset>
+			<table>
+				<tbody>
+					<tr>
+						<td>*Fecha:</td>
+						<td><?=$this->element->getElement('log_date'); ?></td>
+					</tr>
+					<tr>
+						<td>*Actividad :</td>
+						<td><?=$this->element->getElement('description'); ?></td>
+					</tr>
+					<tr>
+						<td>*Duraci&oacute;n (horas):</td>
+						<td><?=$this->element->getElement('duration'); ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+</div>
+<span id="clones"></span>
+<div class="center">
+<?=$this->element->getElement('Guardar');?>
+<?=$this->element->getElement('Cancelar');?>
+</div>

@@ -1,0 +1,16 @@
+//Vista para eliminar
+<div style="color: red;"> 
+<a href="<?php echo $this->url(array('controller'=>'cxp',
+'action'=>'index'));?>">Regresar</a>
+</div>
+<div style="text-align: center;">
+<p><h4 style="color: red;">Est&aacute; seguro de querer borrar el pago a: 
+<?php echo $this->escape($this->cxp['provider']); ?>? 
+</h4></p> 
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post"> 
+<div> 
+  <input type="hidden" name="ID" value="<?php echo $this->cxp['ID']; ?>" /> 
+  <input type="submit" name="del" value="Si" /> 
+  <input type="submit" name="del" value="No" /> 
+</div> 
+</div>

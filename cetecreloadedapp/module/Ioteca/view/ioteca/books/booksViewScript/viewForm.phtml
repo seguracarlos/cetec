@@ -1,0 +1,55 @@
+
+<div id="fieldsetForm" class="forms">
+<?=$this->element->getElement('idbooks'); ?>
+<legend id="legendhelp">* Datos requeridos</legend>
+<fieldset>
+		<legend>Bibliograf&iacute;a</legend>
+    <table>
+    		<tbody> 		
+    		<tr>
+                <td>*T&iacute;tulo:</td>
+                <td>*Autor:</td>
+            </tr>
+    		<tr>
+                <td><?=$this->element->getElement('name'); ?></td>
+                <td><?=$this->element->getElement('author'); ?></td>
+            </tr>         
+            <tr>
+             	<td>*Estatus:</td>
+  				<td>*Editorial:</td>
+                <td>*P&aacute;ginas:</td>
+            </tr>         
+            <tr>
+            	<td><?=$this->element->getElement('status'); ?></td>
+               	<td><?=$this->element->getElement('editorial'); ?></td>
+               	<td><?=$this->element->getElement('pages'); ?></td>   		
+            </tr>
+            <tr>
+             	<td>*ISBN:</td>
+                <td>URL:</td>
+                <td "colspan="2">*Tipo:</td>    
+            </tr>         
+            <tr>
+            	<td><?=$this->element->getElement('numIsbn'); ?></td>
+               	<td><?=$this->element->getElement('url'); ?></td>
+               	<td><?=$this->element->getElement('id_type'); ?></td>               	
+            </tr>
+            <tr>
+                <td><?=$this->element->getElement('fisico'); ?>	
+               		<?=$this->element->getElement('electronico'); ?></td>	
+    		</tr>
+    		<tr style="text-align: center;">
+               	<td colspan="5">Descripci&oacute;n:</td>
+            </tr>
+            <tr style="text-align: center;">
+               	<td colspan="5"><?=$this->element->getElement('description'); ?></td>
+            </tr>
+    		</tbody>		
+    </table>
+</fieldset>
+	<div class="center">
+		<?=$this->element->getElement('Guardar'); ?>
+	    <!-- <a href="javascript:document.forms['booksForm'].submit();" class="horusBtn big icon-iconsave">Guardar</a>-->
+	    <a href="javascript:location.href='<?=$this->baseUrl("/Ioteca/books/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>

@@ -1,0 +1,80 @@
+<style>
+<!--
+.wrapper {
+	text-align:center;
+	width: 80%;
+	margin: 20px auto 40px auto;
+}
+
+ul.gallery {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.gallery li {
+	display: inline-block;
+/* 	width: 240px; */
+	margin: 0 20px 20px 0;
+/* 	border: 1px solid #000; */
+	position: relative;
+	-webkit-box-shadow: 1px 2px 5px 2px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 1px 2px 5px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 2px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+ul.gallery img {
+	display: block;
+}
+
+ul.gallery span {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: rgb(255, 255, 255);
+/* 	width: 220px; */
+	padding: 10px;
+}
+
+ul.gallery span {
+	margin-left: -9999px;
+}
+
+ul.gallery li:hover span {
+	margin-left: 0;
+}
+-->
+</style>
+
+<h3 class="centerHor">Generaci&oacute;n de Documentos y artefactos</h3>
+
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity"></li>
+		<li class="iconOpacity"
+			onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las ordenes de compra')">
+			<a><img title="Ayuda"
+				src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>
+</ul>
+
+<div id="overflow">
+
+	<div class="wrapper">
+		<ul class="gallery">
+			<li><a href="<?php echo $this->baseUrl('/Gutenberg/docs_contents/index')?>"><img alt="Manual de usuario"
+				src="<?php echo $this->baseUrl('/public/img/iconmanual.png')?>" /> <span>Manual
+					de Usuario</span></a></li>
+			<li><a href="<?php echo $this->baseUrl('/Gutenberg/docs_contents/index')?>"><img alt="Casos de prueba"
+				src="<?php echo $this->baseUrl('/public/img/icontesting.png')?>" /><span>Casos
+					de prueba</span></a></li>
+			<li><a href="<?php echo $this->baseUrl('/Gutenberg/docs_contents/index')?>"><img alt="Memoria técnica"
+				src="<?php echo $this->baseUrl('/public/img/iconmemory.png')?>" /><span>Memoria
+					técnica</span></a></li>
+		</ul>
+	</div>
+</div>
+

@@ -1,0 +1,32 @@
+<div id="contenido">
+<?php if($this->contents){
+	 foreach ($this->parents as $parents): ?>
+	<div id="temario">
+		<h2>
+			<?php echo $parents['theme_name'];?>
+		</h2>
+	</div>
+	<?php endforeach; 
+	foreach ($this->contents as $contents): ?>
+	<h3>
+		<p>
+			<?php echo $contents['content'];?>
+		</p>
+	</h3>
+	<?php endforeach;
+} 
+if($this->themes){ ?>
+	<div id="temario">
+	<?php foreach ($this->themes as $themes): ?>
+	<h3>
+		<a href="../contents/consult?c=<?php echo $themes['id_theme']; ?>" ><?php echo $themes['theme_name'];?></a>
+	</h3>
+<?php endforeach; ?>
+</div>
+</br>
+<?php
+}
+if(!$this->contents and !$this->themes){ ?>
+<h3>Aun no existe contenido.</h3>
+<?php } ?>
+</div>

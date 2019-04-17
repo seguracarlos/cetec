@@ -1,0 +1,17 @@
+<h3 class="centerHor">Actualizar Contacto</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index') ?>"><img title="Contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>"></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Actualizar contacto')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<script type="text/javascript">
+	var nameContact = "Editar al contacto <?php echo $this->name; ?>";
+</script>
+<?php echo $this->form ;?>

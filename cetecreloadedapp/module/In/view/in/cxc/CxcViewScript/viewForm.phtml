@@ -1,0 +1,44 @@
+<div id="dialog-form" title="Agregar pago">
+<div><?=$this->element->getElement('id_payment'); ?> <?=$this->element->getElement('id_project'); ?>
+<fieldset>
+<table>
+	<tbody>
+	<tr>
+			<td></td>
+			<td align="right">*Fecha :</td>
+			<td><?=$this->element->getElement('payment_date'); ?></td>
+		</tr>
+		<tr>
+			<td>*Saldo por cubrir:</td>
+			<td><?=$this->element->getElement('remaining_amount'); ?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>*Pago <span id="numPay"></span>:</td>
+			<td><?=$this->element->getElement('amount'); ?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>*Saldo pendiente de cobro:</td>
+			<td><?=$this->element->getElement('remaining_amount_new'); ?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>N° de cuenta:</td>
+			<td><?=$this->element->getElement('account'); ?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Referencia:</td>
+			<td><?=$this->element->getElement('reference'); ?></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+</fieldset>
+<div class="center">
+     <?=$this->element->getElement('Guardar'); ?>
+     <?=$this->element->getElement('Cancelar'); ?>
+</div>
+</div>
+</div>

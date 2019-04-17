@@ -1,0 +1,167 @@
+<?php
+	$form = $this->form;
+	$formparam = $this->formparam;
+	$formLabel = $this->plugin('formLabel');
+	echo $this->form()->openTag($formparam);
+?>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4"><h3>CETEC</h3></div>
+		<div id="mensajes" class="col-md-6 col-md-offset-2"></div>
+	</div>
+	
+	<div id="overflow" class="row">
+<!-- 	<div id="mensajes"></div> -->
+	
+		<div id="jstree"  class="col-md-3" style="overflow-x: auto; overflow-y: auto;  max-height: 500px;"></div>
+		
+		<div class="col-md-9" align="center">
+			<div class="wrap2" id="add" name="add">
+		
+			<h1>Editar clase</h1>
+		
+			<br/>
+			<br/>
+			<form method="post" name="addCurse" id="addCurse" onsubmit="return validatorForm()" action="#">
+			<?php 
+				$id_topic = $form->get('id_topic');
+				echo $formLabel->openTag().$id_topic->getOption('label')." ";
+				echo $this->formInput($id_topic);
+				echo $formLabel->closeTag();
+			?>
+			<div class="col-md-6">
+				<?php 
+					$topic_name = $form->get('topic_name');
+					echo $formLabel->openTag().$topic_name->getOption('label')." ";
+					echo $this->formInput($topic_name);
+					echo $formLabel->closeTag();
+				?>
+			</div>
+			<div class="col-md-6">
+				<?php 
+					$project_name = $form->get('project_name');
+					echo $formLabel->openTag().$project_name->getOption('label')." ";
+					echo $this->formInput($project_name);
+					echo $formLabel->closeTag();
+				?>
+			</div>
+			<div class="col-md-12">
+				<?php 
+					$description = $form->get('description');
+					echo $formLabel->openTag().$description->getOption('label')." ";
+					echo $this->formTextarea($description);
+					echo $formLabel->closeTag();
+				?>
+			</div>
+			
+			<div class="col-md-6">
+				<?php 
+					echo $this->formElement($form->get('Editar'));
+				?>
+			</div>
+			<div class="col-md-6">
+				<?php 
+					echo $this->formElement($form->get('Cancelar'));
+				?>
+			</div>
+			</form>
+			</center>
+			
+			<div style="display:none">
+				<?php 
+// 					echo $this->formparam; 
+					echo $this->formElement($formparam->get('id_topic_content'));
+				?>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php 
+	echo $this->form()->closeTag(); 
+?>
+
+<script type="text/javascript">
+	$(function(){
+		$("#id_topic").val("<?php echo $this->id; ?>");
+		$("#topic_name").val("<?php echo $this->topic_name; ?>");
+		$("#project_name").val("<?php echo $this->project_name; ?>");
+		$("#description").val("<?php echo $this->project_name; ?>");
+
+
+		// create an instance when the DOM is ready
+	    $('#jstree').jstree({ 'core' : {
+	      'data' :
+	    	<?php
+	    		echo $this->tree;
+	    	?>
+	    },
+	    "types" : {
+	 	      "root" : {
+	 	        "icon" : "<?php echo $this->basePath('/img/images/tree-icon.png')?>"
+	 	      },
+	 	    "folder" : {
+	 	        "icon" : "<?php echo $this->basePath('/img/images/folder.ico')?>"
+	 	      },
+	 	    "file" : {
+	 	      "icon" : "<?php echo $this->basePath('/img/images/file.png')?>"
+	 	    }
+	 	    },
+	 	    "plugins" : [ "state", "types" ]
+	    });
+	});
+</script>
+
+<script>
+function linkContent(idc){
+	$("#paramform").attr("action","<?php echo $this->basePath('/contents/contents'); ?>");
+	$('#id_topic_content').val(idc);
+    document.paramform.submit();
+}
+function linkContentTopic(id){
+	$("#paramform").attr("action","<?php echo $this->basePath('/topics'); ?>");
+    $('#id_topicSend').val(id);
+    document.paramform.submit(); 
+}
+function parentLink(){
+	window.location.href = "<?php echo $this->basePath('usermanual/index') ?>";
+}
+function getBack(){
+    javascript:history.back();
+}
+
+function update(){
+	$.ajax({
+		url  : $basePath + "/usermanual/edit",
+		type : "POST",
+		data : {"id_clients" : $id_clients},
+		success: function(response){
+			window.location.href = "<?php echo $this->basePath('Gutenberg/docs_usermanual/index') ?>";
+			alert("Documento modificado")
+		},
+		error : function(){alert("Ocurrio un error, intentalo de nuevo");}
+	});
+}
+
+function validatorForm(){
+    if($('#topic_name').val() == '' && $('#project_name').val() == '' && $('#description').val() == ''){
+        alert("No debes dejar los campos vacios.");
+        return false;
+    }
+    if($('#topic_name').val() == ''){
+        alert("Debes escribir el nombre del manual.");
+        return false;
+    }
+    if($('#project_name').val() == ''){
+        alert("Debes escribir el proyecto al que pertenece el manual.");
+        return false;
+    }
+    if($('#description').val() == ''){
+        alert("Debes escribir una descripcion sobre el manual.");
+        return false;
+    }
+    return true;
+}
+</script>
+		

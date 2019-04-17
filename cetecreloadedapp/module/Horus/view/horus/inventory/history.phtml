@@ -1,0 +1,76 @@
+<?php
+$helpUser = $this->helps->inventoryHistory;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#inventories', 12);
+
+	
+});
+</script>
+
+<h3 class="centerHor">Historial Inventario de Equipo</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/inventory/index')?>" ><img title=" Inventario" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconeq.png')?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<table id="inventories" class="display">
+		<thead>
+			<tr>
+				<th>N&deg; de Inventario</th>
+				<th>Clasificaci&oacute;n</th>
+				<th>Tipo</th>
+				<th>Articulo</th>
+				<th>Departamento</th>
+				<th>Existencias</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>Estado</th>
+				<th>Observaci&oacute;n</th>
+				<th>Asignado a</th>
+				<th>Registrado por</th>
+				<th>Fecha de Registro</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if($this->inventory): ?>
+			<?php foreach ($this->inventory as $inventories): ?>
+			<tr>
+				<td><?php echo Application_Util_Tools::format($inventories->getNumber(), 5);?></td>
+				<td> <?php echo $inventories->getNumber()."-".$inventories->getIdDepartment()."-".$inventories->getIdtype()."-".$inventories->getIdarticle()."-".$inventories->getId_inventories();?> </td>
+				<td><?php echo $inventories->getTypes_id_types(); ?></td>
+				<td><?php echo $inventories->getObject(); ?> </td>
+				<td><?php  echo $inventories->getDepartment_name();?></td>
+				<td> <?php echo $inventories->getAmount(); ?> </td>
+				<td> <?php echo $inventories->getMark(); ?>	</td>
+				<td> <?php echo $inventories->getMaterial(); ?>	</td>
+				<td> <?php echo $inventories->getState(); ?> </td>
+				<td>
+					<?php 
+						$obs = "";
+						if(strlen($inventories->getTypes_id_types()) > 15){
+							$obs = substr($inventories->getTypes_id_types(), 0, 15)."(...)";
+						}else{
+							$obs = $inventories->getTypes_id_types();
+						}
+						echo ($obs) ? $obs : Profile::PENDIENTE; 
+					?> 
+				</td>
+				<td> <?php echo $inventories->getId_acl_users(); ?> </td>
+				<td> <?php echo $inventories->getScored_by(); ?> </td>
+				<td> <?php echo $inventories->getDate_record(); ?></td>
+			</tr>
+			<?php endforeach; endif; ?>
+		</tbody>
+	</table>
+</div>
+<div class="center"><a href="#" class="arriba" id="subPay">Ir arriba</a></div>

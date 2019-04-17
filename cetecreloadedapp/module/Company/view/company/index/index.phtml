@@ -1,0 +1,213 @@
+<link href="<?php echo $this->basePath("/public/css/company.css"); ?>" rel="stylesheet">
+<script src="<?php echo $this->basePath("/public/js/company.js");?>"></script>
+<div id="fieldsetForm" class="forms">
+<legend>::Mi empresa::</legend>
+	<!--Logo-->
+	<div class="col-md-2">
+	<div  align="center" style="color:#fff;"><div style="display: none;"><input type="hidden" name="imglogo" id="imglogo" value="<?php echo $logotipe[0]['value']; ?>" /></div>
+	<img style='border-radius: 10%;height: 100px; width: 100px;' name="companylog" id="companylog" alt="User Pic" src="<?php if($logotipe[0]['value']){ echo $logotipe[0]['value']; }else{ echo 'https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100'; } ?>">
+	<br><div id="btnchangelog" style="text-align: center;"><input type="button" value="Cambiar logotipo" class="btn btn-success" onclick="showbtnchangelog()"/></div>
+	</div>	
+	</div>
+	<!--Fin logo-->
+	<div class="col-md-10">
+	<form id="formEditCompany">
+	<div id="infoDiv">
+	<div class="col-md-5">
+	<fieldset class="col-md-12">
+	<legend>Información Comercial ::</legend>
+	<div class="panel-body">
+				<div class="row">   
+		            <div> 
+		           		<table class="table table-user-information">
+		               		<tbody>
+		               			<tr>
+		                        	<td>Razón Social:</td>
+		                        	<td id="namecompany-companytd"><?php echo $company[0]['name_company']; ?></td>
+		                      	</tr>
+		                    	<tr>
+		                        	<td>Marca:</td>
+		                        	<td id="marca-companytd"><?php echo $company[0]['brand']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>RFC</td>
+		                        	<td id="rfc-companytd"><?php echo $company[0]['rfc']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Sitio Web:</td>
+		                        	<td id="website-companytd"><a href="<?php echo $company[0]['website']; ?>"><?php echo $company[0]['website']; ?></a></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Giro:</td>
+		                        	<td id="business-companytd"><?php echo $company[0]['business']; ?></td>
+		                      	</tr>
+		                        <tr>
+		                        	<td>Telefóno:</td>
+		                        	<td id="phone-companytd"><?php echo $company[0]['phone']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Extensión:</td>
+		                        	<td id="extension-companytd"><?php echo $company[0]['ext']; ?></td>
+		                        </tr>
+		                        <tr>
+		                        	<td>Ubicación:</td>
+		                        	<td id="map-companytd"><a href="<?php echo $company[0]['url_map']; ?>">Ver mapa</a></td>
+		                        </tr>
+		                    </tbody>
+		                  </table>
+		            </div>
+				</div>
+			</div>
+	</fieldset>
+	<fieldset class="col-md-12">
+	<legend>Información Bancaría ::</legend>
+	<div class="panel-body">
+				<div class="row">   
+		            <div> 
+		           		<table class="table table-user-information">
+		               		<tbody>
+		               			<tr>
+		                        	<td>CLABE:</td>
+		                        	<td id="interbankclabe-banktd"><?php echo $company[0]['interbank_clabe']; ?></td>
+		                      	</tr>
+		                    	<tr>
+		                        	<td>N° de cuenta:</td>
+		                        	<td id="numberacount-banktd"><?php echo $company[0]['number_acount']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Nombre del banco:</td>
+		                        	<td id="namebank-banktd"><?php echo $company[0]['name_bank']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Sucursal:</td>
+		                        	<td id="sucursalname-banktd"><?php echo $company[0]['sucursal_name']; ?></td>
+		                      	</tr>
+		                    </tbody>
+		                  </table>
+		            </div>
+				</div>
+			</div>
+	</fieldset>
+	</div>
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-6">
+	<fieldset class="col-md-12">
+	<legend>Dirección ::</legend>
+	<div class="panel-body">
+				<div class="row"> 
+		           		<table class="table table-user-information">
+		               		<tbody>
+		               			<tr>
+		                        	<td>Estado:</td>
+		                        	<td id="statename-directiontd"><?php echo $company[0]['state']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Del. o Mpio.:</td>
+		                        	<td id="districtname-directiontd"><?php echo $company[0]['name']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Colonia:</td>
+		                        	<td id="colony-directiontd"><?php echo $company[0]['colony']; ?></td>
+		                      	</tr>
+		                      	<tr>
+		                        	<td>Código Postal:</td>
+		                        	<td id="postalcode-directiontd"><?php echo $company[0]['postalcode']; ?></td>
+		                      	</tr>
+		               			<tr>
+		                        	<td>Calle:</td>
+		                        	<td id="street-directiontd"><?php echo $company[0]['street']; ?></td>
+		                      	</tr>
+		                    	<tr>
+		                        	<td>Número:</td>
+		                        	<td id="number-directiontd"><?php echo $company[0]['number']; ?></td>
+		                      	</tr>
+		                    </tbody>
+		                  </table>
+				</div>
+			</div>
+	</fieldset>
+	<fieldset class="col-md-12">
+	<legend>Contacto ::</legend>
+	<?php if($favoriteUser){ ?>
+		<div class="panel-body">
+				<div class="row">   
+		            <div> 
+		           		<table class="table table-user-information">
+		               		<tbody id="userfavorite-information">
+		               			<tr id="userfavorite-numberemployee">
+		                        	<td>Numero de empleado:</td>
+		                        	<td><?php echo $favoriteUser[0]['numberEmployee']; ?></td>
+		                      	</tr>
+		                    	<tr id="userfavorite-rfc">
+		                        	<td>RFC:</td>
+		                        	<td><?php echo $favoriteUser[0]['rfc']; ?></td>
+		                      	</tr>
+		                      	<tr id="userfavorite-name">
+		                        	<td>Nombre:</td>
+		                        	<td><?php echo $favoriteUser[0]['name']; ?></td>
+		                      	</tr>
+		                      	<tr id="userfavorite-surname">
+		                        	<td>Apellido Paterno:</td>
+		                        	<td><?php echo $favoriteUser[0]['surname']; ?></td>
+		                      	</tr>
+		                      	<tr id="userfavorite-lastname">
+		                        	<td>Apellido Materno:</td>
+		                        	<td><?php echo $favoriteUser[0]['lastname']; ?></td>
+		                      	</tr>
+		                      	<tr id="userfavorite-email">
+		                        	<td>Correo electronico:</td>
+		                        	<td><?php echo $favoriteUser[0]['email']; ?></td>
+		                      	</tr>
+		                      	<tr id="userfavorite-d_name">
+		                        	<td>Departamento:</td>
+		                        	<td><?php echo $favoriteUser[0]['d_name']; ?></td>
+		                      	</tr>
+		                      	<tr id="userfavorite-privilegio">
+		                        	<td>Privilegios:</td>
+		                        	<td><?php echo $favoriteUser[0]['role_name']; ?></td>
+		                      	</tr>
+		                    </tbody>
+		                  </table>
+		            </div>
+				</div>
+			</div>
+	<?php }else{ ?>
+	<div class="panel-body" id="panel_infoUserFavorite" style="display: none;">
+				<div class="row">   
+		            <div> 
+		           		<table class="table table-user-information">
+		               		<tbody id="userfavorite-information">
+		               			<tr id="userfavorite-numberemployee">
+		                      	</tr>
+		                    	<tr id="userfavorite-rfc">
+		                      	</tr>
+		                      	<tr id="userfavorite-name">
+		                      	</tr>
+		                      	<tr id="userfavorite-surname">
+		                      	</tr>
+		                      	<tr id="userfavorite-lastname">
+		                      	</tr>
+		                      	<tr id="userfavorite-email">
+		                      	</tr>
+		                      	<tr id="userfavorite-d_name">
+		                      	</tr>
+		                      	<tr id="userfavorite-privilegio">
+		                      	</tr>
+		                    </tbody>
+		                  </table>
+		            </div>
+				</div>
+			</div>
+	<h1>Aun no has asignado al contacto</h1>
+	<?php } ?>
+	</fieldset>
+	</div>
+	<div class="col-md-12" id="editsavecancel"><input type="button" value="Editar información" class="btn btn-success" onclick="editInfo()" /></div>
+	</form>
+	</div>
+	</div>
+	<script>
+var basep = "<?php echo $this->basePath(); ?>";
+var company_users = "<?php echo $company[0]['id_company']; ?>"
+</script>

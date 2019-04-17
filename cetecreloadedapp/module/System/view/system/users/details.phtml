@@ -1,0 +1,162 @@
+<?php
+	 echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAdminCategories.css'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$('a.arriba').click(function(){
+		$('html, body').animate({scrollTop:0}, 1250);
+		return false;
+	});
+	
+	var detail = ( '<?php echo $this->detail ?>' && '<?php echo $this->detail ?>' != "") ? true : false;
+	console.log(detail);
+	if(detail){
+		$('#userDetails').hide();
+		$('.report').show();
+	}else {
+		$('.report').hide();
+		$('userDetails').show();
+		jqueryTable('#userDetails', 12);
+	}
+});
+</script>
+
+
+<h3 class="centerHor"><?php echo 'Detalles de los '.$this -> titulo; ?></h3>
+<ul class="toolbar">
+	<div id="icons">
+		 <li class="iconOpacity">
+			<?php if(isset($_GET['employe']) == "true"): ?>
+				<a href="<?php echo $this->baseUrl('/System/employee/index')?>"><img title="Empleados" src="<?php echo $this->baseUrl('/public/img/iconemplo.png')?>" /></a>
+		 	<?php else:?>
+				<a href="<?php echo $this->baseUrl('/System/users/index')?>"><img title="Usuarios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" /></a>
+			<?php endif;?>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Los detalles de usuarios muestran direcci&oacute;nes e informaci&oacute;n de contacto')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<table id="userDetails" class="display">
+		<thead>
+			<tr>
+				<th>Usuario</th>
+				<th>Fec. de Ingreso</th>
+				<th>Local</th>
+				<th>M&oacute;vil</th>
+				<th>Fec. de Nac.</th>
+				<th>Calle</th>
+				<th># Ext.</th>
+				<th># Int.</th>
+				<th>Col.</th>				
+				<th>Estado</th>
+				<th>Mpio. o Del.</th>
+				<th>C.P.</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($this->users as $users) : ?>
+			<?php if ($users==$users):?>
+			<tr>
+				<td class="alpha searchById"><?php echo $users['user_name']; ?> - <?php echo $users['real_name'] . " " . $users['surname'] ; ?></td>
+				<td class="alpha"><?php echo Application_Util_Tools::dateFrontFormat("-", $users['date_admission']); ?></td>
+				<td class="number"><?php echo $users['local_phone']; ?></td>
+				<td class="number"><?php echo $users['cellphone'] ? $users['cellphone'] : Profile::PENDIENTE ; ?></td>
+				<td class="alpha"><?php echo Application_Util_Tools::dateFrontFormat("-", $users['birthday']); ?></td>
+				<td class="alpha"><?php echo Application_Util_Tools::splitText($users['street']); ?></td>
+				<td class="number"><?php echo $users['number']; ?></td>
+				<td class="number"><?php echo $users['interior'] ? $users['interior'] : Profile::PENDIENTE ; ?></td>
+				<td class="alpha"><?php echo $users['colony']; ?></td>
+				<td class="alpha"><?php echo $users['state']; ?></td>
+				<td class="alpha"><?php echo $users['name']; ?></td>				
+				<td class="number"><?php echo $users['postalcode']; ?></td>
+				<td id="opt"><a
+					href="<?php echo $this->baseUrl('/System/users/editdetails?u='.$users['privateKey'] . '&a='.$users['id_address'].'&d='.$users['id_details'].'&='.$users['state_id'].'&di='.$users['district_id'])?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>"
+						title="Editar detalles" alt="Editar detalles">
+				</a>
+				<a onclick="javascript:deleteRecord('userDetails',this,'<?php echo $users['user_id']?>','/System/users/deletedetails')">
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar" alt="Eliminar">
+					</a>
+				</td>
+			</tr>
+			<?php endif;?>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+
+		<div class="report">
+		<tbody id="detail">
+			<div id="fieldsetForm" class="forms">
+					<?php 
+						$val = sizeof($this->users);
+						if($val == 1) : 
+					?>	
+					<?php foreach ( $this->users as $users ) : ?>
+						<?php if($users['photofilename'] == ""){ ?>
+							    <div style="float: left; padding: 10px;"><img class="fotografia" src="<?php print $this->baseUrl("/public/img/nofoto.png")?>" alt="Perfil" /> </div>
+						<?php }else{ ?>
+								<div style="float: left; padding: 10px;"><img class="fotografia" src="data:image/png;base64,<?php echo $users['photofilename']; ?>" alt="Perfil"  /> </div>	
+						<?php } ?>
+					
+					<fieldset style="width: 400px; float: left;">
+						<legend><span class="title">Informaci&oacute;n General</span></legend>
+							<br />
+							<?php if($users['user_type'] == "Interno"): ?>
+								<div><span class="format">N&uacute;mero de Empleado : </span><span class="result" ><?php  echo str_pad($users['numberEmployee'], 4, '0', STR_PAD_LEFT); ?></span></div>
+								<br />
+							<?php endif; ?>
+							<div><span class="format">Nombre : </span><span class="result" ><?php  echo $users['real_name']; ?></span></div>
+							<br />
+							<div><span class="format">Apellido Paterno : </span><span class="result" ><?php  echo $users['surname']; ?></span></div>
+							<br />
+							<div><span class="format">Apellido Materno : </span><span class="result" ><?php  echo ($users['lastname'] != "" ) ? $users['lastname'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">E-Mail : </span><span class="result" ><?php  echo ($users['mail'] != "" ) ? $users['mail'] :  Profile::PENDIENTE; ?></span></div>
+					</fieldset>
+					<fieldset>
+						<legend><span class="title">Detalles</span></legend>
+							<div><span class="format">Usuario : </span><span class="result" ><?php  echo ($users['user_name'] != "" ) ? $users['user_name'] : Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Fecha de Ingreso : </span><span class="result" ><?php  echo ($users['date_admission'] != "" ) ? Application_Util_Tools::dateFrontFormat('-', $users['date_admission']) : Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Tel&eacute;fono : </span><span class="result" ><?php  echo ($users['local_phone'] != "" ) ? $users['local_phone'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">M&oacute;vil : </span><span class="result" ><?php  echo ($users['cellphone'] != "" ) ? $users['cellphone'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Cumplea&ntilde;os : </span><span class="result" ><?php  echo ($users['birthday'] != "" ) ? Application_Util_Tools::dateFrontFormat('-', $users['birthday']) : Profile::PENDIENTE; ?></span></div>
+							<br />
+					</fieldset>
+					<fieldset>
+						<legend><span class="title">Direcci&oacute;n</span></legend>
+							<div><span class="format">Estado : </span><span class="result" ><?php  echo ($users['state'] != "" ) ? $users['state'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Delegaci&oacute;n o Municipio : </span><span class="result" ><?php  echo ($users['name'] != "" ) ? $users['name'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Colonia : </span><span class="result" ><?php  echo ($users['colony'] != "" ) ? $users['colony'] :  Profile::PENDIENTE; ?></span></div>		
+							<br />
+							<div><span class="format">N&uacute;mero Exterior : </span><span class="result" ><?php  echo ($users['number'] != "" ) ? $users['number'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">N&uacute;mero Interior : </span><span class="result" ><?php  echo ($users['interior'] != "" ) ? $users['interior'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">C.P. </span><span class="result" ><?php  echo ($users['postalcode'] != "" ) ? $users['postalcode'] :  Profile::PENDIENTE; ?></span></div>
+					</fieldset>
+			</div>
+				   <?php  endforeach; endif; ?>
+		</tbody>
+	</div>
+	
+</div>
+<div class="center">
+	<?php if(isset($_GET['e'])):?>
+		<a href='<?php echo $this->baseUrl("/Horus/employee/index");?>' id="subPay">Regresar</a>
+	<?php else: ?>
+		<a href='<?php echo $this->baseUrl("/System/users/index");?>' id="subPay">Regresar</a>
+	<?php endif;?>
+</div>

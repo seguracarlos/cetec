@@ -1,0 +1,131 @@
+<?php
+$this->headScript ()->appendFile ( $this->baseUrl ( '/public/js/jsFunctions/ajax/vitaeFunctions.js' ) );
+?>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	oTableInvoice = jqueryTable('#expWorkTab',7);	
+
+	$('#date_admission').change(function(){
+		var f = new Date();
+		var g = (f.getMonth() +1 < 10)? "0"+(f.getMonth() +1) : f.getMonth() +1;
+		var array = [""+f.getDate(),g,""+f.getFullYear()];	
+		var seleccion = $('#date_admission'); 
+		comparateDates(array, seleccion);
+		
+	});
+	
+});
+</script>
+
+<div id="fieldsetForm" class="forms">
+	<legend id="legendhelp">* Datos requeridos</legend>
+<?=$this->element->getElement('id'); ?>
+<?=$this->element->getElement('hasCV'); ?>
+<fieldset>
+		<legend>Datos personales</legend>
+		<table border=0>
+			<tbody>
+				<tr>
+					<td id="tdPhoto">
+						<div class="title">Foto:</div>
+	    	
+			        		<div id="contenedorImagen">
+					    		<img id="loaderAjax"  src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+								<img id="fotografia" width="500px;"  class="fotografia" src="<?php echo $this->baseUrl('/public/img/nofoto.png'); ?>">
+								<br>
+								<img id="addImage" src="<?php echo $this->baseUrl('/public/img/agregarImg.png');?>" onclick="uploadAjaxImg('addImageProg', 'program', 'fotografiaProg', 'loaderAjaxProg');" />
+							   	<p>M&aacute;ximo: 1000px x 1000px, Formato: jpeg, jpg, png</p>
+							   	<br>
+							   	<?=$this->element->getElement('photofile'); ?>
+								<br>
+								<?=$this->element->getElement('photofilename');?>	
+					    	</div>			    	
+			    	
+					</td>
+					<td><table border=0 cellpadding="2" cellspacing="2">
+							<tbody>
+								<tr>
+				        		<?php if($this->element->getElement('user_type')):?>
+					        		<td>* Tipo de Usuario:</td>
+									<td><?=$this->element->getElement('user_type'); ?></td>
+				        		<?php endif;?>
+				        	 </tr>
+<!-- 								<tr> -->
+				             	<?php //if(isset($_GET['employee']) != "true"):?>
+<!-- 					             	<td><label id="company_IDLbl" for="company_ID">* -->
+<!-- 											Compa&ntilde;ia:</label></td> -->
+<!-- 									<td> -->
+									<?php //$this->element->getElement('company_ID'); ?>
+										<?php //$this->element->getElement('hostCompany'); ?>
+<!-- 									</td> -->
+				            	<?php // endif; ?>
+<!-- 				            </tr> -->
+								<tr>
+									<td>* Nombre(s):</td>
+									<td><?=$this->element->getElement('real_name'); ?></td>
+
+								</tr>
+								<tr>
+									<td>* Ap. Paterno:</td>
+									<td><?=$this->element->getElement('surname'); ?></td>
+								</tr>
+								<tr>
+									<td>&nbsp;&nbsp;Ap. Materno:</td>
+									<td><?=$this->element->getElement('lastname');?></td>
+								</tr>
+								<tr>
+									<td id='labeljob'>* Cargo:</td>
+									<td><?=$this->element->getElement('id_job') ?></td>
+								</tr>
+								<tr>
+									<td><span id="depLabel">* Departamento:</span></td>
+									<td><?=$this->element->getElement('id_department');?></td>
+								</tr>
+								<tr>
+									<td><label id="dateIng">* Fecha de ingreso:</label></td>
+									<td><?=$this->element->getElement('date_admission'); ?></td>
+								</tr>
+							</tbody>
+						</table></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</fieldset>
+
+	<fieldset>
+		<legend>Formaci&oacute;n</legend>
+		<table style="width: 50%">
+			<tr>
+				<td><label id="dateIng">* Objetivo:</label></td>
+				<td><?=$this->element->getElement('objective'); ?></td>
+			</tr>
+			<tr>
+				<td><label id="dateIng">* Visi&oacute;n:</label></td>
+				<td><?=$this->element->getElement('vision'); ?></td>
+			</tr>
+			<tr>
+				<td><label id="dateIng">* Educaci&oacute;n:</label></td>
+				<td><?=$this->element->getElement('education'); ?></td>
+			</tr>
+			<tr>
+				<td><label id="dateIng">* T&iacute;tulo Obtenido:</label></td>
+				<td><?=$this->element->getElement('titleDeg'); ?></td>
+			</tr>
+			<tr>
+				<td><label id="dateIng">* Fecha de Titulaci&oacute;n:</label></td>
+				<td><?=$this->element->getElement('titleDate'); ?></td>
+			</tr>
+			<tr>
+				<td><label id="dateIng">* Escuela:</label></td>
+				<td><?=$this->element->getElement('school'); ?></td>
+			</tr>
+		</table>
+	</fieldset>
+
+	<div class="center">
+	<?=$this->element->getElement('Siguiente'); ?>
+	<?=$this->element->getElement('Cancelar'); ?>
+</div>
+</div>

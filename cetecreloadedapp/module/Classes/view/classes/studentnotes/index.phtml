@@ -1,0 +1,50 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Mis Notas</p></div></div>
+		<div class="col-md-4">
+		
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+
+<div class="container">
+
+		<table class="table" id="topics">
+			<thead>
+				<th>ID</th>
+				<th>Tema</th>
+				<th>Notas</th>
+			</thead>
+	<tbody>
+	<?php
+		$cont=1;
+		foreach($this->topics as $topic)
+	{?>
+	<tr>
+	<td><?php echo $cont++;?></td>
+	<td><?php echo $topic['topic_name']?></td>
+	<td>
+	<?php if($topic['notes']!=0){?>
+		<a title="Ver Notas" href="<?php echo $this->basePath().'/classes/studentnotes/viewnotes/'.$topic['id_topic'];?>">Notas Agregadas:<?php echo $topic['notes']?></a>
+	<?php }else{?>
+		A&uacute;n no has agregado notas en este tema
+	<?php } ?>
+	</td>
+	</tr>
+	<?php } ?>
+	
+	</tbody>
+</table>
+
+</div>
+
+<script>
+$(document).ready(function(){
+	$("#topics").dataTable();
+});
+</script>

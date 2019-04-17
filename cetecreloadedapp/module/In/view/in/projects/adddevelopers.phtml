@@ -1,0 +1,52 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#developers', 2);
+});
+</script>
+<h3 class="centerIn">Agregar desarolladores</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity"><a href="<?php echo $this->baseUrl('/projects/index')?>"><img title="Proyectos" src="<?php echo $this->baseUrl('/public/img/icongear.png')?>"/></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','En la tabla usted puede seleccionar un proyecto y agregar a los desarrolladeres que desea incluir en &eacute;l.')">
+					<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<table id="developers" class="display">
+		<thead>
+			<tr>
+				<th colspan="3" class="number">
+					Seleccione un proyecto: 
+					<select id="avilableProjects">
+						<?php foreach ($this->projects as $projects) : ?>
+							<option value="<?php echo $projects->id ?>"><?php echo $projects->name_project ?></option>
+						<?php endforeach;?>
+					</select>
+				</th>
+			</tr>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($this->results as $developers) : ?>
+			<tr>
+				<td class="alpha"><?php echo $developers->getRealName()?></td>
+				<td class="alpha"><?php echo $developers->getSurName()?></td>
+				<td>
+					<a onclick="addTeam('<?php echo $developers->getUserId()?>')">
+						<img id="ok<?php echo $developers->getUserId()?>" class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/ok.png')?>">
+						<img id="load<?php echo $developers->getUserId()?>" class="iconOpacity" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loadtd.gif')?>">
+					</a>
+				</td>
+			</tr>
+		<?php endforeach;?>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,68 @@
+<script>
+var oTableInvoice;
+$(document).ready(function(){
+	oTableInvoice = jqueryTable('#invoicedetail', 4);
+
+	$('#customer').change(function(){
+		getAddressCustomer();
+	});
+
+	$('#unityPrice').change(function(){
+		$('#unityPrice').formatCurrency();
+		$('#price').val(parseFloat($('#unityPrice').clone().toNumber().val()*$('#quantity').val()));
+		$('#price').formatCurrency();
+	});
+
+	$('#quantity').change(function(){
+		if($('#unityPrice').val() == ""){
+			$('#price').val();
+		}else{
+			$('#price').val(parseFloat($('#unityPrice').clone().toNumber().val()*$('#quantity').val()));
+			$('#price').formatCurrency();
+		}
+	});
+	if($('#total').val() != null || $('#total').val() != ""){
+		$('#total').formatCurrency();
+	}
+	if($('#tax').val() != null || $('#tax').val() != ""){
+		$('#tax').formatCurrency();
+	}
+	if($('#subtotal').val() != null || $('#subtotal').val() != ""){
+		$('#subtotal').formatCurrency();
+	}
+
+	$('#Guardar').click(function(){
+		addInvoice();
+	});
+
+	if($('#ID').val() != "" || $('#ID').val() != null){
+		getPurchaseInvoice($('#ID').val());
+	}
+
+	if($('#customer').val() == "pC"){
+		$('#CustomerOther').show();
+		$('#rfcCustomer').show();
+	}
+});
+
+</script>
+<div style="text-align: center">
+<h3 class="centerIn">Actualizar los datos de la factura</h3>
+<ul class="toolbar">
+		<div id="icons">
+				<li class="iconOpacity ">
+					<a href="<?php echo $this->baseUrl('/invoices/index')?>"><img title="Ver facturas" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconmulti.png');?>" /></a>
+				</li>
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser?>')">
+					<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+				<div id="clock"></div>
+		</div>	
+</ul>
+
+<div>
+<h5>Los campos con * son obligatorios</h5>
+</div>
+</div>
+
+<?php echo $this->form ;?>

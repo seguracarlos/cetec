@@ -1,0 +1,96 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#minutes',5);	
+});
+</script><h3 class="centerHor">Minutas</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Nueva minuta" href="<?php echo $this->baseUrl('/Gutenberg/minute/add') ?>" > 
+				<img class="iconOpacity" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Nuevo" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a href="javascript:;" title="Ayuda" class="tooltipcenter">
+				<img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+	<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+
+<table id="minutes" class="display">
+	<thead>
+	    <tr>
+	        <th>N&uacute;mero</th>
+	        <th>Objetivo</th>
+	        <th>Fecha</th>
+	        <th>Convoco</th>
+	        <th>Ubicaci&oacute;n</th>
+	        <th>
+	    		<a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Gutenberg/minute/add') ?>">
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar Nuevo">
+				</a>
+	        </th>
+	    </tr>
+    </thead>
+    <tbody>
+    <?php if($this->minutes != 0) :?>
+	    		<?php foreach ($this->minutes as $minute):?>
+	    	 <tr>
+	    	 	<td><?php echo $minute->getIdminutes(); ?></td>
+   				<td><?php echo $minute->getObjective(); ?></td>
+				<td><?php echo $minute->getTime(); ?></td>
+	    		<td><?php echo $minute->getConvened(); ?></td>
+	    		<td><?php echo $minute->getLocation(); ?></td>
+	    	 	<td>
+		    	 	<a class="tooltip" title="Actualizar" href="<?php echo $this->baseUrl() ?>/Gutenberg/minute/update?c=<?= $minute->getIdminutes(); ?>">
+                    	<img src=" <?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png') ?>" title="Actualizar">
+                    </a>
+	    	 	
+	                <a class="tooltip" title="Eliminar" href="javascript:;" onclick="javascript:deleteRecord('minutes',this,'<?php echo $minute->getIdminutes(); ?>','/minute/delete')">
+                		<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png') ?>" title="Eliminar">
+                	</a>
+	    	 	
+	    	 		<a class="tooltipright" title="Detalles" href="<?php echo $this->baseUrl('/Gutenberg/minute/details?c='.$minute->getIdminutes()); ?>">
+	              		<img style="height: 26px; width: 26px;" src=<?php echo $this->baseUrl("/public/img/details.png")?> title="Ver Minute">
+	                </a>
+	    	 	</td>
+	    	 </tr>
+		    <?php endforeach;?>
+	   	<?php endif;?>    
+        </tbody>
+</table>
+</div>
+<!-- <a href="<?php //echo $this->baseUrl('/minute/ver/idmnutes/1')?>">ver </a> -->
+<script>
+    function del(id){
+        // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+        $( "#dialog:ui-dialog" ).dialog( "destroy" );
+	
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height:140,
+            modal: true
+        });
+        document.getElementById("idminutes").value = id;
+    }
+</script>
+
+<!-- 
+:::::::::::::::: cuadro de dialogo para eliminar minuta
+-->		
+<div id="dialog-confirm" title="Eliminar Minuta?" style="display:none">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        ¿S&iacute; est&aacute; seguro de eliminar la minuta presione Aceptar, S&iacute; No Cancelar?
+    </p>
+    <form id="delete" action="<?php echo $this->url(array('action' => 'delete')); ?>" method="post"> 
+        <input type="hidden" name="idminutes" id="idminutes"/> 
+        <button id="TBsubmit" name="del" value="S&iacute;" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all">
+            <span class="ui-button-text">Aceptar</span></button> 
+        <button id="TBcancel" name="del" value="No" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all">
+            <span class="ui-button-text">Cancelar</span></button> 
+    </form>
+</div>

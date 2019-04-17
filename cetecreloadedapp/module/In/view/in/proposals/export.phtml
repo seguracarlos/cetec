@@ -1,0 +1,170 @@
+<?php 
+echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/proposalsStyle.css'));
+include_once APPLICATION_PATH . '/services/impl/PreferencesServiceImpl.php';
+$service = new ProjectsServiceImpl();
+$helpUser = $this->helps->proposalsIndex;
+?>
+
+<script>
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+		
+</script>
+
+<script>
+function imprimir(que) {
+	var ventana = window.open("", "", "");
+	var contenido = "<html><body onload='window.print();window.close();'>";
+	contenido = contenido + document.getElementById(que).innerHTML + "</body></html>";
+	ventana.document.open();
+	ventana.document.write(contenido);
+	ventana.document.close();
+}
+
+</script>
+<h3 class="centerIn">Imprimir Cotizaci&oacute;n de productos</h3>
+<ul class="toolbar">
+		<div id="icons">
+				<li class="iconOpacity">
+					 <a href="<?php echo $this->baseUrl('/proposals/index') ?>"><img src="<?php echo $this->baseUrl('/public/img/iconnote.png');?>" title="Cotizaciones de Productos"></a> 
+				</li>
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','exportar propuesta')">
+					<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+
+				<div id="clock"></div>
+		</div>	
+</ul>
+ <br />
+<center>
+<a href="<?php echo $this->baseUrl('/proposals/index'); ?>" class="subPay" name="Regresar" >Regresar a listado</a>
+<a href="javascript:imprimir('fieldsetForm')" class="subPay" name="Imprimir Propuesta">
+Imprimir Cotizaci&oacute;n</a>
+</center>
+<a name="top"></a>
+ <br />
+<div id="fieldsetForm" class="forms">
+	<div id="log">
+		<?php $preferencesService =  new Application_Service_Impl_PreferencesServiceImpl();
+			  $preference = $preferencesService->getPreferencesById(Preferences::CODE_LOGO);
+		foreach ($preference as $valor){ ?>
+			<?php if($valor->getValue() != ""): ?>
+				<img id="imgLogo" style="width: 150px; height: 180px;" src="<?php echo "data:image/png;base64,".$valor->getValue();?>" alt="logotipo" title="logotipo">
+			<?php else: ?>
+				<img id="imgLogo" style="width: 150px; height: 180px;" src="<?php echo $this->baseUrl('img/aqui_tu_logo.jpg'); ?>" alt="logotipo" title="logotipo">
+			<?php endif; ?>
+		<?php } ?>
+	</div>
+	<div id="title" style="margin-bottom: 10px;" class="center">
+		<h1 style="font-size: 34px;position:relative;color: #000;font-weight: 400;text-shadow: 0px 0px 1px rgba(0,0,0,0.3);padding: 20px;text-transform: uppercase;text-align: center;">Cotizaci&oacute;n de Productos</h1>
+		<br />
+		<div id="dateCreate" style="text-align: center;color: navy;font-size: 20px;">
+			Fecha de creaci&oacute;n: <span><?php echo new Zend_Date(); ?></span>
+		</div>
+	</div>
+	<?php if(count($this->dataProp)):?>
+	 <?php $propuesta = $this->dataProp; ?>
+	 	<div id="firstInfo" style="height: auto;margin-bottom: 10px;padding: 10px;">
+	 		<h1 style="text-align: center;">Informaci&oacute;n General</h1>
+	 		<div id="objective" style="font-size: 15px;font-weight: bold;margin-bottom: 5px;padding: 5px;">Cliente: <span class="cont" style="font-size: 14px;font-weight: normal;"><?php echo $service->getCompanyName($propuesta["id_company"]);?></span>
+	 		</div>
+	 		<br />
+	 		<div id="antecedent" style="font-size: 15px;font-weight: bold;margin-bottom: 5px;padding: 5px;">Subtotal: <span class="cont" style="font-size: 14px;font-weight: normal;"><?php echo Application_Util_Tools::currency($propuesta['subtotal']);?></span></div>
+			<br />
+			<div id="solution" style="font-size: 15px;font-weight: bold;margin-bottom: 5px;padding: 5px;">Iva: <span class="cont" style="font-size: 14px;font-weight: normal;"><?php echo Application_Util_Tools::currency($propuesta['iva']);?></span></div>
+ 			<br />
+ 			<div id="audience" style="font-size: 15px;font-weight: bold;margin-bottom: 5px;padding: 5px;">Total: <span class="cont" style="font-size: 14px;font-weight: normal;"><?php echo Application_Util_Tools::currency($propuesta['total'])?></span>
+ 			</div>
+		</div>	 
+
+		<div id="SecondInfo" style="padding: 5px;height: auto;margin-bottom: 10px;">
+			<br />
+			<h1 style="text-align: center;">Productos Cotizados</h1>
+<br />
+    		<table id="mitabla" align="center">
+    			<thead>
+    					<th>Clave</th>
+    					<th>Nombre</th>
+    					<th>Unidad</th>
+    					<th>Cantidad</th>
+    					<th>Precio</th>
+    			</thead>
+    			<tbody>
+    		<?php foreach ($this->idOrder as $order): ?>	
+    				<tr>
+    					<td><?php echo $order['p_key']; ?></td>
+    					<td><?php echo $order['productName']; ?> </td>
+    					<td><?php echo $order['unit']; ?> </td>
+    					<td><?php echo $order['quantity']; ?></td>
+    					<td><?php echo $order['price']; ?></td>
+    				</tr>
+    		<?php endforeach; ?>
+    			</tbody>
+    		</table>
+    		<?php if($this->idOrder == null): ?>	
+    		<?php echo "<center>No hay datos que mostrar</center>"; ?>
+    		<?php endif; ?>
+<br />
+
+	 <?php else:?>
+		<div>No hay datos</div>
+	<?php endif;?>	
+	</div>
+</div>
+<br />
+<center>
+<a href="#" class="arriba" id="subPay" name="button">Regresar arriba</a>
+</center>
+
+<style type="text/css">
+		
+#mitabla{
+/*estilo de el cuerpo de nuestra tabla*/
+background-color: #1e8cbe;*
+width:100%;
+margin:20px auto;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+font-family:helvetica,arial,sans-serif;
+font-weight:normal;
+/*text-transform: uppercase;*/
+}
+
+#mitabla th{
+/*estilo de los elementos(th)*/
+background-color: #1e90ff;
+color:#ffffff;
+font-weight: bolder;
+font-size:15px;
+padding: 8px;
+text-transform: uppercase;
+text-align: center;
+}
+
+#mitabla td{
+
+/*estilo a los elementos (td)*/
+font-weight: bold;
+width:100px;
+font-size:15px;
+}
+
+**Aqui esta la magia ahora vamos usar el  nth-child()**
+
+#mitabla tr:nth-child(odd){
+
+/*para los colores de las filas impares*/
+background-color: #ffffff;
+}
+
+#mitabla tr:nth-child(even){
+
+/*para los colores de las filas pares*/
+background:#EDEDED;
+}
+
+</style>

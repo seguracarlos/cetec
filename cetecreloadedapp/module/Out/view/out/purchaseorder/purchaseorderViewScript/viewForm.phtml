@@ -1,0 +1,172 @@
+<?php include_once APPLICATION_PATH . '/Constants/Constants.php'; ?>
+<?php 
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css'))
+ 				  ->appendStylesheet($this->baseUrl('/public/css/paysPop.css'))
+ 				  ->appendStylesheet($this->baseUrl('/public/css/popupArticle.css'));
+ $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addPurchase.js'));
+ 
+ $layout = Zend_Layout::getMvcInstance();
+ $view = $layout->getView(); ?>
+
+	
+<script>
+	var iva = "<?php echo Application_Util_Tools::getPreferenceTax($this->element->getElement('value')->getValue()); ?>";
+	var SEPARATOR = "<?php echo SeparatorString::SEPARATOR;?>";
+	var iconsFile = "<?php echo $view->iconset; ?>";
+
+	$(document).ready(function(){
+		
+		$('#article option').remove();
+		$('#article').append('<option value="0">seleccione</option>');
+		$('#subtotal').formatCurrency();
+		$('#total').formatCurrency();
+		$('#iva').formatCurrency();
+		
+		$('#id_company').change(function(){	
+			var id_supplier = $(this).val();
+			if(id_supplier != 0){
+				$('#suppSele').val(id_supplier);
+				getProductsByIdSupplier(id_supplier);
+				$('#addArticle').show();
+			}else{
+				$('#suppSele').val("");
+				$('#article option').remove();
+				$('#article').append('<option value="0">seleccione</option>');
+				$('#addArticle').hide();
+			}
+		});
+	});
+</script>
+
+<input id="suppSele" type="hidden" />
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+	  <fieldset>
+			<legend>Nueva orden de compra</legend>
+			<table>
+				<tbody>
+					<tr>
+<!--						<td>* N° de pedido: </td>-->
+						<td>Fecha: <?php echo date('d/m/Y');?></td>											
+					</tr>
+					<tr>
+<!--//						<td><? $this->element->getElement('account'); ?></td>-->
+						<td></td>						
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+					</tr>										
+					<tr>
+						<td>* Proveedor: </td>
+						<td>Fecha de entrega: </td>
+						<td>Fecha de env&iacute;o esperada:</td>
+						<td>* Departamento: </td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('id_company'); ?></td>
+						<td><?=$this->element->getElement('start_date'); ?></td>
+						<td><?=$this->element->getElement('end_date'); ?></td>
+						<td><?=$this->element->getElement('ld_department'); ?></td>						
+					</tr>
+					</tbody>
+			 </table>
+		 </fieldset>
+		 <fieldset>
+		 	
+			<legend>Productos de la Compra</legend>
+				<table>
+					<tr>
+						<td>Art&iacute;culo: </td>
+						<td>Precio c/u:</td>
+						<td>Cantidad:</td>
+						<td></td>
+					</tr>
+					<tr>
+						<img id="loadProd" style="display:none;" src="<?php echo $this->baseUrl("/public/img/loader.gif");?>"/>
+						<td><?=$this->element->getElement('article'); ?><a id="addArticle" style="display: none" href="javascript:;">Agregar articulo</a></td>
+						<td><?=$this->element->getElement('amount'); ?></td>
+						<td>
+							<?=$this->element->getElement('quantity'); ?>
+							<div id="toStok" class="stoks" style="display: none;">Total en stock <span id="toS"></span></div>
+							<div id="minStok" class="stoks" style="display: none;">M&iacute;nimo en stock <span id="mnS"></span></div>
+							<div id="maxStok" class="stoks" style="display: none;">M&aacute;ximo en stock <span id="mxS"></span></div>
+						</td>
+						<td>
+							<img id="addPurchase" src="<?php echo $this->baseUrl("/public/img/icons/".$view->iconset."/iconplus.png"); ?>" title="agregar" />
+							<span id='maxErr' style='display: none; color: red;'><br/><-- tienes que llenar los 3 campos</span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4"></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div id="tableOrderPurchase">
+							<img class="loadTable" style="display:none;" src="<?php echo $this->baseUrl("/public/img/loader.gif");?>"/>
+								<table id="tableOrder" class="display">
+									<thead>
+										<tr>
+											<td>Clave</td>
+											<td>Art&iacute;culo</td>
+											<td>Cantidad</td>
+											<td>Precio c/u</td>
+											<td>
+												Acci&oacute;n
+											</td>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>* Subtotal:</td>
+						<td>* iva:</td>
+						<td>* Total:</td>
+						<td>* N&deg; pagos:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('subtotal');?></td>
+						<td><?=$this->element->getElement('iva');?></td>
+						<td><?=$this->element->getElement('total'); ?></td>
+						<td><?=$this->element->getElement('numberofpayments'); ?>
+							<img id="paysCalendar" src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconcalendar.png');?>" title="Especifique las fechas de pago"/>
+							<?=$this->element->getElement('value'); ?>
+						</td>
+					</tr>
+					<tr>
+						<td>Condiciones:</td>
+					</tr>
+					<tr class="center">
+						<td colspan="4"><?=$this->element->getElement('conditions');?></td>
+					</tr>
+				</tbody>
+			</table>	
+		  </fieldset>
+
+	<?=$this->element->getElement('dates'); ?>
+<?=$this->element->getElement('purchaseItem');?>	
+<?=$this->element->getElement('minstock');?>
+<?=$this->element->getElement('maxstock');?>
+<?=$this->element->getElement('stock'); ?>
+	<div class="center">
+	<?=$this->element->getElement('Enviar'); ?>
+	<a href="javascript:location.href='<?=$this->baseUrl("/Out/purchaseorder/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+<div id="paysPop" class="popHorus">
+	<h2>Especifique las fechas de Pago.</h2>
+	<div id="btnAccept">Aceptar</div>
+	<ul id="paysArea"></ul>
+</div>
+<div id="paysBack"></div>
+<!-- 
+    termina popup
+-->

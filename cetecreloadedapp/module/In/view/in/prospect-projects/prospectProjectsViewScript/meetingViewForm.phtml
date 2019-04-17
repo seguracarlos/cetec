@@ -1,0 +1,34 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAdminCategories.css' )); ?>
+<div class="forms">
+<?=$this->element->getElement('id_meeting'); ?>
+	<fieldset>
+		<legend><span id="titleForm"></span></legend>
+		<table>
+			<tr>
+				<td>Fecha:</td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('m_date'); ?></td>
+			</tr>
+			<tr>
+				<td>Hora:</td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('m_hour'); ?></td>
+			</tr>
+			<tr>
+				<td>Descripci&oacute;n:</td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('m_description'); ?></td>
+			</tr>
+		</table>
+	</fieldset>
+	<div class="center">
+	    <!-- <a href="javascript:document.forms['projectForm'].submit();" class="horusBtn big icon-iconsave">Guardar</a>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/In/prospectprojects/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a> -->	
+	    <?=$this->element->getElement('guardar'); ?>
+	    <?=$this->element->getElement('cancelar'); ?>
+	</div>
+</div>
+

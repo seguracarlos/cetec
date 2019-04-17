@@ -1,0 +1,344 @@
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/bankandCashStyle.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/bankFunctions.js'));
+?>
+<script>
+	var iconsFile = "<?php echo $this->iconset; ?>";
+	 $(function() {
+		 $( "#tabs" ).tabs();
+		 $("#tabs-saldo").tabs();
+		 });
+</script>
+<h3 class="centerHor">Banco</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity"><a href="javascript:;" title="Ayuda"
+			class="tooltipcenter"><img title="Ayuda"
+				src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>
+</ul>
+<input id="totalBanks" value="<?php echo $this->totalBanks; ?>"
+	type="hidden" />
+<div id="overflow">
+	<div id="fieldsetForm" class="forms"
+		style="width: 70%; margin-left: auto; margin-right: auto;">
+		<fieldset>
+			<legend>Saldo actual en bancos</legend>
+			<div id="options">
+				<img id="loaderinitialbanks"
+					src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+				<div id="tabs">
+					<ul>
+						<li><a href="#tabs-1">Saldo</a></li>
+						<li><a href="#tabs-2">Consulta Hist&oacute;rica</a></li>
+					</ul>
+					<div id="tabs-1">
+						<table>
+							<tr>
+								<td><span style="font-size: 18px;">Saldo en bancos: </span> <span
+									id="GeneralBalanceInBanks"
+									style="font-size: 20px; color: black;">$0.00</span></td>
+							</tr>
+						</table>
+					</div>
+					<div id="tabs-2"></div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<table id="banks" class="display">
+		<thead>
+			<tr>
+				<th>Clave</th>
+				<th>Nombre</th>
+				<th>Saldo</th>
+				<th>No. de cuenta</th>
+				<th>CLABE</th>
+				<th>Sucursal</th>
+				<th><a href="javascript:;" onclick="addAccountBank();"><img
+						class="iconOpacity" title="Agregar Banco"
+						src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" /></a>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+  		<?php if($this->banks != 0): ?>
+  			<?php foreach($this->banks as $bank): ?>
+  				<tr>
+				<td><?php echo $bank['id_bank']; ?></td>
+				<td><?php echo $bank['name']; ?></td>
+				<td class="amountTotal"><?php echo Application_Util_Tools::currency($bank['amount']); ?></td>
+				<td class="text-right"><?php echo $bank['account']; ?></td>
+				<td class="text-right"><?php echo $bank['clabe']; ?></td>
+				<td><?php echo $bank['branch']; ?></td>
+				<td><a href="javascript:;"
+					onclick="showEditAccountBank('<?php echo $bank['id_bank']; ?>', this);"><img
+						class='iconOpacity'
+						src='<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png');?>'
+						alt='Editar Banco' title='Editar Banco' /></a> <a
+					href="javascript:;"
+					onclick="deleteAccountBank('<?php echo $bank['id_bank']; ?>', this);"><img
+						class='iconOpacity' alt='Eliminar Banco' title='Eliminar Banco'
+						src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png');?>" /></a>
+					<a href="javascript:;"
+					onclick="showMovements('<?php echo $bank['id_bank']; ?>', '<?php echo $bank['name']; ?>');"><img
+						class='iconOpacity'
+						src='<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/iconstats.png");?>'
+						alt='Movimientos del banco' title='Movimientos del banco' /></a> <a
+					href="javascript:;"
+					onclick="transactionBankCash('<?php echo $bank['id_bank']; ?>', '<?php echo $bank['name']; ?>', '<?php echo Application_Util_Tools::currency($bank['amount']); ?>');"><img
+						class="iconOpacity"
+						src="<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/bankTcash.png");?>"
+						title="Traspasar de banco a caja" alt="Traspasar de banco a caja"></a>
+				</td>
+			</tr>
+  			<?php endforeach; ?>
+  		<?php endif; ?>
+  	</tbody>
+	</table>
+</div>
+
+<div id="contentTable" style="display: none;">
+
+	<input id="id_bank" type="hidden" />
+
+	<div id="fieldsetForm" class="forms"
+		style="width: 70%; margin-left: auto; margin-right: auto;">
+		<fieldset>
+			<legend>
+				Movimientos del banco: "<span id="nameBank"></span>"
+			</legend>
+			<div id="options">
+				<div id="tabs-saldo">
+					<ul>
+						<li><a href="#tabs-1">Saldo</a></li>
+						<li><a href="#tabs-2">Consulta Hist&oacute;rica</a></li>
+					</ul>
+					<div id="tabs-1">
+						<span style="font-size: 18px;">Saldo Actual: </span>
+						<span id="initialBalance" style="font-size: 18px;"></span>
+					</div>
+					<div id="tabs-2">
+						<table>
+							<tr>
+								<td>Fecha Inicio:</td>
+								<td><input id="initialDate" type="text" /></td>
+								<td>Fecha Fin:</td>
+								<td><input id="endDate" type="text" /></td>
+								<td>
+									<a href="javascript:;" id="searchByDate">
+										<img title="Buscar" src="<?php echo $this->baseUrl('/public/img/icons/'. $this->iconset  .'/iconsearch.png')?>" />
+									</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="actionTx" style="margin: auto; width:80%">
+			    <table>
+					<tr>
+						<td>
+							<a href="javascript:;" class="tooltipcenter" title="Realizar Abono" onClick="showBoxAddBank(1);">
+								<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" />
+							</a>
+						<td>
+							<a href="javascript:;" class="tooltipcenter" title="Realizar Cargo" onClick="showBoxAddBank(2);">
+								<img  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" />
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>			
+		</fieldset>
+	</div>
+
+	<div id="actionTxNo" style="display: none; margin-left: 80%">
+		<table>
+			<tr>
+				<td><a href="javascript:;" class="tooltipcenter"
+					title="Regresar al mes actual de transacciones"
+					onClick="backToActualTx();"><img id="wrong"
+						src="<?php echo $this->baseUrl('/public/img/wrong.png'); ?>" />regresar
+						al mes actual</a></td>
+			</tr>
+		</table>
+	</div>
+	<div class="movements">
+		<table id="bankTable">
+			<tr>
+				<td>N&deg;</td>
+				<td>Fecha</td>
+				<td>Hora</td>
+				<td>Descripci&oacute;n</td>
+				<td>Cargo</td>
+				<td>Abono</td>
+				<td>Saldo</td>
+				<td>Acciones</td>
+			</tr>
+			<tr id="emptyTable" class="contentTr">
+				<td colspan="8"><h2 class="center">No existen movimientos</h2></td>
+			</tr>
+		</table>
+	</div>
+	<br />
+	<div class="center">
+		<button class="back" id="subPay" onclick="javascript:showBanks();">Regresar</button>
+	</div>
+</div>
+<!-- 
+    Inicia popup bank
+-->
+<div id="popupAccountBank" class="popHorus">
+	<div id="btnCloseAccountBank" title="Cerrar ventana">X</div>
+	<div id="formAccountBank">
+		<div class="center">
+			<h3 id="title">Agregar cuenta bancaria</h3>
+			<br /> <img id="loaderAccountAjax"
+				src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+			<div id="hiddenAccountForm"></div>
+			<div id="transBankCashDiv">
+				<ul class="nav nav-tabs">
+					<li class="active"><a id="tabL1" class="tab" href="#tab1"
+						data-toggle="tab">Cajas</a></li>
+					<li><a class="tab" id="tabL2" href="#tab2" data-toggle="tab">Bancos</a></li>
+				</ul>
+				<input id="id_bankBank" type="hidden" /> <input id="id_cash"
+					type="hidden" /> <input id="id_bankT" type="hidden" /> <input
+					id="nameBankBank" type="hidden" /> <input id="tB" type="hidden" />
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab1">
+						<h2>Elije una caja para hacer el traspaso</h2>
+						<form id="transBankCash" method="POST">
+							<div id="fieldsetForm" class="forms">
+								<legend id="legendhelp">* Datos requeridos</legend>
+								<fieldset>
+									<table>
+										<tbody>
+											<tr>
+												<td>Total en banco:</td>
+											</tr>
+											<tr>
+												<td><input id="totalInBank" type="text" readonly="readonly"
+													class="inputNumber amount"
+													style="height: auto; width: 220px;" maxlength="80"
+													size="42" /></td>
+											</tr>
+											<tr>
+												<td>* Cajas:</td>
+											</tr>
+											<tr>
+												<td><select id="cashSelect">
+														<option value="-">-- Seleccione --</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Total en caja elegida:</td>
+											</tr>
+											<tr>
+												<td><input id="totalInCash" type="text" readonly="readonly"
+													class="inputNumber amount"
+													style="height: auto; width: 220px;" maxlength="80"
+													size="42" /></td>
+											</tr>
+											<tr>
+												<td>* Cantidad:</td>
+											</tr>
+											<tr>
+												<td><input id="amountTrans" type="text"
+													class="inputNumber amount"
+													style="height: auto; width: 220px;"
+													onkeypress="return numericDecimal(event,this)"
+													maxlength="80" size="42" /></td>
+											</tr>
+										</tbody>
+									</table>
+								</fieldset>
+								<div class="center">
+									<button name="Guardar" id="GuardarTran" type="button" class="btn btn-success">Traspasar</button>
+									<button name="Cancelar" id="Cancelar" type="button" class="bankCashTranCancel btn btn-danger">Cancelar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="tab-pane" id="tab2">
+						<h2>Elije un Banco para hacer el traspaso</h2>
+						<form id="transBankCash" method="POST">
+							<div id="fieldsetForm" class="forms">
+								<legend id="legendhelp">* Datos requeridos</legend>
+								<fieldset>
+									<table>
+										<tbody>
+											<tr>
+												<td>Total en banco:</td>
+											</tr>
+											<tr>
+												<td><input id="totalInBankF" type="text" readonly="readonly"
+													class="inputNumber amount"
+													style="height: auto; width: 220px;" maxlength="80"
+													size="42" /></td>
+											</tr>
+											<tr>
+												<td>* Bancos:</td>
+											</tr>
+											<tr>
+												<td><select id="bankSelect">
+														<option value="-">-- Seleccione --</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Total en banco elegido:</td>
+											</tr>
+											<tr>
+												<td><input id="totalInBankBank" type="text"
+													readonly="readonly" class="inputNumber amount"
+													style="height: auto; width: 220px;" maxlength="80"
+													size="42" /></td>
+											</tr>
+											<tr>
+												<td>* Cantidad:</td>
+											</tr>
+											<tr>
+												<td><input id="amountTransBank" type="text"
+													class="inputNumber amount"
+													style="height: auto; width: 220px;"
+													onkeypress="return numericDecimal(event,this)"
+													maxlength="80" size="42" /></td>
+											</tr>
+										</tbody>
+									</table>
+								</fieldset>
+								<div class="center">
+									<button name="Guardar" id="GuardarTranBank" type="button" class="btn btn-success">Traspasar</button>
+									<button name="Cancelar" id="Cancelar" type="button" class="bankCashTranCancel btn btn-danger">Cancelar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="backgroundAccountBank"></div>
+<!-- 
+	Termina popup bank
+-->
+<!-- 
+    Inicia popup bank reposition
+-->
+<div id="popupBank" class="popHorus">
+	<div id="btnCloseBank" title="Cerrar ventana">X</div>
+	<div id="formBank">
+		<div class="center">
+			<h3 id="titleReposition"></h3>
+			<br /> <img id="loaderAjax"
+				src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+			<div id="hiddenForm"></div>
+		</div>
+	</div>
+</div>
+<div id="backgroundBank"></div>

@@ -1,0 +1,89 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#vision', 4);	
+});
+</script>
+<h3 class="centerHor">Visi&oacute;n</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Nueva Vision" href="<?php echo $this->baseUrl('/Gutenberg/vision/add') ?>" > 
+				<img class="iconOpacity" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Nuevo" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter"><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+<div id="overflow">
+<table id="vision" class="display">
+ <thead>
+    <tr>
+        <th>N&uacute;mero</th>
+        <th>Fecha</th>
+        <th>Nombre Cliente</th>
+        <th>Nombre Proyecto</th>
+        <th>
+        	<a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Gutenberg/vision/add') ?>">
+				<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar Nuevo">
+			</a>
+        </th>
+    </tr>
+ </thead>
+	 <tbody>
+	 <?php if($this->vision != 0) :?>
+	    <?php foreach ($this->vision as $vision) : ?>
+	        <tr>
+	        	<td><?php echo $vision->getIdvision(); ?></td>
+	            <td><?php echo $vision->getFecha(); ?></td>
+	            <td><?php echo $vision->getName_customers(); ?></td>
+	            <td><?php echo $vision->getName_project(); ?></td>
+	            <td>
+					<a class="tooltip" title="Editar" href="<?php echo $this->baseUrl() ?>/Gutenberg/vision/update?c=<?= $vision->getIdvision();?>">
+                    	<img src=" <?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png') ?>" title="Editar">
+                    </a>
+	            
+					<a class="tooltip" title="Eliminar" href="javascript:;" onclick="javascript:deleteRecord('vision',this,'<?php echo $vision->getIdvision(); ?>','/Gutenberg/vision/delete')">
+                   		<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png') ?>" title="Eliminar">
+					</a>					
+	            
+	                <a class="tooltipright" title="Detalles" href="<?php echo $this->baseUrl('/Gutenberg/vision/details?c='.$vision->getIdvision()); ?>">
+	                	<img style="height: 26px; width: 26px;" src=<?php echo $this->baseUrl("/public/img/details.png")?> title="Ver Visi&oacute;n">
+	                </a>
+	            </td>
+	        </tr>
+	    <?php endforeach; ?>
+    <?php endif; ?>
+     </tbody>
+</table>
+<script>
+    function del(id){
+        // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+        $( "#dialog:ui-dialog" ).dialog( "destroy" );
+	
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height:140,
+            modal: true
+        });
+        document.getElementById("idvision").value = id;
+    }
+</script>
+</div>
+<!-- 
+:::::::::::::::: cuadro de dialogo para eliminar vision
+-->		
+<!-- <div id="dialog-confirm" title="Eliminar Vision?" style="display:none">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        Â¿Si esta seguro de eliminar la vision presione Aceptar, si no Cancelar?
+    </p>
+    <form id="delete" action="<?php //echo $this->url(array('action' => 'delete')); ?>" method="post"> 
+        <input type="hidden" name="idvision" id="idvision"/> 
+        <button id="TBsubmit" name="del" value="Si" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all">
+            <span class="ui-button-text">Aceptar</span></button> 
+        <button id="TBcancel" name="del" value="No" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all">
+            <span class="ui-button-text">Cancelar</span></button> 
+    </form>
+</div> -->

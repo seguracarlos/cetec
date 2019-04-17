@@ -1,0 +1,180 @@
+<script type="text/javascript">
+	$(function(){
+	    // 6 create an instance when the DOM is ready
+		$('#jstree').jstree({ 
+			'core' : {
+			   	'data' :
+		 			<?php 
+						echo $this->tree; 
+		 			?>
+			},
+			"types" : {
+	 	      	"root" : {
+	 	        	"icon" : "<?php echo $this->basePath('/img/images/tree-icon.png') ?>"
+	 	      	},
+		 	    "folder" : {
+		 	        "icon" : "<?php echo $this->basePath('/img/images/folder.ico') ?>"
+		 	    },
+		 	    "file" : {
+		 	      	"icon" : "<?php echo $this->basePath('/img/images/file.png') ?>"
+		 	    }
+	 	    },
+			"plugins" : [ "state", "types"]
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	/*
+	 * Variable de ruta base 
+	 */
+	var $basePath = "<?php echo $this->basePath();?>";
+</script>
+
+
+<script>
+
+	function linkContent(idc){
+		$("#paramform").attr("action","<?php echo $this->basePath('/contents/contents'); ?>");
+		$('#id_topic_content').val(idc);
+	    document.paramform.submit();
+	}
+	function linkContentTopic(id){
+		$("#paramform").attr("action","<?php echo $this->basePath('/topics/index'); ?>");
+	    $('#id_topic_content').val(id);
+	    document.paramform.submit();
+	}
+	function parentLink(){
+		window.location.href = "<?php echo $this->basePath('usermanual/index') ?>";
+	}
+	
+	/*
+	 * Extra Lines
+	 */
+
+	function presentation(id){
+		$("#parentNode").jstree("open_node", '#parentNode');
+		$("#parentNode").jstree("open_all", '#'+id);
+		var myarr = [];
+		$(function(){
+		    $('li#'+id).children().find(".file").each(function(){
+		        myarr[myarr.length] = $(this).attr('id');
+		    });
+		});
+		
+		$("#paramform").attr("action","<?php echo $this->basePath('/presentation/index'); ?>");
+	    $('#id_topic_content').val(id); //linea para carga normal
+// 	    $('#id_topic').val(id);			//linea para carga por sesion pendiente
+		$('#id_topic_exportArray').val(myarr)
+		
+	    document.paramform.submit();
+	}
+</script>
+
+<?php
+	$form = $this->forms;
+	$form->prepare();
+	$formLabel = $this->plugin('formLabel');
+	echo $this->form()->openTag($form);
+?>
+
+<div class="container-responsive">
+	<div class="row">
+		<div class="col-md-4"><h3>CETEC User manual</h3></div>
+		<div id="mensajes" class="col-md-6 col-md-offset-2"></div>
+	</div>
+	
+	<div id="overflow" class="">
+		<!-- <div id="mensajes" class=""></div> -->
+		
+		<div id="jstree"  class="col-md-3" style="overflow-x: auto; overflow-y: auto;  max-height: 500px;"></div>
+		
+		<div class="col-md-9">
+			<div class="col-md-9 col-md-offset-2">
+				<h1>Lista de Clases:</h1>
+			</div>
+			<div class="col-md-5">
+				<br/>
+				<p>
+					<h4>
+						<a href="<?php echo $this->basePath("usermanual/add")?>">
+							<img src="<?php echo $this->basePath("/img/images/add.png")?>"/>
+						</a>Nueva Clase
+					</h4>
+				<p/>
+	
+			</div>
+			
+			<?php if($this->usermanual){ ?>
+			<div class="col-md-5 table-responsive col-md-offset-3">
+				<table class="table table-striped table-bordered">
+				    <thead>
+						<th style="color:#1E90FF">Clase</th>
+					    <th style="color:#1E90FF">Tema</th>
+					    <th style="color:#1E90FF">Descripci&oacute;n</th>
+					    <th style="color:#1E90FF">Actualizar</th>
+					    <th style="color:#1E90FF">Eliminar</th>
+					    <th style="color:#1E90FF">Presentación</th>
+				    </thead>
+				    <tbody align="center">
+				       <?php foreach ($this->usermanual as $usermanual): ?>
+				        <tr>
+			    			<td><font size=2><?php echo $usermanual['topic_name'];?></font></td>
+			    			<td><font size=2><?php echo $usermanual['project_name'];?></font></td>
+			    			<td><font size=2><?php echo $usermanual['description'];?></font></td>
+			
+			    			<td>
+			    				<a href="<?php 
+			    							echo $this->url('usermanual',
+			    								array('action'	=> 'update',
+			    									  'method'	=> 'POST', 
+			    									  'm' 		=> $usermanual['id_topic']));
+							    		?>">
+			    					<img src=<?php echo $this->basePath("/img/images/update.png")?>>
+			    				</a>
+			    			</td>
+			    			<td>
+			    				<a href="<?php 
+			    							echo $this->url('usermanual',
+			    								array('action'	=> 'delete', 
+			    									  'm' 		=> $usermanual['id_topic']));
+							    		?>"
+			    					onclick="return confirm('¿Seguro que deseas eliminar esta clase?');">
+			    						<img src="<?php 
+			    							echo $this->basePath("/img/images/deleteBook.png")?>"/>
+			    					</a>
+			    			</td>
+			
+			    			<!-- ------ Extra Lines ------ -->
+							
+			    			<td>
+			    				<a href="#" onclick="presentation(<?php 
+		    							echo $usermanual['id_topic']; ?>)">
+		    						<img src=<?php echo $this->basePath("/img/images/pwp.png");?>>
+		    					</a>
+			    			</td>
+				        </tr>
+				    <?php endforeach;?>
+				    </tbody>
+				</table>
+			</div>
+			<?php } else{?>
+			<div class="col-md-12" align="center">
+				<h3>Aun no tienes ningun manual.</h3>
+			</div>
+			<?php } ?>
+		</div>
+		<div style="display: none;">
+				<?php 
+					echo $this->formElement($form->get('id_topic_content'));
+					echo $this->formElement($form->get('id_topic'));
+					echo $this->formElement($form->get('id_topic_exportArray'));
+// 					echo $this->formElement($form->get('id_topic_ExportParents'));
+					echo $this->formElement($form->get('id_topic_ExportContents'));
+				?>
+		</div>
+		</div>
+</div>
+<?php 
+	echo $this->form()->closeTag(); 
+?>

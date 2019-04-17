@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<estudiantes>
+    <estudiante estado="Activo">
+        <identificacion tipo="Extranjero">1-2345-6789</identificacion>
+        <xs:nombre>Cali</xs:nombre>
+        <apellidos>Rojas</apellidos>
+        <genero>Masculino</genero>
+        <nota>94.5</nota>
+    </estudiante>
+</estudiantes>

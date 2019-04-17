@@ -1,0 +1,22 @@
+<h3 class="centerHor"> Agregar Componentes </h3>    
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Componentes" href="<?php echo $this->baseUrl('/Ioteca/components/index') ?>" > 
+				<img class="iconOpacity" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcomp.png')?>" title="Agregar Nuevo" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a href="javascript:;" title="Ayuda" class="tooltipcenter">
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<p class="triangle-border" >Ingresa los datos del componente.</p>
+	 <?php echo $this->form; ?>
+</div>
+    

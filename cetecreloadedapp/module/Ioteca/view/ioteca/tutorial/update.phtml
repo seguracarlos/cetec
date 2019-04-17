@@ -1,0 +1,20 @@
+<h3 class="centerHor"> Modificar Manual</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Tutorial" href="<?php echo $this->baseUrl('/Ioteca/tutorial/index')?>">
+				<img title="Manuales" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondet.png')?>" /></a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a class="tooltipcenter" title="Ayuda">
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>	  
+    
+<div id="overflow">
+	<p class="triangle-border" >Edita los datos del manual.</p>
+		<?php echo $this->form; ?>
+</div>

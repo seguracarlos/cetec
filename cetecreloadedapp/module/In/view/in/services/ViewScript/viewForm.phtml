@@ -1,0 +1,46 @@
+<?php 
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/servicesFunction.js'));
+
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/paysPop.css'));
+?>
+ <?=$this->element->getElement('percentageGain'); ?>
+ 
+ <div style="width:80%;margin-left:auto;margin-right:auto;">
+ 
+ <div  id="fieldsetForm" class="forms">
+	<fieldset>
+		<legend id="legendhelp">* Datos requeridos</legend>
+		<table>
+				<tr>
+					<td>* Clave: <?=$this->element->getElement('clave'); ?> </td>
+					<td>* Nombre: <?=$this->element->getElement('name'); ?> </td>
+					<td>* Fecha:  <?=$this->element->getElement('dateService'); ?></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="center">Descripci&oacute;n:</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="center"><?=$this->element->getElement('description'); ?></td>
+				</tr>
+				<tr>
+					<td><label for="sliderper">% de Ganancia:</label>
+					<br><img src="<?php echo $this->baseUrl('/public/img/trian.png') ?>"/><br>
+					
+						<div style="margin-left:5px; margin-bottom: 10px;">
+						      <div id="sliderper" style="width: 50%;"></div>
+						</div>
+					</td>
+					<td>
+						* Costo: <?=$this->element->getElement('cost'); ?>
+					</td>
+				</tr>
+				
+			</table>
+	</fieldset>
+	<div class="center">
+	    <?=$this->element->getElement('Guardar'); ?>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/In/services/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+    </div>
+</div>
+ 
+ </div>

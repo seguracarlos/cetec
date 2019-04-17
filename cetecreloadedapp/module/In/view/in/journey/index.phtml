@@ -1,0 +1,353 @@
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/payroll/checkbox-css.css'; ?>" rel="stylesheet" />
+ <!-- Add IntroJs styles -->
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/intro/introjs.css'; ?>" rel="stylesheet">
+
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/TableTools/css/dataTables.tableTools.min.css'; ?>" rel="stylesheet">
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/overlay/jquery.blockUI.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/intro/intro.js'; ?>"></script>
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/TableTools/js/dataTables.tableTools.min.js'; ?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Ordenes de env&iacute;o</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li>
+						<a href="javascript:void(0);" class="btn" onclick="startIntro();" data-toggle="tooltip" data-placement="bottom" title="Ayuda">
+							<span class=" glyphicon glyphicon-question-sign"></span>
+						</a>
+					</li>
+					<!--<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>-->
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Viajes</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">Informaci&oacute;n de las ordenes de env&iacute;o</h3>
+		</div>
+		<div class="panel-body">
+			<p>La siguiente tabla contiene informaci&oacute;n relacionada a los viajes</p>
+			<table id="shippings" class="table table-striped table-hover table-condensed table-bordered">
+				<thead>
+					<th>Cliente</th>
+					<th># Viaje</th>
+					<th>Folio Cliente</th>
+					<th>Fecha</th>
+					<th>Confirmada?</th>
+					<th></th>
+					<th></th>
+					<th id="step1">
+						<a class="btn btn-success" href="<?php echo $this->basePath()."/in/journey/add"?>" data-toggle="tooltip" data-placement="top" title="Agregar viaje">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</a>
+					</th>
+				</thead>
+				<tbody>
+			    	<?php foreach($this->rows as $row) : ?>
+					<tr>
+				        <td>
+					        <a class="btn" href="<?php echo $this->basePath()."/in/customers/detail/".$row["company_ID"]; ?>" data-toggle="tooltip" data-placement="top" title="Detalle cliente">
+				        		<span class="glyphicon glyphicon-search"></span>
+				        		<?php echo $row["name_company"]; ?>
+				        	</a>
+				        </td>
+				        <td id="step3">
+				        	<a class="btn" href="<?php echo $this->basePath()."/in/journey/detail/".$row["id_shipping"]; ?>" data-toggle="tooltip" data-placement="top" title="Detalle viaje">
+				        		<span class="glyphicon glyphicon-paperclip"></span>
+				        		<?php echo Util_Tools::format($row["id_shipping"], 4); ?>
+				        	</a>
+				        </td>
+				        <td><?php echo $row['client_folio']; ?></td>
+						<td><?php echo Util_Tools::dateFormat("-", $row["start_date"]); ?></td>
+						<td>
+							<?php
+								if($row["status"] == 1){
+									echo "<span class='label label-success'>Confirmada</span>";
+								}else{
+									echo "<span class='label label-danger'>Pendiente</span>";
+								}
+							?>
+						</td>
+				        <td id="step2">
+				        	<a <?php echo ($row['status'] == 0) ? '' : 'disabled="disabled"'; ?> class="btn btn-primary" href="<?php echo $this->basePath().'/in/journey/edit/'.$row["id_shipping"]; ?>" data-toggle="tooltip" data-placement="top" title="Editar viaje">
+				        		<span class="glyphicon glyphicon-pencil"></span>
+				        	</a>
+				        </td>
+				        <td id="step5">
+				        	<a <?php echo ($row['status'] == 0) ? '' : 'disabled="disabled"'; ?> class="btn btn-danger" href="<?php echo $this->basePath().'/in/journey/delete/'.$row["id_shipping"];?>" data-toggle="tooltip" data-placement="top" title="Eliminar viaje">
+				        		<span class="glyphicon glyphicon-trash"></span>
+				        	</a>
+				        </td>
+			    		<td id="step4">
+			    			<!--<button <?php //echo ($row['status'] == 0) ? '' : 'disabled="disabled"'; ?> type="button" class="btn btn-warning btn-confirm-shipping" data-toggle="tooltip" data-placement="top" title="Confirmar orden de env&iacute;o" data-shipping="<?php //echo $row["id_shipping"]; ?>">
+			    				<span class="glyphicon glyphicon-check"></span>
+			    			</button>-->
+			    			<!--<input type="checkbox" class="check-confirm-shipping" data-shipping="<?php //echo $row["id_shipping"]; ?>" <?php //echo ($row['status'] == 0) ? '' : 'checked'; ?> />-->
+
+			    			<label style="display:inline-block;" for="<?php echo "shi".$row["id_shipping"]; ?>" class="label-check">
+			  					<input type="checkbox" id="<?php echo "shi".$row["id_shipping"]; ?>" class="check-confirm-shipping" value="<?php echo "shi".$row["id_shipping"]; ?>" data-shipping="<?php echo $row["id_shipping"]; ?>" <?php echo ($row['status'] == 0) ? '' : 'checked'; ?> />
+			  					<i></i>
+							</label>
+			    		</td>
+			    	</tr>
+			    	<?php endforeach; ?>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalConfirmShipping" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirmar Orden de Env&iacute;o</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" name="id_shipping" id="id_shipping" />
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-default btn-cancel-confirm" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var $basePath = "<?php echo $this->basepath(); ?>";
+$(document).ready(function(){
+
+	$( document ).ajaxStart(function() {
+		$.blockUI({
+            message: '<h1 style="margin-top:10px;margin-bottom:10px;"><img style="margin-top:-9px;" src="'+$basePath+'/public/img/loader-30.gif"> Espere...</h1>',
+            css: {
+            	border: 'none',
+	            padding: '15px',
+	            backgroundColor: '#000',
+	            '-webkit-border-radius': '10px',
+	            '-moz-border-radius': '10px',
+	            opacity: .5,
+	            color: '#fff'
+            }
+        });
+	});
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$("#shippings").dataTable({
+		/*"dom" : 'T<"clear">lfrtip',
+		"tableTools" : {
+            "sSwfPath": $basePath+"/public/bootstrap-3.3.1/dist/TableTools/swf/copy_csv_xls_pdf.swf",
+            "aButtons": [
+                {
+                    "sExtends":    "collection",
+                    "sButtonText": "Guardar",
+                    "aButtons":    [
+	                    {
+		        			'sExtends':'xls',
+		         			'mColumns':[0,1,2,3,4], //set which columns here
+		         			'sFileName':'shippings.csv',
+                    		'sTitle': ' Reporte de Viajes'
+		        		},
+		        		{
+		        			'sExtends':'pdf',
+		        	 		'mColumns':[0,1,2,3,4], //set which columns here
+		        	 		'sFileName':'shippings.pdf',
+                    		'sTitle': 'Reporte de Viajes'
+		        		},
+        			]
+                }
+            ]
+        },*/
+		"aoColumnDefs" : [ {
+	    	'bSortable' : false,
+	        'aTargets' : [ 5, 6, 7 ]
+		} ],
+		"order": [[ 1, "desc" ]]
+	});
+
+	/*
+		CONFIRMAR ORDEN DE ENVIO
+	*/
+	$(document).on("click", ".check-confirm-shipping", function(){
+		var $checkbox = $(this);
+		var $idShipping = $checkbox.data('shipping');
+		//console.log($checkbox);
+		//console.log($idShipping);
+		var $objeto = {
+			"checkbox":$checkbox,
+			"id_shipping":$idShipping
+		};
+		//alert($idShipping);
+		if ($checkbox.is(":checked")) {
+			//alert("Deseas confirmar la orden?");
+			alertify.confirm("Estas seguro de confirmar la orden?", function(result) {
+				if (result) {
+					$checkbox.prop("checked", true);
+				   console.log("Confirmaste la orden");
+				   confirmSipping($objeto,1);
+				} else {
+					$checkbox.prop("checked", false);
+					console.log("No se confirmo la orden");
+				}
+			});
+		}else{
+			alertify.confirm("Deseas habilitar la orden de nuevo?", function(result) {
+				if (result) {
+					$checkbox.prop("checked", false);
+				   console.log("Habilitaste la orden");
+				   confirmSipping($objeto,0);
+				} else {
+					$checkbox.prop("checked", true);
+					console.log("No se habilito la orden");
+				}
+			});
+		};
+	});
+
+}); // End docuemnt ready
+
+/*
+	MOSTRAR TUTORIAL
+*/
+var intro = introJs();
+
+function startIntro(){
+
+    intro.setOptions({
+        steps: [
+            {
+            	intro: "<p class='text-center'><strong><span class='glyphicon glyphicon-pushpin'></span> Ordenes de env&iacute;o.</strong></p>"
+            },
+            {
+            	element: document.querySelector('#step1'),
+            	intro: "Deseas agregar una orden de env&iacute;o.",
+            	position: 'left'
+            },
+            {
+            	element: document.querySelector('#step2'),
+            	intro: "Deseas modificar una orden de env&iacute;o.",
+                position: 'left'
+            },
+            {
+                element: '#step3',
+                intro: 'Quieres conocer el detalle de una orden de envio.',
+                position: 'right'
+            },
+            {
+                element: '#step4',
+                intro: "Confirmar una orden.",
+                position: 'left'
+            },
+            {
+                element: '#step5',
+                intro: 'Eliminar la orden de env&iacute;o.',
+                position: 'left'
+            }
+        ],
+        nextLabel : "Siguiente <span class='glyphicon glyphicon-arrow-right'></span>", // Etiqueta siguiente botón
+        prevLabel : "<span class='glyphicon glyphicon-arrow-left'></span> Anterior", // Etiqueta del botón Anterior
+        skipLabel : "<span class='glyphicon glyphicon-remove'></span> Omitir", // Etiqueta del botón Saltar
+        doneLabel : "<span class='glyphicon glyphicon-ok'></span> Completo", // Etiqueta del botón Completo
+        exitOnEsc: false, // Introducción Salir al pulsar el botón Escape, verdadero o falso
+        exitOnOverlayClick : false, // Introducción Salir al hacer clic en la capa de revestimiento, verdadero o falso
+        showStepNumbers: false, // Mostrar los pasos del número en el círculo rojo o no, verdadero o falso
+		keyboardNavigation: true, // Navegar con el teclado o no, verdadero o falso
+        showButtons : true, // Botones de navegación Mostrar introducción o no, verdadero o falso
+		showBullets : true, // Mostrar balas introducción o no, verdadero o falso
+		showProgress : true, // Mostrar progreso introducción o no, verdadero o falso
+		//overlayOpacity : 0.9, // Ajuste la opacidad de superposición, Número
+		scrollToElement : true, // Auto de desplazamiento para el elemento resaltado, si está fuera de la ventana gráfica, verdadera o falsa
+    });
+
+    intro.start();
+}
+
+intro.oncomplete(function() {
+  //console.log("Fin del tutorial.");
+});
+
+intro.onexit(function() {
+  //console.log("Salida de introducción");
+});
+
+intro.onbeforechange(function(targetElement) {
+	//alert("feetre");
+	//if (!targetElement) // if targetElement does not exist
+    //introJS().nextStep() // go to the next step
+});
+
+
+/*
+	FUNCION PARA CONFIRMAR O HABILITAR UNA ORDEN DE ENVIO
+*/
+function confirmSipping($objeto,status)
+{
+	//var table = $('#shippings').DataTable();
+	var tr    = $objeto.checkbox.parents('tr');
+	//var row   = table.row( tr );
+	var $objPost = {
+			key    : 1,
+			id     : $objeto.id_shipping,
+            status : status,
+        };
+
+	$.ajax({
+		method   : "POST",
+		url      : $basePath + "/in/journey/confirmshipping",
+		dataType : "json",
+		data     : $objPost
+	})
+	.done(function(response) {
+		console.log("success");
+		// Cerramos el fondo de espere...
+		$.unblockUI();
+		//Validar si el response devuelve ok
+		if (response.response == "ok") {
+			//Validar tipo de status 1.- Confirmada 2.-Pendiente
+			if (status == 1) {
+				//Cambiar texto y color del titulo de status
+				tr.find('td:eq(4) span').text("Confirmada").removeClass("label-danger").addClass("label-success");
+				//Deshabilitar boton de modificar
+				tr.find('td:eq(5) a').attr("disabled", true);
+				//Deshabilitar boton de eliminar
+				tr.find('td:eq(6) a').attr("disabled", true);
+			}else{
+				tr.find('td:eq(4) span').text("Pendiente").removeClass("label-success").addClass("label-danger");
+				tr.find('td:eq(5) a').attr("disabled", false);
+				tr.find('td:eq(6) a').attr("disabled", false);
+			}
+
+		}
+
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+
+}
+</script>

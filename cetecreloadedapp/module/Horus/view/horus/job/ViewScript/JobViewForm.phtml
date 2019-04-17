@@ -1,0 +1,23 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAdminCategories.css' )); ?>
+<div class="forms">
+	<?=$this->element->getElement('id'); ?>
+	<fieldset>
+	<legend><span id="titleForm"></span></legend>
+		<table>
+			<tr>
+				<td>Nombre:</td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('name_job'); ?></td>
+			</tr>
+			<tr>
+				<td>Descripci&oacute;n:</td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('description'); ?></td>
+			</tr>
+		</table>
+	</fieldset>
+	<?=$this->element->getElement('save'); ?>
+	<?=$this->element->getElement('cancel'); ?>
+</div>

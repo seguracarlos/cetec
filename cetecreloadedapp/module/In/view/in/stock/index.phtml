@@ -1,0 +1,202 @@
+<?php $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addCategory.js')); 
+$helpUser = $this->helps->stockIndex;
+$helpUser2 = $this->helps->stockIndex2;
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		jqueryTable('#products', 15);
+		jqueryTablePopup('#category',2);
+		
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+
+	var iconset = "<?php echo $this->iconset;?>";
+</script>
+
+<h3 class="centerIn">Inventario de productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="javascript:;"  title="Agregar categor&iacute;a" class="tooltipcenter" onclick="javascript:showCatalogOptions()">
+				<img title="Agregar categor&iacute;a"  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcateadd.png');?>"/>
+			</a>
+		</li>
+		<?php if($this->permissions[KeysGlobalPermissions::INGRESOSSTOCKADD]): ?>
+			<li class="iconOpacity" >
+				<a class="tooltipcenter" title="Agregar nuevo inventario" href="<?php echo $this->baseUrl('/In/stock/add')?>">
+					<img title="Agregar producto"  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" />
+				</a>
+			</li>
+		<?php endif;?>
+		<li class="iconOpacity ">
+			<a class="tooltipcenter" title="Historial de inventario" href="<?php echo $this->baseUrl('/In/stock/history')?>">
+				<img title="Historial" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a class="tooltipcenter" title="ayuda" href="javascript:;">
+					<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="products" class="display">
+	<thead>
+		<tr>
+			<th>Clave</th>
+			<th>Nombre</th>
+			<th>Foto</th>
+			<th>Unidad</th>
+			<th>Categor&iacute;a</th>
+			<th>Descripci&oacute;n</th>
+			<th>Existencias</th>
+			<th>Exist. M&iacute;n</th>
+			<th>Exist. M&aacute;x</th>
+			<th>Registrado</th>
+			<th>Caducidad</th>
+			<th>Precio Unitario</th>
+			<th>Total</th>
+			<th>Tipo</th>
+			<th>¿Revisado?</th>
+			<th >
+			<?php if($this->permissions[KeysGlobalPermissions::INGRESOSSTOCKADD]): ?>
+				<a href="<?php echo $this->baseUrl('/In/stock/add') ?>" title="Crear nuevo inventario" class="tooltipcenter"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar producto"> 
+				</a>
+				<?php endif;?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	<?php if($this->products) foreach ($this->products as $product) : ?>
+		<tr>
+			<td><?=$product['p_key'] != "" ? $product['p_key'] : Profile::PENDIENTE ?></td>
+			<td><?=$product['p_name'] != "" ? $product['p_name'] : Profile::PENDIENTE?></td>
+			<td>
+				<?php if($product['p_photo'] != null):  ?>
+					<img src="data:image/png;base64,<?php echo $product['p_photo']; ?>" width="35px" height="35px" />
+				<?php else:?>
+					<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/noConozco.png');?>" width="35px" height="35px">
+				<?php endif; ?>
+			</td>			
+			<td><?=$product['unit'] != "" ? $product['unit'] : Profile::PENDIENTE?></td>
+			<td><?=$product['c_name'] != "" ? $product['c_name'] : Profile::PENDIENTE?></td>
+			<td><?php echo ($product['p_description'] ? $product['p_description'] : Profile::PENDIENTE); ?></td>
+			<td class="number"><?=$product['stock'] != "" ? $product['stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['min_stock'] != "" ? $product['min_stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['max_stock'] != "" ? $product['max_stock'] : Profile::PENDIENTE?></td>
+			<td><?=$product['p_record_date'] != "" ? $product['p_record_date'] : Profile::PENDIENTE?></td>
+			<td><?=$product['expiration'] != "" ? $product['expiration'] : Profile::PENDIENTE ?></td>
+			<td class="number"><?=$product['p_price'] != "" ? Application_Util_Tools::currency($product['p_price']) : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['stock'] * $product['p_price'] > 0 ? Application_Util_Tools::currency($product['stock'] * $product['p_price']):Application_Util_Tools::currency(0);?></td>
+
+			<td><?= $product['review_product'] == ProductType::INSUMO ? "Materia prima" : "Producto terminado" ?></td>
+			<td><?= $product['review_product'] == ProductReview::REVISION ? "Producto revisado" : "Producto en revision" ?></td>
+			<td>
+				<a href="<?php echo $this->baseUrl('/In/stock/update/id/'.$product['id_products'])?>"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+				</a>
+			
+				<a onclick="javascript:deleteRecord('products',this,'<?=$product['id_products']?>','/In/stock/delete')"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+				</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDiscount" class="popHorus">
+		<div id="btnCloseDiscount" title="Cerrar ventana">X</div>
+		<div id="formDiscount">
+			<div class="center">
+				<?=$this->form;?>	
+			</div>
+		</div>
+	</div>
+<div id="backgroundDiscount"></div>
+<!-- 
+	Termina popup
+-->
+<!-- 
+    Inicia popup
+-->
+	<div id="popupCatalog" class="popHorus">
+		<div id="btnCloseCatalog" title="Cerrar ventana">X</div>
+		<div id="formCatalog">
+			<div class="center">
+				<h3>Categor&iacute;as</h3>		
+				<br />	
+				<ul class="toolbar">
+					<div id="icons">
+						<li class="iconOpacity ">
+							<a id="modalAddCategory" href="javascript:;" onclick="javascript:changeView('save');">
+								<img title="Agregar categor&iacute;a" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" />
+							</a>
+						</li>
+						<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser2; ?>')">
+								<a>
+									<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+								</a>
+						</li>
+						<div id="clock"></div>
+					</div>	
+				</ul>
+				
+				<div id="tableCover">
+				<img style="display:none; width: 36px; height: 36px;" id="loadEditCategory" alt="cargando..." src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"/>
+					<table id="category" class="display">
+						<thead>
+							<tr>
+								<th>Categor&iacute;a</th>
+								<th>Descripci&oacute;n</th>
+								<th>
+									<a onclick="javascript:changeView('save');"> 
+										<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar categor&iacute;a"> 
+									</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php if($this->categories) foreach ($this->categories as $category):?>
+									<?php if ($category->getCategoryId() != Constants::ALMACEN):?>
+										<tr>
+											<td class="alpha"><?php echo $category->getName()?></td>
+											<td class="alpha"><?php echo $category->getDescription()?></td>
+											<td> 
+								               <a id="editCategory" onclick="javascript:editCategory('category',this,'<?php echo $category->getCategoryId()?>')"> 
+													<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Editar"	alt="Editar">
+											   </a>
+								               <a id="deleteCategory" onclick="deleteCategory('category',this,'<?php echo $category->getCategoryId()?>','/category/delete','<?php echo Categories::ALMACEN ?>')"> 
+													<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+											   </a>
+								            </td> 
+										</tr>
+									<?php endif; ?> 
+							<?php endforeach;?>
+						</tbody>
+					</table>
+				</div>
+				<div id="hiddenForm" style="display: none;">
+						<?php echo $this->categoryForm; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="backgroundCatalog"></div>
+<!-- 
+	Termina popup
+-->
+
+

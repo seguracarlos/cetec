@@ -1,0 +1,46 @@
+<?php
+$helpUser = $this->helps->invoicesCreateview;
+?>
+<script>
+var oTableInvoice;
+$(document).ready(function(){
+	oTableInvoice = jqueryTable('#invoicedetail', 4);
+	
+	$('#unityPrice').change(function(){
+		$('#unityPrice').formatCurrency();
+		$('#price').val(parseFloat($('#unityPrice').clone().toNumber().val()*$('#quantity').val()));
+		$('#price').formatCurrency();
+	});
+
+	$('#quantity').change(function(){
+		if($('#unityPrice').val() == ""){
+			$('#price').val();
+		}else{
+			$('#price').val(parseFloat($('#unityPrice').clone().toNumber().val()*$('#quantity').val()));
+			$('#price').formatCurrency();
+		}
+	});	
+
+	$('#Guardar').click(function(){
+		addInvoice();
+	});
+});
+
+</script>
+<div style="text-align: center">
+	<h3 class="centerIn">Ingresa los datos de la factura</h3>
+	<ul class="toolbar">
+			<div id="icons">
+					<li class="iconOpacity ">
+						<a href="<?php echo $this->baseUrl('/In/invoices/index')?>">
+							<img title="Ver facturas" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconmulti.png');?>" />
+						</a>
+					</li>
+					<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser?>')">
+						<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+					</li>
+					<div id="clock"></div>
+			</div>	
+	</ul>
+</div>
+<?php echo $this->form ;?>

@@ -1,0 +1,114 @@
+<script>
+	var cust_type = "<?php echo ($this->cust_type); ?>";
+	var company_ID = "<?php echo $this->company_ID; ?>";
+	var id_price = "<?php echo (isset($_GET['id']))? $_GET['id']: "-"; ?>";
+
+	function getClientOrProspect(type){
+	//chek = 1 - cliente check = 0 - prospecto	
+	var nameType = "";
+	var id_company = $("#company_ID");
+	$("#loadCp").show();
+
+	if(type == 1){
+		nameType = "cliente";
+	}else{
+		nameType = "prospecto";
+	}
+	id_company.empty();
+
+	$.ajax({
+		type : 'GET',
+		url : BASE_URL + "/In/prospectprojects/index",
+		data: {gCP: 1, type: type},
+		cache : false,
+		dataType : 'json',
+		success : function(response) {
+			if(response.response == "ok"){
+				
+				id_company.append(new Option("-- Seleccione --", "0"));
+
+				for(var i = 0; i < response.data.length; i++){
+					var item = response.data[i];
+
+					id_company.append(new Option(item.name_company, item.id_company));	
+				}
+				$("#loadCp").hide();
+			}else{
+				horusAlert("No hay ningun " + nameType + " registrado.");
+				$("#loadCp").hide();	
+			}
+		}
+	});
+
+}
+
+	$(document).ready(function(){
+
+		if (cust_type != null ) {
+		$('input[name=mybrand][value='+ cust_type +']').attr('checked', true);
+		if($("input[name='mybrand']:checked").val() == 1){
+			$("#suppl").html("* Cliente: ");	
+			$("#supplAdd").hide();
+			var check = $("input[name='mybrand']:checked").val();
+			$("#mybrand option[value="+ check +"]").attr("selected",true);
+			//chek = 1 - cliente check = 0 - prospecto	
+			getClientOrProspect(check);
+			$('#projectForm').removeAttr('onsubmit');
+			$('#projectForm').attr("onsubmit", "return isEmptyForm('projectForm',5)");
+		}else{
+			var check = $("input[name='mybrand']:checked").val();
+			$("#suppl").html("* Cliente prospecto: ");	
+			$("#supplAdd").hide();
+			//chek = 1 - cliente check = 0 - prospecto	
+			getClientOrProspect(check);
+			$('#projectForm').removeAttr('onsubmit');
+			$('#projectForm').attr("onsubmit", "return isEmptyForm('projectForm',5)");
+		}
+
+		setTimeout(function() {
+			$('#company_ID option[value='+company_ID+']').attr('selected','selected')
+			$('#company_ID').attr('disabled','disabled')
+			$('input[name=mybrand]').attr("disabled",true);
+			//$('input[name=mybrand]').hide();
+			//$("#span").hide();
+		}, 4000);
+
+		if(id_price != "-"){
+			getServicePriceToClientorProspect(id_price);
+		}
+		
+	}
+
+	});
+</script>
+
+<?php 
+
+$this->headScript()
+->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/prospectsprojectFunctions.js'));
+?>
+
+
+<h3 class="centerIn">
+	Modificar Cotizaci&oacute;n Servicio:
+	</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/prospectprojects/index')?>">
+					<img title="Cotizaci&oacute;nes de Servicios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icocash.png');?>"/>
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Actualizar los datos de un proyecto')">
+				<a>
+					<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<p class="triangle-border" style="margin-left: 128px">Actualiza los datos de la cotizaci&oacute;n.</p>
+	<?php print $this->form; ?>
+</div>

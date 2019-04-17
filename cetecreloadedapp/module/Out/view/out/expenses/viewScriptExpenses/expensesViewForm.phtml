@@ -1,0 +1,54 @@
+<?php 
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/expensesFunctions.js'));
+?>
+<div style="width:70%;margin-left:auto;margin-right:auto;">
+
+<div id="fieldsetForm" class="forms">
+<?=$this->element->getElement('hosh'); ?>
+<legend id="legendhelp">* Datos requeridos</legend>
+	<fieldset>
+		<legend>Detalles del gasto</legend>
+		<table>	
+			<tr>
+				<td>* Tipo:</td>
+				<td>* Fecha:</td>
+			</tr>
+			<tr>
+				<td>
+					<?=$this->element->getElement('amountAccount'); ?>
+					<?=$this->element->getElement('reference_of_expenses'); ?>
+					<span id="amountAccountTxt"></span>
+				</td>
+				<td><?=$this->element->getElement('date_of_expenses'); ?></td>
+			</tr>
+			<tr>
+				<td>* Causas de pago:</td>
+				<td>* Importe:</td>
+				<!-- <td id="labelSupplier" style="width: 30px;">* Proveedor:</td> -->
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('expenses_type'); ?></td>
+				<td><?=$this->element->getElement('amount_of_expenses'); ?></td>
+				<!-- <td>
+					<span id="labSupplier" style="display: none;">Definir en descripcion los detalles</span>
+					<?=$this->element->getElement('supplier'); ?>
+				</td> -->
+			</tr>
+			<tr>
+				<td>
+					<div class="center">Descripci&oacute;n:</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="center"><?=$this->element->getElement('description_of_expenses');?></div>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<div class="center">
+	   <?=$this->element->getElement('Guardar');?>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/Out/expenses/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>
+</div>

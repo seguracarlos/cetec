@@ -1,0 +1,321 @@
+/*
+*{
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+*/
+
+/*body {*/
+    /*background: url(http://mymaplist.com/img/parallax/back.png);
+    background-color: #444;
+    background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);
+    */
+    /*padding-top: 80px;
+    padding-bottom: 70px;*/
+/*}*/
+
+/*
+.vertical-offset-100{
+    padding-top:100px;
+    display: table-cell;
+    vertical-align: middle;
+}
+*/
+
+/*
+==================================================================================
+BODY
+==================================================================================
+*/
+body { 
+    padding-top: 100px;
+    padding-bottom: 90px;
+}
+
+/*
+==================================================================================
+PERFIL DE USUARIO
+==================================================================================
+*/
+.profile-img-panel {
+    width: 150px;
+    height: 150px;
+}
+
+.profile-name-panel {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+}
+
+.reauth-email {
+    display: block;
+    color: #404040;
+    line-height: 2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/*
+==================================================================================
+STYLES FONTS
+==================================================================================
+*/
+
+.pacifico {
+    font-family: 'Pacifico', cursive;
+}
+.lobster {
+    font-family: 'Lobster', cursive;
+}
+.nunito {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+.nova-flat {
+    font-family: 'Nova Flat', cursive;
+}
+.poiret-one {
+    font-family: 'Poiret One', cursive;
+}
+
+/*
+==================================================================================
+COLORS
+==================================================================================
+*/
+.blanco {
+    color: #FFFFFF;
+}
+.verde {
+    color: #a2c753;
+}
+.negrito {
+    /*background-color: #343838;*/
+    background-color: black;
+}
+.gris {
+    background-color: #424242;
+}
+
+.rosamexicano {
+    background-color: #bd135a;
+}
+
+/*
+==================================================================================
+PANEL
+==================================================================================
+*/
+.panel > .panel-heading {
+    background-color: black;
+    /*background-color: #424242;
+    background-color: #bd135a;*/
+    border-color: #ddd;
+    color: #ffffff;
+}
+
+.panel-body li {
+    list-style:none;
+    text-align: center;
+}
+
+.h1-tittle {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    /*color: #5bc0de;
+    color: #424242;*/
+    color : #ffffff;
+    font-family: 'Bree Serif',serif;
+    font-size: 26px;
+    font-weight:bold;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
+}
+
+span {
+    /*color: #678889;*/
+    /*color : #5bc0de;*/
+    color: #fff;
+    font-size: 13px;
+    line-height: 16px;
+    /*text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);*/
+}
+
+/*
+==================================================================================
+BOTONES
+==================================================================================
+*/
+.btn-green {
+    /*background-color: #629909;*/
+    /*background-color: #36D94F;*/
+    background-color: #00DE80;
+}
+
+/*
+==================================================================================
+HEADER
+==================================================================================
+*/
+header {
+    text-align: center;
+    font-size: 72px;
+    line-height: 100px;
+    height: 100px;
+    /*background: #335C7D;
+    background: #a2c753;
+    background: #b92326;
+    background-color: #C00201;
+    background-color: #023859;
+    background-color: #424242;
+    background-color: #830E21;
+    background-color: #100F11;
+    background-color: #A8C545;
+    background-color: #424242;
+    background-color: #A8122A;
+    background-color: #4b4c4d;
+    background-color: #343838;
+    background-color: #424242;
+    /*background-color: #bd135a;*/
+    background-color: black;
+    color: #fff;
+         
+    // set animation
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+header.sticky {
+    font-size: 24px;
+    line-height: 48px;
+    height: 48px; 
+    /*background: #efc47D;
+    background-color: #F4A444;
+    background-color: #03658C;
+    background-color: #A8122A;
+    background-color: #bd135a;*/
+    background-color: #424242;
+    text-align: left;
+    padding-left: 20px;
+}
+
+/*
+==================================================================================
+FOOTER
+==================================================================================
+*/
+
+.footer {
+    background-color: black;
+    height: auto !important;
+    /*background-color: #424242;
+    background-color: #bd135a;
+    height: 100px;*/
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer a{color: #a2c753;}
+
+.footer a:hover{color: #a2c753;}
+
+/*
+==================================================================================
+copyright
+==================================================================================
+*/
+.copyright {
+    padding-top:30px;
+    padding-bottom: 30px;
+    /*padding: 10px 0;*/
+}
+
+/*
+==================================================================================
+SOCIAL ICONS
+==================================================================================
+*/
+.social-icons { margin:0; }
+
+.social-icons li {
+    float:left;
+    display:inline;
+    list-style:none;
+    margin-right:5px;
+    margin-bottom:5px;
+    text-indent:-9999px;
+}
+
+.social-icons li {
+    height: 28px;
+    width: 28px;
+    overflow: hidden;
+}
+
+.social-icons a {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.social-icons.rounded a {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.social-icons li a, a.social-icon {
+    width:28px;
+    height:28px;
+    display:block;
+    background-position:0 0;
+    background-repeat:no-repeat;
+    transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+}
+.social-icons li:hover a {
+    background-position:0 -38px;
+}
+
+.social_rss {background: url(../img/icons/social/rss.png) no-repeat;}
+.social_facebook {background: url(../img/icons/social/facebook.png) no-repeat;}
+.social_twitter {background: url(../img/icons/social/twitter.png) no-repeat;}
+.social_googleplus {background: url(../img/icons/social/googleplus.png) no-repeat;}
+
+
+/*
+==================================================================================
+VERTICAL ALIGN
+==================================================================================
+*/
+.vertical-centered-text {
+  -ms-display: flex;
+  display: flex;
+  /* alineacion vertical */
+  align-items: center;
+   /* alineacion horizontal */
+  justify-content: center;
+}
+
+.vertical-centered-text-2 {
+  -ms-display: flex;
+  display: flex;
+  /* alineacion vertical */
+  align-items: center;
+}

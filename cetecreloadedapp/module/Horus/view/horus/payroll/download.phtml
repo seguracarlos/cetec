@@ -1,0 +1,14 @@
+<?php    
+if (count($results) > 0) {
+	$fh = @fopen( 'php://output', 'w' );
+	//COLS
+	if($columnHeaders){
+		fputcsv ( $fh, $columnHeaders);
+	}
+
+	foreach ($results as $result) {
+		fputcsv($fh, $result);
+	}
+	
+	fclose($fh);
+}

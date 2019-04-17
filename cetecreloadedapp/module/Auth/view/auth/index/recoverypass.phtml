@@ -1,0 +1,105 @@
+<!--<script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>-->
+<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+
+<?php
+	$flash = $this->flashMessenger()
+	        ->setMessageOpenFormat('<div%s>')
+	        ->setMessageSeparatorString('')
+	        ->setMessageCloseString('</div>');
+?>
+
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) :
+?>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+	<?php
+    foreach ($flashMessage as $msg) :
+    	foreach ($msg as $type => $message) :
+    ?>
+        <div class="alert alert-danger" role="alert">
+        	<p class="<?php echo 'text-center animated flash '.$type; ?>">
+        		<strong><?php echo $message; ?></strong>
+        	</p>
+        </div>
+    	<?php endforeach; ?>
+    <?php endforeach; ?>
+	</div>
+</div>
+<?php endif; ?>
+
+<div class="row vertical-offset-100">
+	<div class="col-md-6 col-md-offset-3">
+
+		<?php echo $flash->render('add_correcto',array('alert', 'alert-success', 'text-center'));?>
+
+   		<div class="panel panel-default">
+			<div class="panel-heading">
+				<center><h3 class="panel-title nunito">Recuperaci&oacute;n de contrase&ntilde;a</h3></center>
+			</div>
+			<div class="panel-body">
+				
+				<!--<h1 class="h1-tittle">::Enlasa::</h1>-->
+				<img src="<?php echo $this->basePath()."/public/img/logocetec.png"; ?>" alt="enlasa" class="center-block">
+				<center>
+					<span class="poiret-one"><br></span>
+				</center>
+				
+				<?php
+	            $form = $this->recoveryForm;
+	            $form->prepare();
+	            echo $this->form()->openTag($form);
+	            ?>
+                	<fieldset>
+                		<input type="hidden" name="id_user" value="<?php echo $this->user_id;?>">
+                		<!--<div style="margin-top: 25px;" class="input-group">
+                  			<span class="input-group-addon">
+                  			<i class="glyphicon glyphicon-user"></i></span>-->
+                        	<!--<?php echo $this->formlabel($form->get('password'));?>-->
+                        	<div class="form-group">
+                        		<?php echo $this->formElement($form->get('password')); ?>
+                        	</div>
+                 		<!--</div>-->
+                 		<span class="common-error-msg"><?php echo $this->formElementErrors($form->get('password'));?></span>
+                	
+                		<!--<div style="margin-top: 25px;" class="input-group">
+                  			<span class="input-group-addon">
+                  			<i class="glyphicon glyphicon-lock"></i></span>-->
+                  			<div class="form-group">
+                        		<?php echo $this->formElement($form->get('newpass')); ?>
+                        	</div>
+                 		<!--</div>-->
+                 		<center><span id="msg" style="color:red"></span></center>
+                 		<span class="common-error-msg"><?php echo $this->formElementErrors($form->get('newpass'));?>
+			    		<hr/>
+			    		<?php
+	                    echo $this->formRow($form->get('loginCsrf'));
+	                    echo $this->formElement($form->get('submit'));
+                    	?>
+			    	</fieldset>
+				<?php echo $this->form()->closeTag($form); ?>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+
+$("#send").click(function(){
+	$password=$("#password").val();
+	$passwordrepeat = $("#newpass").val();
+
+	if($password==$passwordrepeat){
+		return true;
+	}else{
+		$('#msg').empty();
+		$('#msg').append('Las contrase\u00f1as no coinciden').fadeIn("slow");
+		setTimeout("$('#msg').hide();", 4000);
+		return false;
+	}
+
+});
+</script>

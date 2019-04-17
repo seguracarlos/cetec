@@ -1,0 +1,226 @@
+<link href="<?php echo $this->basePath().  '/public/bootstrap-3.3.1/dist/css/fullcalendar/fullcalendar.css'; ?>" rel="stylesheet">
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/fullcalendar/fullcalendar.js';?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/fullcalendar/es.js';?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Calendario N&oacute;mina</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="<?php echo $this->basePath()."/horus/payroll/index";?>" data-placement="top" data-toggle="tooltip" title="Listado Nomina" class="btn"> <span class="glyphicon glyphicon-list"></span></a></li>
+					<li><a href="<?php echo $this->basePath()."/horus/payroll/history";?>" data-placement="top" data-toggle="tooltip" title="Historial" class="btn"> <span class="glyphicon glyphicon-folder-open"></span></a></li>
+					<!--<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>-->
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Horus</a>
+			        <a href="#" class="btn btn-default">N&oacute;mina</a>
+			        <a href="#" class="btn btn-default">Calendario</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+
+<div class="container">
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div style="margin: 0; margin-bottom:30px;" class="page-header">
+  				<h1 style="margin:0;" class="text-center text-info">Fechas de d&iacute;as de pago de n&oacute;mina</h1>
+			</div>
+		</div>
+	</div>
+	
+	<div style="margin-bottom: 20px;" class="row">
+		<div class="col-sm-6 col-md-4">
+			<form>
+  				<div class="form-group">
+    				<label for="inputSearchDate">Seleccione la fecha que desea consultar:</label>
+    				<input type="text" class="form-control input-lg" id="inputSearchDate" placeholder="Fecha">
+  				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div id='calendar'></div>
+		</div>
+	</div>
+
+
+</div>
+
+<script>
+var $basePath = "<?php echo $this->basePath();?>";
+$(document).ready(function() {
+
+	$("#inputSearchDate").datepicker({
+		dayNames: ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+		dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+		dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+		monthNames: ["Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+		monthNamesShort: ["Ene", "Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],
+		dateFormat: "dd/mm/yy",
+		altFormat: "yy-mm-dd",
+		onSelect: function (dateText, inst) {
+			//var $getDate = $( "#inputSearchDate" ).datepicker( "getDate" );
+			var $getDate = dateText;
+			//console.log($getDate);
+			if($getDate != ""){
+				//var datePart2 = $getDate.match(/\d+/g);
+				var datePart     = $getDate.split("/");
+				var day          = datePart[0]; var month = datePart[1]; var year = datePart[2];
+				var selectedDate = new Date(year+'/'+month+'/'+day);
+				//console.log(datePart);
+				//console.log(selectedDate);
+				$('#calendar').fullCalendar('gotoDate', selectedDate);
+				$('#calendar').fullCalendar( 'select', selectedDate);
+				
+				/*var selectedDay = parseFloat(day);
+				$('#calendar td').not(".fc-other-month").filter( function () {
+				    return $(this).text() == selectedDay;
+				}).css("background","#4396BD");*/
+				//console.log(datePart2);
+			}
+			
+		},
+		//showButtonPanel: true,
+		//currentText: "Hoy",
+		//closeText: "Cerrar",
+		//changeYear: true,
+		//changeMonth: true	
+	});
+	
+	$("[data-toggle=tooltip]").tooltip();
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        // poner sus opciones y devoluciones de llamada aquí
+        header : {
+    		left:   'prev,next today',
+    		center: 'title',
+    		right:  'month,agendaWeek,agendaDay'
+		},
+		/*eventSources: [
+		       		{
+		           		url: $basePath + "/horus/payroll/calendar",
+		                type: 'POST',
+		                data: {
+		                	custom_param1: 'something',
+		                    custom_param2: 'somethingelse'
+		              	},
+		                   error: function() {
+		                       alert('there was an error while fetching events!');
+		                   },
+		                   color: 'yellow',   // a non-ajax option
+		                   textColor: 'black' // a non-ajax option
+		               }
+
+		               // any other sources...
+
+		],*/
+	    /*events: function(start, end, timezone, callback) {
+	        $.ajax({
+	        	url: $basePath + "/horus/payroll/calendar",
+	            dataType: 'xml',
+	            data: {
+	                // our hypothetical feed requires UNIX timestamps
+	                start: start.unix(),
+	                end: end.unix()
+	            },
+	            success: function(doc) {
+	                var events = [];
+	                $(doc).find('event').each(function() {
+	                    events.push({
+	                        title: $(this).attr('title'),
+	                        start: $(this).attr('start') // will be parsed
+	                    });
+	                });
+	                callback(events);
+	            }
+	        });
+	    },*/
+	    /*events: function(start, end, timezone, callback) {
+	        jQuery.ajax({
+	        	url: $basePath + "/horus/payroll/calendar",
+	            type: 'POST',
+	            dataType: 'json',
+	            data: {
+	                start: start.format(),
+	                end: end.format()
+	            },
+	            success: function(doc) {
+	                var events = [];
+	                if(!!doc.result){
+	                    $.map( doc.result, function( r ) {
+	                        events.push({
+	                            id: r.id,
+	                            title: r.title,
+	                            start: r.date_start,
+	                            end: r.date_end
+	                        });
+	                    });
+	                }
+	                callback(events);
+	            }
+	        });
+	    },*/
+		events: {
+	    	url: $basePath + "/horus/payroll/calendar",
+	    	type: 'POST',
+	    	dataType: 'json',
+	    	data: {
+	        	custom_param1: 'algo',
+	        	custom_param2: 'otra cosa'
+	    	},
+	    	error: function() {
+	        	alert('Hubo un error al recuperar los eventos!');
+	    	},
+	    	//color: 'yellow',   // a non-ajax option
+	    	//textColor: 'black' // a non-ajax option
+		},
+		//events:[{"start":"2015-01-06","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=2015-01-06"},{"start":"2015-01-13","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=2015-01-13"},{"start":"2015-01-20","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=2015-01-20"},{"start":"2015-01-27","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=2015-01-27"},{"start":"2015-02-03","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-02-03"},{"start":"1969-02-10","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-02-10"},{"start":"1969-02-17","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-02-17"},{"start":"1969-02-24","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-02-24"},{"start":"1969-03-03","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-03-03"},{"start":"1969-03-10","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-03-10"},{"start":"1969-03-17","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-03-17"},{"start":"1969-03-24","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-03-24"},{"start":"1969-03-31","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-03-31"},{"start":"1969-04-07","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-04-07"},{"start":"1969-04-14","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-04-14"},{"start":"1969-04-21","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-04-21"},{"start":"1969-04-28","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-04-28"},{"start":"1969-05-05","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-05-05"},{"start":"1969-05-12","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-05-12"},{"start":"1969-05-19","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-05-19"},{"start":"1969-05-26","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-05-26"},{"start":"1969-06-02","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-06-02"},{"start":"1969-06-09","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-06-09"},{"start":"1969-06-16","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-06-16"},{"start":"1969-06-23","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-06-23"},{"start":"1969-06-30","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-06-30"},{"start":"1969-07-07","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-07-07"},{"start":"1969-07-14","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-07-14"},{"start":"1969-07-21","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-07-21"},{"start":"1969-07-28","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-07-28"},{"start":"1969-08-04","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-08-04"},{"start":"1969-08-11","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-08-11"},{"start":"1969-08-18","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-08-18"},{"start":"1969-08-25","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-08-25"},{"start":"1969-09-01","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-09-01"},{"start":"1969-09-08","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-09-08"},{"start":"1969-09-15","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-09-15"},{"start":"1969-09-22","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-09-22"},{"start":"1969-09-29","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-09-29"},{"start":"1969-10-06","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-10-06"},{"start":"1969-10-13","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-10-13"},{"start":"1969-10-20","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-10-20"},{"start":"1969-10-27","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-10-27"},{"start":"1969-11-03","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-11-03"},{"start":"1969-11-10","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-11-10"},{"start":"1969-11-17","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-11-17"},{"start":"1969-11-24","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-11-24"},{"start":"1969-12-01","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-12-01"},{"start":"1969-12-08","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-12-08"},{"start":"1969-12-15","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-12-15"},{"start":"1969-12-22","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-12-22"},{"start":"1969-12-29","title":"Semanal","uri":"\/Horus\/payroll\/listpayroll?t=S&d=1969-12-29"},{"start":"1969-01-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-01-30"},{"start":"1969-02-28","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-02-28"},{"start":"1969-03-28","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-03-28"},{"start":"1969-04-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-04-30"},{"start":"1969-05-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-05-30"},{"start":"1969-06-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-06-30"},{"start":"1969-07-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-07-30"},{"start":"1969-08-29","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-08-29"},{"start":"1969-09-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-09-30"},{"start":"1969-10-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-10-30"},{"start":"1969-11-28","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-11-28"},{"start":"1969-12-30","title":"Mensual","uri":"\/Horus\/payroll\/listpayroll?t=M&d=1969-12-30"}],
+	    eventRender: function(event, element) {
+	        /*element.on("mouseenter", function(){
+	        	console.log(event.uri);
+		    });*/
+	    	element.attr('href', 'javascript:void(0);');
+	        element.click(function() {
+	            //$("#startTime").html(moment(event.start).format('MMM Do h:mm A'));
+	            //$("#endTime").html(moment(event.end).format('MMM Do h:mm A'));
+	            //$("#eventInfo").html(event.description);
+	           //	event.attr('href', event.uri);
+	           	window.location.href = $basePath + event.uri;
+	            //$("#eventContent").dialog({ modal: true, title: event.title, width:350});
+	        });
+		    
+	    },
+		//dayClick: function(date, jsEvent, view) {
+	        /*alert('Clicked on: ' + date.format());
+	        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+	        alert('Current view: ' + view.name);*/
+	        // change the day's background color just for fun
+	        //$(this).css('background-color', 'red');
+	    //},
+	    /*eventClick: function(calEvent, jsEvent, view) {
+	        //alert('Event: ' + calEvent.title);
+	        //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+	        //alert('View: ' + view.name);
+	        // change the border color just for fun
+	        $(this).css('border-color', 'red');
+
+	    }*/
+        
+    });
+
+});
+</script>

@@ -1,0 +1,152 @@
+<?php
+ $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPriceProduct.js'));
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+ $helpUser = $this->helps->profileIndex;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#purchaseTable');
+
+	$('a.arriba').click(function(){
+		$('html, body').animate({scrollTop:0}, 1250);
+		return false;
+	});
+});
+
+</script>
+
+<h3 class="centerIn">Cotizaci&oacute;n de Productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/proposals/index')?>">
+				<img title="Cotizaciones de productos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconorder.png')?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Actualizar los datos de un proyecto')">
+			<a>
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+	
+<?php if(isset($_GET['er'])): ?>
+
+	<?php if($_GET['er'] == 'notK'):?>
+		<script type="text/javascript">
+			messajes('Falta Id de la orden intentalo otra vez. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'savOr'):?>
+		<script type="text/javascript">
+			messajes('Error al guardar la orden, intentalo de nuevo. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'savPu'):?>
+		<script type="text/javascript">
+			messajes('Error al guardar la compra, intentalo de nuevo. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'MisIdProd'):?>
+		<script type="text/javascript">
+			messajes('Error, la orden solicitada no existe. :(', "error");
+		</script>
+	<?php endif;?>
+	
+<?php endif;?>
+
+
+<div id="overflow">
+	
+	<table id="purchaseTable" class="display">
+		<thead>
+			<tr>
+				<th>Orden</th>
+				<th>Cliente</th>
+				<th>Fecha de pedido</th>
+				<th>Fecha de entrega</th>
+				<th>IVA</th>
+				<th>Total</th>
+				<th>Estatus</th>
+				<th>Condiciones</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php $i = 1;?>
+		<?php if($this->orders != 0) : ?>
+			<?php foreach ($this->orders as $order): ?>
+				<tr><?php // echo $order->getOrder_Id();?>
+					<td><?php echo $i++; ?></td><!-- orden -->
+					<td><?php echo $order->getName_company();?></td><!-- nombre de cliente -->
+					<!--<td><?php echo $order->getDep_name(); ?></td> -->
+					<!-- <td><?php // echo $order->getName_Project(); ?></td> --><!-- nombre de proyecto -->
+					<td><?php echo Application_Util_Tools::dateFrontFormat('-', $order->getLogDate()); ?></td><!-- fecha de inicio -->
+					<td><?php echo Application_Util_Tools::dateFrontFormat('-', $order->getStart_date()); ?></td><!-- fecha de fin -->
+					<td><?php echo $order->getIva(); ?></td><!-- iva -->
+					<td><?php echo Application_Util_Tools::currency($order->getTotal()); ?></td><!-- total -->
+					<td>
+					<?php
+						$statusVisual = "";
+						switch ($order->getStatus()) {
+							case StatusPurchaseOrder::NOT_DELIVERED:
+								$statusVisual = "No entregada";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+								$statusVisual = "Entregada incompleta";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_COMPLETE:
+								$statusVisual = "Entregada completa";								
+								break;							
+							default:								
+								break;
+						}
+						echo $statusVisual;
+					?>
+					
+					
+					</td>
+					<td><?php echo $order->getConditions(); ?></td><!-- condiciones -->
+				</tr>
+			<?php endforeach; ?>
+		<?php endif; ?>
+		</tbody>
+	</table>
+	
+</div>
+
+<!-- 
+    Inicia popup
+-->
+<div id="TableOrderPurchasePop" class="popHorus">
+		<div id="btnXOrderPay" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+		</div>
+		<div id="message"></div>
+		<div id="tablaPayDiv" >
+    		<table class="display" id="OrderTablePay">
+    			<thead>
+    				<tr>
+    					<td>N&deg;</td>
+    					<td>Nombre</td>
+    					<td>Cantidad</td>
+    					<td>Precio</td>
+    				</tr>
+    			</thead>
+    			<tbody>
+    			</tbody>
+    		</table>	
+	     </div>
+	     <div id="btnAcceptDiv">
+	     	<input type="button" value="Aceptar" id="btnAccept">
+	     </div>
+	</div>
+	<div id="TableOrderPurchaseBack"></div>
+<!-- 
+    termina popup
+-->
+
+<div class="center"><a href="#" class="arriba" id="subPay">Ir arriba</a></div>

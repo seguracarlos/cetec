@@ -1,0 +1,226 @@
+<?php
+	 include_once APPLICATION_PATH . '/util/Tools.php';
+	 echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/projectsStyle.css'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$('a.arriba').click(function(){
+		$('html, body').animate({scrollTop:0}, 1250);
+		return false;
+	});
+	
+	var detail = ( '<?php echo $this->detail ?>' && '<?php echo $this->detail ?>' != "") ? true : false;
+	console.log(detail);
+	if(detail){
+		$('#visionDetails').hide();
+		$('.report').show();
+	}else {
+		$('.report').hide();
+		$('userDetails').show();
+		jqueryTable('#visionDetails', 13);
+	}
+});
+</script>
+<h3 class="centerHor"> Detalles de Visi&oacute;n</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Visi&oacute;n" href="<?php echo $this->baseUrl('/Gutenberg/vision/index')?>">
+				<img title="Visi&oacute;n" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconvision.png')?>" /></a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a class="tooltipcenter" title="Ayuda">
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+<tbody id="detail">
+	<div id="fieldsetForm" class="forms">
+		<fieldset>
+			<legend><span class="title">Informaci&oacute;n General</span></legend>
+				<br />
+				<div>
+					<span class="format">Fecha : </span>
+					<span class="result" ><?php  echo $this->vision['fecha']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Nombre del Cliente : </span>
+					<span class="result" ><?php  echo $this->vision['name_customers']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Nombre del Proyecto : </span>
+					<span class="result" ><?php  echo $this->vision['name_project']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Problema : </span>
+					<span class="result" ><?php  echo $this->vision['problem']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Afecta a : </span>
+					<span class="result" ><?php  echo $this->vision['affects']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Cuyo impacto ocasiona : </span>
+					<span class="result" ><?php  echo $this->vision['impact']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Una solucion exitosa : </span>
+					<span class="result" ><?php  echo $this->vision['solutions']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Ambiente de operaci&oacute;n : </span>
+					<span class="result" ><?php  echo $this->vision['operating_environment']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Ambiente de Usuario : </span>
+					<span class="result" ><?php  echo $this->vision['user_environment']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Perfiles de Usuario : </span>
+					<span class="result" ><?php  echo $this->vision['user_profiles']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Necesidades de los Clientes : </span>
+					<span class="result" ><?php  echo $this->vision['customers']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Necesidades del Corporativo : </span>
+					<span class="result" ><?php  echo $this->vision['corporate']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Necesidades del Distribuidor : </span>
+					<span class="result" ><?php  echo $this->vision['distribuitor']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Vista General del Proyecto : </span>
+					<span class="result" ><?php  echo $this->vision['view_project']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Login : </span>
+					<span class="result" ><?php  echo $this->vision['login']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Activaciones : </span>
+					<span class="result" ><?php  echo $this->vision['activations']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Activar Tarjetas : </span>
+					<span class="result" ><?php  echo $this->vision['activate_card']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Asignar Puntos : </span>
+					<span class="result" ><?php  echo $this->vision['assign_points']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Promociones : </span>
+					<span class="result" ><?php  echo $this->vision['promotion']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Comunicador : </span>
+					<span class="result" ><?php  echo $this->vision['comunicator']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Consultar Tarjetas Activadas : </span>
+					<span class="result" ><?php  echo $this->vision['activate_card_check']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Puntos Otorgados : </span>
+					<span class="result" ><?php  echo $this->vision['points_awarded']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Puntos Redimidos : </span>
+					<span class="result" ><?php  echo $this->vision['points_redeemed']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Noticias : </span>
+					<span class="result" ><?php  echo $this->vision['news']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Datos Personales : </span>
+					<span class="result" ><?php  echo $this->vision['personal_data']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Balance de Puntos : </span>
+					<span class="result" ><?php  echo $this->vision['points_balance']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Consultar Promociones : </span>
+					<span class="result" ><?php  echo $this->vision['see_promotions']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Consultar Noticias : </span>
+					<span class="result" ><?php  echo $this->vision['the_news']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Promociones : </span>
+					<span class="result" ><?php  echo $this->vision['promotions']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Tienda : </span>
+					<span class="result" ><?php  echo $this->vision['store']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Otros Requerimientos : </span>
+					<span class="result" ><?php  echo $this->vision['other_requerimnets']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Estandares Aplicados : </span>
+					<span class="result" ><?php  echo $this->vision['applicable_standard']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Requerimientos del Sistema : </span>
+					<span class="result" ><?php  echo $this->vision['system_requeriments']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Requerimientos de Desempe&nacute;o : </span>
+					<span class="result" ><?php  echo $this->vision['performance_requeriments']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Requerimientos de Ambiente : </span>
+					<span class="result" ><?php  echo $this->vision['environmental_requirements']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Perspectiva del Proyecto : </span>
+					<span class="result" ><?php  echo $this->vision['perspective_project']; ?></span>
+				</div>
+		</fieldset>
+</tbody>
+</div>

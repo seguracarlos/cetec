@@ -1,0 +1,73 @@
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+<?php if($this->element->getElement('type')->getValue() == "1"): ?>
+	<?=$this->element->getElement('id_category'); ?>
+	<fieldset>
+			
+			<table>
+				<tr>
+					<td>* Nombre :</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('name'); ?></td>
+				</tr>
+				<tr>
+					<td>Descripci&oacute;n:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('description'); ?></td>
+				</tr>
+			</table>
+	</fieldset>
+	<div class="center">
+	    <a href="javascript:document.forms['createUser'].submit();" class="horusBtn big icon-iconsave">Guardar</a>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/Horus/accountmanager/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+<?php elseif($this->element->getElement('type')->getValue() == "3"): ?>
+ 	<fieldset>
+			<table>
+				<tr>
+					<td>* Monto :</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('amount'); ?></td>
+				</tr>
+				<tr>
+					<td>Descripci&oacute;n:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('description'); ?></td>
+				</tr>
+			</table>
+	</fieldset>
+	<div class="center">
+	ddd
+		<?=$this->element->getElement('Guardar'); ?>
+		<?=$this->element->getElement('Cancelar'); ?>
+	</div>
+<?php else: ?>
+	<fieldset>
+			<table>
+				<tr>
+					<td>* Nombre :</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('name'); ?></td>
+				</tr>
+				<tr>
+					<td>Descripci&oacute;n:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('description'); ?></td>
+				</tr>
+			</table>
+	</fieldset>
+	<div class="center">
+    <a href="javascript:document.forms['createUser'].submit();" class="horusBtn big icon-iconsave">Guardar</a>
+    <a href="javascript:location.href='<?=$this->baseUrl("/Horus/accountmanager/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	
+		<?=$this->element->getElement('Guardar'); ?>
+		<?=$this->element->getElement('Cancelar'); ?>
+	</div>
+<?php endif; ?>
+</div>

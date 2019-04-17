@@ -1,0 +1,275 @@
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font color="#000066"><font face="Century Schoolbook, serif"><font size="5" style="font-size: 18pt"><i><b>EL
+ALGORITMO DE UNA RAÍZ CUADRADA</b></i></font></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Vamos
+a hacer un ejemplo paso a paso para mostrar cómo se hace</font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Supongamos
+que queremos hacer la raíz cuadrada de </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>59074</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Recordemos,
+en primer lugar se separan las cifras de dos en dos empezando de
+derecha a izquierda, así:</font></font></font></font></p>
+<p class="western" align="center" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b><span style="background: #ffff99">59074</span></b></font></font></font></font></p>
+<p class="western" align="center" style="line-height: 100%"><br>
+</p>
+<p class="western" align="left" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Buscamos
+un número cuyo cuadrado sea </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>5
+</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">ó
+menor que </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>5</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+que será </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>2</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 1in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	  
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAkCAIAAAAB01PiAAAEOUlEQVR4nO2aWSh8URzHB9c2NJa/NWvZ4sEDUYhIIZQtnix5oKwlsoa8eROikH/kiVIoSySRfU2URJZSeBAhyjL+3//cuuY/ixlz7uD+u58yzj3nnnt/53vOb5kaamZmJjw8XKCEqamp+fl5a2trZTewyMvLS1hYmJ+f3xe8i0Woy8vLi4sLOzs7+bHHx8ejo6OGhoavMQVmzM3NcU/ByMjIiYmJ9PR0+bGlpaWgoKCvt4lbUFZWVgYGBufn5/b29jJju7u7xcXF32IWh6DwFxUVNTw8nJWVJT1wcHDg5uamcM74+PjV1ZWlpWVsbCzTOTg4aGhoGB8fj/bKygqmJyYmmpqa0qNra2v7+/to+Pv7e3t7o7GxsWFjY+Pk5KTSxOPj44WFBXiDMnu+l78Kmpubi8Xi29tbkUjEDCCH5OTkyE9YX1/v7e318fHx8vJiOisqKh4eHiAcRVGBgYGYWFlZWV1d3dLSgtG3t7fR0VEMLS8v0yrg5qKiovLycpUKPj09tba2Hh4e1tTUzM7Ourq6srFqNqHof9nZ2Vgt47PwXwikr68vP2FkZKS/vz8lJSU3N5fpXFxcDAkJ8fX17ezs3NnZeX19xelrb2+nFQSIs+7u7tAC+uKyu7t7dXVVHfvu7++hHdR3dHTEHpMsVUtQTMvFxeXk5ITeZHiNjFMz4HylpaW1tbVlZmZOTk7SnbW1tXl5eUjotra28lN0dHQgn0ByGPX09MbGxmJiYkpLS9WxD7ECn3hdUlISduhzi/sS3hWMiIhALMNhvL6+NjY2NjIyUjgBBxNy4Hw1NzfjEuUOchEiKcpGhMWysjKcX/pOMzMz+ODp6Sn2BskKGT86Ohr9iLnwx+fn576+PsRKlSYiYm5vb/f09Nzc3CDgsLBoVnlXEEHQwsICC0YRQy9VIfDE6enpkpISOiEgwDc2Nnp6ejY1NeXn5wcHBwcEBEAapI76+nroi9uQVSD62dlZaGgopnR0dOATmmZkZKi0D9tZVVWFYhvbg9AZFxfHwqJZhZK+gHBYPE6HQmekqaurgyPr6uo6OzsLJIkFuiNadXV1oSGQHNKhoaG7uztELrgtMqmDgwP64fsmJibMcyCrOl91hEIhYivdVlj2fzv/KAjnhQoJCQkfTEDJIp0Q6WTKVC00vyTQbeZm6UQvkIRd+YdD7q2tLWWvxnn8wDBlwDYPDw8NJqoJJXOdmpqqvZepBHEThQ67z1RYUbCIrILqgLOwubmJr4OsW4MSClUR64/VKp9WEN//k5OT9/b2NPOp/49PK4hwXlBQUFhYqA1ruIgmXswjDa8gKZrEQVTUYrF4YGAAJZ42bOIWmsTB3xK0YQ0X4b2YFF5BUngFSeEVJIVXkBReQVJ4BUnhFSSFV5AUXkFSeAVJ4RUkhVeQFF5BUn6QgkKhkP5xCLf4QQqKRCLO/YAV/AGrR4hBl8WCjQAAAABJRU5ErkJggg==" align="bottom"></p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+</span><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Elevamos
+</font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>2</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+al cuadrado, que da </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+y se le resta al </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>5</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+quedando </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>1</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"></font></font></font></font></p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	  
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAlCAIAAADKj4BHAAAEy0lEQVR4nO1ZaSh0bRh+ZezZQpakEEm2bGUn2ZVCSGTN+oNIlrIUSfhBJH9IIWRL9mVsJbIlS0hEyb4kwljf63tPzTcxjPnOYLzfucrMs55zP9fcy/WENjIyYm9v/+sNLC4uVldXq6urv7WAtxAVFY2Ojv6ad/EKtN3d3ePjYwUFhddzz8/P4LekpOTLrPnKd/EKNFdX176+vqCgoNdzS0tL+vr6X2/TzwJNXl6eRqMdHBwoKSm9mIMDJiQkfItZPwg0/Dk4ONDp9MDAQNaJs7MzWVlZtns2NjYQ+GhYWloyB9fW1rDFzMxMSEjo9PR0fX1dQ0OD+atcXFysrKygISEhYWhoiMb19fX29rauru5HrFxYWLi/v8fD/8sRPxn/MKioqHh5eYkjiYuLMyd6e3vd3Nxeb7i6ukpKSpKWljY2NmYyOD4+np2djUFnZ+e4uDhUA6SFtLQ0jBMLhoeHW1tbGQyGsLBwfX09RpA6qqqquru7OZo4PT1dVFTU1dVVUFDAhzFBI75CQkJqampiYmKI7uHhoYCAANvyMjk5ieiGw7KmThzv4eHB29s7NTXVysqqo6OjsLBwYmICru3o6IgFcMa6urr9/f2xsTF0MVVcXPyWj79GQ0NDSkpKW1sb/zIIGSEmJnZ+fk6canR0FKHNdgNoLS8vb2lpgYfOzc0Rg+7u7mBtZmbm9vb28fERbGLw6ekJoUcssLCwwGdTU1NiYiLegjyAGgUZ8BETzc3N8Tk1NZWVlUXqrJ8DGrPl5eXV3t4eFhaGYyPNKSsrs91g9AehoaFwCuYgFCX25uTk+Pr6cnzl4OBgZWXlzs7O3d0dSFRVVeW4BSonICCAbVb5dvzLoIyMDPLg3t4eEjzxs7NFWVnZ/Px8ZmYmcfLg4GA0cnNz4bZbW1s9PT14DjwO7GhpaYFZW1tbhDzyw/Lysp6eHrZ4enoigSLeEdRIwRxNxGM7OztdXFwQ+EgdrzXD94LG2rGzs0OOOzo6eifdoEqgAvT394eHh6ML15CUlET8qqiozM7OEmtqa2sHBgaQtpAcwB1RcKGZbGxs0BD/g6ioKBQlFG6OJqLKE64NuvmNvl8vGIR9SGTvXPIAFNPY2Fhm18PD4/UaTU1N5hqmSNLR0WFdg1/rgyYiyX5w5beA9qLv4+PDqmm+GNAApaWlPH8s5IGpqSnPH0vgJYNSUlIf2QbxCGdEYN7c3CDqUcFZN+KGgzyopqbGrTWIUz7UK+/jJYMcAaUC8Tw0NNTc3IwbYWRkJPIgUhUh9IDNzU2wANHj7++PSzevDeY7cM0glDauZfn5+WhDi0Drrq6umpiYQKM4OTlhsKKiQkREBNUjLy+PYpANBAUFtbW1ibacnJyBgQFubJCQuPkSgycnJy8afze4ZpAVYBDX28bGRiTBdyTk3w1SDBKA+kPAom7gcm1tbe3n51ddXY1xNMg/nP/BNYMMBoNOp2dkZEAwg7K6ujqkQiKu4YYaGhq4hKAWn56epqenf4LBfAeuGUSVSE5OZnZZb8fx8fFEIyIigrxlPwU8iOL/OSgGyYJikCwoBsmCYpAsKAbJgmKQLCgGyYJikCwoBsmCYpAsKAbJgmKQLCgGyYK/GDQyMvpuE7gGfzH4/j/7+RO/AY3v4nXBjtXBAAAAAElFTkSuQmCC" align="bottom">
+		</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	</p>
+</span><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Bajamos
+las dos cifras siguientes, o sea el </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>90</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+separando la última cifra de la derecha, o sea el cero</font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>	</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 252in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGsAAAAlCAIAAADKj4BHAAAFNElEQVR4nO1ZeyidfRyfnBmWW4iNlCOSDI2JzW0td6UQEs2Q6x9khJVtRXL7YyL5x0k5Qm65DGPuGbksMaFFttjMHBLhuO7zeuq8p3MOx3mfx3HW+3zqHL/78/19nu/VYfT19bm4uNy6ANPT0ywWy9DQ8KIF1EJRUTEmJkY6z6IKjJWVld+/f2trawvPnZ2dgd93795JTRppPosqMDw8PDo7O0NDQ4XnZmZmHjx4IH2Z/i4wtLS0GAzG2tqarq6uwBwUMDEx8UbE+ovAwOfp06c9PT0hISH8E5ubmxoaGiL3fP36FYaPxuPHj3mD8/Pz2PLo0aPbt29zOJyFhQUmk8l7K9vb27Ozs2jcvXvX0tISjb29veXlZTMzs6tIOTU1dXR0hMP/yxWvGf8wqKOjs7OzgyspKyvzJjo6Ojw9PYU37O7uJicnq6mpPXz4kMfg4ODgmzdvMOjm5hYfH49oALeQnp6OcWJBb29vQ0MDl8tVUFCoqqrCCFxHeXn5+/fvxYo4NjZWUFDQ1taWm5srgzbBIP48f/68oqIiNjaW6P769UtOTk5keBkZGYF1Q2H5XSeud3x87Ofnl5aW9uTJk+bm5vz8/OHhYaj2s2fPsADKyGazf/78OTAwgC6mCgsLL9JxYVRXV6empjY2Nsoug0gjlJSUtra2iFv19/fDtEVuAK0lJSX19fXQ0MnJSWLQy8sLrI2Pjx8cHJycnIBNDJ6ensL0iAX29vb4rq2tTUpKwlPgBxCjkAZcRURbW1t8j46Ovn79mtRdrwcMXsvX17epqenFixe4NtzcvXv3RG6wOkd4eDiUgjeIjBJ73759GxAQIPaR3d3dZWVl3759Ozw8BIn6+vpityDLCQ4OFulVbhz/Mqiurg4/+OPHDzh44rWLRHFx8efPnzMzM4mbh4WFoZGVlQW1XVpaam9vxznQOLBjbGwMZp2cnGDy8A9fvnwxNzfHFh8fHzhQ2DuMGi5YrIg4trW11d3dHYYP1yGcM9wsGPwdZ2dn+Lj19fVL3A2iBCLAhw8fIiIi0IVqqKiowH7v378/MTFBrKmsrOzq6oLbgnMAd0TARc7k6OiIhvI5oqOjEZQQuMWKiChPqDboljX6bgkwCPngyC4p8gAE07i4OF7X29tbeI2RkRFvDS9JMjU15V+Dt3VFEeFkr7jyRsAQ6Pv7+/PnNFIGcoCioiLKj0V6YGNjQ/mxBAQZVFVVvco2JI9QRhjm/v4+rB4RnH8jKhz4QQMDA0mlgZ1e5EBWV1f19PQkPVAKEGRQLJCpIHn++PFjXV0dKsKoqCj4QbgqItEDFhcXwQKSnqCgIBTdlEiJ+Ibgg/BNyWnUQmIGkWmjLMvJyUEbuQhy3bm5OWtra+Qorq6uGCwtLb1z5w6iR3Z2NiUMgr6UlBQ4aPJHXQckZlBeXt7ExIRoa2pqWlhYoGJDConKlxjc2NgQaJAB8vOhoSGkQShvyJ92HZCYQX6AQZS3NTU1cIKXpJBk8P37dyg1FBBv6NOnT/z/y5ARkGKQALI/GCziBoprBweHwMBAFouFcTTIH47SKC8vr6WlBYUgT/dlChIzyOVyYVCvXr1CwgzK2Gw2XCFxN6ghk8lEEYJYzOFwMjIyyMuHnNzOzg5BH/EKgYv8gZRDYgYRJV6+fMnr8lfHCQkJRCMyMpK8ZPywOQe1Z1IFCqz4fw6aQbKgGSQLmkGyoBkkC5pBsqAZJAuaQbKgGSQLmkGyoBkkC5pBsqAZJAuaQbKQLQatrKxuWgSJIVsMXv5jv2ziD9VfEQG6WA1ZAAAAAElFTkSuQmCC" align="bottom"></p>
+</span><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Ponemos
+el doble de </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>2</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+debajo, o sea un </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,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" align="bottom"></p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	     
+	</p>
+</span><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Y
+dividimos </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>19</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+entre </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4
+</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">que
+cabe a </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+  Se añade ese </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+a la derecha del otro </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+y se multiplica por </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+el </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>44</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>	</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,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" align="bottom"></p>
+</span><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Se
+resta </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>190</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+menos </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>176</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+y se escribe debajo del </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>190</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+subiendo ya el </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>4</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+a la derecha del </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>2</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">			</font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>		</b></font></font></font></font><span dir="ltr" style="float: left; width: 25in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,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" align="bottom"></p>
+</span>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Se
+bajan las dos cifras siguientes, o sea el </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>74</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+separando la última cifra de la derecha</font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">				</font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	 
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAAAkCAIAAADq5OjhAAAIK0lEQVR4nO2aeWxMWxzHhw6qtjyl9p3aSlBbba3ad7FUqaQITagihFRVbbEG0cTOH2otia2IFK2llIq1Qq211dLaikGp5X3ePS/nzet07ryZuWrk9Zt0cu5yzj3ne37L93dv9SdOnPD29taZQWRkpJOTk7mr2qJhw4YdO3bMm2fZD/3z588zMjLc3NxMr3GpYsWKgwcPzpuprFy58ncijrnGx8f7+/ubXouLi+vevXvez+m3gB5b+/bt26tXr1xdXY0vYIZ6vT7HyXxI6Pnr0aPH4cOHAwICjC/cvHmzbt26ph0+fPiwd+9eGi1atJA3pKamJiYmtm/fvlq1au/fv9+/f3/9+vU9PT3FVfbgyJEjNCpUqNCpUycajx49YquaNm1qcX537949d+6cj49P5cqVxZmYmJi+ffvavGCt8BdxpUuXzsrK+vjxo4uLi7yQnJw8fvx40w5EovT0dLrI2JeWlta5c+cZM2YEBgYePXp0+vTpZBva58+fFwOePHnywYMHmZmZt27dgrjs7Ozly5cXLVrUInFfvnzhcSkpKfPnz09ISChTpgxjjh071lGIA8OGDdu2bdvo0aPFIeuHi1w7cBvEjRs3rkiRIuLMs2fP7t+/37ZtW7pjp+vWrevVqxeGyZ1jxozhBgiC5YsXL7I9HO7Zs4fo2bt3b4uTe/fu3axZs96+fdusWbNPnz49fvwYHg0Gg/3Lth9/E8f+lypVijRavnx5Dm/fvi18yhTR0dEPHz7EBNzd3YcOHapTZASNsLAwc8+oXbs2v2fPnsWEr127Vq5cuVyTuCkwMX7Xrl07cuTISpUqRUVFMSvigJVr/CnQy1aHDh3QdEOGDCGs1KhRo2DBgrl2KFasGDGxa9eurIfNx/pq1aq1devW9evXf/361cPDgw0Qd5YsWRIvZkuMM8ylS5cWLlyI7dy5c4eGxfkR4HgEro2nL1q0yKBg3759/fv3t2/h9uIf4jAE3IHQfvr06YEDB5rrMGDAAFzP19e3T58+x44dGz58OOxs3LiR6AN3BQoUCA8PT0pKqlKlCnvAZiB35syZExsb26VLF7oHKsBwWrZsaXFyr1+/Dg0NLVSoUM+ePSMiIgiRu3fvHjVq1C9nTWdMHBg0aNCaNWvIjCVKlDDXAbIIOlgT+QFXunHjBjZFx8mTJwsjDQ4OfvLkyYQJE2jv2rXL2dmZBhHQOPMQ/mSIVAFdNm3aJNq4Kr/oSpzdhnVqjn8RV7x4cSzFz89PpcMfCkSbhVWtWpVG9erV5Q0YiDwUEVOMbDyIPG8MLPfy5cvmnvvmzRvZRsqozNAYNWvWlKFDW+hzHOdaQuQNEB9IIm3HRNtrO6BETuIsQpQZJJA2bdp8/vyZuIaHBgUFYWjiBrLevXv32ADqXKtGxjrwaNPzxEdMWIhtIsPTp0/NSSUJ8v6VK1f69eunco/QN0yepM+YqChOEqaIoawR20cGhISEmOtuNXHHjx8n6qP7IG7ixIkk2QsXLlASkDR0iqabNm0aSXDKlCk7duywdnBToJCInuRTiEMbzp49u06dOurEYbkLFiz4/v27OnFLlixhNHYF4pDoDRo0QDYyfy5xHtW5c+dOle5WE8ek27VrJ9rYXfPmzdEuaFpBHOYmvIMz1o6cK0ijPEW0STVUIBAnDklTbA+LRK6TdqWiZsFYHMFaHMLg6tWrRRvlIAsepDXpXrTJ+CQ6TAy/QcOvWrWKQoiOKhOzmjhj8ADkiJOTE8rennHMYcuWLaIsI4+fOnWKMM+zaIuraBoqk8WLF6MH5fsodCLep9frMR9Wbk6N5oBQ2lgZEn3Dhg1oBhy5W7duqEhzXewiDvdhbYg+xAfFBrKLfUbK6ZRgYc/IAsga/B1dDWvYFGqRp+Cw4ioPomLBvg4cOCCJgy+0DhEK7uhYuHBhuMu16DYHlsD2eHp6zp07V+U2q4lLTEwkpqKTk5OTU1NTt2/fHhkZWa9ePSz/zJkzuA9+cejQoZkzZ1o7silCFbD/VPV4IrqXiqV169biKp6F6pw0aRKKmjhF+cxJHwUBAQFIUVhTGRx+cUxI9/Ly4uaDBw8i6XWKVEQz4kxLly5V6W41ceQE3EG0GzduLEW8jBewZu2Y6sCIZFu8nhLwUkDDtM6BFIvDBiiQh8YvHTBwi93tctX/M/KJsxGaEYd6wqdEetIp2Y1U+/LlS8I5h25ubuLlkgAS2mAwWEwgDJiRkUFH6q2UlBR0D4JRqwnbCW2II45GRUVFREQIlUT2INCSE4m4CQkJ6enp3t7eU6dOlfeLV1IWXyuRMREEK1asYNjg4OD4+HhkvbUFyU+CNsSR7+fNmyfaWFl4eDi/OiV7jBgxgmJDWiIgkW3evFkIZhXExcXBb5MmTTIzM0nl7ARVVHZ2tiYTth/aEOfs7Czkm05ZMPYVHR1NWwjj69evSyWFpv/x44f88mIOlD64p7u7u04RVmiOZcuW4ao53rL8QmifHCiDdErIo0Ly8/Nj/eLFjqhgYmJikEgW3wBTPKIE8XHka1hYGJo+KSkJJ7169aqvr6/mc7YB2hCHEqZEhY6srKy0tDSkHJ4o3uux4FatWukUNYuvIcRCQkIsvgH2V0Bh4OLiUrZsWXT8ixcvqMOFDToCtCEOs8KUaFDl8AtTsbGx4pKHh4dwzKCgIPmBimRCPWBxWGIl1Q93YsUUKpAu3gM7ArQhTn57FiAVUPeItgxnxnLkv3yK1infz0TD1dXV0f6tJF8A24h84mxEPnE2Ip84G+FAxDVq1OhXT8EKOBBxKv9R64D4E/ZF3mHO/7eRAAAAAElFTkSuQmCC" align="bottom"></p>
+</span><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Se
+baja el doble de </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>24</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+o sea </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>48
+</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">y
+se divide </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>147</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+entre </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>48</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 125in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,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" align="bottom"></p>
+</span><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Como
+a esa división cabe a </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>3</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+se añade un </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>3</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+a la derecha del </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>48</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+y se multiplica </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>483
+</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">por
+</font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>3</b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">					</font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>
+</b></font></font></font></font>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><span dir="ltr" style="float: left; width: 25in; height: 113in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	    
+	<img src="data:image/png;base64,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" align="bottom"></p>
+</span><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Se
+resta </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>1474</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+menos </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>1449</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+quedando </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>25</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+de resto</font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>			</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">		</font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>
+</b></font></font></font></font>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">De
+tal forma que </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b><span style="background: #ffff99">243²</span></b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><span style="background: #ffff99">
+</span></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b><span style="background: #ffff99">+</span></b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><span style="background: #ffff99">
+ </span></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b><span style="background: #ffff99">25</span></b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><span style="background: #ffff99">
+</span></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b><span style="background: #ffff99">=</span></b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><span style="background: #ffff99">
+</span></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b><span style="background: #ffff99">59074</span></b></font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Si
+el número del que queremos hallar la raíz es decimal la separación
+de las cifras de dos en dos se hace desde la coma hacia la derecha y
+hacia la izquierda</font></font></font></font></p>
+<p class="western" align="justify" style="margin-bottom: 014in; line-height: 100%">
+<span dir="ltr" style="float: left; width: 25in; height: 125in; border: 1px solid #000000; padding: 005in 01in; background: #ffffff">
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	<br><br>
+	</p>
+	<p align="left" style="margin-bottom: 014in; background: #ffff99; line-height: 115%">
+	   
+	<img src="data:image/png;base64,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" align="bottom"></p>
+</span><br><br>
+</p>
+<p class="western" align="justify" style="text-indent: 049in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">Si
+en la raíz cuadrada anterior queremos sacar decimales, se bajan
+dos ceros a la derecha del </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>25</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">,
+se pone una coma después del </font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt"><b>243</b></font></font><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">
+y se sigue el mismo procedimiento</font></font></font></font></p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="justify" style="line-height: 100%"><br>
+</p>
+<p class="western" align="left" style="margin-bottom: 014in; line-height: 100%">
+<font face="Calibri, serif"><font size="2" style="font-size: 11pt"><font face="Century Schoolbook, serif"><font size="3" style="font-size: 12pt">En
+cualquier caso hoy en día con las calculadoras apenas si se usa este
+algoritmo</font></font></font></font></p>
+</body>
+</html>

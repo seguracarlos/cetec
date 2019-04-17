@@ -1,0 +1,72 @@
+<h1>Agregar inventario</h1>
+
+<div class="panel">
+	<div class="panel-heading"></div>
+	<div class="panel-body">
+		<?php 	
+		$form = $this->form; 
+		$form->prepare(); 
+		echo $this->form()->openTag($form);
+		/* echo $this->formRow($form->get('id_inventory')); */
+		?>
+		<!--  <form> -->
+			<div class="row">
+			
+            	<div class="col-xs-12 col-sm-3 col-md-3">
+                	<div class="form-group">
+                		<label>No. serie</label>
+                   		<?php echo $this->formRow($form->get('serialnumber')); ?>
+                   	</div>
+               	</div>
+               	
+              	<div class="col-xs-12 col-sm-3 col-md-3">
+                	<div class="form-group">
+                 		<label>Cantidad</label>         
+                  		<?php echo $this->formRow($form->get('amount')); ?>
+               		</div>
+               	</div>
+                                
+             	<div class="col-xs-12 col-sm-3 col-md-3">
+                	<div class="form-group">
+                    	<label>Marca</label>
+                        <?php echo $this->formRow($form->get('brand')); ?>
+                    </div>
+                </div>
+                
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                	<div class="form-group">
+                    	<label>Material</label>
+                        <?php echo $this->formRow($form->get('material')); ?>
+                    </div>
+                </div>
+                
+          	</div><!-- Fin row -->
+                            
+           	<div class="form-group">
+          		<?php echo $this->formRow($form->get('state')); ?>
+         	</div>
+          
+           	<div class="form-group">
+          		<?php echo $this->formRow($form->get('types_id_types')); ?>
+           	</div>
+                            
+            <div class="form-group">
+            	<label>Comentarios</label>
+            	<?php echo $this->formRow($form->get('comments')); ?>
+          	</div>
+                            
+           	<hr>
+            <div class="row">
+            	<div class="col-md-6">
+                	<?php echo $this->formRow($form->get('submit')); ?>
+               	</div>
+                <div class="col-md-6">
+                	<input type="button" value="Cancelar" class="btn btn-danger btn-block btn-lg">
+            	</div>
+           	</div>
+		<!--</form> -->
+		<?php echo $this->form()->closeTag(); ?>
+	</div><!-- Fin panel-body -->
+</div><!-- Fin panel -->
+						
+						

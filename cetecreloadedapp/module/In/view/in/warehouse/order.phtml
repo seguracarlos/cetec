@@ -1,0 +1,131 @@
+<?php
+include_once APPLICATION_PATH . '/Constants/Constants.php';
+
+$this -> headScript() -> appendFile($this -> baseUrl('/public/js/jsFunctions/ajax/warehouse.js')) 
+-> appendFile($this -> baseUrl('/public/js/jsFunctions/ajax/viewPurchase.js'));
+
+?>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+
+		jqueryTable('#purchaseTable');
+		enterItems();
+		radioState();
+	});
+
+</script>
+<h3 class="centerIn">Ingresar productos al almac&eacute;n</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/Out/purchaseorder/index') ?>">
+				<img title="Almac&eacute;n" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconorder.png');?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/warehouse/index') ?>">
+				<img title="Productos en el almac&eacute;n" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconinventory.png');?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las oredenes de compra')">
+				<a>
+					<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div class="exito mensajesExito" ></div>
+<div class="error mensajesError" ></div>
+<div id="overflow">
+<input id="order_id" type="hidden" value="<?php echo $this->purchaseOrder['order_id']?>"/>
+<input id="total" type="hidden" value="<?php echo $this->purchaseOrder['total']?>"/>
+<input id="subtotal" type="hidden" value="<?php echo $this->purchaseOrder['subtotal']?>"/>
+<input id="numberofpayments" type="hidden" value="<?php echo $this->purchaseOrder['numberofpayments']?>"/>
+	<div id="fieldsetForm" class="forms">
+		<fieldset>
+			<legend>
+				Orden de compra
+			</legend>
+			<ul>
+				<li>
+					<label><b>Proveedor: </b> </label> <?php echo $this->purchaseOrder['name_company']; ?>
+				</li>
+				<li>
+					<label><b>Fecha de entrega: </b> </label> <?php echo utf8_decode($this->purchaseOrder['start_date']); ?>
+				</li>
+				<li>
+					<label><b>Pedido por: </b> </label> <?php echo utf8_decode($this->purchaseOrder['d_name']); ?>
+				</li>
+				<li>
+					<label><b>Condiciones: </b> </label> <?php echo utf8_decode($this->purchaseOrder['conditions']); ?>
+				</li>
+			</ul>
+		</fieldset>
+		<fieldset id="tableProd">
+			<legend>Productos</legend>
+			<table id="items" class="almTableIng">
+				<thead>
+				<tr id="m-header">
+					<th>Producto</th>
+					<th class="center">Completo</th>
+					<th class="center">Incompleto</th>
+					<th class="center">Ingresar</th>
+					<th>Existencias</th>
+					<th># Pedido</th>
+					<th>Entregado</th>
+				</tr>
+				</thead>
+				<tbody>
+					<?php $i = 0; 
+					if(count($this->purchaseOrderItems)>0){ ?>
+						<?php foreach ($this->purchaseOrderItems as $orderItem): ?>
+							<?php if ($orderItem->getStatus() != StatusPurchaseOrder::DELIVERED_COMPLETE):$increment = $i++;?>
+								<tr id="<?php echo $orderItem->getIdPurchase()?>">
+									<td ><?php echo $orderItem->getName()?></td>
+									<td class="center"><input class="complete" type="radio" name="<?php echo $increment; ?>" value="<?php echo $orderItem->getProductId()?>"/></td>
+									<td class="center"><input class="incomplete" type="radio" name="<?php echo $increment; ?>" value="<?php echo $orderItem->getProductId()?>" checked="checked"/></td>
+									<td class="center"><input id="quantity<?php echo $increment; ?>" class="number" type="text" size="10" value="0" /></td>
+									<td class="number"><label id="existence<?php echo $increment; ?>"><?php echo ($orderItem->getStock())?></label></td>
+									<td class="number"><label id="ordered<?php echo $increment; ?>"><?php echo ($orderItem->getQuantity())?></label></td>
+									<td class="number" id="delivered<?php echo $increment; ?>"><?php echo $orderItem->getRemainingQuantity()?></td>
+								</tr>
+								<?php endif;?>
+						<?php endforeach; ?>
+					<?php } ?>	
+				</tbody>
+			</table>
+		</fieldset>
+		<?php if(count($this->purchaseOrderItems) > 0):?>
+		<div class="center">
+			<input type="submit" id="enter_items_button"  class="btn btn-primary" value="Dar entrada" <?php echo $res = ($this->purchaseOrder['status'] == 1 )? "disabled=disabled" : " "; ?> />
+		</div>
+		<?php else: ?>
+			<div class="center">
+				<span>Por favor revisa que los productos no esten pendientes de revisi&oacute;n</span>
+			</div>
+		<?php endif; ?>
+	</div>
+</div>
+<div class='center'>
+	<a href="#" class="arriba" id="subPay">Ir arriba</a>
+	<a id="subPay" href='javascript:history.back();;'>Regresar</a>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="popWait">
+			<div class="center">
+				<label id="wait">Guardando cambios, espere por favor...</label>
+				<hr/>
+				<img id="loader" src="<?php echo $this->baseUrl('/public/img/loader.gif')?>">
+			</div>
+	</div>
+<div id="waitBack"></div>
+<!-- termina popup -->

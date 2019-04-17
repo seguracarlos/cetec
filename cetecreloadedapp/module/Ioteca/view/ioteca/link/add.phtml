@@ -1,0 +1,20 @@
+<h3 class="centerHor"> Agregar Link</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Links" href="<?php echo $this->baseUrl('/Ioteca/link/index')?>">
+				<img title="Links" src="<?php echo $this->baseUrl('/public/img/iconbookmark.png')?>" /></a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a class="tooltipcenter" title="Ayuda">
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>	
+  
+<div id="overflow">
+	<p class="triangle-border" >Ingresa los datos del link.</p>
+	 <?php echo $this->form; ?>
+</div>

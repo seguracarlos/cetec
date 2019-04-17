@@ -1,0 +1,30 @@
+#form {
+	padding:20px;
+	width:400px;
+	margin:auto;
+	border:1px solid #900;
+}
+#form legend {
+	font-size:12px;
+	font-weight:bold;
+}
+#form ol {
+	list-style:none;
+}
+#form ol li{
+	padding-bottom:10px;
+}
+#form label{
+	width:100px;
+	float:left;
+}
+#newField{
+	/*border: aqua solid;*/
+	margin-bottom: 15px;
+}
+#linkDel{
+	float: right;
+}
+#load{
+	display: none;
+}

@@ -1,0 +1,237 @@
+<script type="text/javascript" src="<?php echo $this->basePath().'/public/js/TimePicker/src/wickedpicker.js'?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath().'/public/js/TimePicker/stylesheets/wickedpicker.css'?>" />
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Mis ex&aacute;menes</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+<!-- 				<ul class="toolbar"> -->
+<!-- 					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li> -->
+<!-- 					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li> -->
+<!-- 					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li> -->
+<!-- 				</ul> -->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+<!-- 				<div class="btn-group btn-breadcrumb"> -->
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Bachillerato</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Mis examenes</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Agregar</a> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+<!-- <p class="triangle-border text-size-20 amaranth">Datos de mis examenes.</p> -->
+<center>
+<div class="col-md-2"></div>
+<div id="add" class="col-md-9 well" name="add">
+		
+
+		<?php
+		$form = $this->formparam;
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		//echo $this->formRow($form->get('idExpenses'));
+		?>
+		
+			<h1 align="center" >Agregar Examen</h1>
+				<hr>
+				<form method="post" name="addExam" id="addExam" onsubmit="return validatorForm()" action="#">
+				<?php 
+					//$id_topic = $form->get('id_topic');
+					//echo $formLabel->openTag().$id_topic->getOption('label')." ";
+					//echo $this->formInput($id_topic);
+					//echo $formLabel->closeTag();
+				?>
+				<div class="col-md-12">
+				<legend>Datos Generales</legend>
+				<div class="col-md-6">
+						<?php 
+						
+						echo $this->formlabel($form->get('topic_name'));
+						echo $this->formElement($form->get('topic_name'));
+						
+						?>
+				</div>
+				
+				<div class="col-md-6">
+						<?php 
+						
+							echo $this->formlabel($form->get('project_name'));
+							echo $this->formElement($form->get('project_name'));
+							
+						?>
+				</div>
+				</div>
+				
+				<div class="col-md-12">
+				
+				<div class="col-md-12">
+					<label>Descripci&oacute;n</label>
+					<?php 
+							echo $this->formElement($form->get('description'));
+							
+					?>
+					</div>
+				</div>
+				
+				<div class="col-md-12">
+					<br>
+					<legend>Vigencia y Duraci&oacute;n</legend>
+					<div class="col-md-6">
+							<label>Desde:</label>
+						<?php 
+							echo $this->formElement($form->get('startDate'));
+						?>
+					</div>
+						<div class="col-md-6">
+						<label>Hasta:</label>
+							<?php 
+							echo $this->formElement($form->get('endDate'));
+							?>
+						</div>
+				</div>
+				
+				<div class="col-md-12">
+									<br/>
+					
+								<div class="col-md-4">
+							<label>Tiempo que durara el examen: </label>
+							<br/>
+							<br/>
+							<?php 
+							echo $this->formElement($form->get('time'));
+							?>
+						
+					</div>
+				</div>
+				
+				
+				<div class="col-md-12">
+				<br>
+				
+					<div class="col-md-6">
+						<?php 
+							echo $this->formElement($form->get('Guardar'));
+						?>
+					</div>
+					<div class="col-md-6">
+						<?php
+							echo $this->formElement($form->get('Cancelar'));
+						?>
+					</div>
+				</div>
+				
+				</form>
+			</div>
+			</div>
+			</center>
+		
+
+<?php 
+	echo $this->form()->closeTag(); 
+?>
+		
+
+		
+
+	</div>
+
+</div>
+
+<script>
+var $basePath = "<?php $this->basePath(); ?>";
+
+$(document).ready(function(){
+
+	$('#time').wickedpicker({
+		now: "00:00",
+		twentyFour: true,
+		title: 'Horas/Minutos'
+	});
+   
+	$.datepicker.regional['es'] =
+	{
+		closeText: 'Cerrar',
+		prevText: 'Previo',
+		nextText: 'Pr�ximo',
+		   
+		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+		  'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+		  'Jul','Ago','Sep','Oct','Nov','Dic'],
+		monthStatus: 'Ver otro mes', yearStatus: 'Ver otro a�o',
+		dayNames: ['Domingo','Lunes','Martes','Mi�rcoles','Jueves','Viernes','S�bado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','S�b'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+		dateFormat: 'dd/mm/yy', firstDay: 0,
+		initStatus: 'Selecciona la fecha', isRTL: false
+	};
+
+	$.datepicker.setDefaults($.datepicker.regional['es']);
+
+	$("#startDate").datepicker({
+		onSelect: function(selectedDate) {
+		$("#endDate").datepicker("option", "minDate", selectedDate);
+		}
+	});
+	
+	$( "#startDate" ).datepicker( "option", "showAnim", "bounce" );
+			
+	$("#endDate").datepicker({
+		//defaultDate: "+1w",
+		//changeMonth: true,
+		//numberOfMonths: 3,
+		onSelect: function(selectedDate) {
+			$("#startDate").datepicker( "option", "maxDate", selectedDate);
+		}
+	});
+
+	$( "#endDate" ).datepicker( "option", "showAnim", "bounce" );
+	
+});
+	
+
+
+function getBack(){
+    javascript:history.back();
+}
+function validatorForm(){
+    if($('#topic_name').val() == '' && $('#project_name').val() == '' && $('#description').val() == ''){
+        alert("No debes dejar los campos vacios.");
+        return false;
+    }
+    if($('#topic_name').val() == ''){
+        alert("Debes escribir el nombre del exámen.");
+        return false;
+    }
+    if($('#project_name').val() == ''){
+        alert("Debes escribir el area del exámen.");
+        return false;
+    }
+    if($('#value').val() == ''){
+        alert("Debes escribir el valor del exámen.");
+        return false;
+    }
+    if($('#from').val() == ''){
+        alert("Debes elegir la fecha de inicio del exámen.");
+        return false;
+    }
+    if($('#to').val() == ''){
+        alert("Debes alegir la fecha final del exámen.");
+        return false;
+    }
+    if($('#description').val() == ''){
+        alert("Debes escribir una descripcion sobre el exámen.");
+        return false;
+    }
+    return true;
+}
+
+</script>

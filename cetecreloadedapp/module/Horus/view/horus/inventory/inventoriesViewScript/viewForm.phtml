@@ -1,0 +1,63 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/paysPop.css')); ?>
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+<fieldset>
+	<legend id="titleFormUSer">Informaci&oacute;n del equipo</legend>
+    <table>
+        <tbody>
+            <tr>
+            	<td>*Tipo:</td>
+                <td>*Art&iacute;culo:</td>
+                <td>*Departamento:</td>
+                <td>*Existencias:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('types_id_types'); ?></td>
+                <td><?=$this->element->getElement('object'); ?><img style="display:none" id="load" alt="" height="18" src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"></td>
+           		<td><?=$this->element->getElement('id_department');?></td>
+           		<td><?=$this->element->getElement('amount'); ?></td>
+            </tr>
+            <tr>
+             	<td>*Marca:</td>
+             	<td>*Modelo:</td>
+             	<td>*N/S:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('brand'); ?></td>
+            	<td><?=$this->element->getElement('material'); ?></td>
+            	<td><?=$this->element->getElement('serialnumber'); ?></td>
+            </tr>
+            <tr>
+             	<td>*Estado del Equipo:</td>
+            	<td>Asignado a:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('state'); ?></td>
+               	<td><?=$this->element->getElement('id_acl_users'); ?></td>
+            </tr>   	
+            <tr style="text-align: center;">
+               	<td colspan="4">Comentarios:</td>
+            </tr>
+            <tr style="text-align: center;">
+               	<td colspan="4"><?=$this->element->getElement('comments'); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+	<div class="center">
+    <?=$this->element->getElement('Guardar'); ?>
+    <a href="javascript:location.href='<?=$this->baseUrl("/Horus/inventory/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="paysPop" class="popHorus">
+	<h2>Especique la fecha de revisi&oacute;n por favor.</h2>
+		<div id="btnAccept">Aceptar</div>
+		<ul id="paysArea"></ul>
+	</div>
+	<div id="paysBack"></div>
+<!-- 
+    termina popup
+-->

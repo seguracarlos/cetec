@@ -1,0 +1,53 @@
+#popup_container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 5px solid #999999;
+    border-radius: 5px 5px 5px 5px;
+    color: #000000;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    max-width: 600px;
+    min-width: 300px;
+}
+#popup_title {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("../img/title.gif") repeat-x scroll center top #CCCCCC;
+    border-color: #FFFFFF #FFFFFF #999999;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #666666;
+    cursor: default;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.75em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+#popup_content {
+    background: url("../img/info.gif") no-repeat scroll 16px 16px transparent;
+    margin: 0;
+    padding: 1em 1.75em;
+}
+#popup_content.alert {
+    background-image: url("../img/info.gif");
+}
+#popup_content.confirm {
+    background-image: url("../img/important.gif");
+}
+#popup_content.prompt {
+    background-image: url("../img/help.gif");
+}
+#popup_message {
+    padding-left: 48px;
+}
+#popup_panel {
+    margin: 1em 0 0 1em;
+    text-align: center;
+}
+#popup_prompt {
+    margin: 0.5em 0;
+}

@@ -1,0 +1,22 @@
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/documentsStyle.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/documentsFunctions.js')); 
+?>
+
+<h3 class="centerIn">Crear Nuevo Documento</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/index') ?>"><img title="Documentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondocgear.png');?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<p class="triangle-border" >Agrega campos al documento </p>
+<?php echo $this->formulario; ?>
+</div>

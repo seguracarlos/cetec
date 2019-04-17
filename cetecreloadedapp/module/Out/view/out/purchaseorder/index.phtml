@@ -1,0 +1,207 @@
+<?php
+	 $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPurchase.js'));
+	 $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+?>
+<?php 
+	$helpUser = $this->helps->purchaseorderIndex;
+?>
+<script type="text/javascript">
+var oTableO;
+$(document).ready(function() {
+	jqueryTable('#purchaseTable', 7);
+	$('#purchaseTable').show();
+	oTableO= jqueryTablePopup('#OrderTablePay', 4);
+});
+</script>
+
+<h3 class="centerOut">&Oacute;rdenes de Compra</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<?php if ($this->permissions[KeysGlobalPermissions::EGRESOSPURCHASEORDERADDORDER]) :?>
+				<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl("/Out/purchaseorder/addorder"); ?>" >
+							<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Orden de Compra" />
+						</a>
+				</li>
+			<?php endif; ?>
+			<?php if ($this->permissions[KeysGlobalPermissions::EGRESOSPURCHASEORDERHISTORY]) :?>
+				<li class="iconOpacity"><a href="<?php echo $this->baseUrl('/Out/purchaseorder/history') ?>">
+					<img title="Ver historial de compras" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>"/></a>
+				</li>
+			<?php endif; ?>
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n', '<?php echo $helpUser ?>')">
+						<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+				<div id="clock"></div>
+	</div>	
+</ul>
+
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+	
+<?php if(isset($_GET['er'])): ?>
+
+	<?php if($_GET['er'] == 'notK'):?>
+		<script type="text/javascript">
+			messajes('Falta Id de la orden intentalo otra vez. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'savOr'):?>
+		<script type="text/javascript">
+			messajes('Error al guardar la orden, intentalo de nuevo. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'savPu'):?>
+		<script type="text/javascript">
+			messajes('Error al guardar la compra, intentalo de nuevo. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'MisIdProd'):?>
+		<script type="text/javascript">
+			messajes('Error, la orden solicitada no existe. :(', "error");
+		</script>
+	<?php endif;?>
+	
+<?php endif;?>
+
+
+<div id="overflow">
+	
+	<table id="purchaseTable" class="display">
+		<thead>
+			<tr>
+				<th>N&deg; de orden</th>
+				<th>Proveedor</th>
+				<th>Fecha de entrega</th>
+				<th>Total</th>
+				<th>N&uacute;m. de pagos</th>
+				<th>¿Entregado?</th>
+				<th>Condiciones</th>
+				<th>
+				<?php if ($this->permissions[KeysGlobalPermissions::EGRESOSPURCHASEORDERADDORDER]) :?>
+					<a href="<?php echo $this->baseUrl("/Out/purchaseorder/addorder"); ?>" >
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Orden de Compra" />
+					</a>
+					<?php endif; ?>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php $i = 1;?>
+		<?php if($this->orders != 0) : ?>
+			<?php foreach ($this->orders as $order): ?>
+				<tr><?php // echo $order->getOrder_Id();?>
+					<td><?php echo Application_Util_Tools::format($order->getOrder_Id(), 3); ?></td><!-- orden -->
+					<td><?php echo $order->getName_company();?></td><!-- nombre de proveedor -->
+					<td><?php echo Application_Util_Tools::dateFrontFormat('-', $order->getStart_date()); ?></td><!-- fecha de fin -->
+					<td><?php echo Application_Util_Tools::currency($order->getTotal()); ?></td>
+					<td class="number"><?php echo $order->getNumberOfpayment();?></td><!-- numero de pagos -->
+					<td>	
+						<?php 	$msj=""; ?>
+							<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSWAREHOUSEORDER]): ?>
+											<?php  
+												switch ($order->getStatus()) {
+													case StatusPurchaseOrder::NOT_DELIVERED:
+														$icon = "iconaddin.png";
+														$ur = $this->baseUrl('/In/warehouse/order/id').'/'.$order->getOrder_Id();
+														$msj = "No entregada";
+														break;
+													case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+														$icon = "warning.gif";
+														$msj = "Pendiente";
+														$ur = $this->baseUrl('/In/warehouse/order/id').'/'.$order->getOrder_Id();
+														break;
+													case StatusPurchaseOrder::DELIVERED_COMPLETE:
+														$icon = "ok.png";
+														$ur = '#';
+														$msj = "Completa";
+														break;
+													default:
+														$msj="Default";				
+														break;
+												}   ?>
+											<a href="<?php echo $ur; ?>">
+												<img border="0" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/'.$icon)?>" alt="Ingresar elementos al almac&eacute;n" title="Ingresar elementos al almac&eacute;n"/>
+												<?php echo $msj;?>
+											</a>
+							<?php else: ?>						
+										<?php  
+											switch ($order->getStatus()) {
+												case StatusPurchaseOrder::NOT_DELIVERED:
+													$icon = "iconaddin.png";
+													$msj = "No entregada";
+													break;
+												case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+													$icon = "warning.gif";
+													$msj = "Pendiente";
+													break;
+												case StatusPurchaseOrder::DELIVERED_COMPLETE:
+													$icon = "ok.png";
+													$msj = "Completa";
+													break;
+												default:
+													$msj="Default";				
+													break;
+											}   ?>
+											<img border="0" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/'.$icon)?>" alt="estatus" title="estatus"/>
+											<?php echo $msj;?>
+							<?php endif; ?>
+					</td>	
+					<td><?php echo $order->getConditions(); ?></td><!-- condiciones -->
+					<td>
+						<?php if ($this->permissions[KeysGlobalPermissions::EGRESOSPURCHASEORDEREDITORDER]): ?>
+							<a href="<?php echo $this->baseUrl() . "/Out/purchaseorder/editorder?idOrder=" . $order->getOrder_id()."&supplier=".$order->getId_company(); ?>">
+								<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar orden de compra" alt="Actualizar">
+							</a>
+						<?php endif; ?>
+					
+						<?php if ($this->permissions[KeysGlobalPermissions::EGRESOSPURCHASEORDERDELETEORDER]): ?>	
+							<a href="#" onclick="javascript:deleteRecord('purchaseTable',this, '<?php echo $order->getOrder_Id();?>','/Out/purchaseorder/deleteorder')">
+								<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar orden"	alt="Eliminar">
+							</a>
+						<?php endif; ?>
+					
+						<a href="#" onclick="javascript:showPurchase('<?php echo Application_Util_Tools::format($order->getOrder_Id(), 3); ?>', '<?php echo $order->getOrder_Id();?>')">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconinventory.png');?>" title="Ver Detalles"	alt="Ver Detalles">
+						</a>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		<?php endif; ?>
+		</tbody>
+	</table>
+	
+</div>
+
+<!-- 
+    Inicia popup
+-->
+<div id="TableOrderPurchasePop" class="popHorus">
+		<div id="btnXOrderPay" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/default-loader.gif')?>">
+		</div>
+		<div id="message"></div>
+		<div id="tablaPayDiv" >
+    		<table class="display" id="OrderTablePay">
+    			<thead>
+    				<tr>
+    					<td>Clave</td>
+    					<td>Nombre</td>
+    					<td>Cantidad</td>
+    					<td>Unidad</td>
+    					<td>Precio</td>
+    				</tr>
+    			</thead>
+    			<tbody>
+    			</tbody>
+    		</table>	
+	     </div>
+	     <div id="btnAcceptDiv">
+	     	<button id="btnAccept" class="btn btn-primary" value="Cerrar">Cerrar</button>
+	     </div>
+	</div>
+	<div id="TableOrderPurchaseBack"></div>
+<!-- 
+    termina popup
+-->
+

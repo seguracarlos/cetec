@@ -1,0 +1,402 @@
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<?php 
+	include_once APPLICATION_PATH . '/util/FusionCharts.php';
+	
+	echo $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/graphsActivities.js'))
+							->appendFile($this->baseUrl('/public/js/jquery.jqplot.min.js'))
+							->appendFile($this->baseUrl('/public/js/jqplot.categoryAxisRenderer.min.js'))
+							->appendFile($this->baseUrl('/public/js/jqplot.pointLabels.min.js'))
+							->appendFile($this->baseUrl('/public/js/jqplot.barRenderer.min.js'));
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/jquery.jqplot.min.css' ));
+?>
+
+<h3 class="centerHor">Gr&aacute;ficas de Actividades Diarias</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity" >
+				<a href="<?php echo $this->baseUrl('/Horus/activities/index');?>">
+					<img title="Actividades Diarias" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconact.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Graficas de las Actividades Diarias')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+	</div>	
+</ul>
+
+<style>
+
+	#space1{
+		-webkit-border-top-left-radius: 13px;
+	    -moz-border-radius-topleft: 13px;
+	    border-top-left-radius: 13px;
+	    -webkit-border-top-right-radius: 0px;
+	    -moz-border-radius-topright: 0px;
+	    border-top-right-radius: 0px;
+	    -webkit-border-bottom-left-radius: 0px;
+	    -moz-border-radius-bottomleft: 0px;
+	    border-bottom-left-radius: 0px;
+	    -webkit-border-bottom-right-radius: 13px;
+	    -moz-border-radius-bottomright: 13px;
+	    border-bottom-right-radius: 13px;		
+	    
+	    border: 1px solid;
+    	border-color: rgb(2, 205, 232);
+    	
+		padding: 10px;
+		overflow:  auto;
+		margin-bottom: 30px;
+		font-family: sans-serif;
+		font-size: 12px;
+		background: white;
+		margin-top:30px;
+		float: left;
+		width: 30%;
+		position: relative;
+	}
+	#space2{
+		-webkit-border-top-left-radius: 13px;
+	    -moz-border-radius-topleft: 13px;
+	    border-top-left-radius: 13px;
+	    -webkit-border-top-right-radius: 0px;
+	    -moz-border-radius-topright: 0px;
+	    border-top-right-radius: 0px;
+	    -webkit-border-bottom-left-radius: 0px;
+	    -moz-border-radius-bottomleft: 0px;
+	    border-bottom-left-radius: 0px;
+	    -webkit-border-bottom-right-radius: 13px;
+	    -moz-border-radius-bottomright: 13px;
+	    border-bottom-right-radius: 13px;		
+	    
+	    border: 1px solid;
+    	border-color: rgb(2, 205, 232);
+    
+		padding: 10px;
+		overflow:  auto;
+		margin-bottom: 30px;
+		font-family: sans-serif;
+		font-size: 12px;
+		background: white;
+		margin-top:30px;
+		float: left;
+		margin-left: 30%;
+		position: relative;
+		width: 50%;
+	}
+	
+	#spaceFilters1Graph{
+		display: none;
+		
+		-webkit-border-top-left-radius: 13px;
+	    -moz-border-radius-topleft: 13px;
+	    border-top-left-radius: 13px;
+	    -webkit-border-top-right-radius: 0px;
+	    -moz-border-radius-topright: 0px;
+	    border-top-right-radius: 0px;
+	    -webkit-border-bottom-left-radius: 0px;
+	    -moz-border-radius-bottomleft: 0px;
+	    border-bottom-left-radius: 0px;
+	    -webkit-border-bottom-right-radius: 13px;
+	    -moz-border-radius-bottomright: 13px;
+	    border-bottom-right-radius: 13px;		
+	    
+	    border: 1px solid;
+    	border-color: rgb(2, 205, 232);
+    	
+    	margin-top:30px;
+		overflow:  auto;
+		margin-bottom: 30px;
+		font-family: sans-serif;
+		font-size: 12px;
+		background: white;
+		padding: 10px;
+		float: left;
+		width: 40%;	
+	}
+	
+	#spaceFilters{
+		display: none;
+		
+		-webkit-border-top-left-radius: 13px;
+	    -moz-border-radius-topleft: 13px;
+	    border-top-left-radius: 13px;
+	    -webkit-border-top-right-radius: 0px;
+	    -moz-border-radius-topright: 0px;
+	    border-top-right-radius: 0px;
+	    -webkit-border-bottom-left-radius: 0px;
+	    -moz-border-radius-bottomleft: 0px;
+	    border-bottom-left-radius: 0px;
+	    -webkit-border-bottom-right-radius: 13px;
+	    -moz-border-radius-bottomright: 13px;
+	    border-bottom-right-radius: 13px;		
+	    
+	    border: 1px solid;
+    	border-color: rgb(2, 205, 232);
+    	
+		padding: 10px;
+		overflow:  auto;
+		margin-bottom: 30px;
+		margin-top: 30px;
+		font-family: sans-serif;
+		font-size: 12px;
+		background: white;
+		
+		float: left;
+		width: 30%;
+		
+	}
+	
+	#hoursProject{
+		cursor: pointer;
+		font-size: 20px;
+	}
+	#hoursUsersProject{
+		cursor: pointer;
+		font-size: 20px;
+	}
+	
+	#hoursProject:HOVER, #hoursUsersProject:HOVER{
+		font-size: 25px;
+	}
+	
+	#projectsSelect{
+		display: none;
+	}
+	
+	.title{
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.divTable{
+		width: 30%;
+		float: left;
+	}
+	.graphDiv{
+		width: 70%;
+		float: left;
+	}
+	#contetInfoGraf{
+		border-bottom: 1px solid blue;
+		height: 40px;
+	}
+	#textName{
+		font-size: 20px;
+		float: left;
+		width: 60%;
+		height: 100%;
+	}
+	#textNumber{
+		font-size: 20px;
+		float: left;
+		width: 40%;
+		height: 100%;
+	}
+</style>
+<script>
+	var hours = ""; 
+	<?php if($this->hours != 0): ?>
+		hours = "true";
+	<?php else: ?>
+		hours = "false";
+	<?php endif; ?>
+	
+	gvChartInit();
+				
+	$(document).ready(function(){
+	
+		if(hours == "true"){
+			$('#ProjectsGraphTable').gvChart({
+				chartType: 'ColumnChart',
+				gvSettings: {
+					vAxis: {title: 'Horas'},
+					hAxis: {title: 'Proyectos'},
+					width: 620,
+					height: 300
+				   }
+				});	
+		}else{
+			$(".graphDiv").html("No hay actividades para graficar");
+		}
+	
+	
+		  //opciones de graficas ver
+			$("#hoursProject").click(function(){
+				$("#spaceFilters").hide();
+				$("#projectsSelect").hide();
+				$('#spaceFilters1Graph').show();
+				$('.divTable').show();
+				$('.divTable').html("");
+				$('.graphDiv').html("");
+				
+				$("#users").val("-");
+				$("#month").val("-");
+				$("#month").attr("disabled", "true");
+			});
+			
+			$("#hoursUsersProject").click(function(){
+				$("#spaceFilters").show();
+				$('#spaceFilters1Graph').hide();
+				$("#projectsSelect").show();
+				$("#graphDefault").hide();
+				$('.divTable').hide();
+				$('.divTable').html("");
+				$('.graphDiv').html("");
+
+				$("#yearSelect").val("-");
+				$("#projectsSelect").val("-");
+				$("#projectsSelect").attr("disabled", "true");
+			});
+			
+			$("#yearSelect").change(function(){
+				$("#projectsSelect").val("-");
+				
+				if($(this).val() != "-"){
+					$("#projectsSelect").removeAttr("disabled");
+				}else{
+					$("#projectsSelect").attr("disabled", "true");
+				}
+			});
+
+			$("#users").change(function(){
+				$("#month").val("-");
+				
+				if($(this).val() != "-"){
+					$("#month").removeAttr("disabled");
+				}else{
+					$("#month").attr("disabled", "true");
+				}
+			});
+
+			$("#month").change(function(){
+				hoursProjectsByMonthGraph($("#users").val(), $(this).val());
+			});
+
+			$("#allP").click(function(){
+				hoursProjectsGraph();
+			});
+			
+			$("#projectsSelect").change(function(){
+				if($(this).val() != "-"){
+					var name_proj = $("#projectsSelect option:selected").html();
+					var year = $("#yearSelect").val();
+				
+					hoursUserProjectGraphs($(this).val(), name_proj, year);	
+				}
+			});
+			
+			// Bind a listener to the "jqplotDataClick" event.  Here, simply change
+			  // the text of the info3 element to show what series and ponit were
+			  // clicked along with the data for that point.
+			  
+			  $('#chartSpace').bind('jqplotDataClick', 
+			    function (ev, seriesIndex, pointIndex, data) {
+			      var name_proj = $("#projectsSelect option:selected").html();
+			    	
+			      showInfoBar(seriesIndex, pointIndex, data, name_proj);
+			    }
+			  ); 
+	});
+</script>
+
+<div id="overflow">
+	<div id="fieldsetForm" class="forms">
+		<div id="space1">
+			<ul>
+				<li id="hoursProject"  title="ver grafica de las horas por proyecto">
+					<img src="<?php echo $this->baseUrl("/public/img/incoming_arrow.png");?>" >
+					&emsp;Horas por proyecto
+				</li>
+				<li id="hoursUsersProject" title="ver grafica de las horas de usuario por proyecto">
+					<img src="<?php echo $this->baseUrl("/public/img/incoming_arrow.png");?>" >
+					&emsp;Horas de colaboradores por proyecto
+				</li>
+			</ul>
+		</div>
+		<div id="spaceFilters1Graph">
+			<span id="allP" class="title center"><a href="javascript:;">Ver todos los proyectos</a></span>
+				<div >- o filtrar por -</div>
+				<span class="title">Consultor: </span>
+				<select id="users">
+					<option value="-">Selecciona</option>
+					<?php if($this->listUsers != 0): ?>
+						<?php foreach($this->listUsers as $user): ?>
+							<option value="<?php echo $user->getUserId()?>"><?php echo $user->getUserName() . "  - " . $user->getRealName() . " " . $user->getSurname() ?></option>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</select>
+				<span class="title">Mes: </span>
+				<select id="month" disabled="disabled">
+					<option value="-">Selecciona</option>
+					<option value="01">Enero</option>
+					<option value="02">Febrero</option>
+					<option value="03">Marzo</option>
+					<option value="04">Abril</option>
+					<option value="05">Mayo</option>
+					<option value="06">Junio</option>
+					<option value="07">Julio</option>
+					<option value="08">Agosto </option>
+					<option value="09">Septiembre </option>
+					<option value="10">Octubre </option>
+					<option value="11">Noviembre </option>
+					<option value="12">Diciembre </option>
+			   </select>
+	    </div>
+		<div id="spaceFilters">
+				<span class="title">A&ntilde;o: </span>
+				<select id="yearSelect">
+					<option value="-">Selecciona</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+				</select>
+				<span class="title">Proyecto: </span>
+				<select id="projectsSelect" disabled="disabled">
+							<option value="-">Selecciona</option>
+						<?php foreach($this->hours as $proj): ?>
+							<option value="<?php echo $proj['projects_ID']; ?>"><?php echo $proj['project_name']; ?></option>
+						<?php endforeach; ?>
+				</select>
+		</div>
+		<div id="space2">
+			<img id="loadGraph" src="<?php echo $this->baseUrl("/public/img/load.gif"); ?>" style="display: none;">
+			  <div class="divTable">
+			  	<?php if($this->hours != 0):?>			
+				  				<?php foreach($this->hours as $hoursProject):?>
+					  				<div id="contetInfoGraf">
+										<p id="textName"><?php echo $hoursProject['project_name']; ?></p>
+										<p id="textNumber"><?php echo $hoursProject['hours']; ?></p>
+									</div>
+								<?php endforeach;?>
+				  <?php else: ?>
+				  	<?php echo "No hay datos para graficar."; ?>
+				  <?php endif;?>
+			  </div>
+			  <div class="graphDiv" id="chartSpace" >
+				<div id="graphDefault">
+					<?php if($this->hours != 0): ?>
+						<table id="ProjectsGraphTable">
+							<caption>Horas por Proyectos</caption>
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->hours as $hoursProject):?>
+									<tr>
+										<th><?php echo $hoursProject['project_name']; ?></th>
+										<td><?php echo $hoursProject['hours']; ?></td>
+									</tr>
+								<?php endforeach;?>
+							</tbody>
+						</table>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

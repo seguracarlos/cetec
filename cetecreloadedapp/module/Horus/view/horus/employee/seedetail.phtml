@@ -1,0 +1,595 @@
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/elevatezoom/jquery.elevateZoom-3.0.8.min.js'; ?>"></script>
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/checkbox/label-checkbox.css'; ?>" rel="stylesheet" />
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Detalle alumno</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+<!-- 				<div class="btn-group btn-breadcrumb"> -->
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Cetec</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Alumnos</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Detalle</a> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+
+
+
+<div class="container">
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#details">Datos Generales</a></li>
+  <li><a data-toggle="tab" href="#loginhistory">Historial de Sesiones</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="details" class="tab-pane fade in active">
+	<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title font-raleway text-size-20">
+				<span class="glyphicon glyphicon-tag"></span>
+					<?php echo $user[0]["name"]." ".$user[0]["lastname"]." ".$user[0]["surname"]; ?>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-3 col-lg-3">
+				<center>
+					<img class="image-zoom" height="200" width="200" alt="Foto usuario" src="<?php echo (!empty($user[0]['photofile'])) ? $user[0]['photofile'] :  $this->basePath().'/public/img/user-male-icon.png'; ?>" class="img-circle">
+					<input id="id_student" type="hidden" value="<?php echo $user[0]["user_id"];?>"
+				</center>
+			</div>
+			<div class="col-md-9 col-lg-9">
+				<div class="row">
+					<div class="col-md-7 col-lg-7">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Informaci&oacute;n general</legend>
+							<div class="table-responsive">
+							
+								<table class="table font-raleway text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>N&uacute;mero de Alumno:</td>
+			                       			<td><?php echo Util_Tools::format($user[0]["user_id"], 4); ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>N&uacute;mero de Incorporacion(SEP):</td>
+			                       			<td><?php if($user[0]["numSep"]!=0){echo $user[0]["numSep"];}else{echo "S/N";} ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Nombre:</td>
+			                       			<td><?php echo $user[0]["name"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Apellido Paterno:</td>
+			                       			<td><?php echo $user[0]["lastname"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Apellido Materno:</td>
+			                       			<td><?php echo $user[0]["surname"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+					                    	<td>Correo:</td>
+					                    	<td><?php echo $user[0]["email"]; ?></td>
+					                    </tr>
+					                    <tr>
+					                    	<td>Telefono(Casa):</td>
+					                    	<td><?php echo $user[0]["phone"]; ?></td>
+					                    </tr>
+					                    <tr>
+					                    	<td>Telefono(Celular):</td>
+					                    	<td><?php echo $user[0]["cellphone"]; ?></td>
+					                    </tr>
+					                    <tr>
+					                    	<td>Sexo:</td>
+					                    	<td><?php if($user[0]["sexo"]=="H"){echo "Masculino";}elseif($user[0]["sexo"]=="M"){echo "Femenino";}?></td>
+					                    </tr>
+					                     <tr>
+					                    	<td>Fecha de Nacimiento:</td>
+					                    	<td><?php echo $user[0]["datebirth"]; ?></td>
+					                    </tr>
+					                     <tr>
+					                    	<td>CURP:</td>
+					                    	<td><?php echo $user[0]["curp"]; ?></td>
+					                    </tr>
+					                     <tr>
+					                    	<td>Estado de Nacimiento:</td>
+					                    	<td><?php echo $user[0]["state_birth"]; ?></td>
+					                    </tr>
+					                    <tr>
+					                    	<td>Ciudad de Nacimiento:</td>
+					                    	<td><?php echo $user[0]["city_birth"]; ?></td>
+					                    </tr>
+					                     <tr>
+					                    	<td>Escuela Secundaria:</td>
+					                    	<td><?php echo $user[0]["highschool"]; ?></td>
+					                    </tr>
+					                     <tr>
+					                    	<td>Fecha del Certificado de Secundaria:</td>
+					                    	<td><?php echo $user[0]["date_certificate"]; ?></td>
+					                    </tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</fieldset>
+					</div>
+				<div class="col-md-5 col-lg-5">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Pagos</legend>
+							<div class="table-responsive">
+								<table class="table font-raleway text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>Trimestre:</td>
+			                       			<td id="trim"><?php echo $user[0]["trim"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        	<td>
+			                        
+			                        	<label style="display:inline-block;" for="inscription" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar pago">
+			  							<input type="checkbox" id="inscription" class="check-confirm-inscription" value="1" <?php if($paymentInfo) echo ($paymentInfo['inscription'] == 0 ) ? '' : 'checked'; ?> />
+			  							<i></i>
+										</label>
+										Incripci&oacute;n
+										<br>
+										
+			                        	<label style="display:inline-block;" for="month_1" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar pago">
+			  							<input type="checkbox" id="month_1" class="check-confirm-month_1" value="1" <?php if($paymentInfo) echo ($paymentInfo['month_1'] == 0 ) ? 'data-id="0"' : 'data-id="1" checked'; ?>  />
+			  							<i></i>
+										</label>
+			                        	Mes 1
+			                        	<br>
+										
+										<label style="display:inline-block;" for="month_2" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar pago">
+			  							<input type="checkbox" id="month_2" name="month_2" class="check-confirm-month_2" value="1" <?php if($paymentInfo) echo ($paymentInfo['month_2'] == 0 ) ? 'data-id="0"' : 'data-id="1" checked '; ?> />
+			  							<i></i>
+										</label>
+			                        	Mes 2
+			                        	<br>
+			                        	
+										<label style="display:inline-block;" for="month_3" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar pago">
+			  							<input type="checkbox" id="month_3" name="month_3" class="check-confirm-month_3" value="1" <?php if($paymentInfo) echo ($paymentInfo['month_3'] == 0 ) ? '' : 'checked'; ?> />
+			  							<i></i>
+										</label>
+			                        	Mes 3
+			                        	<br>
+			                        	<?php if($user[0]["trim"]<=5){?>
+			                        	<div id="next">
+			                        	<label style="display:inline-block;" for="nextTrim" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar pago">
+			  							<input type="checkbox" id="nextTrim" name="nextTrim" class="check-confirm-nextTrim" value="1"/>
+			  							<i></i>
+										</label>
+			                        	Habilitar Siguiente Trimestre	
+			                        	</div>
+			                        	<?php }?>									
+										</td>
+			                      		</tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</fieldset>
+					</div>
+					
+					<div class="col-md-5 col-lg-5">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Documentos</legend>
+							<div class="table-responsive">
+								<table class="table font-raleway text-size-15">
+									<tbody>
+			                      		<tr>
+			                        	<td>
+			                        	<label style="display:inline-block;" for="documents" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="">
+			  							<input type="checkbox" id="documents" class="check-confirm-documents" value="0" <?php echo $user[0]['documents'] == 0 ? '' : 'checked';  ?>/>
+			  							<i></i>
+										</label>
+										Entreg&oacute; Documentos
+										</td>
+			                      		</tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</fieldset>
+					</div>
+					
+						<div class="col-md-5 col-lg-5">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Horas de Estudio Actuales</legend>
+							<div class="table-responsive">
+								<table class="table font-raleway text-size-15">
+									<tbody>
+			                      		<tr>
+			                        	<td>
+			                        	<?php if($this->timeInfo[0] == "00" && $this->timeInfo[1] == "00" && $this->timeInfo[2] == "00"){echo "El Alumno a&uacute;n no cuenta con horas de estudio.";
+						                     }else{
+						                     	echo $this->timeInfo[0]." Horas ".$this->timeInfo[1]." Minutos ".$this->timeInfo[2]." Segundos";
+						                     }
+				                        ?>
+			                        	</td>
+			                      		</tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</fieldset>
+					</div>
+				
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">Direcci&oacute;n</legend>
+					<div class="table-responsive">
+						<table class="table font-raleway text-size-15">
+							<tbody>
+								<tr>
+									<td>Calle:</td>
+									<td><?php echo $address["calle"]; ?></td>
+								</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Interior:</td>
+	                       			<td><?php if($address["numInt"]!=0){echo $address["numInt"];}else{echo "S/N";} ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Exterior:</td>
+	                       			<td><?php if($address["numExt"]!=0){echo $address["numExt"];}else{echo "S/N";} ?></td>
+	                      		</tr>
+								<tr>
+	                        		<td>Colonia:</td>
+	                       			<td><?php echo $address["colonia"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Delegaci&oacute;n o Municipio:</td>
+	                       			<td><?php echo $address["delegacion"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Ciudad:</td>
+	                       			<td><?php echo $address["ciudad"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>C&oacute;digo Postal:</td>
+	                       			<td><?php echo $address["cp"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Pais:</td>
+	                       			<td><?php echo $address["pais"]; ?></td>
+	                      		</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+				
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">Datos de Facturaci&oacute;n</legend>
+					<div class="table-responsive">
+						<table class="table font-raleway text-size-15">
+							<tbody>
+								<tr>
+									<td>Nombre:</td>
+									<td><?php echo $billDetails["name"]; ?></td>
+								</tr>
+	                      		<tr>
+	                        		<td>Apellido Materno:</td>
+	                       			<td><?php echo $billDetails["surname"]  ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Apellido Paterno:</td>
+	                       			<td><?php echo $billDetails["lastname"]; ?></td>
+	                      		</tr>
+								<tr>
+	                        		<td>RFC:</td>
+	                       			<td><?php echo $billDetails["rfc"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Calle:</td>
+	                       			<td><?php echo $billDetails["calle"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Exterior:</td>
+	                       			<td><?php if($billDetails["num_ext"]!=0){echo $billDetails["num_ext"];}else{echo "";} ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Interior:</td>
+	                       			<td><?php if($billDetails['num_int']!=0) {echo $billDetails["num_int"];}else{echo "";}?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Colonia:</td>
+	                       			<td><?php echo $billDetails["colonia"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>CP:</td>
+	                       			<td><?php if($billDetails["cp"]!=0){echo $billDetails["cp"];}else{echo "";} ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Delegacion:</td>
+	                       			<td><?php echo $billDetails["delegacion"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Ciudad:</td>
+	                       			<td><?php echo $billDetails["ciudad"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Pais:</td>
+	                       			<td><?php echo $billDetails["pais"]; ?></td>
+	                      		</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="clearfix">
+			<span class="pull-right">
+				<a class="btn btn-default" href="<?php echo $this->basePath("/horus/employee/index")?>" data-toggle="tooltip" data-placement="top" title="Regresar">
+					<span class="glyphicon glyphicon-repeat"></span>
+				</a>
+			</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+	    
+  </div>
+  <div id="loginhistory" class="tab-pane fade">
+  </br></br>
+  	<table id="tableHistory" class="table table-hover table-condensed table-bordered">
+	<thead>
+		<tr>
+			<th>Fecha y Hora del Inicio de Sesi&oacute;n</th>
+    		<th>Fecha y Hora del Cierre de Sei&oacute;n</th>
+			<th>Duraci&oacute;n de la Sesi&oacute;n</th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php foreach($this->loginHistory as $value){?>
+		<tr>
+			<td><?php echo $value['login_date'] ?></td>
+			<td><?php echo $value['logout_date']?></td>
+			<td><?php echo $value['session_time']?></td>
+		</tr>
+		<?php }?>
+		</tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<style>
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover { 
+	outline: 0;
+	color: #555555;
+	background-color: #ffffff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+	cursor: default;
+}
+</style>
+
+<script>
+
+	var $basePath = "<?php echo $this->basePath();?>"
+	var $id_user = $("#id_student").val();
+	$(document).ready(function() {
+		$('.image-zoom').elevateZoom();
+		$("#tableHistory").dataTable();
+		
+	});
+
+	
+	$(document).on("click", ".check-confirm-month_1", function(){
+		var $inscription = $("#inscription");
+		var $month1 = $(this);
+		var $month2 = $("#month_2");
+		var $month3 = $("#month_3");
+		var $status = 1;
+
+		if ($month1.is(":checked")) {
+			if(!$inscription.is(':checked')){
+				alertify.alert("Aun no se ha realizado el pago de inscripci&oacute;n", function(result) {
+				$month1.prop("checked", false);
+				});
+			}else{
+				alertify.confirm("Confirmar pago del Mes1", function(result) {
+				if (result) {
+				var $status = 1;
+				$month1.prop("checked", true);
+				$.ajax({
+					method   : "POST",
+					url      : $basePath + "/horus/employee/payments",
+					dataType : "json",
+					data     : {payment : "month_1" , id_user : $id_user, status : $status}
+				})
+				.done(function(response) {
+					console.log("success");
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				} else {
+				$month1.prop("checked", false);
+				}
+			});
+		  }
+		}
+	})
+	
+	$(document).on("click", ".check-confirm-month_2", function(){
+		var $inscription = $("#inscription");
+		var $month1 = $("#month_1");
+		var $month2 = $(this);
+		var $month3 = $("#month_3");
+		var $status = 1;
+
+		if ($month2.is(":checked")) {
+			if(!$month1.is(':checked')){
+				alertify.alert("Aun no se ha realizado el pago del primer mes", function(result) {
+				$month2.prop("checked", false);
+				});
+			}else{
+				alertify.confirm("Confirmar pago del Mes 2", function(result) {
+				if (result) {
+				var $status = 1;
+				$month2.prop("checked", true);
+				$.ajax({
+					method   : "POST",
+					url      : $basePath + "/horus/employee/payments",
+					dataType : "json",
+					data     : {payment : "month_2" , id_user : $id_user , status : $status}
+				})
+				.done(function(response) {
+					console.log("success");
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				} else {
+				$month2.prop("checked", false);
+				}
+			});
+		  }
+		}
+	})
+	
+	$(document).on("click", ".check-confirm-month_3", function(){
+		var $inscription = $("#inscription");
+		var $month1 = $("#month_1");
+		var $month2 = $("#month_2");
+		var $month3 = $(this);
+		
+		
+		if ($month3.is(":checked")) {
+			if(!$month2.is(':checked')){
+				alertify.alert("Aun no se ha realizado el pago del Segundo Mes", function(result) {
+				$month3.prop("checked", false);
+				});
+			}else{
+				alertify.confirm("Confirmar pago del Mes 3", function(result) {
+				if (result) {
+				var $status = 1;
+				$month3.prop("checked", true);
+				$.ajax({
+					method   : "POST",
+					url      : $basePath + "/horus/employee/payments",
+					dataType : "json",
+					data     : {payment : "month_3" , id_user : $id_user, status : $status}
+				})
+				.done(function(response) {
+					console.log("success");
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				} else {
+				$month3.prop("checked", false);
+				}
+			});
+		  }
+		}
+	})
+	
+	$(document).on("click", ".check-confirm-nextTrim", function(){
+		var $nextTrim = $(this);
+		var $inscription = $("#inscription");
+		var $month1 = $("#month_1");
+		var $month2 = $("#month_2");
+		var $month3 = $("#month_3");
+		
+		if ($nextTrim.is(":checked")) {
+			if(!$inscription.is(':checked')||!$month1.is(':checked')||!$month2.is(':checked')||!$month3.is(':checked')){
+				alertify.alert("El alumno no ha cumplido con todos los pagos para cambiar al siguiente trimestre");
+				$nextTrim.prop("checked", false);
+			}else{
+			alertify.confirm("Seguro que deseas habilitar el siguiente trimestre?", function(e) {
+				if (e) {
+					$nextTrim.prop("checked", true);
+					$.ajax({
+						method   : "POST",
+						url      : $basePath + "/horus/employee/payments",
+						dataType : "json",
+						data     : {payment : "nextTrim" , id_user : $id_user}
+					})
+					.done(function(response) {
+						console.log("success");
+						if(response.data=="Score"){
+							alertify.alert("El alumno no ha aprobado el examen para el siguiente trimestre");
+							$nextTrim.prop("checked", false);
+						}
+						if(response.data=="6"){
+							$("#next").fadeOut();
+						}
+						if(response.data!="Score"||response.data<6){
+							alertify.success("El alumno ha avanzado de trimestre");
+							$("#trim").html(response.data);
+							if(response.data==5){
+								$inscription.prop("checked",false);
+								$inscription.attr("disabled", false);
+							}else{
+								$inscription.attr("disabled", true);
+							}							
+							$month1.prop("checked",false);
+							$month2.prop("checked",false);
+							$month3.prop("checked",false);
+							$nextTrim.prop("checked", false);							
+						}
+					})
+					.fail(function() {
+						console.log("error");
+					})
+					.always(function() {
+						console.log("complete");
+					});
+				} else {
+
+					$nextTrim.prop("checked", false);
+				}
+			});
+		  }
+		}
+	})
+	
+	$(document).on("click", ".check-confirm-documents", function(){
+		$documents = 0;
+		if ($(this).is(":checked")) {
+			$documents = 1;
+		}	
+		$.ajax({
+			method   : "POST",
+			url      : $basePath + "/horus/employee/documents",
+			dataType : "json",
+			data     : {documents : $documents , user_id : $id_user}
+			})
+			.done(function(response) {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+	});
+</script>

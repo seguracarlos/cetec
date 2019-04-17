@@ -1,0 +1,170 @@
+<?php
+include_once APPLICATION_PATH . '/Constants/Constants.php';
+
+ $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPurchase.js'));
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+?>
+<script type="text/javascript">
+var oTableO;
+$(document).ready(function() {
+	jqueryTable('#purchaseTable');
+	
+	oTableO = $('#OrderTablePay').dataTable({
+		   "bPaginate": true,
+           "bLengthChange": true,
+           "bFilter": true,
+           "bSort": true,
+           "bInfo": true,
+           "iDisplayLength" : 10,
+           "bAutoWidth": false,
+           "aoColumns": [
+                           null,
+                           null,
+                           null,
+                           null
+                         ],
+             "oLanguage": {
+          	   "oPaginate": {
+          	   "sPrevious": "Anterior",
+          	   "sNext": "Siguiente",
+          	   "sLast": "Ultima",
+          	   "sFirst": "Primera"
+          	   },
+
+          	   "sLengthMenu": 'Mostrar <select>'+
+          	   '<option value="10">10</option>'+
+          	   '<option value="20">20</option>'+
+          	   '<option value="30">30</option>'+
+          	   '<option value="40">40</option>'+
+          	   '<option value="50">50</option>'+
+          	   '<option value="-1">Todos</option>'+
+          	   '</select> registros',
+
+          	   "sInfo": "Mostrando del _START_ a _END_ (Total: _TOTAL_ resultados)",
+          	   "sInfoFiltered": " - filtrados de _MAX_ registros",
+          	   "sInfoEmpty": "No hay resultados de búsqueda",
+          	   "sEmptyTable": "No hay registros a mostrar",
+          	   "sZeroRecords": "No hay registros a mostrar",
+          	   "sProcessing": "Espere, por favor...",
+          	   "sSearch": "Buscar:"
+          } 
+	});
+});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerIn">Historial de Almac&eacute;n</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/warehouse/index') ?>">
+				<img title="Almac&eacute;n materia prima" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconbrick.png')?>" /></a>
+		</li>
+
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','alamcen histroial')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+
+
+<div id="overflow">
+	
+	<table id="purchaseTable" class="display">
+		<thead>
+			<tr>
+				<th>N&deg; Pedido</th>
+				<th>Proveedor</th>				
+				<th>Estatus</th>
+				<th>Fecha de pedido</th>
+				<th>Fecha de entrega</th>
+				<th></th>
+				
+			</tr>
+		</thead>
+		<tbody>
+		
+			<?php if(count($this->purchaseOrders)>0){?>
+			<?php foreach ($this->purchaseOrders as $order): ?>
+				<tr>
+					<td><?php echo Application_Util_Tools::format($order->getOrder_Id(), 3); ?></td><!-- orden -->
+					<td><?php echo $order->getId_company()?></td><!-- nombre de cliente -->					
+					<td>
+					<?php
+						$statusVisual = "";
+						switch ($order->getStatus()) {
+							case StatusPurchaseOrder::NOT_DELIVERED:
+								$statusVisual = "No entregada";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+								$statusVisual = "Entregada incompleta";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_COMPLETE:
+								$statusVisual = "Entregada completa";								
+								break;							
+							default:								
+								break;
+						}
+						echo $statusVisual;
+					?>
+					</td>
+					
+					<td><?php echo Application_Util_Tools::dateFrontFormat('-', $order->getLogDate()); ?></td><!-- fecha de inicio -->
+					<td><?php echo Application_Util_Tools::dateFrontFormat('-', $order->getStart_date()); ?></td><!-- fecha de fin -->			
+					<td>						
+						<a href="#" onclick="javascript:showPurchase('<?php echo Application_Util_Tools::format($order->getOrder_Id(), 3); ?>','<?php echo $order->getOrder_Id();?>')">Ver Compras</a>
+					</td>					
+				</tr>
+			<?php endforeach; ?>
+			<?php }?>
+		</tbody>
+	</table>
+	
+</div>
+
+<!--  Inicia popup -->
+
+<div id="TableOrderPurchasePop" class="popHorus">
+		<div id="btnXOrderPay" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+		</div>
+		<div id="message"></div>
+		<div id="tablaPayDiv" >
+    		<table class="display" id="OrderTablePay">
+    			<thead>
+    				<tr>
+    					<td>Clave</td>
+    					<td>Nombre</td>
+    					<td>Cantidad</td>
+    					<td>Precio</td>
+    				</tr>
+    			</thead>
+    			<tbody>
+    			</tbody>
+    		</table>	
+	     </div>
+	     <div id="btnAcceptDiv">
+	     	<button value="Aceptar" id="btnAccept">Aceptar</button>
+	     </div>
+	</div>
+	<div id="TableOrderPurchaseBack"></div>
+ 
+ <!--   termina popup -->
+
+

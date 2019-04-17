@@ -1,0 +1,229 @@
+<?php 
+		$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupactivity.css'))
+		 							->appendStylesheet($this->baseUrl('/public/css/calendar.css' ));
+	  	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addActivity.js'))
+	  								    ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/surfWeeks.js'));
+	  
+	  echo $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=UTF-8' )."\n";
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		initActivities("<?php echo $this->roleId; ?>");
+		surfWeeks("<?php echo $this->projectId; ?>","<?php echo $this->idUser; ?>");
+		
+		$("#activities_next").click(function(){//>
+			var totals = 0;
+			
+			 $.each($(".totales"), function() {
+	       	   totals += parseInt($(this).html());
+	      		});
+	        $("#superTotal").html(totals);
+		});
+		
+		$("#activities_previous").click(function(){//<
+			var totals = 0;
+			
+			 $.each($(".totales"), function() {
+	       	   totals += parseInt($(this).html());
+	      		});
+	        $("#superTotal").html(totals);
+		});
+		
+		$("#activities_last").click(function(){//>>
+	
+			var totals = 0;
+			
+			 $.each($(".totales"), function() {
+	       	   totals += parseInt($(this).html());
+	      		});
+	        $("#superTotal").html(totals);
+		});
+		
+		$("#activities_first").click(function(){//<<
+			var totals = 0;
+			
+			 $.each($(".totales"), function() {
+	       	   totals += parseInt($(this).html());
+	      		});
+	        $("#superTotal").html(totals);
+		});
+		
+		$(".fg-button").click(function(){//numeros
+			var totals = 0;
+			
+			 $.each($(".totales"), function() {
+	       	   totals += parseInt($(this).html());
+	      		});
+	        $("#superTotal").html(totals);
+		});
+		
+		$("#activities_length").click(function(){//filtro cuantos vistos
+			var totals = 0;
+			
+			 $.each($(".totales"), function() {
+	       	   totals += parseInt($(this).html());
+	      		});
+	        $("#superTotal").html(totals);
+		});
+		
+		$("#activities_filter input").keyup(function(){//buscador
+			var totals = 0;
+
+			if($(".totales").html() != null){
+				 $.each($(".totales"), function() {
+					  totals += parseInt($(this).html());
+	     		});
+			}
+			
+			 $("#superTotal").html(totals);
+	       
+		});
+	});
+</script>
+<h3 class="centerHor">Registro de Actividades Diarias del Proyecto "<?php echo  $this->nameProject; ?>"</h3>
+
+<ul class="toolbar">
+	<div id="icons">
+			<?php if (Privilege::SUPERUSUARIO == $this->roleId || Privilege::SUPERADMINISTRADOR == $this->roleId || Privilege::ADMINISTRADOR == $this->roleId || Privilege::VISUALIZADOR == $this->roleId){?>
+				<li class="iconOpacity">
+					<a href="<?php echo $this->baseUrl('/Horus/activities/history/id/'.$this->projectId.'/iduser/'.$this->idUser.'/from/'.Application_Util_Tools::getActualMondayDate().'/to/'.Application_Util_Tools::getActualSundayDate()) ?>">
+						<img title="Historial" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png')?>"/>
+					</a>
+				</li>
+			<?php  } ?>
+			<li class="iconOpacity" >
+				<a href="<?php echo $this->baseUrl('/Horus/activities/index');?>">
+					<img title="Actividades Diarias" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconact.png')?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Graficas de las Actividades Diarias')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+	</div>	
+</ul>
+
+<div id="overflow">
+<h2 id="weekDuration" class="center">Semana del <span id="weekFirst"><?php echo $this->week; ?></span> al <span id="weekEnd"><?php echo $this->weekEnd; ?></span> de <span id="month"><?php echo $this->month; ?></span></h2>
+
+<div class="center">
+	<button id="before" value="<?php echo $this->mondayActualWeek; ?>">&lt;&lt; Semana Anterior</button>
+	<button id="after" value="<?php echo $this->sundayActualWeek; ?>">Semana Siguiente &gt;&gt;</button>
+</div>
+	<table id="activities" class="display">
+		<thead>
+			<tr>
+				<th>Actividad</th>
+				<th>Lunes</th>
+				<th>Martes</th>
+				<th>Miercoles</th>
+				<th>Jueves</th>
+				<th>Viernes</th>
+				<th>Sabado</th>
+				<th>Domingo</th>
+				<th>Tiempo semanal (Horas)</th>
+				<th>
+					<?php if($this->permissions[KeysGlobalPermissions::HORUSACTIVITIESADDWEEK]) :?>
+						<a onclick="renderActivity();"> <img class="iconOpacity"
+							src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>"
+							title="Agregar actividad" alt="Agregar actividad">
+						</a>
+					<?php endif;?>
+				</th>
+			</tr>
+		</thead>
+	<?php if (!empty($this->activitiesDto )):?>
+	<?php
+		$rowCount = 0;
+		$newDayHour = array(); 
+		foreach ( $this->activitiesDto  as $activity ) :?>
+		<tr id="<?php echo $activity->getId_activity();?>">
+			<td><?php echo $activity->getDescription();?></td>
+				<?php foreach ($activity->getDaysHours() as $dayHourArray => $dayHour):?>
+				<?php 
+				/**
+				 * $dayHourArray contiene un conjunto de arreglos, estos arreglos 
+				 * conocidos como $dayHour contienen una sola posición y un valor asociado que representan 
+				 * el dia que se hizo una actividad y las horas que se dedico a ella, por tanto se extraen
+				 * las keys de cada arreglo con la función array_keys y su valor asociado en forma desordenada,
+				 * una ves obtenidos se agrupan estos pares en un unico arreglo con el fin de poder emplear
+				 * el sort de oredenamiento basado en keys llamado ksort, una ves ordenado el arreglo se puede predecir
+				 * el orden en que los dias y sus horas se situan en el arreglo ordenado y por tanto se imprimen por posición
+				 */
+			$keys = array_keys($dayHour); 
+			$newDayHour[$keys[0]] = $dayHour[$keys[0]];
+		endforeach;
+			ksort($newDayHour);
+	?>	
+				<td class="center" id="mon<?php echo $rowCount; ?>"><?php echo $newDayHour[1];?></td>
+				<td class="center" id="tue<?php echo $rowCount; ?>"><?php echo $newDayHour[2];?></td>
+				<td class="center" id="wed<?php echo $rowCount; ?>"><?php echo $newDayHour[3];?></td>
+				<td class="center" id="thu<?php echo $rowCount; ?>"><?php echo $newDayHour[4];?></td>
+				<td class="center" id="fri<?php echo $rowCount; ?>"><?php echo $newDayHour[5];?></td>
+				<td class="center" id="sat<?php echo $rowCount; ?>"><?php echo $newDayHour[6];?></td>
+				<td class="center" id="sun<?php echo $rowCount; ?>"><?php echo $newDayHour[0];?></td>
+				<td class="center" id="total<?php echo $rowCount; ?>" class="totales">
+					<?php
+					$total = 0;
+						for ($i = 0; $i < Constants::WEEKLENGTH; $i++) {
+							$total = $total + $newDayHour[$i];
+						}
+					echo  $total;
+					?>
+				</td>
+				<td>
+				<?php if ($this->permissions[KeysGlobalPermissions::HORUSACTIVITIESDELETE]) :?>
+					<a onclick="javascript:deleteActivity('activities',this,'<?php echo $activity->getId_activity()?>','/Horus/activities/delete')">
+						<img class="iconOpacity" alt="Eliminar" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>">
+					</a>
+				<?php endif;?>
+				</td>
+		</tr>
+		<?php $rowCount++; ?>
+	<?php endforeach; endif;?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+				<th class="center"></th>
+			</tr>
+		</tfoot>	
+	</table>
+</div>
+<!-- 
+    Inicia popup
+-->
+<div id="popupactivity" class="popHorus">
+	<div class="center">
+		<div id="btnXactivity" title="Cerrar ventana">X</div>
+			<div id="btnMoreForms" title="Agregar formulario" onclick="clone()"><img alt="M&acute;s" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>"></div>
+			<div id="btnLessForms" title="Eliminar formulario" onclick="removeEach()"><img alt="Menos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>"></div>
+			<h1 class="center">Crear actividad para el proyecto "<?php echo  $this->nameProject; ?>"</h1>
+			<h4></h4>
+				<div id="containerForms">
+				<?php echo $this->form; ?>
+				</div>
+	</div>
+</div>
+<div id="backgroundactivity"></div>
+<!-- 
+    termina popup
+-->
+<!-- 
+    Inicia popup
+-->
+	<div id="popWait">
+			<div class="center">
+				<label id="wait">Espere por favor...</label>
+				<hr/>
+				<img id="loader" src="<?php echo $this->baseUrl('/public/img/loader.gif')?>">
+			</div>
+	</div>
+<div id="waitBack"></div>
+<!-- termina popup -->

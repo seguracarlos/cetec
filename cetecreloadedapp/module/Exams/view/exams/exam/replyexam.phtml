@@ -1,0 +1,397 @@
+<script type="text/javascript" src="<?php echo $this->basePath('/public/js/chrony/js/jquery.chrony.min.js'); ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/overlay/jquery.blockUI.js'; ?>"></script>
+
+<style>
+form:not(:first-of-type) {
+display: none;
+
+
+h7{
+	text-align:left
+}
+
+
+
+.new-button {
+    float: left;
+}
+
+.delete-button {
+    float: right;
+}
+
+
+}
+</style>
+
+
+
+<div id="overflow">
+<div id="mensajes"></div>
+
+<div>
+<center>
+
+<div class="container">
+<div class="wrap" id="add" name="add">
+<h2>Evaluación <?php echo $this->parent[0]['topic_name']; ?></h2>
+<div id="question" ALIGN=left style="display:none">
+	<?php
+	$i = 0;
+	$count = count($this->question);
+	if($this->question){ 
+	foreach($this->question as $question):
+	?>
+	<form id="pre<?php echo ($i+1);?>" name="pre<?php echo ($i+1);?>" method="post" class="pre">
+		<center>Pregunta <?php echo ($i+1)."/".$count;?></center></br></br>
+		<h4><?php echo ($i+1);?>.-<?php echo $question['question_name'];?></h4>
+		<input type="hidden" name="exam" value="<?php echo $this->parent[0]['id_topic']; ?>" ></input>
+		<input type="hidden" name="idquestion" value="<?php echo $question['id_question']; ?>" ></input>
+		<input type="hidden" name="user" value="<?php echo $this->user; ?>" ></input>
+		<input type="hidden" name="questionType" value="<?php echo $question['type_question']; ?>" ></input>
+		<input type="hidden" name="initScore" value="<?php echo $this->initScore; ?>" ></input>
+		<input type="hidden" name="value" value="<?php echo $question['value']; ?>" ></input>
+		</br></br>
+		
+		<left>
+		<?php
+		if($question['type_question'] == 1){
+			?>
+			<input type="text" style="width:30%;" id="resp<?php echo ($i+1); ?>" name="open" ></input>
+			</br>
+		<?php }else if($question['type_question'] == 2){
+			foreach ($this->options[$i] as $option): ?>
+				<div class="options">
+					<ul class="choices inputChoices">
+						<h5 class="containerChoices"><input type="radio" name="resp" class="answer" id="<?php echo $option['id_resp']; ?>" value="<?php echo $option['id_resp']; ?>"  style="visibility:hidden;"><p class="optionName"><?php echo $option['nombre']; ?></p></input></h5>
+					</ul>
+				</div>
+			</br>
+			<?php endforeach;
+		}else if($question['type_question'] == 3){
+			foreach ($this->options[$i] as $option): ?>
+				<h7><input type="checkbox" name="respCheck[]" class="answer" id="<?php echo $option['id_resp']; ?>" value="<?php echo $option['id_resp']; ?>" ><?php echo $option['nombre']; ?>" </input></h7>
+			</br>
+			<?php endforeach;
+		}else if($question['type_question'] == 4){
+			foreach ($this->options[$i] as $option): ?>
+				<table><tr><td><input type="checkbox" name="respCheckImg[]" id="<?php echo $option['id_resp']; ?>" value="<?php echo $option['id_resp']; ?>" ></input></td><td><img id='titleImg' name="titleImg" style='border-radius: 25%; height: 100px; width: 100px'; class='' src="<?php echo $option['nombre']; ?>" /></td></tr></table>	
+			<?php endforeach;
+		}?>
+		</br></br>
+		</left>
+		<?php  
+		if($count == ($i+1)){ ?>
+			<input type="hidden" name="finalice" value="finalizar" />
+			<input class="btn btn-lg btn-primary"  type="submit" id="finalizar" name="finalizar"  value="Finalizar" ></input>
+			
+		<?php }else if($count > ($i+1)){ ?>
+		<button type="submit" id="siguiente" name="siguiente"  value="Siguiente" class="next btn btn-lg btn-primary" ><span class="glyphicon glyphicon-arrow-right"></span> Siguiente Pregunta</button>
+		<?php } ?>
+	</form>
+<?php
+	$i++;
+	endforeach; 
+	}else{
+		echo "<center><h3>No existen preguntas aun en este examen.</h3></center>";
+	}
+	?>
+	<div class="timeLeft">
+		<h3 style="text-align: right;">Tiempo restante:<br><div style="text-align: right;float: right;" id="time" ></div> </h3>
+	</div>
+</div>
+</center>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+var $basePath = "<?php echo $this->basePath();?>"
+	
+$(document).ready(function(){
+	var current_fs, next_fs; //conjuntos de campos
+	var basePath = "<?php echo $this->basePath("/exams/exam/checkanswers"); ?>";
+
+		$("#question").fadeIn(2000);
+		$('#time').chrony({ 
+			hour: <?php echo $this->hour; ?>, 
+		    minute: <?php echo $this->min; ?>,
+		    finish: function() {
+		    			$(".next").attr('disabled','disabled');
+				    	califExam();
+		   	} });
+
+		$(".next").click(function(e){
+		e.preventDefault();
+		answer = 0;
+		var formPregunta = $(this).parent().serialize();
+
+		$('.pre:visible').find('.answer').each(function(index,value) {
+			if($(this).is(":checked")){
+				answer = 1;
+			}
+		})
+		
+		if(answer == 1){
+			$.ajax({
+	 			type: "POST",
+	 			url: basePath,
+	 			data: formPregunta,
+	 			dataType: "json",
+	 			success: function(response){
+	 				//alert(response.response);
+	 				console.log(response.response);
+	 			},
+	 			error: function(){
+	 				//alert("Fallo, intentalo otra vez");
+	 				console.log("Fallo, intentalo otra vez");
+	 			}
+			});
+	 		current_fs = $(this).parent();
+	 		next_fs = $(this).parent().next();
+	 		//mostrar el siguiente formulario
+	 		next_fs.show(); 
+	 		//ocultar el formulario actual con estilo
+	 		current_fs.hide();
+		}else{
+			alertify.alert("Debes seleccionar una respuesta para continuar");
+		}
+
+	})
+
+		$("#finalizar").click(function(e){
+		e.preventDefault();
+	    var answer = 0;
+		$('.pre:visible').find('.answer').each(function(index,value) {
+			if($(this).is(":checked")){
+				answer = 1;
+			}
+		})
+
+		if(answer == 1){
+			$.blockUI({
+		        message: '<h1 style="margin-top:10px;margin-bottom:10px;"><img style="margin-top:-9px;" src="'+$basePath+'/public/img/loader-30.gif"> Espere...</h1>',
+		        css: {
+		        	border: 'none',
+		            padding: '15px',
+		            backgroundColor: '#000',
+		            '-webkit-border-radius': '10px',
+		            '-moz-border-radius': '10px',
+		            opacity: .5,
+		            color: '#fff'
+		        }
+		    });
+			var r=0;
+			var formPregunta = $(this).parent().serialize();
+			$.ajax({
+				type: "POST",
+				url: basePath,
+				data: formPregunta,
+				dataType: "json",
+				success: function(response){
+					//alert("Gracias por contestar este examen, tu calificacion es: " + response.scorefinal);
+					$.unblockUI();
+					alert("Gracias por contestar este examen, revisa la bandeja de entrada de tu correo para conocer tu calificaci\u00F3n")
+					var basePath= "<?php echo $this->basePath('/exams/exam') ?>";
+//					var params = "<?php echo $this->user; ?>";
+//	 				var replyExam = basePath+params;
+					$(location).attr('href',basePath);
+					
+				},
+				error: function(){
+					console.log("Fallo, intentalo otra vez");
+				}
+			});
+				
+		}else{
+			alertify.alert("Debes seleccionar una respuesta para continuar");
+		}
+	
+	});
+	
+	
+});
+
+
+$(".options").click(function(){
+	var $optionsContainer = $(this).parents('.pre').find(".answer");
+	var $inputCheck = $(this).find('.answer');
+	 $($optionsContainer).each(function(index,value){
+// 		 if($(this).is(":checked")){
+// 			console.log("Checked");
+// 			console.log(value);
+			 $(this).parents().find(".optionsSelected").removeClass("optionsSelected").addClass("options");
+			 $(this).parents().find('.containerChoicesSelected').removeClass("containerChoicesSelected").addClass("containerChoices");
+			 $(this).parents().find('.choicesSelected').removeClass("choicesSelected").addClass("choices");
+			 $(this).parents().find('.optionNameSelected').removeClass("optionNameSelected").addClass("optionName");  
+	 });
+
+	 $(this).removeClass("options").addClass("optionsSelected");
+	 $(this).find('.containerChoices').removeClass("containerChoices").addClass("containerChoicesSelected"); 
+	 $(this).find('.choices').removeClass("choices").addClass("choicesSelected");
+	 $(this).find('.optionName').removeClass("optionName").addClass("optionNameSelected");
+	 $(this).find('.answer').prop("checked",true);
+
+})
+
+
+</script>
+<script type="text/javascript">
+function califExam(){
+	var califPath ="<?php  echo $this->basePath('/exams/exam/getscore') ?>";
+	var exitPath = "<?php echo $this->basePath('/exams/exam') ?>";
+	var text = '{"version": "<?php echo $this->initScore ?>", "exam" : "<?php echo $this->parent[0]['id_topic'] ?>", "user" : "<?php echo $this->user ?>" }';
+
+	$.blockUI({
+        message: '<h1 style="margin-top:10px;margin-bottom:10px;"><img style="margin-top:-9px;" src="'+$basePath+'/public/img/loader-30.gif"> Espere...</h1>',
+        css: {
+        	border: 'none',
+            padding: '15px',
+            backgroundColor: '#000',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .5,
+            color: '#fff'
+        }
+    });
+
+	$.ajax({
+		type: "POST",
+		url: califPath,
+		data: {myData:text},
+		dataType: "json",
+		success: function(response){
+			//alert("Se termino el tiempo para contestar este examen, tu calificacion fue:" + response.scorefinal);
+			$.unblockUI();
+			alert("Se termino el tiempo para contestar este examen, revisa la bandeja de entrada de tu correo para conocer tu calificaci\u00F3n");
+			$(location).attr('href',exitPath);
+		},
+		error: function(){
+			console.log("Fallo, intentalo otra vez");
+		}
+	});
+}
+
+//startChr();
+</script>
+
+<style>
+.wrap{
+	background: #E6E6E6;
+	border-radius: 10px;
+	border: 1px solid #E0E0E0;
+	padding: 25px;
+	width: 60%;
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom:100px;
+}
+
+  h4 {
+    font-family: sans-serif;
+    padding-top: 16px;
+    padding-left: 20px;
+    font-size: 12pt;
+    font-weight: bold;
+    color: #1C1C1C;
+ }
+ 
+.wrap h2{
+	margin-bottom: 20px;
+	border-bottom: 1px solid #DDD;
+	padding-bottom: 15px;
+	text-align: center;
+	color: #01A9DB;
+}
+
+form input{
+	margin-bottom:10px;
+}
+
+.fl{
+	padding: 10px;
+}
+
+.cf{
+	clear: both;
+	padding: 10px;
+}
+ .inputs{
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 4px 4px 4px 4px;
+    color: #555555;
+    font-size: 14px;
+    height: 30px;
+    width: 90%;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+}
+
+.inputs:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0 none;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(82,168,236,.6);
+    -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(82,168,236,.6);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(82,168,236,.6);
+}
+
+.optionsSelected, .containerChoicesSelected, .optionNameSelected{
+	background-color:#2677B6;
+    -webkit-transition-property: background;
+    transition-property: background;
+    transition-duration: .2s;
+    border-radius: 5px 5px 5px 5px;
+	color: white;
+    text-shadow: 0px 1px 1px rgba(0,0,0,.6);
+}
+
+.options:hover, .containerChoices:hover,.optionName:hover, .choices:hover{
+	background: #3498db;
+    -webkit-transition-property: background;
+    transition-property: background;
+    transition-duration: .2s;
+    border-radius: 5px 5px 5px 5px;
+	color: white;
+    text-shadow: 0px 1px 1px rgba(0,0,0,.6);
+}
+
+  .choices {
+    color: #4D4D4D;
+  }
+
+  .choices , .inputChoices {
+   	margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .optionName , .optionNameSelected{
+  	padding-left: 10px;
+  	padding-top:8px;
+  	padding-right:5px;
+  }
+  
+  .containerChoices, .containerChoicesSelected{
+  	display: inline-flex;
+  }
+  
+  .timeLeft{
+  	margin-top:-65px;
+  }
+    
+    /* Extra Small Devices, Phones */ 
+    @media (max-width : 720px) {
+		.timeLeft{
+		  	margin-top:50px;
+		 }
+    }
+    
+   @media (min-width : 300px) {
+		.wrap{
+			width: 95%;
+		 }
+    }
+
+</style>

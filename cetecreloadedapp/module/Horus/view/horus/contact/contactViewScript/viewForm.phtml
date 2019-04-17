@@ -1,0 +1,204 @@
+<?php 
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/functions.js'))
+					   ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/1000.js'));
+?>
+<style>
+	.userPrivilege{
+		display:none;
+	}
+	#loaderPass{
+		display:none;
+	}
+	#loaderUser{
+		display:none;
+	}
+</style>
+<script>
+	$(document).ready(function() {
+		birthday();
+		
+		$('#mail_contact').change(function(){
+			var mail = $(this).val();
+			validaEmail(mail, $(this));
+		});
+
+		if(nameContact != null){
+			$("#titleFormContact").html(nameContact);
+		}
+
+		$('#user_name').change(function(){
+			var user_name = $(this).val();
+			validaUser_Name(user_name, $(this));
+		});
+
+		$("#canlogin").change(function(){
+			if($(this).is(':checked') == false){
+				$(".userPrivilege").hide();
+				$("#contactForm").removeAttr('onSubmit');
+				$("#user_name").attr("class", "canBeNull");
+				$("#password").attr("class", "canBeNull");
+				$(".pass").hide();
+				$("#confirm_password").attr("class", "canBeNull");
+				$("#contactForm").attr("onSubmit", "return isEmptyForm('contactForm', 6)");
+			}else{
+				horusConfirm("Si da permiso al contacto de entra a Horus se convertir\u00e1 en un usuario \u00BFesta seguro de darle permiso? ", 'Alerta', function(r){
+					if(r){
+						$(".userPrivilege").show();
+						$("#contactForm").removeAttr('onSubmit');
+						$("#user_name").removeAttr("class");
+						$("#password").removeAttr("class");
+						$("#confirm_password").removeAttr("class");
+						$("#user_name").val("");
+						$(".pass").show();
+						$("#contactForm").attr("onSubmit", "return isEmptyForm('contactForm', 9)");
+					}else{
+						$("#canlogin").prop("checked", "");
+					}
+				});
+			}
+			saveButtonEnable('Guardar');
+		});
+
+		if($("input[name='canlogin']:checked").val() == "1"){
+			$(".userPrivilege").show();
+			$("#contactForm").removeAttr('onSubmit');
+			$("#user_name").removeAttr("class");
+			$(".pass").hide();
+			$("#contactForm").attr("onSubmit", "return isEmptyForm('contactForm', 7)");
+		}else{
+			$(".userPrivilege").hide();
+			$(".userPrivilege").hide();
+			$("#contactForm").removeAttr('onSubmit');
+			$("#user_name").attr("class", "canBeNull");
+			$("#password").attr("class", "canBeNull");
+			$("#confirm_password").attr("class", "canBeNull");
+			$("#contactForm").attr("onSubmit", "return isEmptyForm('contactForm', 6)");
+		}
+		
+		$('#subPay1').click(function(){
+			$('#password').val("");
+			$('#confirm_password').val("");
+			$('#key').val("");
+			$('#key').hide();
+			$('#labelkey').hide();
+			$('#subPay1').hide();
+		});
+		
+
+		$('#subPay').click(function(){
+			var a = azar();
+			$('#key').val(a);
+			$('#password').val(a);
+			$('#confirm_password').val(a);
+			$('#key').show();
+			$('#labelkey').show();
+			$('#subPay1').show();
+		});
+
+		$('#password').change(function(){
+			validpass($(this).val(), $('#Guardar'));
+		});
+	});
+</script>
+
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+	<fieldset>
+		<legend id="titleFormContact">Informaci&oacute;n de contacto</legend>
+		<table>
+			<tbody>
+				<?php if ($this->element->getElement('company_ID') != ""): ?>
+				<tr>
+					<td id="c">* Compañía:</td>
+					<td></td>
+				</tr>
+				<?php endif; ?>
+				<tr>
+					<td><?=$this->element->getElement('company_ID'); ?></td>
+				</tr>
+				<tr>
+					<td>* Nombre:</td>
+					<td>* Ap. Paterno:</td>
+					<td>Ap. Materno:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('name_contact'); ?></td>
+					<td><?=$this->element->getElement('surname_contact'); ?></td>
+					<td><?=$this->element->getElement('lastname_contact'); ?></td>
+				</tr>
+				<tr>
+					<td>* Puesto:</td>
+					<td>* Tel&eacute;fono local:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('id_job');?></td>
+					<td><?=$this->element->getElement('phone_contact'); ?></td>
+				</tr>
+				<tr>
+					<td>M&oacute;vil:</td>
+					<td>* E-Mail:</td>
+				</tr>
+				<tr>
+					<td><?=$this->element->getElement('cellphone_contact'); ?><br></td>
+					<td><?=$this->element->getElement('mail_contact'); ?>
+						<img id="loaderEmail" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					<br></td>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>
+	<?php if(isset($_GET['c'])) :?>
+	<fieldset id="accesSecurity">
+			<legend>Datos de acceso y seguridad</legend>
+		    <table>
+		        <tbody>
+		        		<div id="iCan">
+		        			<tr>
+        						<td>&iquest;Puede entrar a Horus?</td>
+        						<td><?=$this->element->getElement('canlogin'); ?></td>
+        					</tr>
+		        		</div>
+					            <tr class="userPrivilege">
+					            	<td><label>* Clave de usuario:</label></td>
+					            </tr>            
+					            <tr class="userPrivilege">
+					               	<td>
+					               		<?=$this->element->getElement('user_name'); ?>
+					               		<img id="loaderUser" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					               	</td>
+				           	 	</tr>
+					            <tr class="userPrivilege">
+					            	<td><label class="pass">* Contrase&ntilde;a:</label></td>
+					                <td colspan="2" ><label class="pass">* Confirmar contrase&ntilde;a:</label></td>
+					            </tr>
+					            <tr class="userPrivilege pass">
+					                <td>
+					                	<?=$this->element->getElement('password'); ?>
+					                	<div id="showErrPass" style=" padding: 3px; font-size: 10px; width: auto; height: auto; position: absolute; background-color: #FFEE7C; z-index: 1; float: right; display: none;"></div>
+					                	<img id="loaderPass" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					                </td>
+					               	<td><?=$this->element->getElement('confirm_password'); ?><?=$this->element->getElement('subPay');?></td>
+					            </tr>
+		        </tbody>
+		    </table>
+		    <table class="pass">
+		    	<tbody>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><span id="labelkey" hidden="true"> Clave  Generada:</span></td>
+		    			<td></td>
+		    		</tr>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><?=$this->element->getElement('key');?></td>
+		    			<td><input type="button" id="subPay1" name="reset" value="Limpiar"/></td>
+		    		</tr>
+		    	</tbody>
+		    </table>
+		</fieldset>
+	<?php endif; ?>
+	<div class="center">
+	    <?=$this->element->getElement('Guardar');?>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/Horus/contact/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>

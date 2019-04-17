@@ -1,0 +1,26 @@
+
+<script type="text/javascript">
+	var tax = "<?php echo Application_Util_Tools::getPreferenceTax($this->tax); ?>";
+	var IconSet = "<?php echo $this->iconset; ?>";
+	var permisSearchCatalog = "<?php echo $this->permissions[KeysGlobalPermissions::INGRESOSCATALOGINDEX]; ?>";
+
+</script>
+
+<h3 class="centerHor">Punto de Venta</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSSALESINDEX]):?>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl("/In/sales/index"); ?>">
+					<img title="Ventas"  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcart.png');?>"/>
+				</a>
+			</li>
+		<?php endif; ?>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ventas')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<?php echo $this->salesForm; ?>

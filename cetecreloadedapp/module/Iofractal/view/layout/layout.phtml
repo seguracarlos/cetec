@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="en" class="ie7"> <![endif]-->  
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+    <title>..: IOFractal Osiris :..</title>
+
+    <!-- Meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/plugins/bootstrap/css/bootstrap.min.css';?>">
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/css/style.css';?>">
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/css/headers/header1.css';?>">
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/plugins/bootstrap/css/bootstrap-responsive.min.css';?>">
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/css/style_responsive.css';?>">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/plugins/font-awesome/css/font-awesome.css';?>">
+    <!-- CSS Theme -->    
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/css/themes/default.css';?>" id="style_color">
+    <link rel="stylesheet" href="<?php echo $this->basePath() . '/public/assets/css/themes/headers/default.css';?>" id="style_color-header-1">
+    
+    <script>
+						var BASE_URL = '<?php echo $this->basePath(); ?>';
+						var ICONS='<?php echo $this->iconset;?>';
+			</script>
+			
+	        <?php  echo $this->headLink()
+					         ->appendStylesheet($this->basePath('/public/horus/bootstrap/css/bootstrap.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/css/global.css'))
+							 ->appendStylesheet($this->basePath('/public/horus/css/090.css'))
+							 ->appendStylesheet($this->basePath('/public/horus/css/template_IE9.css'),'','IE 9')
+							 ->appendStylesheet($this->basePath('/public/horus/css/template_IE8.css'),'','lte IE 8')
+							 ->appendStylesheet($this->basePath('/public/horus/css/template.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/css/nav.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/css/iofgrad.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/css/jquery.alerts.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/css/Qmedia.css'))
+							 ->appendStylesheet($this->basePath('/public/horus/css/forms.css'))
+							 ->appendStylesheet($this->basePath('/public/horus/js/DataTables-1.8.2/media/css/demo_page.css'))
+							 ->appendStylesheet($this->basePath('/public/horus/js/DataTables-1.8.2/media/css/demo_table_jui.css'))							 
+					         ->appendStylesheet($this->basePath('/public/horus/js/jquery/css/jquery-ui-1.8.21.custom.css' ))
+					         ->appendStylesheet($this->basePath('/public/horus/js/jquery/jquery-ui-1.10.4.custom/css/south-street/jquery-ui-1.10.4.custom.css' ))
+					         ->appendStylesheet($this->basePath('/public/horus/css/ui/jquery.ui.all.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/notification_menu/css/style_light.css'))
+					         ->appendStylesheet($this->basePath('/public/horus/css/styleie.css'),'','IE')
+					         ->appendStylesheet($this->basePath("/public/horus/js/tour/mobile.css"))
+					         ->appendStylesheet($this->basePath('/public/horus/js/tour/joyride-2.0.3.css'))
+					         ->appendStylesheet($this->basePath("/public/horus/css/sidePanel.css"))
+					         ->appendStylesheet($this->basePath("/public/horus/js/jquery/scrollpane/style/jquery.jscrollpane.css"))
+					         ->appendStylesheet($this->basePath("/public/horus/js/horus/css/horusBtn.css"))
+							 ->appendStylesheet($this->basePath("/public/horus/css/icon-". $this->iconset .".css"))
+	        				 ->appendStylesheet($this->basePath('/public/horus/js/jstree/dist/themes/default/style.min.css'));
+	         ?>
+	        
+	        <!-- Scripts -->
+	        <?php 
+	        // 				        
+		       echo  $this->headScript()
+		       ->appendFile($this->basePath('/public/horus/js/jstree/dist/libs/jquery.js'))
+		       			  ->appendFile($this->basePath('/public/horus/js/jquery/jquery-1.11.1.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js'))
+				          
+				          ->appendFile('http://code.jquery.com/jquery-migrate-1.2.1.js')
+
+				          ->appendFile($this->basePath('/public/horus/js/jquery-themeSwitcher/themeswitchertool.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jsFunctions/ui-settings.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery/scrollpane/script/jquery.mousewheel.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery/scrollpane/script/jquery.jscrollpane.min.js'))				          
+				          ->appendFile($this->basePath('/public/horus/js/DataTables-1.8.2/media/js/jquery.dataTables.js'))			          
+				          ->appendFile($this->basePath('/public/horus/bootstrap/js/bootstrap.js'))
+				          ->appendFile($this->basePath('/public/horus/js/TableView/jquery.cookie.js'))
+				          ->appendFile($this->basePath('/public/horus/js/html5.js'),'text/javascript',array('conditional' => 'lt IE 9'))
+				          ->appendFile($this->basePath('/public/horus/js/jsFunctions/Dialogs.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jsFunctions/functions.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jsFunctions/ValidateForm.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jsFunctions/popup.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jsFunctions/ajax/dropDownajax.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery.formatCurrency-1.4.0.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery.jeditable.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery.dataTables.editable.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery-ui-timepicker-addon.js'))
+						  ->appendFile($this->basePath('/public/horus/js/jquery-ui-sliderAccess.js'))
+						  ->appendFile($this->basePath('/public/horus/js/tour/jquery.joyride-2.0.3.js')) 
+				          ->appendFile($this->basePath('/public/horus/js/jquery.event.frame.js'))
+				          ->appendFile($this->basePath('/public/horus/js/jquery-Calendar/jquery.weekcalendar.js'))
+					 	  ->appendFile($this->basePath('/public/horus/js/jquery-Calendar/fullcalendar.js'))
+						  ->appendFile($this->basePath('/public/horus/js/jquery-Calendar/CxcCalendar.js'))
+						  ->appendFile($this->basePath('/public/horus/js/JquerySparkLines.js'))
+						  ->appendFile($this->basePath('/public/horus/js/AjaxUpload.2.0.min.js'))
+						  ->appendFile($this->basePath('/public/horus/js/jquery.alerts.js'))
+						  ->appendFile($this->basePath('/public/horus/notification_menu/js/ttw-notification-menu.js'))
+						  ->appendFile($this->basePath('/public/horus/js/jsFunctions/ajax/notificationMenu.js'))
+						  ->appendFile($this->basePath('/public/horus/js/graphs/jquery.gvChart-1.1.min.js'))
+						  ->appendFile($this->basePath('/public/horus/js/jsFunctions/ajax/getPreferences.js'))
+						  ->appendFile($this->basePath('/public/horus/js/horus/jquery.jhButton.min.js'))
+						  ->appendFile($this->basePath('/public/horus/js/horus/horusBtn.js'))
+						  ->appendFile($this->basePath('/public/horus/js/jsFunctions/ajax/contentMenu.js')) 					  
+		       			  ->appendFile($this->basePath('/public/horus/js/jstree/dist/jstree.min.js')) ;
+		            
+	          ?>
+	         
+	         
+	         <script type="text/javascript">
+				var jDate = '<?= $this->horusDate ?>';
+				var jHora = '<?= date('H') ?>';
+				var jMin = '<?= date('i') ?>';
+				var jSec = '<?= date('s') ?>';
+				
+				var THEME = <?php echo "'".$this->theme."'"; ?>;
+				var idUser = "<?php echo $this->userid;?>";
+				var progress = new Array();
+				var iconPref = "<?php echo $this->iconset; ?>";
+			
+	                $(document).ready(function(){
+	                	var actualRol = "<?php echo $this->roleId; ?>";
+	                	var admin = "<?php echo Privilege::ADMINISTRADOR  ?>";
+	                	var superAdmin = "<?php echo Privilege::SUPERADMINISTRADOR ?>";
+	                	var superUser = "<?php echo Privilege::SUPERUSUARIO?>";
+	                	var consult = "<?php echo Privilege::CONSULTOR; ?>";
+	                	loadThemeSettings(THEME);
+	                	/*if(actualRol != consult){
+	                		notShow();
+	                	}*/
+	                	
+	                 	window.onload = function() {
+	                 		document.onkeyup = ctrlEvent;
+						}
+	         			function ctrlEvent(eve){
+	                 		 var evento = window.event || eve;
+	                 		if(evento.altKey){
+	                 			if(evento.keyCode == 80){
+	                 				location.href = "/projects/index";
+	                 			}
+	                 			if(evento.keyCode == 67){
+	                     			location.href = "/customers/index";
+	                 			}
+	                 			if(evento.keyCode == 85){
+									location.href = "/users/index";
+	                 			}
+	                 		}
+	                 	}
+						$('#outSes').click(function(){				
+							window.location = "<?php echo $this->basePath("/index/logout") ?>";
+						});
+
+						 hideAllMessages();
+						 if(actualRol == admin || actualRol == superAdmin || actualRol == superUser){
+		                		sidePanel();
+		                		banksRegistered();
+		                  }
+
+						 var myMessages = ['info','warning','error','success'];
+						 
+						 // When message is clicked, hide it
+						 $('.message').click(function(){			  
+								  $(this).animate({top: -$(this).outerHeight()}, 500);
+						 });	
+	                });
+	          </script>
+        
+</head> 
+
+<body>
+<!--=== Style Switcher ===-->    
+<i class="style-switcher-btn icon-wrench"></i>
+<div class="style-switcher">
+    <div class="theme-close"><i class="icon-remove"></i></div>
+    <div class="theme-heading">Theme Colors</div>
+    <ul class="unstyled">
+        <li class="theme-default theme-active" data-style="default" data-header="light"></li>
+        <li class="theme-blue" data-style="blue" data-header="light"></li>
+        <li class="theme-orange" data-style="orange" data-header="light"></li>
+        <li class="theme-red" data-style="red" data-header="light"></li>
+        <li class="theme-light" data-style="light" data-header="light"></li>
+    </ul>
+</div><!--/style-switcher-->
+<!--=== End Style Switcher ===-->
+
+<!--=== Top ===-->
+<div class="top">
+    <div class="container">
+        <div class="row-fluid">
+            <ul class="phone-mail">
+                <li><i class="icon-phone"></i><span>800 123 3456</span></li>
+                <li><i class="icon-envelope-alt"></i><span>mail@example.com</span></li>
+            </ul>
+            <ul class="loginbar">
+                <li><i class="icon-globe"></i><a>Languages <i class="icon-sort-up"></i></a>
+                    <ul class="nav-list">
+                        <li class="active"><a href="#">English</a> <i class="icon-ok"></i></li>
+                        <li><a href="#">Spanish</a></li>
+                        <li><a href="#">Russian</a></li>
+                        <li><a href="#">German</a></li>
+                    </ul>
+                </li>
+                <li class="devider">&nbsp;</li>
+                <li><a href="page_faq.html" class="login-btn">Help</a></li>
+                <li class="devider">&nbsp;</li>
+                <li><a href="page_login.html" class="login-btn">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div><!--/top-->
+<!--=== End Top ===-->
+<!--=== Header  Horus===-->
+<div id="horusHeader" class="header ui-widget-header">
+							<div id="imgLogoCompany">
+							<img class="imgLogo" src="<?php echo $this->userProfile['logo'];?>" alt="logotipo" title="logotipo">	
+							 </div>							 
+							 <div id="menuContent">
+							 	<div id="nameContent">
+									<div id="ghost"><?php echo $this->userProfile['brand']; ?></div>
+								</div>
+								<div id="menuDiv">
+									 <?php echo $this->render('layout/menusite.phtml'); ?>
+								</div>
+							 </div>
+							<div id="greetingDiv">
+								<div id="closeSession">
+									<a href="<?php echo $this->basePath().'/auth/logout'; ?>"><img id="outSes" src="<?php echo $this->basePath().'/public/horus/img/exit2.png'; ?>"></a>
+								</div>
+								<div id="pic">
+									<img alt="avatar" style="vertical-align:text-bottom; border-radius:50%" src="<?php echo $this->basePath('/public/horus/img/uploaded/jet.jpg')?>">
+								</div>
+								<div id="greting">
+									<div id="geek" style="width:150%">¡Excelente tarde <span id="saludo"></span><b><?php echo $this->userProfile['user_name']; ?>!</b>
+										<span style="height:20px;"></span>
+										<span id="rolShow">
+											Eres: <b class="rolBar" style="color:#bdfdff;">Programador</b>
+										</span>
+									</div>
+								</div>
+							</div>
+		    		</div>
+		    		<h3 class="centerOut">Hola</h3> 
+<!--=== End Header horus ===-->
+
+<!--=== Header ===-->
+ <!-- <div class="header">               
+    <div class="container">  -->  
+        <!-- Logo -->       
+        <!--  <div class="logo">                                            
+             <img id="logo-header" src="<?php //echo $this->basePath() . '/public/assets/img/logo1-default.png';?>" alt="Logo"> 
+        </div>  -->
+        <!-- /logo -->        
+        <!-- Menu -->
+            <?php //echo $this->render('layout/menusite');?>
+        <!-- /Menu -->   
+    <!-- </div>  /container -->               
+ <!-- </div> /header -->      
+<!--=== End Header ===-->
+
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs margin-bottom-25">
+	<div class="container">
+        <h1 class="color-green pull-left">Login</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="index.html">Home</a> <span class="divider"><i class="icon-angle-right"></i></span></li>
+            <li><a href="">Pages</a> <span class="divider"><i class="icon-angle-right"></i></span></li>
+            <li class="active">Login</li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+<!--=== Content Part ===-->
+<div class="container">		
+	<div class="row-fluid">
+	<?php echo $this->content;?>
+        <form class="log-page">
+            <h3>Login to your account</h3>    
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-user"></i></span>
+                <input class="input-xlarge" type="text" placeholder="Username">
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-lock"></i></span>
+                <input class="input-xlarge" type="text" placeholder="Username">
+            </div>
+            <div class="controls form-inline">
+                <label class="checkbox"><input type="checkbox" /> Stay Signed in</label>
+                <button class="btn-o pull-right" type="submit">Login</button>
+            </div>
+            <hr />
+            <h4>Forget your Password ?</h4>
+            <p>no worries, <a class="color-green" href="#">click here</a> to reset your password.</p>
+        </form>
+    </div><!--/row-fluid-->
+</div><!--/container-->		
+<!--=== End Content Part ===-->
+
+<!--=== Footer ===-->
+<div class="footer">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="headline"><h3>Get In Touch</h3></div>
+                <address class="address">
+                    <ul class="icons-ul">
+                        <li><i class="icon-li icon-map-marker"></i>25, Lorem Lis Street, <br />Orange California, US</li>
+                        <li><i class="icon-li icon-phone"></i>Phone: 800 123 3456</li>
+                        <li><i class="icon-li icon-print"></i>Fax: 800 123 3456</li>
+                        <li><i class="icon-li icon-envelope"></i>Email: <a href="mailto:mail@example.com" class="">mail@example.com</a></li>
+                    </ul>
+                </address>
+            </div><!--/span3-->
+            <div class="span5">
+                <div class="headline"><h3>Subscribe</h3></div>
+                <p>Ut eu nulla eget massa blandit eleifend vel sedis lacus. Sed at viverra nulla.
+                    Fusce vel adipisci odio. Phasellus commodo, mauris eget pharetra.</p>
+                <p>Join our mailing list to stay up to date <br />and get notices about our new releases!</p>
+                <form class="form-inline">
+                    <div class="input-append-of">
+                        <input type="text" placeholder="Email Address" class="input-medium">
+                        <button class="btn-o">Subscribe</button>
+                    </div>
+                </form>
+            </div><!--/span5-->
+            <div class="span4">
+                <div class="posts">
+                    <div class="headline"><h3>Recent Blog Entries</h3></div>
+                    <dl class="dl-horizontal">
+                        <dt><a href="#"><img src="<?php echo $this->basePath() . '/public/assets/img/sliders/elastislide/6.jpg';?>" alt="" /></a></dt>
+                        <dd>
+                            <p><a href="#">Anim moon officia Optimum is an incredibly beautiful responsive Bootstrap Template</a></p>
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt><a href="#"><img src="<?php echo $this->basePath() . '/public/assets/img/sliders/elastislide/10.jpg';?>" alt="" /></a></dt>
+                        <dd>
+                            <p><a href="#">Anim moon officia Optimum is an incredibly beautiful responsive Bootstrap Template</a></p>
+                        </dd>
+                    </dl>
+                </div>
+            </div><!--/span4-->
+        </div><!--/row-fluid-->
+    </div><!--/container-->
+</div><!--/footer-->
+<!--=== End Footer ===-->
+
+<!--=== Copyright ===-->
+<div class="copyright">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span2">
+                <a href="index.html"><img id="logo-footer" src="<?php echo $this->basePath() . '/public/assets/img/logo2-default.png';?>" alt="" /></a>
+            </div>
+            <div class="span6">
+                <p class="terms">2015 &copy; IOFractal. HorusRobot. Todos los derechos reservados.<br /> <a href="#">Pol&iacute;tica de Privacidad</a> | <a href="#">Terms of Service</a></p>
+            </div>
+            <div class="span4">
+<!--                 <ul class="social-icons pull-right"> -->
+<!--                     <li><a href="#" data-original-title="Feed" class="social_rss"></a></li> -->
+<!--                     <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li> -->
+<!--                     <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li> -->
+<!--                     <li><a href="#" data-original-title="Goole Plus" class="social_googleplus"></a></li> -->
+<!--                 </ul> -->
+            </div>
+        </div><!--/row-fluid-->
+    </div><!--/container-->
+</div><!--/copyright-->
+<!--=== End Copyright ===-->
+
+<!-- JS Global Compulsory -->           
+<script type="text/javascript" src="<?php echo $this->basePath() . '/public/assets/js/jquery-1.8.2.min.js';?>"></script>
+<script type="text/javascript" src="<?php echo $this->basePath() . '/public/assets/js/modernizr.custom.js';?>"></script>        
+<script type="text/javascript" src="<?php echo $this->basePath() . '/public/assets/plugins/bootstrap/js/bootstrap.min.js';?>"></script> 
+<!-- JS Implementing Plugins -->           
+<script type="text/javascript" src="<?php echo $this->basePath() . '/public/assets/plugins/back-to-top.js';?>"></script>
+<script type="text/javascript" src="<?php echo $this->basePath() . '/public/assets/plugins/jquery.sticky.js';?>"></script>
+<!-- JS Page Level -->           
+<script type="text/javascript" src="<?php echo $this->basePath() . '/public/assets/js/app.js';?>"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        App.init();
+    });
+</script>
+<!--[if lt IE 9]>
+    <script src="<?php echo $this->basePath() . '/public/assets/js/respond.js';?>"></script>
+<![endif]-->
+
+</body>
+</html> 

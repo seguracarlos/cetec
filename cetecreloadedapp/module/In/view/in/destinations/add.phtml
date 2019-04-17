@@ -1,0 +1,275 @@
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/destinations.js'; ?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Agregar destino</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Destinos</a>
+			        <a href="#" class="btn btn-default">Agregar</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<p class="triangle-border text-size-20 amaranth">Ingresa los datos del destino.</p>
+	
+	<div clasS="content-forms">
+	
+		<?php 
+		$form = $this->form;
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		echo $this->formElement($form->get('id_destination'));
+		?>
+	
+		<div style="text-align:right;">
+			<span style="text-align:right;" class="label label-info">* Datos requeridos</span>
+		</div>
+		
+		<fieldset class="responsive-fieldset fieldset">
+			
+			<legend class="legend amaranth">
+				<span style="border-radius:100%;" class="label label-warning">1</span> Datos generales
+			</legend>
+			
+			<div class="row">
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Tipo:</label>
+						<?php echo $this->formElement($form->get('type_destination')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Directo / Ruta:</label>
+						<?php echo $this->formElement($form->get('direct_route')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Nombre:</label>
+						<?php echo $this->formElement($form->get('name_destination')); ?>
+					</div>
+				</div>
+				
+			</div>
+		
+		</fieldset>
+		
+		<fieldset class="responsive-fieldset fieldset">
+			
+			<legend class="legend amaranth">
+				<span style="border-radius:100%;" class="label label-warning">2</span> Asigna destinos
+			</legend>
+			
+			<!-- <div class="row">
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Estado:</label>
+						<?php //echo $this->formElement($form->get('state_id')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Delegaci&oacute;n / Municipio:</label>
+						<?php //echo $this->formElement($form->get('district')); ?>
+					</div> 
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Colonia:</label>
+						<div class="input-group input-group-lg">
+							
+		                    <?php //echo $this->formElement($form->get('neighborhood')); ?>
+		                    <span class="input-group-btn">
+		                        <button type="button" id="buttonAddDestinations" class="btn btn-primary">
+		                        	<span class="glyphicon glyphicon-plus-sign"></span>
+		                        </button>
+		                    </span>
+		                </div>
+	                </div>
+				</div>
+				
+			</div>
+			
+			<div class="row">
+			
+				<div class="col-md-6 col-md-offset-3">
+				
+				<div class="panel panel-primary">
+				  	<div class="panel-heading">Lugares asignados al destino</div>
+				  	<div class="panel-body">
+				    	<table id="places" class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Nombre</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+					
+				</div>
+			
+			</div> --><!-- / .row -->
+			
+			<div class="row">
+			
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="text-amaranth">Descripci&oacute;n:</label>
+						<?php echo $this->formElement($form->get('description_destination')); ?>
+					</div>
+				</div>
+			
+			</div> <!-- / .row -->
+			
+			<!-- <div class="row">
+			
+				<div class="col-md-6">
+				
+					<div class="form-group">
+						<label class="text-amaranth">Descripci&oacute;n:</label>
+						<?php //echo $this->formElement($form->get('description_destination')); ?>
+					</div>
+				
+				</div>
+			
+			</div> --> <!-- / .row -->
+		
+		</fieldset> <!-- / fieldset -->
+		
+		<div class="row">
+		
+		<div class="col-md-4">
+		
+			<fieldset class="responsive-fieldset fieldset">
+				<legend class="legend amaranth">
+					<span style="border-radius:100%;" class="label label-warning">3</span> Tarifas: Operador/Ayudante
+				</legend>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="text-amaranth">Tarifa operador:</label>
+							<?php echo $this->formElement($form->get('operator_salary')); ?>
+						</div>
+						<div class="form-group">
+							<label class="text-amaranth">Tarifa ayudante:</label>
+							<?php echo $this->formElement($form->get('assistant_salary')); ?>
+						</div>
+					</div> <!-- / .col-md-6 -->
+					<!-- <div class="col-md-6">
+						<div class="form-group">
+							<label class="text-amaranth">Salario ayudante:</label>
+							<?php //echo $this->formElement($form->get('operator_assistant')); ?>
+						</div>
+					</div> --> <!-- / .col-md-6 -->
+				</div> <!-- / .row -->
+			</fieldset>
+		
+		</div> <!-- / .col-md-6 -->
+		
+		
+		<div class="col-md-8">
+		
+			<fieldset class="responsive-fieldset fieldset">
+				
+				<legend class="legend amaranth">
+					<span style="border-radius:100%;" class="label label-warning">4</span> Precios destino
+				</legend>
+				
+				<div id="destinoForaneo" class="row">
+					<div class="col-md-12">
+					
+						<ul class="nav nav-tabs">
+			  				<li class="active"><a href="#tab_a" data-toggle="tab">Seca</a></li>
+			  				<li><a href="#tab_b" data-toggle="tab">Refrigerados</a></li>
+						</ul>
+					
+						<div class="tab-content">
+		        			<div class="tab-pane active" id="tab_a">
+		            			<h4 class="text-center text-info">Servicios for&aacute;neos directos de producto terminado y promocional.</h4>
+		            			<table class="table table-bordered">
+			            			<thead>
+				            			<tr>
+					            			<th>Camioneta seca</th>
+					            			<th>4.5 toneladas seca</th>
+					            			<th>Cami&oacute;n</th>
+				            			</tr>
+			            			</thead>
+			            			<tbody>
+			            				<tr>
+			            					<td><?php echo $this->formElement($form->get('dry_van')); ?></td>
+			            					<td><?php echo $this->formElement($form->get('tonel_van')); ?></td>
+			            					<td><?php echo $this->formElement($form->get('truck')); ?></td>
+			            				</tr>
+			            			</tbody>
+		            			</table>
+		        			</div> <!-- / .tab-pane -->
+		        			<div class="tab-pane" id="tab_b">
+		            			<h4 class="text-center text-info">Servicios for&aacute;neos refrigerados</h4>
+		            			<table class="table table-bordered">
+			            			<thead><tr><th>Camioneta Refrigerada</th></tr></thead>
+			            			<tbody><tr><td><?php echo $this->formElement($form->get('refrigerated_truck')); ?></td></tr></tbody>
+		            			</table>
+		        			</div>
+						</div> <!-- tab content -->
+					
+					</div> <!-- / .col-md-12 -->
+				</div> <!-- / .row -->
+				
+			</fieldset> <!-- / .fieldset -->
+		
+		</div> <!-- / .col-md-6 -->
+		
+		</div>
+		
+		<div style="margin-top: 10px;" class="row">
+			<div class="col-md-6">
+				<?php echo $this->formElement($form->get('submitbutton')); ?>
+			</div>
+			<div class="col-md-6">
+				<a href="<?php echo $this->basePath()."/in/destinations/index";?>" class="btn btn-danger btn-lg btn-block">Cancelar</a>
+			</div>
+		</div>
+		
+		<?php
+		echo $this->form()->closeTag();
+		?>
+	
+	</div>
+
+</div>
+
+<script>
+var $basePath = "<?php echo $this->basePath()?>"; 
+$(document).ready(function(){
+	$("#places").dataTable();
+});
+</script>

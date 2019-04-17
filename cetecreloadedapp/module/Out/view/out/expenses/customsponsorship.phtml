@@ -1,0 +1,179 @@
+<script type="text/javascript">
+var $basePath = "<?php echo $this->basePath();?>"
+</script>
+
+
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/reveal.js-master/css/theme/default.css'); ?>" id="theme">
+<link rel="stylesheet" href="<?php echo $this->basePath('/public//css/bootstrap.min.css');?>">
+<script src="<?php echo $this->basePath('/public//js/reveal.js-master/lib/js/head.min.js'); ?>"></script>
+<script src="<?php echo $this->basePath('/public//js/reveal.js-master/js/reveal.js'); ?>"></script>
+<script src="<?php echo $this->basePath('/public/js/jquery-2.1.0.min.js');?>"></script>	
+<script src="<?php echo $this->basePath() . '/public/js/uploadImages.js'; ?>"></script>
+
+<div class="container">
+	<input type="hidden" id="id_presentation" name="id_presentation" value="<?php echo $this->id_presentation;?>">
+     <div class="row">
+        <div class="col-md-12 ">
+        <center>
+          <div class="headerImage">
+          <?php if($this->sponsors['top']!=null){?>
+          	  <input type="hidden" class="fileHeaderStatus" name="fileHeaderStatus" id="<?php echo $this->sponsors['top']['id_sponsor']; ?>" value="<?php echo $this->sponsors['top']['imagepath']; ?>"/>
+              <input type="file" class="fileHeader" name="fileHeader" accept="image/*"/>
+              <div class="imageHeader">
+              <img src="<?php echo $this->basePath()."/public/".$this->sponsors['top']['imagepath'];?>" class="thumbHeader"/>
+              </div>
+              <div class="deleteImage">
+              <img src ="<?php echo $this->basePath().'/public/img/close.png'?>" width='19' height='19' alt='close'/>
+              </div>          	
+          <?php }else{?>
+          	  <input type="hidden" id="fileHeaderStatus" class="fileHeaderStatus" name="fileHeaderStatus" value="0"/>
+              <input type="file" class="fileHeader" name="fileHeader" accept="image/*"/>
+              <div class="imageHeader"></div>
+              <?php } ?>
+          <div>
+          </center>
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+
+     <div class="row">
+      <div class="col-lg-2 ">
+        <div class="leftImage">
+            <?php if($this->sponsors['left']!=null){ ?>
+                     <input type="hidden" id="<?php echo $this->sponsors['left']['id_sponsor']; ?>" class="fileLeftStatus" name="fileLeftStatus" value="<?php echo $this->sponsors['left']['imagepath']; ?>"/>  
+                     <input type="file" class="fileLeft" name="fileLeft" accept="image/*"/> 
+                     <div class="imageLeft">
+                      <img src="<?php echo $this->basePath()."/public/".$this->sponsors['left']['imagepath'];?>" class="thumbLeft"/>
+                     </div>
+                     <div class="deleteImage">
+                     <img src ="<?php echo $this->basePath().'/public/img/close.png'?>" width='19' height='19' alt='close'/>
+                     </div>   
+            <?php }else{ ?>
+        	  <input type="hidden" id="fileLeftStatus" class="fileLeftStatus" name="fileLeftStatus" value="0"/>  
+			  <input type="file" class="fileLeft" name="fileLeft" accept="image/*"/> 
+              <div class="imageLeft"></div>
+              <div></div>
+            <?php } ?>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+      <div class="reveal">
+     	 <div class="slides">
+			<section>
+			 <center><h4>Personalizacion de los patrocinios durante la presentacion(Vista Previa)</h4>
+			<br><br><br><br><br><br>
+			
+			<center><button onClick="javascript:history.back(1)" class="btn btn-danger" >Regresar</button></center>
+			</section>
+		 </div>
+      </div>
+      </div>
+
+      <div class="col-lg-2">
+         <div class="RightImage">
+            <?php if($this->sponsors['right']!=null){?>
+              <input type="hidden" id="<?php echo $this->sponsors['right']['id_sponsor']; ?>" class="fileRightStatus" name="fileRightStatus" value="<?php echo $this->sponsors['right']['imagepath']; ?>"/>  
+            <input type="file" class="fileRight" name="fileRight" accept="image/*"/> 
+              <div class="imageRight">
+                  <img src="<?php echo $this->basePath()."/public/".$this->sponsors['right']['imagepath'];?>" class="thumbRight"/>
+              </div>
+              <div class="deleteImage">
+                 <img src ="<?php echo $this->basePath().'/public/img/close.png'?>" width='19' height='19' alt='close'/>
+              </div>
+            <?php }else{ ?>
+        	    <input type="hidden" id="fileRightStatus" class="fileRightStatus" name="fileRightStatus" value="0"/>  
+              <input type="file" class="fileRight" name="fileRight" accept="image/*"/>
+              <div class="imageRight"></div>
+              <div></div>
+              <?php } ?>
+        </div>
+      </div>
+      
+      <hr class="featurette-divider">
+
+
+      <div class="row featurette">
+        <div class="col-md-12">
+          <center>
+           <div class="footerImage">
+            <?php if($this->sponsors['buttom']!=null){?>
+               <input type="hidden" id="<?php echo $this->sponsors['buttom']['id_sponsor']; ?>" class="fileFooterStatus" name="fileFooterStatus" value="<?php echo $this->sponsors['buttom']['imagepath']; ?>"/> 
+               <input type="file" class="fileFooter" name="fileQuestion" accept="image/*"/> 
+		        <div class="imageFooter"> 
+                 <img src="<?php echo $this->basePath()."/public/".$this->sponsors['buttom']['imagepath'];?>" class="thumbFooter"/>
+               </div>
+               <div div class="deleteImage">
+                  <img src ="<?php echo $this->basePath().'/public/img/close.png'?>" width='19' height='19' alt='close'/>
+               </div>
+            <?php }else{?>
+        	    <input type="hidden" id="fileFooterStatus" class="fileFooterStatus" name="fileFooterStatus" value="0"/> 
+ 				 <input type="file" class="fileFooter" name="fileQuestion" accept="image/*"/>
+              <div class="imageFooter"></div>
+              <div></div>
+              <?php } ?>
+            </div>
+            </center>
+        </div>
+   
+      </div>
+
+  
+
+    </div>
+    <br>
+        <br>
+    
+    </div>
+    
+    <style>
+
+.file{
+  display:none;
+}
+
+.headerImage, .footerImage{
+    width: 925px; 
+    height: 95px; 
+    margin: 5px;
+    border:1px dashed #2E64FE;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    background:#F5F5F5 url(<?php echo $this->basePath().'/public/img/';?>uploadImage.png) no-repeat center center;
+    position: relative;
+    border-radius: 5px;
+}
+
+
+
+.imageHeader,.imageFooter{width: 925px; height: 95px; vertical-align: middle; display: block; position: absolute; margin-top: -24px;}
+
+.imageLeft, .imageRight{width: 150px; height: 400px; vertical-align: middle; border: 0; margin: 0;padding: 0;border-radius: 5px}
+
+
+.deleteImageFooterHeader{width: 19px; height:19px; position: absolute; top:0; right:5px; cursor: pointer; overflow: visible; }
+.deleteImage{width: 19px; height:19px; position: absolute; top:0; right:5px; cursor: pointer; overflow: visible; }
+
+
+.thumbHeader, .thumbFooter{width: 922px; height: 90px; vertical-align: middle; border: 0; margin: 25px -30px;padding: 0;border-radius: 5px}
+
+.thumbLeft{width: 146px; height: 395px; vertical-align: middle; border: 0; margin-top: 0;padding: 0;border-radius: 5px}
+.thumbRight{width: 146px; height: 395px; vertical-align: middle; border: 0; margin-top: 0;padding: 0;border-radius: 5px}
+
+.leftImage,.RightImage {
+    width: 150px; 
+    height: 400px; 
+    margin: 5px;
+    border:1px dashed #2E64FE;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    background:#F5F5F5 url(<?php echo $this->basePath().'/public/img/'?>uploadImage.png) no-repeat center center;
+    position: relative;
+    border-radius: 5px;
+}
+
+</style>

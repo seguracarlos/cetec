@@ -1,0 +1,877 @@
+<link rel="shortcut icon" href="<?php echo $this->basePath("/public/img/logocetec.png"); ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath('/public/js/jstree/dist/themes/default/style.min.css')?>"/> 
+<script src="<?php echo $this->basePath('/public/js/jstree/dist/jstree.js')?>"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath('/public/js/tree/skin-win8/ui.fancytree.css')?>"/> 
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath('/public/js/tree/contextmenu/css/jquery.contextMenu.css')?>"/> 
+
+<script src="<?php echo $this->basePath('/public/js/tree/jquery.fancytree.js')?>"></script>
+<script src="<?php echo $this->basePath('/public/js/tree/jquery.fancytree.dnd.js')?>"></script>
+<script src="<?php echo $this->basePath('/public/js/tree/jquery.fancytree.edit.js')?>"></script>
+<script src="<?php echo $this->basePath('/public/js/tree/contextmenu/js/jquery.contextMenu-1.6.5.js')?>"></script>
+<script src="<?php echo $this->basePath('/public/js/tree/contextmenu/js/jquery.fancytree.contextMenu.js')?>"></script>
+
+
+
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/css/defaultEditContent.css'); ?>" id="theme">
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/css/revealEditContents.css'); ?>">
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/reveal.js-master/lib/css/zenburn.css'); ?>">
+<!-- jquery plainoverlay js -->
+<script src="<?php echo $this->basePath() . '/public/horus-security/js/plainoverlay/jquery.plainoverlay.js'; ?>"></script>
+<!-- REVEAL JS -->
+<script src="<?php echo $this->basePath('/public/js/reveal.js-master/js/reveal.js'); ?>"></script>
+<!-- html5gallery JS -->
+<script src="<?php echo $this->basePath('/public/js/html5gallery/html5gallery.js'); ?>"></script>
+<!-- CKEDITOR JS -->
+<script src="<?php echo $this->basePath('/public/js/ck_editor/ckeditor.js'); ?>"></script>
+
+<div class="col-md-3 tree">
+	<h2>Temas</h2>
+
+<div id="container">
+
+<ul>
+  <?php foreach($this->themes as $theme){?>
+  			<li class="topic" data-icon="<?php echo $this->basePath('/public/img/folder.ico');?>" id="<?php echo $theme['id'];?>"><?php echo $theme['text'];?>
+  			  	<ul>
+  				<?php foreach($theme['children'] as $children){?>
+  						<li class="subtopic" data-icon="<?php echo $this->basePath('/public/img/folder.ico');?>" id="<?php echo $children['id'];?>"><?php echo $children['text'];?>
+  						<ul>
+	  						<?php foreach($children['children2'] as $slide){?>
+	  							<?php if($slide['type'] == "text"){?>
+	  							<li data-order="<?php echo $slide['display_order'];?>" class="slideTxt" class="viewTxt" data-icon="<?php echo $this->basePath('/public/img/file.png'); ?>" id="<?php echo $slide['id'];?>"
+	  							<a href="#" class="content txt"><?php echo $slide['text'];?></a>
+	  							</li>
+	  							<?php }elseif($slide['type'] == "multimedia"){?>
+	  									<li data-order="<?php echo $slide['display_order'];?>" class="slideMultimedia" class="viewMultimedia" data-icon="<?php echo $this->basePath('/public/img/video.png'); ?>" id="<?php echo $slide['id'];?>"
+	  									<a href="#" class="content video"><?php echo $slide['text'];?></a>
+	  									</li>
+	  							<?php }?>
+	  						<?php } ?>
+  						</ul>
+  				<?php }?>	
+  				</ul>
+  			
+  			</li>
+  <?php } ?>
+ <ul>
+</div>
+
+	</div>
+	<div class="col-md-9">
+	<div class="reveal">
+	 <div id="slides" class="slides">
+	
+	<section id="content">
+	<strong>
+	<p style="text-align: center;">Editor de Contenido</p>
+	</strong>
+	<p style="text-align: center;">Navega en la lista de temas de la izquierda para consultar sus slides, podras
+	ver una vista previa y editar el contenido de cada slide.
+	</p>
+	</section>
+	</div>
+	<div id="editContent" style="display:none; margin-top:90px;">
+ 	<textarea id="txt">
+ 	</textarea>
+ 	<br>
+ 	<center>
+ 	<input type="hidden" id="id_content" value="">
+ 	<button id="save" type="button" class="btn btn-success">Guardar</button>
+ 	<button id="cancel" type="button" class="btn btn-danger">Cancelar</button>
+ 	</center>
+ 	</div>
+	</div>
+	
+
+	</div>
+	
+ 	<input type="hidden" id="contextMenu" value="0">
+ 	
+
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Video</h4>
+      </div>
+      <div class="modal-body">
+        <center>
+      	<div class="thumb">
+      	</div>
+      	<div class="link">
+      	</div>
+      	</center>
+      </div>
+      <div class="modal-footer">
+     	<center>
+        <button type="button" id="addVideo" class="btn btn-primary">Aceptar</button>
+        <button type="button" id="cancelVideo" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="deleteVideo" class="btn btn-danger" >Eliminar</button>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="videoModalNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Video</h4>
+      </div>
+      <div class="modal-body">
+        <center>
+      	<div class="thumb2">
+      	</div>
+      	<div class="link2">
+      	</div>
+      	</center>
+      </div>
+      <div class="modal-footer">
+     	<center>
+        <button type="button" id="addNewVideo" class="btn btn-primary">Agregar</button>
+        <button type="button" id="cancelVideo" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+	 	
+
+ 
+<script>
+
+var $basePath = "<?php echo $this->basePath();?>"
+var instructions = "<strong><p style='text-align: center;'>Editor de Contenido</p></strong><p style='text-align: center;'>Navega en la lista de temas de la izquierda para entrar a sus diapositivas, podras ver una vista previa y editar el contenido de cada slide.</p>"
+var menuFlag = 0;
+
+
+$(document).ready(function() {
+	 $('#container').fancytree({
+		  extensions: ["contextMenu","edit","dnd"],
+		  dnd: {
+			    autoExpandMS: 400,
+			    draggable: { // modify default jQuery draggable options
+			      zIndex: 1000,
+			      scroll: false,
+			      containment: "parent",
+			      revert: "invalid"
+			    },
+			    preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+			    preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+
+			    dragStart: function(node, data) {
+//			    if( data.originalEvent.shiftKey ) ...          
+			    if( node.extraClasses == "topic" || node.extraClasses == "subtopic") { return false; }
+			      return true;
+			    },
+			    dragEnter: function(node, data) {
+				if(node.parent !== data.otherNode.parent){
+			      return false;
+			    }
+
+				
+			    // Don't allow dropping *over* a node (would create a child). Just
+			    // allow changing the order:
+			    return ["before", "after"];
+			     // Accept everything:
+			     //return true;
+			    },
+			    dragExpand: function(node, data) {
+			      // return false to prevent auto-expanding parents on hover
+			    },
+			    dragOver: function(node, data) {
+				
+			    },
+			    dragLeave: function(node, data) {
+			    },
+			    dragStop: function(node, data) {
+			    },
+			    dragDrop: function(node, data) {
+			  	var displayOrder = [];
+      			data.otherNode.moveTo(node, data.hitMode);
+			  	 $.each(node.parent.children, function( index, value ) {
+				  	 displayOrder.push({
+					  	 'id_content' : value.key,
+					  	 });
+				  	});
+
+			  	 $.ajax({
+		        		type: 'POST',
+		        		url: $basePath + '/classes/class/displayorder',
+		        		data: { "contents" : displayOrder },
+		        		dataType: 'json',
+		        		success: function(response){
+			        		alertify.success("Orden Actualizado");
+		        		},
+		        		error: function(){ return false; }
+		        	});	 
+			    }
+			  },
+		   contextMenu: {
+		        menu: function(node){
+			        switch(node.extraClasses){
+				        case 'topic' :
+			        	    return {
+		        	        'addSubTopic':{ 'name': 'Agregar Subtema', 'icon': 'add'},
+		        	        'RenameTopic':{ 'name': 'Editar', 'icon': 'edit'}
+		        	        };
+		        	     break;
+				        case 'subtopic' :
+			        	    return {
+		        	        'addSlide':{ 'name': 'Agregar Slide Texto', 'icon': 'add'},
+		        	        'addSlideMultimedia':{ 'name': 'Agregar Slide Multimedia', 'icon': 'add'},
+		        	        'RenameSubTopic':{ 'name': 'Editar', 'icon': 'edit'},
+		        	        'DeleteSubTopic':{ 'name': 'Eliminar', 'icon': 'delete'}
+		        	        };  
+				        break;
+				        default :
+					        return{
+					        'verSlide' : {'name':'Ver Slide','icon': 'view'},
+				        	'editSlide':{ 'name': 'Editar', 'icon': 'edit'},
+		        	        'deleteSlide':{ 'name': 'Eliminar', 'icon': 'delete'}
+		        	        };  
+					    break; 
+			        }
+		        },
+
+		        actions: function(node, action, options) {
+			        switch(action){
+				        	case 'addSubTopic':
+						        var $idParent = node.key;
+				        		 $.ajax({
+	 					        		type: 'POST',
+	 					        		url: $basePath + '/classes/class/addtopic',
+	 					        		data: { "topic_name" : "Nuevo Subtema" , "id_parent" :$idParent },
+	 					        		dataType: 'json',
+	 					        		success: function(response){
+	 					        			node.addChildren({
+		 					        			id : response.data.id_topic,
+		 					        			key : response.data.id_topic,
+	 						        		    title: "Nuevo Subtema",
+	 						        		    extraClasses : "subtopic",
+	 						        		    icon: "<?php echo $this->basePath('/public/img/folder.ico') ?>"
+	 						        		  });
+	 					        		},
+	 					        		error: function(){ console.log("Fallo, intentalo otra vez"); }
+	 					        	});	
+				        			
+					        	break;
+				        	case 'RenameTopic' :
+				        		node.editStart();
+					        	break;
+				        	case 'RenameSubTopic' :
+				        		node.editStart();
+					        	break;
+				        	case 'addSlide':
+					        	var $idSubtopic = node.key;
+					        	if(node.children){
+						        	var $order = node.children.length+1;
+						        	}else{
+							        var $order = 1;
+							        }
+				        		 $.ajax({
+						        		type: 'POST',
+						        		url: $basePath + '/classes/class/addcontent',
+						        		data: { "text" : "Slide" , "type" : "text" ,"id_subtopic" :$idSubtopic , "display_order" : $order},
+						        		dataType: 'json',
+						        		success: function(response){
+						        			node.addChildren({
+		 					        			id : response.data.id_content,
+		 					        			key : response.data.id_content,
+	 						        		    title: "Nuevo Slide",
+	 						        		    extraClasses : "slideTxt",
+	 						        		    icon: "<?php echo $this->basePath('/public/img/file.png') ?>"
+	 						        		  });
+						        		},
+						        		error: function(){ console.log("Fallo, intentalo otra vez"); }
+						        	});
+				        		break;
+				        	case 'addSlideMultimedia':
+				        		var $idSubtopic = node.key;
+				        		if(node.children){
+						        	var $order = node.children.length+1;
+						        	}else{
+							        var $order = 1;
+							     	}
+					        	 $.ajax({
+						        		type: 'POST',
+						        		url: $basePath + '/classes/class/addcontent',
+						        		data: { "text" : "Slide" , "type" : "multimedia" ,"id_subtopic" :$idSubtopic, "display_order" : $order},
+						        		dataType: 'json',
+						        		success: function(response){
+						        			node.addChildren({
+		 					        			id : response.data.id_content,
+		 					        			key : response.data.id_content,
+	 						        		    title: "Nuevo Slide Multimedia",
+	 						        		    extraClasses : "slideMultimedia",
+	 						        		    icon: "<?php echo $this->basePath('/public/img/video.png') ?>"
+	 						        		  });
+						        		},
+						        		error: function(){ console.log("Fallo, intentalo otra vez"); }
+						        	});
+				        		break;
+				        	case 'verSlide':
+				        		$('html').plainOverlay('show');
+				        		var $idContent = node.key;
+				        		$.ajax({
+				        			type: 'POST',
+				        			url: $basePath + '/classes/class/getcontent',
+				        			data: {idContent : $idContent},
+				        			dataType: 'json',
+				        			success: function(response){
+				        	    		if(response.data[0].content != ""){						        	
+				        	    		 if(response.data[0].type == "text"){
+				        	    			 if(CKEDITOR.instances['txt']){
+						        				 CKEDITOR.instances['txt'].destroy(true);
+				        	    			 }
+					        	    			$("#txt").html("");
+							        	        $("#editContent").fadeOut();
+				        	    			$("#content").html("");
+				        	        		$("#content").html(response.data[0].content);
+				        	        		$(".html5gallery").css("margin-top","-110px");
+				        	        		$(".html5gallery").css("margin-left","40px");
+				        	        		$('html').plainOverlay('hide');
+				        	        	 }else if(response.data[0].type == "multimedia"){
+				        		        	$("#content").html("");
+				        	        		$("#content").html(response.data[0].content);
+				        	        		$(".html5gallery").html5gallery();
+				        	        		$('html').plainOverlay('hide');
+				        		        }
+				        	    	   }else{
+				        	    		   $("#content").html("");
+				        	        	   $("#content").html("<center><h4>Este Slide no tiene contenido</h4></center>");
+				        	        		$('html').plainOverlay('hide');
+				        	        	}
+				        			},
+				        			error: function(){ console.log("Fallo, intentalo otra vez"); }
+				        		});
+				        						        	
+					        	break;
+				        	case 'editSlide':
+				        		menuFlag = 1;
+				        		$('html').plainOverlay('show');
+					        	var $idContent = node.key;
+					        	$.ajax({
+					        		type: 'POST',
+					        		url: $basePath + '/classes/class/getcontent',
+					        		data: {idContent : $idContent},
+					        		dataType: 'json',
+					        		success: function(response){
+					        			$("#id_content").val(response.data[0].id_content);
+					        			 if(CKEDITOR.instances['txt']){
+					        				 CKEDITOR.instances['txt'].destroy(true);
+				        	    			}
+				        	    			$("#txt").html("");
+						        	        $("#editContent").fadeOut();
+						        		if(response.data[0].type == "text"){
+							        		$("#content").html("");
+							        		$("#txt").val(response.data[0].content);
+							        		CKEDITOR.replace('txt');
+							        		$("#editContent").fadeIn();
+							        		$('html').plainOverlay('hide');
+							        	}else if(response.data[0].type == "multimedia"){
+								        	$("#content").html("");
+								        	$("#content").html(response.data[0].content);
+								        	$("#content").addClass("contentEdit");
+							        		var links = new Array();
+							        		var buttons = "<center>"+
+							        					"<br><button type='button' id='updateVideos' class='btn btn-success'>Guardar</button>"+
+							        					"&nbsp;&nbsp;<button type='button' id='revertVideos' class='btn btn-danger'>Cancelar</button>"+
+							        					"<center>";
+							        		$('#content').find('a').each(function(index,value) {
+												$(this).addClass("options");
+												$(this).attr("data-id",index);
+							        		    links[index] = value;
+							        		});
+							        		$("#content").html("");
+							        		$("#content").append("<button type='button' class='btn btn-info newVideo'><span class='glyphicon glyphicon-plus'></span> Nuevo Video</button></br>");
+							        		$.each(links, function(index, value) {
+								        		$("#content").append(value);
+							        		});
+
+							        		$("#content").append(buttons);
+							        		$('html').plainOverlay('hide');
+								        }
+					        		},
+					        		error: function(){ console.log("Fallo, intentalo otra vez"); }
+					        	});
+				        		
+					        	break;
+				        	case 'DeleteSubTopic' : 
+					        	var $idSubtopic = node.key;
+				        		 if(confirm('Si eliminas este tema tambien se borrara su contenido, estas seguro?')){
+					        		 $.ajax({
+							        		type: 'POST',
+							        		url: $basePath + '/classes/class/deletetopic',
+							        		data: { "id_topic" : $idSubtopic},
+							        		dataType: 'json',
+							        		success: function(response){
+							        			node.remove(node);
+								        		alertify.success("Subtema eliminado");
+							        		},
+							        		error: function(){ console.log("Fallo, intentalo otra vez"); }
+							        	});
+					        		
+					            }
+					        	break;
+				        	case 'deleteSlide':
+				        		var $idContent = node.key;
+				        		var $idParent  = node.parent.key
+				        		 alertify.confirm("Seguro que deseas eliminar este slide?", function (e) {
+					        		    if (e) {
+					        		    	$.ajax({
+					        		    		type: 'POST',
+					        		    		url: $basePath + '/classes/class/deletecontent',
+					        		    		data: {idContent : $idContent , idParent : $idParent},
+					        		    		dataType: 'json',
+					        		    		success: function(response){
+					        		    			node.remove(node);
+					        		    			alertify.success("Contenido borrado correctamente");
+					        		    			$("#content").html("");
+					        		    			$("#content").html(instructions);
+					        		    		},
+					        		    		error: function(){ console.log("Fallo, intentalo otra vez"); }
+					        		    	});
+					        		    	
+					        		    } 
+					        		});
+					        	break;
+			        }
+		        }
+		  },
+		  edit: {
+			    save: function(event, data){
+				    var title = data.input.val()
+				    var id = data.node.key;
+				    $.ajax({
+			        		type: 'POST',
+			        		url: $basePath + '/classes/class/updatetopic',
+			        		data: { "id_topic" : id, "topic_name" : title},
+			        		dataType: 'json',
+			        		success: function(response){
+				        		if(data.node.extraClasses == "topic"){
+									alertify.success("Tema editado correctamente");
+					        	}
+
+					        	if(data.node.extraClasses == "subtopic"){
+									alertify.success("Subtema editado correctamente");
+						        }
+			        		},
+			        		error: function(){ console.log("Fallo, intentalo otra vez"); }
+			        	});
+			      }
+			  }
+	   
+	   });
+				
+}) 
+
+ 
+
+/*************** EDICION DE VIDEOS *********************/
+
+$(document).on("click",".newVideo",function(e){
+	$(".thumb2").append("<img class='contentEdit' src='http://img.youtube.com/vi/0/hqdefault.jpg'/>");
+	$(".link2").append('<br><label>Url del video(Solo Youtube y Vimeo)</label><br><input type="text" id="" name="videoLink2" class="form-control videoLink2" value="">');
+	$('#videoModalNew').modal('show');
+});
+
+/* Al darle click en la miniatura del video */
+$(document).on("click",".options",function(e){
+	e.preventDefault();
+	$url = $(this).attr("href");
+	$typeVideo = $(this).attr("data-type");
+	$id = $(this).attr("data-id");
+
+	if($typeVideo == "youtube" || $typeVideo === undefined){
+		$idVideo = youtube_parser($url);
+		$(".thumb").append("<img class='contentEdit' src='http://img.youtube.com/vi/"+ $idVideo +"/hqdefault.jpg'/>");
+		$(".link").append('<br><label>Url del video(Solo Youtube y Vimeo)</label><br><input type="text" id="'+$id+'" name="videoLink" class="form-control videoLink" value="'+$url+'">');
+	}else if($typeVideo == "vimeo"){
+		$idVideo = vimeo_parser($url);
+		$thumb = $(this).find("img").attr("src");
+		$(".thumb").append("<img class='contentEdit vimeoThumb' src="+$thumb+">");
+		$(".link").append('<br><label>Url del video(Solo Youtube y Vimeo)</label><br><input type="text" id="'+$id+'" name="videoLink" class="form-control videoLink" value="'+$url+'">');
+	}
+	
+	$('#videoModal').modal('show');
+});
+
+
+/* Cambia la imagen de preview del video al quitar el blur del campo de la url en la ventana modal al editar un video */
+$("body").on("blur", ".videoLink", function(){
+	$newVideoUrl = $(this).val();
+	$typeVideo = "";
+	$idVideo = "";
+	if(youtube_parser($newVideoUrl)){
+		$idVideo = youtube_parser($newVideoUrl);
+		$typeVideo = "youtube";
+ 	}else if(vimeo_parser($newVideoUrl)){
+		$idVideo = vimeo_parser($newVideoUrl);
+		vimeoLoadingThumb($idVideo);
+		$typeVideo = "vimeo";
+ 	 }
+	 
+	if($newVideoUrl != ""){
+		if($typeVideo == "youtube"){
+			if($idVideo){
+				$(this).parents('.modal-body').find('.contentEdit').attr("src","http://img.youtube.com/vi/"+ $idVideo +"/hqdefault.jpg");
+			}else{
+				$(this).parents('.modal-body').find('.contentEdit').attr("src","http://img.youtube.com/vi/0/hqdefault.jpg");
+			}
+		}else if($typeVideo == "vimeo"){
+			if($idVideo){
+				//$(this).parents('.modal-body').find('.contentEdit').attr("src",""+$thumb+"");
+			}else{
+				$(this).parents('.modal-body').find('.contentEdit').attr("src","http://img.youtube.com/vi/0/hqdefault.jpg");
+			}
+		}
+	}
+});
+
+
+/* Cambia la imagen de preview del video al quitar el blur del campo de la url en la ventana modal al agregar un nuevo video */
+ 
+$("body").on("blur", ".videoLink2", function(){
+	$newVideoUrl = $(this).val();
+	$typeVideo = "";
+	$idVideo = "";
+	if(youtube_parser($newVideoUrl)){
+		$idVideo = youtube_parser($newVideoUrl);
+		$typeVideo = "youtube";
+ 	}else if(vimeo_parser($newVideoUrl)){
+		$idVideo = vimeo_parser($newVideoUrl);
+		vimeoLoadingThumb($idVideo);
+		$typeVideo = "vimeo";
+ 	 }
+	 
+	if($newVideoUrl != ""){
+		if($typeVideo == "youtube"){
+			if($idVideo){
+				$(this).parents('.modal-body').find('.contentEdit').attr("src","http://img.youtube.com/vi/"+ $idVideo +"/hqdefault.jpg");
+			}else{
+				$(this).parents('.modal-body').find('.contentEdit').attr("src","http://img.youtube.com/vi/0/hqdefault.jpg");
+			}
+		}else if($typeVideo == "vimeo"){
+			if($idVideo){
+				//$(this).parents('.modal-body').find('.contentEdit').attr("src",""+$thumb+"");
+			}else{
+				$(this).parents('.modal-body').find('.contentEdit').attr("src","http://img.youtube.com/vi/0/hqdefault.jpg");
+
+			}
+		}
+	}
+});
+
+/* Agrega un video Nuevo a la lista de miniaturas de videos */
+
+
+$(document).on('click', '#addNewVideo', function(){
+	$dataId  = parseInt($('#content a:last').attr("data-id"))+1;
+	$urlVideo = $(this).parent().parent().parent().find('.videoLink2').val();
+	$idVideo = "";
+	$typeVideo = "";
+	
+	if(youtube_parser($urlVideo)){
+		$idVideo = youtube_parser($urlVideo);
+		$typeVideo = "youtube";
+ 	}else if(vimeo_parser($urlVideo)){
+		$idVideo = vimeo_parser($urlVideo);
+		$typeVideo = "vimeo";
+		$thumbVimeo =  $(this).parent().parent().parent().find('.vimeoThumb').attr('src');
+ 	 }
+
+	if($urlVideo!=""&&$idVideo){
+		$('#videoModalNew').modal('hide');
+
+		if($typeVideo == "youtube"){
+			if($("#content a:last").length){
+				$('<a class="options" href="'+$urlVideo+'" data-type="youtube" data-id="'+$dataId+'"><img src="http://img.youtube.com/vi/'+$idVideo+'/hqdefault.jpg"/></a>').insertAfter('#content a:last');
+			}else{
+				$('</br><a class="options" href="'+$urlVideo+'" data-type="youtube" data-id="'+$dataId+'"><img src="http://img.youtube.com/vi/'+$idVideo+'/hqdefault.jpg"/></a>').insertAfter('.newVideo');
+			}
+		}else if($typeVideo == "vimeo"){
+			if($("#content a:last").length){
+				$('<a class="options" data-type="vimeo" href="https://player.vimeo.com/video/'+$idVideo+'?title=0&byline=0&portrait=0" data-id="'+$dataId+'"><img src='+$thumbVimeo+'></a>').insertAfter('#content a:last');
+			}else{
+				$('</br><a class="options" data-type="vimeo" href="https://player.vimeo.com/video/'+$idVideo+'?title=0&byline=0&portrait=0"  data-id="'+$dataId+'"><img src='+$thumbVimeo+'></a>').insertAfter('.newVideo');
+			}
+				
+			}
+		$(".thumb2").html("");
+		$(".link2").html("");
+	  }else{
+		alertify.alert("Ingresa una URL de un video valida");	  
+		}
+ 	})
+
+
+/* Actualiza la miniatura del video que se modifico */
+$(document).on('click', '#addVideo', function(){
+	$dataID  = $(this).parent().parent().parent().find('.videoLink').attr("id");
+	$urlVideo = $(this).parent().parent().parent().find('.videoLink').val();
+
+	if(youtube_parser($urlVideo)){
+		$idVideo = youtube_parser($urlVideo);
+		$typeVideo = "youtube";
+ 	}else if(vimeo_parser($urlVideo)){
+		$idVideo = vimeo_parser($urlVideo);
+		$typeVideo = "vimeo";
+		$thumbVimeo =  $(this).parent().parent().parent().find('.vimeoThumb').attr('src');
+ 	 }
+	 
+	if($urlVideo!=""&&$idVideo){
+		$('#content').find('a').each(function(index,value) {
+			if($(this).attr("data-id") == $dataID){
+				if($typeVideo == "youtube"){
+					$(this).attr("href",$urlVideo);
+					$(this).find("img").attr("src","http://img.youtube.com/vi/"+ $idVideo +"/hqdefault.jpg");				
+					$(this).attr("data-type","youtube");
+				}else if($typeVideo == "vimeo"){
+					$(this).attr("href",'https://player.vimeo.com/video/'+$idVideo+'?title=0&byline=0&portrait=0');
+					$(this).find("img").attr("src",$thumbVimeo);				
+					$(this).attr("data-type","vimeo");
+					}
+			}
+		});
+		$('#videoModal').modal('hide');
+	}else{
+		alertify.alert("Ingresa una URL de un video valida");
+	}
+})
+
+
+/* Quita el video seleccionado de la lista de miniaturas de videos */
+$(document).on("click","#deleteVideo",function(e){
+        	$idVideo = $(this).parents().find('.videoLink').attr("id");
+        	$('#content').find('a').each(function(index,value) {
+        		if($(this).attr("data-id") == $idVideo){
+        			$(this).remove();
+        		}
+        	});
+        	$('#videoModal').modal('hide');
+	
+});
+
+
+
+/* Actualiza en la base de datos la lista de videos */
+$(document).on('click', '#updateVideos', function(){
+	$(this).next().remove();
+	$(this).remove();
+	var divGallery = '<div style="display:none;" class="html5gallery" data-skin="darkness" data-width="512" data-height="384"></div>';
+	var $idContent = $("#id_content").val();
+	$("#content").wrapInner(divGallery);
+	var $content = $('#content').html();
+	
+	 $('html').plainOverlay('show');
+ 	$.ajax({
+ 		type: 'POST',
+ 		url: $basePath + '/classes/class/updatecontent',
+ 		data: {idContent : $idContent,content : $content},
+ 		dataType: 'json',
+ 		success: function(response){
+ 			$("#content").html($content);
+    		$(".html5gallery").html5gallery();
+ 			$("#id_content").val("");
+    		menuFlag = 0;
+ 			$("#content").removeClass("contentEdit");
+ 			 $('html').plainOverlay('hide');
+ 			alertify.success("Contenido editado correctamente");
+ 		},
+ 		error: function(){ console.log("Fallo, intentalo otra vez"); }
+ 	});
+	
+});
+
+
+/* Revierte todos los cambios que se hayan hecho en los videos */
+$(document).on('click', '#revertVideos', function(){
+	$("#content").html(instructions);
+	$("#id_content").val("");
+	menuFlag = 0;
+	$("#content").removeClass("contentEdit");
+})
+
+//Limpia los campos de la modal donde se muestra la imagen y link del video//
+$('#videoModal').on('hidden.bs.modal', function () {
+	$(".thumb").html("");
+	$(".link").html("");
+})
+
+//Limpia los campos de la modal donde se muestra la imagen y link del video//
+$('#videoModalNew').on('hidden.bs.modal', function () {
+	$(".thumb2").html("");
+	$(".link2").html("");
+})
+
+
+/*************** EDICION DE SLIDES CON TEXTO *********************/
+
+*/Al Guardar */
+$(document).on('click', '#save', function(event){
+	var $idContent = $("#id_content").val();
+	var $content    = CKEDITOR.instances['txt'].getData();
+	 $('html').plainOverlay('show');
+		
+	$.ajax({
+		type: 'POST',
+		url: $basePath + '/classes/class/updatecontent',
+		data: {idContent : $idContent,content : $content},
+		dataType: 'json',
+		success: function(response){
+			$("#editContent").fadeOut();
+			CKEDITOR.instances["txt"].destroy();
+			$("#txt").html("");
+			$("#content").html($content);
+			alertify.success("Contenido editado correctamente");
+			$('html').plainOverlay('hide');
+			menuFlag = 0;				
+		},
+		error: function(){ console.log("Fallo, intentalo otra vez"); }
+	});
+})
+
+*/Al cancelar */
+$(document).on('click', '#cancel', function(){
+	$("#editContent").fadeOut();
+	CKEDITOR.instances.txt.destroy();	
+	$("#txt").html("");
+	$("#content").html(instructions);
+	$("#id_content").val("");
+	menuFlag = 0;
+})
+
+
+/* Bloquear Menu cuando el Slide esta en edicion */
+
+$("#container").mousedown(function(e){
+		if( e.button == 2 && menuFlag == 1) {
+            alertify.alert('Hay un slide en modo de edici\u00F3n debes de guardar o cancelar los cambios para poder editar o ver otro slide');
+            return false;
+          } else {
+            return true;
+           }
+})
+
+/*Recupera solo el ID de la url de un video de youtube*/
+function youtube_parser(url){
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    return (match&&match[7].length==11)? match[7] : false;
+}
+
+/*Recupera solo el ID de la url de un video de vimeo*/
+function vimeo_parser(url){
+	 var match = /vimeo.*\/(\d+)/i.exec( url );
+	  if (match) {
+		  return match[1];
+	}
+}
+
+function vimeoLoadingThumb(id){
+// 	 $('html').plainOverlay('show');
+//      $.ajax({
+//       async: false,
+//       dataType : 'json',
+//       url: 'http://www.vimeo.com/api/v2/video/' + id + '.json?callback=?',
+//       type : 'GET',
+//       success: function(data) {
+//           $(".contentEdit").addClass('vimeoThumb');
+//     	  $(".contentEdit").attr('src', data[0].thumbnail_large);
+//     	  $('html').plainOverlay('hide');
+//         }
+//    	});
+	 $('html').plainOverlay('show');	
+     $.ajax({
+ 		type: 'POST',
+ 		url: $basePath + '/classes/class/getvimeothumb',
+ 		data: {idVideo : id },
+ 		dataType: 'json',
+ 		success: function(response){
+ 	 	   //console.log(response.data);
+	       $(".contentEdit").addClass('vimeoThumb');
+           $(".contentEdit").attr('src', response.data[0].thumbnail_large);
+		   $('html').plainOverlay('hide');	
+ 		},
+ 		error: function(){ console.log("Fallo, intentalo otra vez"); }
+ 	}); 
+}
+
+
+ </script>
+ 
+ 
+ <style>
+ 
+ #content{
+	 display : block;
+	 margin-top : -120px;
+	 margin-left : 50px;
+	 width : 80%;
+ }
+ 
+ #editcontent{
+	font: normal;	
+}
+
+.vimeoThumb{
+	width:500px;
+	height:350px;
+}
+
+.contentEdit img{
+	width : 90px;
+	height: 90px;	
+}
+
+.html5gallery{
+	margin-top:-70px;
+	margin-left:70px;
+}
+
+.update{
+	margin-left:5px;
+	margin-right:5px;
+}
+
+li{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+}
+
+ul{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+}
+ .tree{
+ 	color : #848484;
+ 	height : 600px;
+ 	margin-top:20px;
+ 	overflow-x: scroll;
+}
+
+.slides{
+-o-transform: none !important;
+
+ -moz-transform: none !important;
+
+ -ms-transform: none !important;
+
+ -webkit-transform: none !important;
+
+ transform: none !important;
+ 
+ margin-top:210px;
+ 
+ zoom:0 !important;
+ }
+ 
+ 
+ </style>

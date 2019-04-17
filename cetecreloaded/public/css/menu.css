@@ -1,0 +1,19 @@
+.dropdown-menu li a
+{
+	font-size: 16px;
+}
+.dropdown .dropdown-toggle
+{
+	cursor: pointer;
+}
+
+.profile_menu .dropdown-toggle {
+    height: 50px;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.profile_menu img {
+    border-radius: 5px;
+    margin-right: 5px;
+}

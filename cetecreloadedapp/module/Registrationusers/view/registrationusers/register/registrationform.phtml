@@ -1,0 +1,360 @@
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<div class="container">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20"><center>Formato de Inscripci&oacute;n<center></h3>
+		</div>
+		<div class="panel-body">
+		
+		<div class="container">
+
+			<div class="col-md-12">
+				<form id="datos" class="form-horizontal" method="post" action="<?php echo $this->basePath()."/registrationusers/register/registrationform" ?>">
+				
+				<input type="hidden" id="id_user" name="id_user" value="<?php echo $this->user_id;?>">
+				<input type="hidden" id="email" name="email" value="<?php echo $this->email;?>">
+				
+				<div class="row">
+					<div class="col-md-9 col-md-offset-1">
+					<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Datos Personales</legend>
+							
+							<div class="form-group">
+    							<label class="col-sm-4 control-label">Nombre:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="nombre" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Apellido Paterno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="apellidop" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Apellido Materno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="apellidom" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Sexo:</label>
+   								<div class="col-sm-8">
+   								<label class="radio-inline"><input type="radio" name="sexo" id="sexo" value="H" required>Masculino</label>
+   						    	<label class="radio-inline"><input type="radio" name="sexo" id="sexo" value="M">Femenino</label>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label" required>CURP:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control curp" name="curp" id="curp" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+     							<a href="https://consultas.curp.gob.mx/CurpSP/" target="popup" onclick="window.open('https://consultas.curp.gob.mx/CurpSP/','popup','width=700,height=600'); return false;">Consulta tu CURP</a>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Fecha de Nacimiento:</label>
+   								<div class="col-sm-8">
+     							<input type="text" name="fecha" id="fecha" class="form-control" required>
+								</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Estado de Nacimiento:</label>
+   								<div class="col-sm-8">
+     							<input type="text" name="edo_nacimiento" id="edo_nacimiento" class="form-control" required>
+								</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Ciudad de Nacimiento:</label>
+   								<div class="col-sm-8">
+     							<input type="text" name="ciudad_nacimiento" id="ciudad_nacimiento" class="form-control" required>
+								</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Escuela Secundaria:</label>
+   								<div class="col-sm-8">
+     							<input type="text" name="secundaria" id="secundaria" class="form-control" required>
+								</div>
+   						    </div>
+   						    
+   						     <div class="form-group">
+    							<label class="col-sm-4 control-label">Fecha del Certificado de Secundaria:</label>
+   								<div class="col-sm-8">
+     							<input type="text" name="fechaCert" id="fechaCert" class="form-control" required>
+								</div>
+   						    </div>
+   						    
+   						     <div class="form-group">
+    							<label class="col-sm-4 control-label">Tel&eacute;fono Casa:</label>
+   								<div class="col-sm-4">
+     							<input type="text" name="telefonoCasa" id="telefonoCasa" class="form-control numericInput" required>
+								</div>
+   						    </div>
+   						    
+   						     <div class="form-group">
+    							<label class="col-sm-4 control-label">Tel&eacute;fono Celular(Opcional):</label>
+   								<div class="col-sm-4">
+     							<input type="text" name="celular" id="celular" class="form-control numericInput">
+								</div>
+   						    </div>
+    					</fieldset>
+  					</div>	
+			
+					
+				<div class="col-md-9 col-md-offset-1">
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">Direcci&oacute;n</legend>
+				
+							<div class="form-group">
+    							<label class="col-sm-1 control-label">Calle:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="calle" required>
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Ext:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="numExt" required>
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Int:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control" name="numInt">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-1 control-label">Colonia:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="colonia" required>
+   						    	</div>
+   						    	
+   						    	<label class="col-sm-2 control-label">CP:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="cp" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-3 control-label">Del. o Municipio:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="delegacion" required>
+   						    	</div>
+   						    	
+   						    	<label class="col-sm-2 control-label">Ciudad:</label>
+   								<div class="col-sm-4">
+     							<input type="text" class="form-control" name="ciudad" required>
+   						    	</div>
+   						    </div>
+   						    
+   						      <div class="form-group">
+    							<label class="col-sm-4 control-label">Pais:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="pais" required>
+   						    	</div>
+   						    	
+   						    </div>
+   					
+				</fieldset>
+				</div>
+				
+				<div class="col-md-9 col-md-offset-1">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Datos de Facturaci&oacute;n(Opcionales)</legend>
+							
+								
+							<div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Nombre(s) o Raz&oacute;n social:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="nombreFact">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Apellido Paterno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="apellidopFact">
+   						    	</div>
+   						    </div>
+   						    
+   						   	<div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Apellido Materno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="apellidomFact">
+   						    	</div>
+   						    </div>
+   						    
+   						       <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">RFC:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="rfcFact" id="rfcFact" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+   						    	</div>
+   						    </div>
+   						    <hr>
+   						    <label>Domicilio Fiscal</label>
+   						    <hr>
+   						    
+							<div class="form-group">
+    							<label for="inputEmail3" class="col-sm-1 control-label">Calle:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="calleFact">
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Ext:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="numExtFact">
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Int:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control" name="numIntFact">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-1 control-label">Colonia:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="coloniaFact">
+   						    	</div>
+   						    	
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">CP:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="cpFact">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-3 control-label">Del. o Municipio:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="delegacionFact">
+   						    	</div>
+   						    	
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Ciudad:</label>
+   								<div class="col-sm-4">
+     							<input type="text" class="form-control" name="ciudadFact">
+   						    	</div>
+   						    </div>
+   						    
+   						      <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Pais:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="paisFact">
+   						    	</div>
+   						    	
+   						    </div>
+						</fieldset>
+				</div>
+			</div>
+		</div>
+			
+		</div>
+			</div>
+			<center>
+		<input type="submit" id="send" class="btn btn-success" value="Enviar Informaci&oacute;n"/>
+		</center>
+			</form>
+			
+	<br>
+</div>
+
+</div>
+
+<style>
+#fecha, #fechaCert {
+      background-color: white;
+      cursor: pointer;
+}
+
+</style>
+
+<script>
+$(document).ready(function() {
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$.datepicker.regional['es'] =
+	{
+		closeText: 'Cerrar',
+		prevText: 'Previo',
+		nextText: 'Pr�ximo',
+		   
+		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+		  'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+		  'Jul','Ago','Sep','Oct','Nov','Dic'],
+		monthStatus: 'Ver otro mes', yearStatus: 'Ver otro a�o',
+		dayNames: ['Domingo','Lunes','Martes','Mi�rcoles','Jueves','Viernes','S�bado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','S�b'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+		dateFormat: 'dd-mm-yy', firstDay: 0,
+		initStatus: 'Selecciona la fecha', isRTL: false
+	};
+
+	$.datepicker.setDefaults($.datepicker.regional['es']);
+
+	$("#fecha").attr('readOnly' , 'true' );
+	$("#fechaCert").attr('readOnly' , 'true' );
+	
+	$( "#fecha" ).datepicker({
+	      changeMonth: true,
+	      changeYear: true,
+	      yearRange: '1935:2001',
+	      defaultDate: "-15y -6m -4d",
+	      maxDate: new Date(2001,12,31),
+	});
+
+	  
+	$( "#fechaCert" ).datepicker({
+	      changeMonth: true,
+	      changeYear: true,
+	      yearRange: '1951:2015',
+	      defaultDate: "-1y -6m -4d",
+	      maxDate: new Date(2015,12,31)
+	});
+
+
+});
+
+$(document).ready(function() {
+    $(".numericInput").keypress(function (e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){ 
+           return false;
+        }
+    });
+});
+$(document).on("click","#send",function(e) {
+	var rfc = $("#rfcFact").val();
+	var curp = $("#curp").val();
+	var regexrfc = /^[A-Z]{4}\d{6}[a-zA-Z0-9]{3}$/;
+	var regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" +
+					"(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" +
+					"[HM]{1}" +
+					"(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" +
+					"[B-DF-HJ-NP-TV-Z]{3}" +
+				 	"[0-9A-Z]{1}[0-9]{1}$";
+
+	if(curp != ""){			 	
+		if(!(curp.match(regexCurp))){
+			e.preventDefault();
+		    alertify.alert("El CURP ingresado no es valido");
+			return false;
+		}
+	}
+				 	
+	if(rfc != ""){
+	    if (!(rfc.match(regexrfc))) {
+			e.preventDefault();
+		    alertify.alert("El RFC ingresado no es valido");
+		    return false;
+	    }
+	}
+
+	
+});
+
+</script>

@@ -1,0 +1,278 @@
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/checkbox/label-checkbox.css'; ?>" rel="stylesheet" />
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#shipingsTrip').dataTable({
+		"aoColumnDefs" : [ {
+	    	'bSortable' : false,
+	        'aTargets' : [8, 9,10]
+		} ],
+		"order": [[ 5, "desc" ]]
+	});
+	$("#modalAddDatasShipping").on('show.bs.modal', function(event){
+    	var $button   = $(event.relatedTarget);
+    	var $id_s = $button.data('shippingmodal');
+    	getDatasByShipping($(this), $button, $id_s);
+	});
+	$("#modalAddDatasShipping").on('hidden.bs.modal', function(event){
+    	var $button   = $(event.relatedTarget);
+    	$('#labelAddDataShipping').html('');
+    	$('#modalendmileage').val('');
+    	$('#modalendgasolinejourney').val('');
+    	$button.blur();
+	});
+	$("#buttonSaveDatasShipping").on("click", function(e){
+			var end_mileage = $('#modalendmileage').val();
+			var endgasolinejourney = $('#modalendgasolinejourney').val();
+			if(end_mileage == '' || endgasolinejourney == ''){
+				alertify.alert("No debes dejar campos vacios.");
+			}else if(end_mileage != '' && endgasolinejourney != ''){
+				$fomName = "#formDatasJourney";
+				alertify.confirm("¿Seguro que desea editar esta información?", function(e){
+				if(e){
+					updateDatasJourney($fomName);
+				}
+			});
+			}
+	});
+});
+function getDatasByShipping(modal, boton, id_s){
+	var basePath = "<?php echo $this->basePath(); ?>";
+	$.ajax({
+		method   : "POST",
+		url      : basePath+"/out/expenses-trip/addeditdatasshipping",
+		dataType : "json",
+		data     : {'id_shipping':id_s, consult : 'consult'}
+	})
+	.done(function(response) {
+		if(response.response == "ok"){
+			$('#labelAddDataShipping').html(response.data[0].client_folio);
+			$('#modalidshipping').val(response.data[0].id_shipping)
+			$('#modaltype_destination').val(response.data[0].type_destination)
+			if(response.data[0].end_mileage){
+				$('#modalendmileage').val(response.data[0].end_mileage);
+			}
+			if(response.data[0].end_gasoline_end_journey){
+				$('#modalendgasolinejourney').val(response.data[0].end_gasoline_end_journey);
+			}
+			if(response.data[0].return_viatic_rest == 1){
+				$('#si').prop('checked','checked');
+			}else if(response.data[0].return_viatic_rest == 0){
+				$('#no').prop('checked','checked');
+			}
+			if(response.data[0].type_destination == 1){
+				$('#si').attr('disabled','disabled');
+				$('#no').attr('disabled','disabled');
+			}else if(response.data[0].type_destination != 1){
+				$('#si').removeAttr('disabled');
+				$('#no').removeAttr('disabled');
+			}
+		}else if(response.response == "fail"){
+			alertify.alert("Ocurrio un error inesperado, porfavor contacte al administrador.");
+		}
+	})
+	.fail(function() { console.log( "error" ); })
+	.always(function() { console.log( "complete" ); });
+}
+function updateDatasJourney($form){
+	var basePath = "<?php echo $this->basePath();?>";
+	$.ajax({
+		method   : "POST",
+		url      : basePath+'/out/expenses-trip/addeditdatasshipping',
+		dataType : "json",
+		data     : $($form).serializeArray()
+	})
+	.done(function(response){
+		if(response.response == "ok"){
+			$('#ship'+response.data[0].id_shipping).removeAttr('disabled');
+			$('#edit'+response.data[0].id_shipping).removeAttr('disabled');
+			$('#status'+response.data[0].id_shipping).html('<span class="label label-success" ><strong>Completo</strong></span>');
+			alertify.success("Datos guardados correctamente.");
+		}else if(response.response == "ok"){
+			alertify.success("Ocurrio un error inesperado, contacte al administrador.");
+		}
+		$('#modalAddDatasShipping').modal('toggle');
+		console.log("done");
+	})
+	.fail(function() { console.log( "error" ); })
+	.always(function() { console.log( "complete" ); });
+}
+function saveConfirmValidatingShipping(id_ship,type_destination){
+	alertify.confirm("¿Seguro que confirmar este viaje?", function(e){
+            if(e){
+            	var basePath = "<?php echo $this->basePath(); ?>";
+            	$.ajax({
+				method   : "POST",
+				url      : basePath+"/out/expenses-trip/confirmvalidatingexpenses",
+				dataType : "json",
+				data     : {'id_shipping': id_ship,'type_destination':type_destination }
+			})
+			.done(function(response){
+				if(response.response == "ok"){
+					$('#ship'+response.data[0].id_shipping).prop('checked', true);
+					$('#ship'+response.data[0].id_shipping).attr('disabled','disabled');
+					$('#edit'+response.data[0].id_shipping).attr('disabled','disabled');
+					alertify.success("Viaje confirmado correctamente.");
+				}else if(response.response == "fail"){
+					alertify.alert("Ocurrio un error inesperado, porfavor contacte al administrador.");
+				}
+			})
+			.fail(function() { console.log( "error" ); })
+			.always(function() { console.log( "complete" ); });
+            }else{
+            	$('#ship'+id_ship).prop('checked', false);
+            }
+        });
+}
+</script>
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Gastos por viaje</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Egresos</a>
+			        <a href="#" class="btn btn-default">Gastos por viaje</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="content-flow">
+				<h3 class="panel-title amaranth text-size-20">Lista de viajes</h3>
+			</div>
+		</div>
+		<div class="panel-body">
+			<p>La siguiente tabla contiene la lista de viajes para administrar gastos.</p>
+			<table id="shipingsTrip" class="table table-striped table-hover table-condensed table-bordered">
+				<thead>
+					<th>Folio-cliente</th>
+					<th>Cliente</th>
+					<th>Unidad</th>
+					<th>Operador</th>
+					<th>Fecha Inicial</th>
+					<th>Fecha Final</th>
+					<th>Destino</th>
+					<th>Status</th>
+					<th>Agregar / Editar</th>
+					<th>Confirmar</th>
+					<th></th>
+				</thead>
+				<tbody>
+			    	<?php foreach($this->shippings as $shipping) : ?>
+					<tr>
+						<td><?php
+						if($shipping['client_folio']){
+							echo $shipping['client_folio']; 
+						}else{
+							echo Util_Tools::format($shipping['internal_folio'], 5);
+						}
+						?></td>
+				        <td>
+					        <a class="btn" href="<?php echo $this->basePath()."/in/customers/detail/".$shipping["id_company"]; ?>" data-toggle="tooltip" data-placement="top" title="Detalle cliente">
+				        		<span class="glyphicon glyphicon-search"></span>
+				        		<?php echo $shipping["name_company"]; ?>
+				        	</a>
+				        </td>
+						<td><?php echo $shipping['id_product']; ?></td>
+						<td><?php echo $shipping['operator']['name_iof_user']." ".$shipping['operator']['surname']; ?></td>
+						<td>
+							<?php echo Util_Tools::dateFormat("-", $shipping['start_date']); ?>
+						</td>
+						<td><?php echo ($shipping['end_date'] == "0000-00-00") ? "<span class='label label-danger'><strong>Sin finalizar</strong></span>" : Util_Tools::dateFormat("-", $shipping['end_date']); ?></td>
+						<td><?php echo $shipping['name_destination']; ?></td>
+						<td id="status<?php echo $shipping['id_shipping']; ?>"><?php
+						echo (!$shipping['end_gasoline_end_journey'] || !$shipping['end_mileage'] ) ? "<span class='label label-danger'><strong>Incompleto</strong></span>" : "<span class='label label-success'><strong>Completo</strong></span>";
+						?></td>
+						<td class="center">
+							<button id="edit<?php echo $shipping['id_shipping']; ?>" type="button" class="btn btn-primary" <?php echo ($shipping['end_date'] == "0000-00-00" || $shipping['status_full_data'] == 1) ? "disabled" : ""; ?> data-toggle="modal" data-target="#modalAddDatasShipping" data-backdrop="static" data-keyboard="false" data-tool="tooltip" data-placement="top" data-shippingmodal="<?php echo $shipping['id_shipping']; ?>" title="Agregar/Editar">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+						</td>
+						<td class="text-center">
+							<label for="<?php echo "ship".$shipping['id_shipping']; ?>" class="label-checkbox">
+  								<input type="checkbox" onclick="saveConfirmValidatingShipping(<?php echo $shipping['id_shipping']; ?>,<?php echo $shipping['type_destination']; ?>)" name="<?php echo "ship".$shipping['id_shipping']; ?>" value="<?php echo $shipping['id_shipping']; ?>"  id="<?php echo "ship".$shipping['id_shipping']; ?>" <?php echo ($shipping['status_full_data'] == 1) ? "disabled checked='true'" : ""; echo (($shipping['end_date'] == "0000-00-00" && $shipping['id_sinister'] == null) || ($shipping['starting_mileage'] == null || $shipping['end_mileage'] == null || $shipping['end_gasoline_end_journey'] == null)) ? "disabled" : ""; ?> />
+  								<i></i>
+  							</label>
+						</td>
+						<td>
+						<?php if($shipping['type_destination'] != 1){ ?>
+						<a class="btn btn-warning" href="<?php echo $this->basePath().'/out/expenses-trip/add/'.$shipping['id_shipping'];?>" data-tool="tooltip" data-placement="top" title="Gastos del viaje" ><span class="glyphicon glyphicon-usd" ></span></a>
+						<?php }else{
+							echo "Viaje local sin gastos.";
+							} ?>
+						</td>
+			    </tr>
+			    	<?php endforeach; ?>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalAddDatasShipping" tabindex="-1" role="dialog" aria-labelledby="labelAddStatusAlert" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="POST" name="formDatasJourney" id="formDatasJourney" >
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" >Datos del viaje <p id="labelAddDataShipping" > </p></h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<input type="hidden" id="modalidshipping" name="modalidshipping" />
+					<input type="hidden" id="modaltype_destination" name="modaltype_destination" />
+					<div class="row">
+						<div class="col-md-6">
+							<label class="sr-only">Kilometraje final: </label>
+							<input class="form-control" type="text" id="modalendmileage" name="modalendmileage" placeholder="Kilometraje final" />
+						</div>
+						<div class="col-md-6">
+							<label class="sr-only">Gasolina que cargo al volver: </label>
+							<input class="form-control" type="text" id="modalendgasolinejourney" name="modalendgasolinejourney" placeholder="Gasolina que cargo al llegar" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>¿Regreso el cambio de los viaticos?</label>
+							<label for="si" class="label-radio text-inline">
+								<span>Si</span>
+  								<input type="radio"  name="returnViatic" value="1" id="si" />
+  								<i></i>	
+  							</label>
+  							<label for="no" class="label-radio text-inline">
+								<span>No</span>
+  								<input type="radio"  name="returnViatic" value="0" id="no" />
+  								<i></i>	
+  							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="buttonSaveDatasShipping" class="btn btn-primary buttonSaveStatus">Guardar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      		</div>
+      		</form>
+		</div>
+	</div>
+</div>
+<!-- Modal -->

@@ -1,0 +1,189 @@
+<script type="text/javascript">
+$(function(){
+    // 6 create an instance when the DOM is ready
+    $('#jstree').jstree({ 'core' : {
+      'data' :
+    	<?php
+    		echo $this->tree;
+    	?>
+    },
+    "types" : {
+ 	      "root" : {
+ 	        "icon" : "<?php echo $this->basePath('/img/images/tree-icon.png')?>"
+ 	      },
+ 	    "folder" : {
+ 	        "icon" : "<?php echo $this->basePath('/img/images/folder.ico')?>"
+ 	      },
+ 	    "file" : {
+ 	      "icon" : "<?php echo $this->basePath('/img/images/file.png')?>"
+ 	    }
+ 	    },
+ 	    "plugins" : [ "state", "types" ]
+    });
+  });
+</script>
+<script>
+
+	function linkContent(idc){
+		$("#paramform").attr("action","<?php echo $this->basePath('/contents/contents'); ?>");
+		$('#id_topic_content').val(idc);
+	    document.paramform.submit();
+	}
+	function linkContentTopic(id){
+		$("#paramform").attr("action","<?php echo $this->basePath('/topics/index'); ?>");
+	    $('#id_topic_content').val(id);
+	    document.paramform.submit();
+	}
+	function parentLink(){
+		window.location.href = "<?php echo $this->basePath('/usermanual/index') ?>";
+	}
+
+	
+	
+	function addTopic(idTopic){
+		$("#paramform").attr("action","<?php echo $this->basePath('/topics/add'); ?>");
+		$('#id_topic_add').val(idTopic);
+		document.paramform.submit();
+	}
+	function updateTopic(topic){
+		$("#paramform").attr("action","<?php echo $this->basePath('/topics/update'); ?>");
+		$('#id_topic_add').val(topic);
+	    document.paramform.submit();
+	}
+	function deleteTopic(topic){
+		var c = confirm('¿Seguro que deseas eliminar este elemento?');
+		if(c == true){
+			$("#paramform").attr("action","<?php echo $this->basePath('/topics/delete'); ?>");
+			$('#id_topic').val(topic);
+		    document.paramform.submit();	
+		}
+	}
+</script>
+
+<script>
+	$('#textContent').css({ color: "#FFFFFF"});
+</script>
+<?php
+	$form = $this->formparam;
+	$topicsform = $this->topicsform;
+	$formLabel = $this->plugin('formLabel');
+	echo $this->form()->openTag($form);
+?>
+<div class="container-responsive">
+	<div class="row">
+		<div class="col-md-4"><h3>CETEC</h3></div>
+		<div id="mensajes" class="col-md-6 col-md-offset-2"></div>
+	</div>
+	
+	<div id="overflow" class="">
+		<!-- <div id="mensajes" class=""></div> -->
+		
+		<div id="jstree"  class="col-md-3" style="overflow-x: auto; overflow-y: auto;  max-height: 500px;"></div>
+		
+		<div class="col-md-9">
+		
+			<div style="display: none">
+			<?php
+				echo $this->formElement($form->get('id_topic_content'));
+				echo $this->formElement($form->get('id_topic'));
+				echo $this->formElement($form->get('id_topic_add'));
+			?>
+			</div>
+			
+			<div class="col-md-9 col-md-offset-3">
+				<h1 ALIGN="center">
+					
+					<?php  
+						foreach ($this->parent as $parent):
+						$t = $parent['id_topic']; 
+						if($parent['parent'] == 2){
+					?>
+					Curso:</br>
+					<?php 
+						}else{
+					?> 
+					Elementos de la carpeta:</br>
+					<?php
+						} echo $parent['topic_name']; endforeach;
+					?>
+				</h1>
+			</div>
+			<div class="col-md-12">
+				</br>
+				<p>
+					<h4>
+					<a href="#" onclick='addTopic(<?php echo $t; ?>)' >
+						<img src=<?php echo $this->basePath("/img/images/add.png")?>>
+					</a>Agregar Nuevo Elemento
+					</h4>
+				</p>
+			</div>
+			<div>
+			
+				<?php if($this->topics){ ?>
+			<div class="table-responsive">
+				<table class="display table table-striped table-bordered" id="table">
+				    <thead>
+					    <tr>
+					        <th>Nombre</th>
+					        <th>Tipo de elemento</th>
+					        <th>Actualizar</th>
+					        <th>Eliminar</th>
+					    </tr>
+				    </thead>
+				    <tbody>
+				       <?php foreach ($this->topics as $topics): ?>
+				        <tr>
+			    			<td><font size=2>
+			    				<?php echo 
+			    				$topics['topic_name'];
+			    				?>
+			    				</font>
+			    			</td>
+			    			<td>
+			    				<font size=2>
+			    				<?php if($topics['type'] == "file"){?> 
+			    				Documento 
+			    				<?php } else if($topics['type'] == "folder"){?> 
+			    				Carpeta 
+			    				<?php }?>
+			    				</font>
+			    			</td>
+			    			<td>
+			    				<a href="#" onclick="updateTopic(<?php echo $topics['id_topic']; ?>)" >
+			    					<img src=<?php echo $this->basePath("/img/images/update.png")?>>
+			    				</a>
+			    			</td>    			
+			    			<td>
+			    				<a href="#" onclick="deleteTopic(<?php echo $topics['id_topic']; ?>)" >
+			    					<img src=<?php echo $this->basePath("/img/images/deleteBook.png")?>>
+			    				</a>
+			    			</td>
+				        </tr>
+				    <?php endforeach;
+				    ?>
+				    </tbody>
+				</table>
+				    <?php } else{
+				     	?>
+				     	<?php
+				     		foreach ($this->parent as $parent):
+						     	if($parent['parent'] == 1){
+				     	?>
+				     <h4>Aun no tienes ningun elemento en la carpeta  </h4>
+						<?php
+							echo $parent['topic_name'];	}else{
+							?>
+				      <h4>En la carpeta <?php
+				      echo $parent['topic_name'];
+								}
+								
+							endforeach;
+				      } ?></h4>
+			</div>
+		</div>
+	</div>
+</div>
+<?php 
+	echo $this->form()->closeTag(); 
+?>

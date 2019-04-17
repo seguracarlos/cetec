@@ -1,0 +1,28 @@
+<?php
+	$helpUser = $this->helps->supplierAdd;
+?>
+<h3 style="text-align: center;" class="centerOut">Modifica la informaci&oacute;n de un Proveedor</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/index') ?>"> 
+				<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconsupp.png');?>" title="Proveedores"> 
+			</a>
+		</li>
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/detalle')?>" >
+				<img title="Informaci&oacute;n detallada de Proveedores" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondet.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<p class="triangle-border" >Editar los datos del proveedor.</p>
+	<?php echo $this->form; ?>
+</div>
+

@@ -1,0 +1,140 @@
+<?php  
+		$this->headLink()
+					->appendStylesheet($this->baseUrl('/public/css/popupAdminCategories.css'))
+					->appendStylesheet($this->baseUrl('/public/css/popupTeam.css'));
+		 $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getProjectsByUser.js'))
+		                    ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addDepartment.js'))
+		                    ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/jobsFunctions.js'))
+		                    ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addEmployeesDetails.js'));
+	 
+		 $helpUser = $this->helps->employeeIndex;
+ ?>
+
+<script type="text/javascript">
+var IconSet = "<?php echo $this->iconset; ?>";
+var tableJob = "";
+
+$(document).ready(function() {
+	jqueryTable('#employee', 7);
+	tableJob = jqueryTablePopup("#jobs", 2);
+});
+
+function sub(o){
+	//$.post("/vitae/add", { u: o,t:1});
+
+	$("#id").val(o);
+	$("#t").val("1");
+	$("#form1").submit();
+	
+	 
+}
+
+</script>
+<h3 class="centerHor">Curriculum Vitae</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="javascript:;" onclick="javascript:showJobs()"><img title="Administrar Puestos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconjobtitle.png')?>" /></a>
+			</li>			
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+<form id="form1" action="<?php echo $this->baseUrl("/Horus/vitae/add-show"); ?>" method="post">
+	<input type="hidden" id="id" name="id">
+	<input type="hidden" id="t" name="t">
+</form>
+<div id="overflow">
+<table id="employee" class="display">
+<thead>
+    <tr>
+    	<th>N&deg;</th>
+    	<th>Curriculum Vitae</th>
+        <th>Usuario</th>
+        <th>Nombre(s)</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
+        <th>E-Mail</th> 
+        <th>Rol</th>
+        <th>Departamento</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if($this->users){ foreach ($this->users as $usuario) : ?>
+        <tr> 
+        	<td style="text-align: center;"><?php echo Application_Util_Tools::format($usuario->getNumberEmployee(), 4);?></td>
+  			<td>
+	            <a href="javascript:sub('<?php echo $usuario->getUserId(); ?>')">
+	                <img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcurriculum.png') ?>" title="Agregar CV">
+	            </a>
+  			</td>
+  			<td class="alpha searchById"><a href="<?php echo $this->baseUrl('/System/users/details?det=true&dev='.$usuario->getPrivateKey()."&e=1"); ?>"title="Ver informacion del usuario"><?= $usuario->getUserName() ?></a></td>           
+            <td class="alpha"><?= $usuario->getRealName() ?></td>
+            <td class="alpha"><?= $usuario->getSurName() ?></td>
+            <td class="alpha"><?= $usuario->getLastName() ?></td>
+			<td class="alpha"><a href="mailto:<?=$usuario->getMail()?>?Subject=Hola%20fractal"><?= $usuario->getMail()?></a></td>            
+            <td class="alpha"><?= $usuario->getRoleId() ?></td>
+            <td class="alpha"><?= $usuario->getDepartment_name()?></td>
+        </tr>
+    <?php endforeach; } ?>
+    </tbody>
+</table>
+</div>
+
+<!-- 
+    Inicia popup jobs
+-->
+<div id="popupJobs" class="popHorus">
+	<div id="btnCloseJobs" title="Cerrar ventana">X</div>
+	<h3 class="center">Puestos</h3>
+	<div id="table">
+		<br />
+		<ul class="toolbar">
+			<div id="icons">
+					<li class="iconOpacity ">
+						<a href="javascript:;" onclick="javascript:showFormJobs();"><img title="Agregar departamento" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" /></a>
+					</li>
+					<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista del inventario de Equipo')">
+						<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+					</li>
+			</div>	
+		</ul>
+		<div class="center">
+			<div id="tableCover">
+			    <img style="display:none; width: 36px; height: 36px;" id="loadEditDepartment" alt="cargando..." src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"/>
+				<table id="jobs" class="display">
+					<thead>
+						<tr>
+							<th>Puesto</th>
+							<th>Descripci&oacute;n</th>
+							<th colspan="2">
+								<a href="javascript:;" onclick="javascript:showFormJobs();"> 
+									<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar departamento"> 
+								</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="form">
+		<br />
+		<ul class="toolbar">
+			<div id="icons">
+					<li class="iconOpacity ">
+						<a href="javascript:;" onclick="javascript:showlistJobs();"><img title="Listado de puestos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icongroup.png')?>" /></a>
+					</li>
+					<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista del inventario de Equipo')">
+						<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+					</li>
+			</div>	
+		</ul>
+		<div id="showForm"></div>
+	</div>
+</div>
+<div id="backgroundJobs"></div>

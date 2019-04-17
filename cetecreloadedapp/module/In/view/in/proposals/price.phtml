@@ -1,0 +1,76 @@
+<?php
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/price.css')) ;
+?>
+	<h3 class="centerIn">Cotizaci&oacute;n</h3>
+	
+	<ul class="toolbar">
+		
+	<div id="icons">
+		<div id="clock"></div>
+	</div>	
+		
+	</ul>
+  		
+	<INPUT type="hidden" value="<?php echo $this->idClient ?>" name="" id="client"> 
+	<INPUT type="hidden" value="<?php echo $this->cust_type ?>" name="" id="cust"> 
+
+	<script type="text/javascript">
+		var idClient = "<?php echo ($this->idClient); ?>";
+		var cust_type = "<?php echo ($this->cust_type); ?>";
+		//alert(cust_type);
+
+		$(document).ready(function() {
+
+		setInterval(function() {copyDate();},1000);
+
+		if ($("#client").val() != 0) {
+				$("#idService").attr({
+  				 		'href': BASE_URL + "/In/prospectprojects/createview?idClient=" + idClient + "&cust_type=" + cust_type,
+				});
+				$("#idProduct").attr({
+  				 		'href': BASE_URL + "/In/proposals/addorder?idClient=" + idClient + "&cust_type=" + cust_type,
+				});
+		}else{
+				$("#idService").attr({
+  				 		'href': BASE_URL + "/In/prospectprojects/index",
+				});	
+				$("#idProduct").attr({
+  				 		'href': BASE_URL + "/In/proposals/index",
+				});
+		}
+
+		});
+	</script>
+	
+	<br/>
+
+  	<div align="center" id="copyClock" style="font-size: large; color: white"></div>
+
+	<div class="contenedor">
+		
+		<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPROSPECTPROJECTSINDEX]):?>	
+		<div class="caja">
+		      <div class="item">
+		        <img src="<?php echo $this->baseUrl('/public/img/servicios3.png')?>" />
+		        <span class="informacion">
+		          <strong>Servicios</strong>En este apartado podras cotizar nuestros servicios. 
+		          <a id="idService" title="Cotizar servicio">Servicios</a>	
+		        </span>
+	      	</div>
+	    </div>
+	    <?php endif; ?>
+
+	    <?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPROPOSALSINDEX]):?>	
+		<div class="caja">
+	      <div class="item">
+	        <img src="<?php echo $this->baseUrl('/public/img/productos3.png')?>" />
+	        <span class="informacion">
+	          <strong>Productos</strong>En este apartado podras cotizar nuestros productos. 
+	          <a id="idProduct" title="Cotizar Producto">Productos</a>
+	        </span>
+	      </div>
+		</div>
+		<?php endif; ?>
+    
+	</div>
+	

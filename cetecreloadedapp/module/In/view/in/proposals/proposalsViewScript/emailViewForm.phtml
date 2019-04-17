@@ -1,0 +1,39 @@
+<div style="width:90%;margin-left:auto;margin-right:auto;">
+	<div id="fieldsetForm" class="forms">
+		<legend id="legendhelp">Datos Requeridos</legend>
+			<fieldset>
+				<legend>Informaci&oacute;n General</legend>
+					<div style="margin:auto; width:750px;">
+						<table>
+							<tr>
+								<td>* Asunto: <?=$this->element->getElement('asunto');?></td>
+								<td>* Para: <?=$this->element->getElement('destino');?></td>
+							</tr>
+							
+							<tr>
+								<td>* Su email: <?=$this->element->getElement('email'); ?></td>
+							</tr>
+							
+							<tr>
+								<td><?=$this->element->getElement('file');?></td>
+							</tr>
+						</table>
+					<div align="center" style="height:350px;">
+						<table>
+							<tr>
+								<td colspan="2">*Mensaje:<?=$this->element->getElement('mensaje'); ?></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</fieldset>
+				<div class="center">
+					<?=$this->element->getElement('Enviar');?>
+					<?=$this->element->getElement('Cancelar');?>
+				</div>
+	</div>
+</div>
+
+<script>
+
+</script>

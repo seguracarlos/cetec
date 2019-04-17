@@ -1,0 +1,117 @@
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/documentsStyle.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/documentsFunctions.js')); 
+	
+	$show = (isset($_GET['edit'])=="true")? $_GET['edit'] : "false";
+	$idDoc = (isset($_GET['idDoc']))?$_GET['idDoc'] : "false";
+	$idVersion = (isset($_GET['idVer']))?$_GET['idVer'] : "false";
+
+?>
+<?php if($this->pdfData != null):?>
+	<?php  
+	header("Content-Type: application/x-pdf");
+	header("Content-Disposition: inline; filename=\"$this->nameDoc.pdf\""); 
+	echo $this->pdfData; 
+	?>
+<?php else:?>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+<h3 class="centerIn">Exportar / Imprimir Documentos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/index') ?>">
+					<img title="Documentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondocgear.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/index?CreAnExp=true') ?>">
+					<img title="Crear una nueva version" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="fieldsetForm" class="forms">
+	<div id="title" style="margin-bottom: 10px;" class="center">
+		<h2 style="font-size: 34px;position:relative;color: #000;font-weight: 400;text-shadow: 0px 0px 1px rgba(0,0,0,0.3);padding: 20px;text-transform: uppercase;text-align: center;">Exportar Versi&oacute;n</h2>
+		<br />
+	</div>
+	
+	<div style="margin-left: 20px;">
+		<div id="descDoc" style="font-size: 15px; font-weight: bold;"> Descripci&oacute;n Documento: <span id="contDesc" style=" font-size: 15px; font-weight: normal;"><?php echo $this->document['description']; ?></span></div>
+	</div>
+	<br/>
+	<br/>
+	<div id="contentDoc" style="padding:10px; border: graytext dashed;">
+		<div id="nameDoc" style=" width:60%; font-size: 30px; text-align: center; margin-top: 20px; margin-bottom: 40px; margin-left: 15%;">
+			<span id="nameDocText"><?php echo $this->document['name']; ?></span>
+			<input id="id_version" type="hidden">
+			<input id="date_version" type="hidden">
+		</div>
+		<?php 
+			$pos = "";
+			$maxWith = "";
+			$minWith = "";
+			$cont = 0;
+			foreach ($this->contFields['contents'] as $contVersion):?>
+			   <?php if(strlen($contVersion['content']) >= 30):?>
+			   	   <?php if($contVersion['position'] == 2):?>
+						<?php 
+							$pos = "5%;";
+							$maxWith = "40%";
+						?>
+				   <?php elseif ($contVersion['position'] == 3):?>
+						<?php 
+							$pos = "60%";
+							$maxWith = "40%";
+						?>
+				   <?php else : ?>
+						<?php 
+							$pos = "5%";
+							$maxWith = "80%";
+						?>
+			       <?php endif; ?>
+			   		<div id="<?php echo $contVersion['idField'] ?>" <?php echo 'style="width: '.$maxWith.'; padding: 10px; margin-top:20px; word-wrap: break-word; font-size: 20px; margin-left:'.$pos.';"'; ?>>
+			   			<?php echo $contVersion['content']; ?>
+			       </div>
+			   <?php else: ?>
+			   	   <?php if($contVersion['position'] == 1):?>
+						<?php $pos = "45%"; ?>
+				   <?php elseif ($contVersion['position'] == 3):?>
+						<?php $pos = "75%"; ?>
+				   <?php else : ?>
+						<?php $pos = "5%"; ?>
+			       <?php endif; ?>
+			       <br/><br/><br/>
+			   		<div id="<?php echo $contVersion['idField'] ?>" <?php echo 'style="width: 200px; word-wrap: break-word; font-size: 20px; margin-left:'.$pos.';"'; ?>>
+			   			<?php echo $contVersion['content']; ?>
+			  	    </div>
+			   <?php endif;?>
+		<?php endforeach;?>
+	</div>
+	<input type="hidden" id="contentReal">
+	<div class="center" style="margin-top: 40px;">
+			<a href="<?php echo $this->baseUrl("/Horus/documents/export?idDoc=".$idDoc."&idVer=".$idVersion."&exp=true"); ?>" id="subPay" value="Imprimir">Imprimir</a>
+			<script>
+				var idDoc = "<?php echo $_GET['idDoc']; ?>";
+	
+				function backList(){
+					location.href = BASE_URL + '/Horus/documents/versions?idDoc=' + idDoc;
+				}
+			</script>
+			<a href="javascript:backList();" id="subPay">Regresar</a>
+	</div>
+</div>
+<?php endif;?>
+<div class="center"><a href="#" class="arriba" id="subPay">Ir arriba</a></div>

@@ -1,0 +1,73 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#books', 10);
+});
+var BASE_URL = "<?php echo $this->baseUrl();?>";
+</script>
+<h3 class="centerHor">Libros</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Ioteca/books/add') ?>" > 
+				<img class="iconOpacity" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Nuevo" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter"><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<table id="books" class="display">
+		<thead>	 
+			 <tr>
+			    <th>T&iacute;tulo</th>
+			    <th>Autor</th>
+			    <th>Descripci&oacute;n</th>
+			    <th>Editorial</th>
+			    <th>Categor&iacute;a</th>
+			    <th>F&iacute;sico</th>
+			    <th>Electr&oacute;nico</th>
+				<th>Estatus</th> 
+				<th>Compartido por</th> 
+				<th>Fecha y hora</th> 
+			    <th>	
+			    <a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Ioteca/books/add') ?>">
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar Nuevo">
+				</a>
+			    	
+			    </th>
+			    
+			  </tr>
+		</thead>
+		<tbody>
+			<?php if($this->books != 0) :?>
+				<?php foreach ($this->books as $books): ?>
+				  <tr>
+					  	<td><?php echo $books->getName();?> </td>
+					  	<td><?php echo $books->getAuthor();?> </td>
+					  	<td><?php echo $books->getDescription();?> </td>
+						<td><?php echo $books->getEditorial();?> </td>
+						<td><?php echo $books->getTipo_books();?> </td>
+						<td><?php echo $books->getFisico();?> </td>
+						<td><?php echo $books->getElectronico();?> </td>
+						<td><?php echo $books->getStatus();?> </td>
+						<td><?php echo $books->getNameUser();?> </td>
+						<td><?php echo $books->getDate_hour();?> </td>
+					    <td>
+						    <a class="tooltipcenter" title="Actualizar" href="<?php echo $this->baseUrl('/Ioteca/books/update/idbooks/'.$books->getIdbooks())?>"> 
+								<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+							</a>
+					    
+					    	<a class="tooltipcenter" title="Eliminar" onclick="javascript:deleteRecord('books',this,'<?php echo $books->getIdbooks()?>','/Ioteca/books/delete')"> 
+								<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+					   		</a>
+					    </td>
+				  </tr>
+				<?php endforeach; ?>
+			<?php endif;?>   
+		</tbody>
+	</table>
+</div>

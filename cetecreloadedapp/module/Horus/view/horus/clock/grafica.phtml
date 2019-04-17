@@ -1,0 +1,62 @@
+<!--Actualización y correciones: Raúl García-->
+<div id="explanation">
+    <h3>
+        <span>Grafica de asistencia</span>
+    </h3>
+</div>
+<div>
+
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity" >
+				<a href="<?php echo $this->baseUrl('/users/changepass/id/')?><?php echo $this->userid ?>"><img title="Cambiar contrase&ntilde;a" src="<?php echo $this->baseUrl('/public/img/changepassBar.gif')?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Los detalles de usuarios muestran direcci&oacute;nes e informaci&oacute;n de contacto')">
+				<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+	</div>	
+</ul>
+
+</div>
+<p>
+    <a href="/clock/index">
+        <img src="<?php echo $this->baseUrl('/public/img/returnIOF.png') ?>" title="Regresar">
+    </a>
+</p>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Year');
+        data.addColumn('number', 'Gabo');
+        data.addColumn('number', 'Jules');
+        data.addColumn('number', 'Juan');
+        data.addColumn('number', 'Jacob');
+        data.addColumn('number', 'Lucero');
+        data.addColumn('number', 'Liliana');
+        data.addColumn('number', 'Raúl');
+        data.addRows([
+            ['Lun', 10.10, 11.01, 10.10, 11,9.12,9.15 ,9],
+            ['Mar', 10.05, 11.05, 11.30, 9.10,9.15,10.31,13],
+            ['Mier',10.30, 10.25, 11.22, 9.05,9.15,10.31,10],
+            ['Jue', 10.30, 10.31, 11.11, 9,9.15,	10.31,14],
+            ['Vie', 10.05, 11.05, 11.15, 9,9.15,	10.31,9.30]
+        ]);
+
+        var options = {
+            width: 450, height: 250,
+            title: 'Mi asistencia vs. IOFractal',
+            vAxis:{viewWindowMode:'explicit', viewWindow:{max:18}},
+            hAxis:{gridlines:{color: '#CCC', count: 5}}
+          
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+
+<center>
+    <div id="chart_div"></div>
+</center>

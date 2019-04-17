@@ -1,0 +1,19 @@
+(function($){
+	$(document).on("ready", function(){
+
+		var $basePath = "<?php echo $this->basePath(); ?>";
+
+		// Tooltip a los elementos
+		$('[data-tool="tooltip"]').tooltip()
+	
+		// Cambiar idioma a las alertas
+		alertify.set({ 
+			labels: {
+				ok     : "Aceptar",
+				cancel : "Cancelar"
+			},
+			buttonReverse: true
+		});
+
+	});
+})(jQuery);

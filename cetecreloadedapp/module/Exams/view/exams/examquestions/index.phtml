@@ -1,0 +1,134 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Mis ex&aacute;menes</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+<!-- 				<div class="btn-group btn-breadcrumb"> -->
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Bachillerato</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Mis examenes</a> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+
+
+<div class="container">
+<div id="mensajes"></div>
+ <h3 align="center">Preguntas del Examen:<?php echo $this->examen; ?></h1>
+    <hr>
+   
+    <div id="delete-ok"></div>
+    <a style="text-decoration:none;" href="<?php echo $this->basePath("/exams/examquestions/add/").$this->id_exam?>">
+        <img src="<?php echo $this->basePath("/public/img/add.png")?>"/>
+    </a>
+    Nueva Pregunta
+    <br><br>
+    <?php if($this->questions){ ?>
+    <div class="table-responsive">
+    <table id="exams" class="table table-striped table table-hover" >
+    <thead>
+    <tr>
+    <th>N&#176; Pregunta</th>
+    <th>T&iacute;tulo de la Pregunta</th>
+    <th></th>
+    <th  style="text-align: right;">
+    </th>
+    </tr>
+    </thead>
+    <?php foreach ($this->questions as $question) : ?>
+    <tr id="bloque" class="question<?php echo $question['id_question']; ?>">
+    <td><p></p></td>
+    <td><?php echo $question['question_name']; ?></td>
+    <td><a href="<?php echo $this->basePath("/exams/examquestions/edit/").$question['id_question'];?>"><img src=<?php echo $this->basePath("/public/img/update.png")?>></a></td>
+    <td><input type=image onclick="deleteQuestion(<?php echo $question['id_question']; ?>);" src="<?php echo $this->basePath('/public/img/deleteBook.png');?>" width="35" height="35"></td>
+    </tr>
+    <?php endforeach; ?>
+    </table>
+    </div>
+    <?php }else{ echo "</br><center><h3 style='color:red;'>Este examen no tiene preguntas</h3></center>"; }?>
+<br>
+<center><a href="<?php echo $this->basePath();?>/exams/exam/index"><input type="button" class="btn btn-lg btn-danger" value="Regresar"></button></a>
+</center>
+</div>
+	
+</div>
+
+
+
+<script>
+
+$(function(){
+	countForm();
+	$("#exams").dataTable({
+		 "aaSorting": []
+		});
+});
+
+function countForm() {
+	$("#exams p").each(function  (index2) {
+		$(this).html("");
+		var cont = (index2+1);
+		$(this).append(cont);
+	 });
+}
+
+function deleteQuestion(id_question){
+	var basePath = "<?php echo $this->basePath("/exams/examquestions/deletequestion")?>";
+	
+	alertify.confirm("<p>Seguro que deseas eliminar esta pregunta?</p>", function (e) {
+		if(e){
+			$.ajax({
+				type: 'POST',
+				url : basePath,
+				data: {id_question: id_question},
+				dataType: "json",
+				success: function(response){
+					if(response.response = "ok"){
+						$('#delete-ok').empty();
+						$('#delete-ok').append('<h3>Se ha eliminado correctamente la pregunta.</h3>').fadeIn("slow");
+						setTimeout("$('#delete-ok').hide();", 3000);
+						//$('#question').fadeOut("slow");
+						$(".question"+id_question).remove();
+						countForm();
+					}else{
+						//alert(response.data);
+					}
+				}
+			});
+		
+		}else{
+			return false;
+		}
+	});
+}
+</script>
+
+<style>
+
+#delete-ok{
+	display:none;
+	width:100%;
+	color: #fff;
+    background-color: #01DF01;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 5px;
+    opacity: 0.5;
+	filter: alpha(opacity=0.5);
+}
+	
+</style>
+
+

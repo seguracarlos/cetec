@@ -1,0 +1,624 @@
+ <link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/checkbox/label-checkbox.css'; ?>" rel="stylesheet" />
+
+ <!-- Add IntroJs styles -->
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/intro/introjs.css'; ?>" rel="stylesheet">
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/intro/intro.js'; ?>"></script>
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/overlay/jquery.blockUI.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/js/PaymentsValidations.js'; ?>"></script>
+
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4">
+			<div class="row"><p class="title-breadcrumbs">Alumnos</p></div>
+		</div>
+		<div class="col-md-4">
+			<div class="row">
+			<!--
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li>
+						<a href="javascript:void(0);" class="btn" onclick="startIntro();" data-toggle="tooltip" data-placement="bottom" title="Ayuda">
+							<span class=" glyphicon glyphicon-question-sign"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Cetec</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Alumnos</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Inicio</a> -->
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Informaci&oacute;n de los Alumnos</a></li>
+  <li><a data-toggle="tab" href="#menu1">Pagos y Documentos</a></li>
+  <li><a data-toggle="tab" href="#menu2">Calificaciones</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <div class="panel panel-default">
+		<div class="panel-body">
+			<p>La siguiente tabla contiene informaci&oacute;n relacionada a los alumnos</p>
+			<div id="mensajes"></div>
+			<div id="delete-ok"></div>
+			<div class="table-responsive">
+<table id="employee" class="table table-hover table-condensed table-bordered">
+				<thead>
+			    		<th>N&deg;</th>
+			    		<th>Matricula SEP</th>
+				    	<th>Nombre(s)</th>
+				        <th id="step2">E-Mail</th>
+				        <th>CURP</th>
+				        <th>Fecha de Nacimiento</th>
+				        <th>Trimestre</th>
+				        <th>Cuenta</th>
+				        <th></th>
+				        <th id="step1" class="text-center">
+				            <a href="<?php echo $this->basePath()."/horus/employee/add";?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Agregar alumno">
+				               <span class="glyphicon glyphicon-plus-sign"></span>
+				            </a>
+				        </th>
+			    	</tr>
+			    </thead>
+			    <tbody>
+			    	<?php foreach($users as $usuario) : ?>
+			    		<tr>
+						<td id="<?php echo $usuario["user_id"];?>"><p></p></td>
+						<td><?php if($usuario['numSep']!=""&&$usuario['numSep']!=0){echo $usuario['numSep'];}else{echo "S/N"; }?></td>
+						<td>
+							<?php if($usuario["name"] != "" && $usuario["surname"] != "" && $usuario ["lastname"] != ""){ ?>
+							<a class="btn studentName" href="<?php echo $this->basePath()."/horus/employee/seedetail/".$usuario["user_id"]; ?>" data-toggle="tooltip" data-placement="top" title="Validar Informacion de Alumno">
+					       		<?php echo $usuario["lastname"]." ".$usuario['surname']. " ".$usuario['name']; ?>
+					       	</a>
+					       	<?php } ?>
+					    </td>
+					    <td><?php echo $usuario["email"]; ?></td>
+					    <td><?php echo $usuario["curp"]; ?></td>
+						<td><?php echo $usuario["fechaNac"]; ?></td>
+						<td>Trimestre  <?php echo $usuario["trim"];?></td>
+						<td class="text-center">
+							<?php
+								if($usuario["canlogin"] == 1){
+									echo "<span class='label label-success'>Activa</span>";
+								}else{
+									echo "<span class='label label-danger'>Inactiva</span>";
+								}
+							?>
+						</td>
+					    <td id="step3"><a class="btn btn-primary" href="<?php echo $this->basePath()."/horus/employee/edit/".$usuario["user_id"]; ?>" data-toggle="tooltip" data-placement="top" title="Editar alumno"><span class="glyphicon glyphicon-pencil"></span></a></td>
+					    <td id="step4"><a class="btn btn-danger deleteStudent" data-id="<?php echo $usuario["user_id"]?>" href="#" data-toggle="tooltip" data-placement="top" title="Eliminar alumno"><span class="glyphicon glyphicon-trash"></span></a></td>
+				    </tr>
+				    <?php endforeach; ?>
+			    </tbody>
+			</table>
+			</div>
+		</div>
+	</div>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+  <div class="panel panel-default">
+  <div class="panel-body">
+  <p>La siguiente tabla contiene informaci&oacute;n relacionada a los pagos y el status de la cuenta de los Alumnos</p>
+  <div class="table-responsive">
+   <table id="tableStudent" class="table-hover table-condensed table-bordered">
+				<thead>
+			    	<tr>
+			    		<th>N&deg;</th>
+				    	<th>Nombre(s)</th>
+				        <th id="step2">E-Mail</th>
+				        <th>Trimestre</th>
+				        <th>Inscripci&oacute;n</th>
+				        <th>Mensualidades</thd>
+				        <th>Documentos</th>
+				        <th>Activar o Desactivar</th>
+				        <th>Status de la Cuenta</th>
+			    	</tr>
+			    </thead>
+			    <tbody>
+			    	<?php foreach($users as $usuario) : ?>
+			    		<tr>
+						<td><p></p></td>
+						<td><a class="btn studentName" href="<?php echo $this->basePath()."/horus/employee/seedetail/".$usuario["user_id"]; ?>" data-toggle="tooltip" data-placement="top" title="Validar Informacion de Alumno">
+					       		<?php echo $usuario["lastname"]." ".$usuario['surname']. " ".$usuario['name']; ?>
+					       	</a></td>
+					    <td><?php echo $usuario["email"]; ?></td>
+						<td class="text-center">
+							<?php echo $usuario["trim"]; ?>
+						</td>
+						<td class="text-center">
+							<label style="display:inline-block;" for="<?php echo "Inscription".$usuario["user_id"]; ?>" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar Inscripci&oacute;n">
+			  					<input type="checkbox" id="<?php echo "Inscription".$usuario["user_id"]; ?>" class="confirmInscription" value="<?php echo "Inscription".$usuario["user_id"]; ?>" data-id="<?php echo $usuario["user_id"]; ?>" <?php echo ($usuario['payments']['inscription'] == 0) ? '' : 'checked'; ?> />
+			  					<i></i>
+							</label>
+						</td>
+						<td>
+						<label style="display:inline-block;" for="<?php echo "monthOne".$usuario["user_id"]; ?>" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar mes">
+			  					<input type="checkbox" id="<?php echo "monthOne".$usuario["user_id"]; ?>" class="confirmMonth1" value="<?php echo "monthOne".$usuario["user_id"]; ?>" data-id="<?php echo $usuario["user_id"]; ?>" <?php echo ($usuario['payments']['month_1'] == 0) ? '' : 'checked'; ?> />
+			  					<i></i>
+						</label>
+						<label style="display:inline-block;" for="<?php echo "monthTwo".$usuario["user_id"]; ?>" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar mes">
+			  					<input type="checkbox" id="<?php echo "monthTwo".$usuario["user_id"]; ?>" class="confirmMonth2" value="<?php echo "monthTwo".$usuario["user_id"]; ?>" data-id="<?php echo $usuario["user_id"]; ?>" <?php echo ($usuario['payments']['month_2'] == 0) ? '' : 'checked'; ?> />
+			  					<i></i>
+						</label>
+						
+						<label style="display:inline-block;" for="<?php echo "monthThree".$usuario["user_id"]; ?>" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar mes">
+			  					<input type="checkbox" id="<?php echo "monthThree".$usuario["user_id"]; ?>" class="confirmMonth3" value="<?php echo "monthThree".$usuario["user_id"]; ?>" data-id="<?php echo $usuario["user_id"]; ?>" <?php echo ($usuario['payments']['month_3'] == 0) ? '' : 'checked'; ?> />
+			  					<i></i>
+						</label>
+						</td>
+						
+						<td class="text-center">
+							<label style="display:inline-block;" for="<?php echo "Documents".$usuario["user_id"]; ?>" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Entrega de documentos">
+			  					<input type="checkbox" id="<?php echo "Documents".$usuario["user_id"]; ?>" class="Documents" value="<?php echo "Documents".$usuario["user_id"]; ?>" data-id="<?php echo $usuario["user_id"]; ?>" <?php echo ($usuario['documents'] == 0 || $usuario['documents'] == null ) ? '' : 'checked'; ?> />
+			  					<i></i>
+						</label>
+						</td>
+						<td class="text-center">
+					 	<label style="display:inline-block;" for="<?php echo "shi".$usuario["user_id"]; ?>" class="label-checkbox" data-toggle="tooltip" data-placement="top" title="Activar o desactivar cuenta">
+			  					<input type="checkbox" id="<?php echo "shi".$usuario["user_id"]; ?>" class="confirmAccount" value="<?php echo "shi".$usuario["user_id"]; ?>" data-shipping="<?php echo $usuario["user_id"]; ?>" <?php echo ($usuario['canlogin'] == 0) ? '' : 'checked'; ?> />
+			  					<i></i>
+						</label>
+					 	</td>
+						<td class="text-center">
+					    <?php
+								if($usuario["canlogin"] == 1){
+									echo "<span class='label label-success'>Activa</span>";
+								}else{
+									echo "<span class='label label-danger'>Inactiva</span>";
+								}
+							?>
+					    </td>
+				    </tr>
+				    <?php endforeach; ?>
+			    </tbody>
+			</table>
+   	</div>
+  </div>
+  </div>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+        <div class="panel panel-default">
+		<div class="panel-body">
+			<p>La siguiente tabla contiene informaci&oacute;n relacionada a las calificaciones de los Alumnos</p>
+			<div class="table-responsive">
+				<table id="tableScores" class="table table-hover table-condensed table-bordered">
+				<thead>
+			    	<tr>
+			    		<th>N&deg;</th>
+			    		<th>Matricula SEP</th>
+				    	<th>Nombre(s)</th>
+				        <th class="text-center">Trimestre Actual</th>
+				        <th class="text-center">Ultimo Examen realizado</th>
+				     	<th class="text-center">Calificac&oacute;n m&aacute;s reciente</th>
+				     	<th class="text-center">Intentos de Examen Disponibles</th>
+				     	<th class="text-center">Intentos de Examen Adicionales</th>
+				     	<th class="text-center">Lista de Intentos de Examen Adicionales</th>
+				     	<th class="text-center">Lista de calificaci&oacute;nes</th>
+			    	</tr>
+			    </thead>
+			    <tbody>
+			    	<?php foreach($users as $usuario) : ?>
+			    		<tr>
+						<td><p></p></td>
+						<td><?php if($usuario['numSep']!=""&&$usuario['numSep']!=0){echo $usuario['numSep'];}else{echo "S/N"; }?></td>
+						<td><a class="btn studentName" href="<?php echo $this->basePath()."/horus/employee/seedetail/".$usuario["user_id"]; ?>" data-toggle="tooltip" data-placement="top" title="Validar Informacion de Alumno">
+					       		<?php echo $usuario["lastname"]." ".$usuario['surname']. " ".$usuario['name']; ?>
+					    </a></td>
+						<td class="text-center trimStudent"><?php echo $usuario["trim"]; ?></td>
+					    <td class="text-center">
+					    		<?php if(end($usuario['lastScore'])){ 
+					    			$lastExam = end($usuario['lastScore']);
+					    			echo $lastExam['date'];
+					    		}else{ 
+					    			echo "El alumno no ha realizado examen";
+					    		}
+					    ?></td>
+						<td class="text-center">
+							<?php if(end($usuario['lastScore'])){ 
+					    			$lastExam = end($usuario['lastScore']);
+					    			echo $lastExam['totalscore'];
+					    		}else{ 
+					    			echo "El alumno no ha realizado examen";
+					    		}
+					    	?>
+						</td>
+						<td class="text-center">
+							<?php echo 3-count($usuario['score']);?>
+						</td>
+						<td class="text-center">
+							
+							<?php if(3-count($usuario['score']) == 0 && $usuario['extraAttemps'] == null && $usuario['highestScore'] <6){?>
+								<button type="button" data-exam="<?php echo $usuario['score'][0]['id_exam']?>" data-id="<?php echo $usuario['user_id']?>" class="btn btn-success ExtraAttemps btnAdd<?php echo$usuario['user_id'];?>" aria-label="Left Align" data-toggle="modal">
+		  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</button>
+							<?php }elseif(3-count($usuario['score']) == 0 && $usuario['extraAttemps'] != null && $usuario['highestScore'] <6){?>
+								<button type="button" data-exam="<?php echo $usuario['score'][0]['id_exam']?>" data-id="<?php echo $usuario['user_id']?>" class="btn btn-success ExtraAttemps btnAdd<?php echo$usuario['user_id'];?>" aria-label="Left Align" data-toggle="modal">
+		  						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</button>
+							<?php }elseif(3-count($usuario['score']) == 0 && $usuario['extraAttemps'] != null && $usuario['highestScore'] >6){?>
+								No necesario
+							<?php }elseif(3-count($usuario['score']) != 0 && $usuario['extraAttemps'] == null && $usuario['highestScore'] >6){ ?>
+								No necesario
+							<?php }?>
+						</td>
+						<td class="text-center">
+							<button type="button" data-id="<?php echo $usuario['user_id']?>" class="btn btn-primary ExtraAttempsList" aria-label="Left Align" data-toggle="modal" data-target="#ExtraAttempsList" <?php if($usuario['extraAttemps'] == null ){ echo "disabled";}?>>
+  							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							</button>
+						</td>
+						<td class="text-center"><button type="button" data-id="<?php echo $usuario['user_id']?>" class="btn btn-primary scores" aria-label="Left Align" data-toggle="modal" data-target="#Calificaciones" <?php if($usuario['globalScores'] == null ){ echo "disabled";}?>>
+  							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							</button>
+						</td>
+				    </tr>
+				    <?php endforeach; ?>
+			    </tbody>
+			</table>
+			</div>
+		</div>
+		</div>
+  </div>
+</div>
+</div>
+
+<div id="Calificaciones" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 id="studentName" class="modal-title">Calificaciones</h4>
+      </div>
+      <div class="modal-body">
+      	<div id="contentScores" class="table-responsive">
+      	
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="ExtraAttempsList" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 id="studentName" class="modal-title">Intentos Adicionales</h4>
+      </div>
+      <div id="contentAttemps" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="ExtraAttempsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 id="studentName" class="modal-title">Examen Adicional</h4>
+      </div>
+      <div id="contentExtra" class="modal-body">
+  			<div class="col-md-12">
+            <label>Ingrese el motivo por el cual se le dara una oportunidad extra a este alumno</label>
+	      	<textarea id="comment" class="form-control" rows="6" style="resize:none;"></textarea>
+	      	<input type="hidden" id="userId" value=""/>
+	      	<input type="hidden" id="examId" value=""/>
+  			</div> 
+      </div>
+      </br></br></br></br></br></br></br></br></br>
+      <div class="modal-footer">
+        <button type="button" id="addExtraAttemp" class="btn btn-success" data-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover { 
+	outline: 0;
+	color: #555555;
+	background-color: #ffffff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+	cursor: default;
+}
+</style>
+
+<script>
+var $basePath = "<?php echo $this->basepath(); ?>";
+
+$( document ).ajaxStart(function() {
+		$.blockUI({
+            message: '<h1 style="margin-top:10px;margin-bottom:10px;"><img style="margin-top:-9px;" src="'+$basePath+'/public/img/loader-30.gif"> Espere...</h1>',
+            css: {
+            	border: 'none',
+	            padding: '15px',
+	            backgroundColor: '#000',
+	            '-webkit-border-radius': '10px',
+	            '-moz-border-radius': '10px',
+	            opacity: .5,
+	            color: '#fff'
+            }
+        });
+});
+
+$(document).ready(function(){
+	countForm()
+	$("#tableStudent").dataTable();
+	$("#tableScores").dataTable();
+	$('[data-toggle="tooltip"]').tooltip();
+	$("#employee").dataTable({
+		"aoColumnDefs" : [ {
+	    	'bSortable' : false,
+	       // 'aTargets' : [ 7, 8, 9]
+		} ],
+	});
+	
+})
+
+$(".scores").on("click",function(){
+	$idUser = $(this).attr("data-id");
+	$studentName = $(this).closest('tr').find('.studentName').html();
+	  $.ajax({
+			type: 'POST',
+			url: $basePath + '/exams/exam/getscoresbyuser',
+			data: { 'id_user' : $idUser},
+			dataType: 'json',
+			success: function(response){
+				console.log(response);
+				$("#studentName").html("Calificaciones de:"+$studentName);
+				if(response.status == true){
+					$table = "<table style='width:100%' class='table table-hover table-condensed table-bordered'>"
+						+"<tr><th>Trimestre</th><th>Calificaci\u00F3n</th><th>Fecha del Examen</th><th>Tipo de Examen</th><th>Revisar</th>"
+						$.each(response.data, function( index, value ) {
+							exam_type ="";
+							exam_score = "";
+							if(value.exam_type==1){
+								exam_type ="Normal";
+							}else{
+								exam_type ="Extraordinario";
+							}
+
+							if(value.totalscore == null){
+								exam_score = 0;
+							}else{
+								exam_score = value.totalscore;
+							}
+								$table += '<tr><td align="center">'+value.trim+'</td>'
+									    +'<td align="center">'+ exam_score +'</td>'
+									    +'<td>'+value.date+'</td>'
+									    +'<td>'+exam_type+'</td>'
+									    +'<td><a target="_blank" href='+$basePath+'/exams/exam/viewresult/'+value.id_version+'>Ver respuestas el Alumno</a></td></tr>';
+						});
+					$table += "</table>";
+					$("#contentScores").html("<center><h4>Calificaciones</h4></center>");
+					$("#contentScores").append($table);
+					$("#tableScores").dataTable();
+					}else{
+						$("#content").html("<h4>El alumno no tiene calificaciones actualmente</h4>");
+					}
+				$.unblockUI();
+			},
+			error: function(){
+				$.unblockUI();
+			 console.log(response.data); 
+			}
+		});
+
+})
+	$(".deleteStudent").on("click",function(){
+	    basePath = "<?php echo $this->basePath("/horus/employee/delete")?>";
+		$idUser = $(this).attr("data-id");
+		$studentName = $(this).closest('tr').find('.studentName').html();
+		$row =  $(this).parent().parent();
+		if($studentName != null){
+			alertify.confirm("<p>Seguro que deseas eliminar a "+$studentName+"</p>", function (e) {
+				if(e){
+					$.ajax({
+						type: 'POST',
+						url : basePath,
+						data: {id_user: $idUser},
+						dataType: "json",
+						success: function(response){
+							$.unblockUI();
+							if(response.response = "ok"){
+								$('#delete-ok').empty();
+								$('#delete-ok').append('<h3>Se ha eliminado correctamente al alumno.</h3>').fadeIn("slow");
+								setTimeout("$('#delete-ok').hide();", 3000);
+								$row.fadeTo(400, 0, function () { 
+        							$row.remove();
+							    }); 
+								countForm();
+							}
+						}
+					})
+				}else{
+					return false;
+				}
+			})
+		}else{
+			alertify.confirm("<p>Seguro que deseas eliminar este registro incompleto?", function (e) {
+				if(e){
+					$.ajax({
+						type: 'POST',
+						url : basePath,
+						data: {id_user: $idUser},
+						dataType: "json",
+						success: function(response){
+							$.unblockUI();
+							if(response.response = "ok"){
+								$('#delete-ok').empty();
+								$('#delete-ok').append('<h3>Se ha eliminado correctamente al alumno.</h3>').fadeIn("slow");
+								setTimeout("$('#delete-ok').hide();", 3000);
+								//$('#question').fadeOut("slow");
+								$row.fadeTo(400, 0, function () { 
+			        				$row.remove();
+							    }); 
+								countForm();
+							}
+						}
+					})
+				}else{
+					return false;
+				}
+			})
+		}
+	});	
+
+$('#Calificaciones').on('hidden.bs.modal', function () {
+	$("#studentName").html("");
+	$("#content").html("");
+})
+
+$('.ExtraAttemps').on('click', function () {
+	var idUser = $(this).data("id");
+	var idExam = $(this).data("exam");
+	$("#ExtraAttempsModal").modal('show');
+	$("#userId").val(idUser);
+	$("#examId").val(idExam);
+})
+
+$('#addExtraAttemp').on('click', function () {
+	basePath = "<?php echo $this->basePath("/exams/exam/addextraattemp")?>";
+	var $idUser = $("#userId").val();
+	var $idExam = $("#examId").val();
+	var $comment = $("#comment").val();
+	
+	$.ajax({
+		type: 'POST',
+		url : basePath,
+		data: {idUser: $idUser, idExam : $idExam, comment : $comment},
+		dataType: "json",
+		success: function(response){
+			$.unblockUI();
+			alertify.success("Intento adicional agregado correctamente");
+			$(".btnAdd"+$idUser).parent().html("1 intento disponible");
+		}
+	}) 
+})
+
+$(".ExtraAttempsList").on('click', function (){
+	$idUser = $(this).attr("data-id");
+	$studentName = $(this).closest('tr').find('.studentName').html();
+	$trim = $(this).closest('tr').find('.trimStudent').html();;
+	$idExam = 0
+
+	  $.ajax({
+			type: 'POST',
+			url: $basePath + '/exams/exam/getextraattemplist',
+			data: { 'id_user' : $idUser,'idExam': $idExam},
+			dataType: 'json',
+			success: function(response){
+				console.log(response);
+				$("#studentName").html("Intentos de Examen Adicionales de:"+$studentName);
+				if(response.status == true){
+					$count = 1;
+					$table = "<table style='width:100%' class='table table-hover table-condensed table-bordered'>"
+						+"<tr><th>Trimestre</th><th>Comentario</th><th>Fecha en que se otorgo</th>"
+						$.each(response.data, function( index, value ) {
+								$table += '<tr><td>'+ value.trim +'</td>' 
+										+ '<td>'+value.comment+'</td>'
+									    +'<td>'+value.date+'</td></tr>';
+						});
+					$table += "</table>";
+					$("#contentAttemps").html("<center><h4>Intentos Adicionales</h4></center>");
+					$("#contentAttemps").append($table);
+					}else{
+						$("#contentAttemps").html("<h4>El alumno no tiene intentos adicionales</h4>");
+					}
+				$.unblockUI();
+			},
+			error: function(){
+				$.unblockUI();
+			 console.log(response.data); 
+			}
+		});
+	
+})
+
+$('#Calificaciones').on('hidden.bs.modal', function () {
+	$("#userId").val("");
+	$("#examId").val("");
+})
+
+$('#ExtraAttempsList').on('hidden.bs.modal', function () {
+	$("#contentAttemps").html("");
+})
+	
+
+$('#ExtraAttempsModal').on('hidden.bs.modal', function () {
+	$("#studentName").html("");
+	$("#comment").html("");
+})
+	
+
+function countForm() {
+	$("#employee p").each(function  (index) {
+		$(this).html("");
+		var cont = (index+1);
+		$(this).append(cont);
+	 });
+
+	$("#tableStudent p").each(function  (index2) {
+		$(this).html("");
+		var cont2 = (index2+1);
+		$(this).append(cont2);
+	 });
+	 
+	$("#tableScores p").each(function  (index3) {
+		$(this).html("");
+		var cont3 = (index3+1);
+		$(this).append(cont3);
+	 });
+	 
+}
+	
+</script>
+
+<style>
+
+#delete-ok{
+	display:none;
+	width:100%;
+	color: #fff;
+    background-color: #01DF01;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 5px;
+    opacity: 0.5;
+	filter: alpha(opacity=0.5);
+}
+	
+</style>
+

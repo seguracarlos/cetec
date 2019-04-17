@@ -1,0 +1,179 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Mis Notas</p></div></div>
+		<div class="col-md-4">
+		
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+ <div class="panel panel-info">
+  <div class="panel-heading"><center><h3></h3></center></div>
+  <div class="panel-body">
+  <div class="col-md-12">
+   <div class="blue" id="accordion">
+		
+		<?php foreach($this->notes as $topic){?>
+			<h3><?php echo $topic['topic_name'];?></h3>
+	    	<div>
+	    	<?php if(count($topic['notes']) > 0 ) :?>
+			<?php foreach($topic['notes'] as $note){?>
+				<textarea disabled><?php echo $note['note_text'];?></textarea>
+			<?php }?>
+			<?php else : ?>
+			<h4>A&uacute;n no has agregado notas en este tema</h4>
+			<?php endif; ?>
+  			</div>
+		<?php } ?>
+   		</div>
+   		<br>
+   		<center><a href="<?php echo $this->basePath().'/classes/studentnotes/index';?>"><button class="btn btn-danger">Regresar</button></a></center>
+</div>
+  </div>
+  </div>
+</div>
+
+
+<style>
+
+/* Add this to import Font-Awesome */
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+/* Add this to important Google Font (Oswald) */
+
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
+/* Main accordion css */
+
+#accordion {
+  /max-width: 700px;
+  /* You can change this */
+  background: url('<?php echo $this->basePath()?>/public/img/wood-tile-background.jpg');
+  
+  margin: auto;
+  /* You can remove this if you do not need it to align in the center of your element */
+  display: block;
+}
+/* This controls the text inside the div, you can play with this by adding background-color, border, etc. */
+
+#accordion div {
+  padding: 5px 10px;
+/*   display: inline-block; */
+  overflow: auto;
+  background: url('<?php echo $this->basePath()?>/public/img/wood-tile-background.jpg');
+  
+}
+/* This controls the header */
+
+#accordion h3 {
+  display: block;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 11px;
+  font-family: Oswald, sans-serif;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin: 2px;
+}
+
+#accordion div p {
+  margin-top: 0;
+}
+/* This CSS controls the Font Awesome Icon, You can float: left as well and add margin-right: 5px; */
+
+.icon-expand,
+.icon-collapse {
+  float: right;
+  margin-top: 5px;
+}
+/* USE THE BELOW CSS FOR BLUE */
+
+.blue h3 {
+  background: #377ad0;
+  /* You can change this to whatever background color you want for the header */
+  
+  color: #fff;
+  /* You can change this to whatever font color you want for the header */
+}
+
+
+#create, textarea  { 
+  float:left; 
+  padding:25px 25px 40px;
+  margin:0 20px 20px 0;
+  width:250px;
+  height:250px; 
+}
+
+#create {
+  user-select:none;
+  padding:20px; 
+  border-radius:20px;
+  text-align:center; 
+  border:15px solid rgba(0,0,0,0.1); 
+  cursor:pointer;
+  color:rgba(0,0,0,0.1);
+  font:220px "Helvetica", sans-serif;
+  line-height:185px;
+}
+
+#create:hover { border-color:rgba(0,0,0,0.2); color:rgba(0,0,0,0.2);
+}
+
+
+textarea {
+  
+resize: none;
+overflow-y: auto;
+  font:14px 'Gloria Hallelujah'; 
+  line-height:1.5;
+  border:0;
+  border-radius:3px;
+  background:#F9EFAF;
+  background: -webkit-linear-gradient(#F9EFAF, #F7E98D); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#F9EFAF, #F7E98D); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#F9EFAF, #F7E98D); /* For Firefox 3.6 to 15 */
+  -webkit-opacity:1;
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+  transition:box-shadow 0.5s ease;
+  font-smoothing:subpixel-antialiased;
+  max-width:520px;
+  max-height:250px;
+}
+textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+textarea:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+
+.ui-widget textarea{
+	font-size: 14px;
+}
+</style>
+
+<script type="text/javascript">
+//Make sure you add the jQuery Library and jQuery UI
+$(function() {
+//     $("#accordion").accordion({
+//         // You can change this to auto or fill for more info view http://api.jqueryui.com/accordion/#option-heightStyle
+//         heightStyle: "content",
+//         // Set this to true if you want the active accordion to remain open
+//         collapsible: true,
+//         // SSetting active to false will collapse all panels. This requires the collapsible option to be true.
+//         active: false
+//     });
+//     //initialize accordion            
+//     $("#accordion").accordion();
+//     //set accordion header options
+//     $("#accordion").accordion("option", "icons", {
+//         // You can change this to differnt Font Awesome class  
+//         'header': 'icon-expand',
+//         // You can change this to differnt Font Awesome class
+//         'activeHeader': 'icon-collapse'
+//     });
+
+});
+</script>
+

@@ -1,0 +1,205 @@
+<script src="<?php echo $this->basePath() . '/public/js/Crypto.js';?>"></script>
+<script src="<?php echo $this->basePath() . '/public/js/questions.js'; ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath().'/public/css/questions.css'?>">
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Mis ex&aacute;menes</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+<!-- 				<div class="btn-group btn-breadcrumb"> -->
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Bachillerato</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Mis examenes</a> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="row">
+	<div id="contenedor" class="contenedor">
+	<center><h2>Examen: <?php echo $this->exam['topic_name'];?></h2></center>
+		
+		<hr>
+		
+		<input type="hidden" id="id_topic" name="id_topic"  value="<?php echo $this->exam['id_topic'];?>" />
+		</br>
+		
+		<div id="1" class="contenedorPregunta">
+			<button class="btn btn-danger delete-question"><span class="glyphicon glyphicon-trash"></span></button>
+			<label class="tittle-question">Titulo de pregunta: </label>
+			<div class="well">
+				<div name="pregunta" class="pregunta principal" id="">
+					<label>Pregunta:</label>
+					<input type="text" id="0" name="title" class="question form-control input-lg marginLeft" placeholder="Redacta tu pregunta"/>
+					<div class="imagenQuestion">
+		        		<input type="file" class="fileQuestion" name="fileQuestion" accept="image/*" id="0" />
+		          		<div class="photoQuestion"></div>
+		          		<div></div>
+		       		</div><br><!--Fin div imagenQuestion-->
+		       		<label>Tipo de pregunta:</label>
+					<select class="tipoPregunta form-control input-lg" id="typequestion" name="typequestion">
+						<option value="0">--seleccione--</option>
+						<option value="3">Verdadero/Falso</option>
+						<option value="2">Opci&oacute;n m&uacute;ltiple con una &uacute;nica respuesta </option>
+<!-- 						<option value="4">Opci&oacute;n m&uacute;ltiple con más de una respuesta </option> -->
+					</select>
+					<div class="RespuestasPregunta marginLeft"></div><!--Fin div RespuestasPregunta-->
+				</div><!--Fin div pregunta-->
+			</div><!--Fin div well-->
+		</div><!--Fin div contenedorPregunta-->
+	</div><!--Fin div contenedor-->
+	<center><input type="button" class="btn btn-primary btn-lg" name="nueva" id="nueva" value="Nueva Pregunta"></center>
+		<div class="botones" style="text-align: center; margin: 50px auto; ">
+		<input type="submit" class="btn btn-success btn-lg" name="guardar" id="guardar" value="Guardar">	
+		<input type="button" class="btn btn-danger btn-lg" name="cancelar" id="cancelar" value="Cancelar">
+<!-- 		<input type="button" class="btn btn-primary btn-lg nuevaPagina" name="cancelar" id="nuevaPagina" value="Nueva Pagina"> -->
+	</div><!--Fin div botones-->
+	</div>
+		
+
+	</div>
+</div><!--Fin div row-->
+
+<!-- Div que genera opciones SI/NO -->
+
+<div id="camposVerdaderoFalso" class="camposVerdaderoFalso" style="display : none;">
+	
+	<br><br>
+
+	<div id="0" class="A">
+		<label>Respuesta</label>
+		<input class="respuesta inputs" type="text" name="opc" value="Verdadero"/>
+	    <input type="hidden" class="correctAnswer" name="correctAnswer" value="">
+		<div class="imagen">
+        	<input type="file" class="file" name="file" accept="image/*"/>
+          	<div class="photo"></div>
+          	<div></div>
+       	</div>
+       	<input type="checkbox" class="CheckAnswer" name="CheckAnswer">
+	</div>		
+	<div id="0" class="A">
+		<label>Respuesta</label>
+		<input class="respuesta inputs" type="text" name="opc" value="Falso"/>
+	    <input type="hidden" class="correctAnswer" name="correctAnswer" value="">
+		<div class="imagen">
+        	<input type="file" class="file" name="file" accept="image/*" />
+         <div class="photo"></div>
+         <div></div>
+      </div>
+       	<input type="checkbox" class="CheckAnswer" name="CheckAnswer">
+	</div>	
+
+			
+</div><!--Fin div camposDinamicos-->
+
+
+
+<!-- Div que genera campos dinamicos -->
+<div id="camposDinamicos" class="camposDinamicos" style="display : none;">
+	
+<!-- 	<br><button type="button" class="agregarCampo btn btn-primary" > -->
+<!-- 			<span class="glyphicon glyphicon-plus-sign"></span> Añadir otro -->
+<!-- 		</button><br><br> -->
+<br><br><br>
+
+	<div id="0" class="A">
+		<label>Respuesta</label>
+		<input class="respuesta inputs" type="text" name="opc" id="0"/>
+	    <input type="hidden" class="correctAnswer" name="correctAnswer" value="">
+		<div class="imagen">
+        	<input type="file" class="file" name="file" accept="image/*"  id="0" />
+          	<div class="photo"></div>
+          	<div></div>
+       	</div>
+       	<input type="checkbox" class="CheckAnswer" name="CheckAnswer">
+		<!-- <a href="#" class="eliminar"><img src="<?php //echo $this->basePath().'/public/img/trash.png'?>"></span></a> -->
+	</div>		
+	<div id="0" class="A">
+		<label>Respuesta</label>
+		<input class="respuesta inputs" type="text" name="opc" id="0"/>
+	    <input type="hidden" class="correctAnswer" name="correctAnswer" value="">
+		<div class="imagen">
+        	<input type="file" class="file" name="file" accept="image/*"  id="0" />
+         <div class="photo"></div>
+         <div></div>
+      </div>
+       	<input type="checkbox" class="CheckAnswer" name="CheckAnswer">
+       	<!-- <a href="#" class="eliminar"><img src="<?php //echo $this->basePath().'/public/img/trash.png'?>"></span></a> -->
+       	
+	</div>	
+	
+		<div id="0" class="A">
+		<label>Respuesta</label>
+		<input class="respuesta inputs" type="text" name="opc" id="0"/>
+	    <input type="hidden" class="correctAnswer" name="correctAnswer" value="">
+		<div class="imagen">
+        	<input type="file" class="file" name="file" accept="image/*"  id="0" />
+         <div class="photo"></div>
+         <div></div>
+      </div>
+       	<input type="checkbox" class="CheckAnswer" name="CheckAnswer">
+       	<!-- <a href="#" class="eliminar"><img src="<?php //echo $this->basePath().'/public/img/trash.png'?>"></span></a> -->
+		</div>	
+			
+</div><!--Fin div camposDinamicos-->
+
+<!-- Div que genera inputs individuales dinamicamente -->
+<div id="inputsDinamicos" class="inputsDinamicos" style="display : none;">			
+		<div id="0" class="A">
+		<label>Respuesta</label>
+		<input class="respuesta inputs" type="text" name="opc" id="0"/>
+	    <input type="hidden" class="correctAnswer" name="correctAnswer" value="">
+		<div class="imagen">
+        	<input type="file" class="file" name="file" accept="image/*"  id="0" />
+         <div class="photo"></div>
+         <div></div>
+      </div>
+       	<input type="checkbox" class="CheckAnswer" name="CheckAnswer">
+		<a href="#" class="eliminar"><img src="<?php echo $this->basePath().'/public/img/trash.png'?>"></span></a>
+		</div>	
+</div><!--Fin div inputsDinamicos-->
+
+<!-- Div que  agrega una pregunta nueva -->
+<div class="addNewQuestion" style="display : none;">
+	<div class="contenedorPregunta">
+		<button class="btn btn-danger delete-question"><span class="glyphicon glyphicon-trash"></span></button>
+		<label class="tittle-question">Titulo de pregunta: </label>
+		<div class="well">
+			<div class="pregunta pre" id="">
+				<label>Pregunta:</label>
+				<input type="text" id="0" name="title" class="question form-control input-lg marginLeft" placeholder="Redacta tu pregunta">
+				<div class="imagenQuestion">
+		        	<input type="file" class="fileQuestion" name="fileQuestion" accept="image/*"  id="0" />
+		          	<div class="photoQuestion"></div>
+		          	<div></div>
+		       	</div><br>
+				<label>Tipo de pregunta:</label>
+				<select class="tipoPregunta form-control input-lg" id="typequestion" name="typequestion">
+					<option value="0">--seleccione--</option>
+					<option value="3">Verdadero/Falso</option>
+					<option value="2">Opci&oacute;n m&uacute;ltiple con una &uacute;nica respuesta </option>
+				</select>
+				<div class="RespuestasPregunta marginLeft"></div>
+			</div><!--Fin div pregunta-->
+		</div><!--Fin div well-->
+	</div><!--Fin div contenedorPregunta-->
+</div><!--Fin div addNewQuestion-->
+
+
+
+<script type="text/javascript">
+var $basePath = "<?php echo $this->basePath().'/'?>";
+
+
+</script>
+

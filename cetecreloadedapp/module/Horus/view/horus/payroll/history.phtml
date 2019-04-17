@@ -1,0 +1,90 @@
+<!-- <link href="https://select2.github.io/select2/select2-3.5.2/select2.css" rel="stylesheet" /> -->
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/select2-331/css/select2.css'; ?>" rel="stylesheet" />
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/select2-331/css/select2-bootstrap3.3.1.css'; ?>" rel="stylesheet" />
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/payroll/history.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/overlay/jquery.blockUI.js'; ?>"></script>
+<!-- <script src="https://select2.github.io/select2/select2-3.4.2/select2.js"></script>  -->
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/select2-331/js/select2.js'; ?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Historial N&oacute;mina</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="<?php echo $this->basePath()."/horus/payroll/index";?>" data-placement="top" data-toggle="tooltip" title="Listado Nomina" class="btn"> <span class="glyphicon glyphicon-list"></span></a></li>
+					<li><a href="<?php echo $this->basePath()."/horus/payroll/calendar";?>" data-placement="top" data-toggle="tooltip" title="Calendario" class="btn"> <span class="glyphicon glyphicon-calendar"></span></a></li>
+					<!--<li><a href="<?php echo $this->basePath()."/horus/payroll/history";?>" data-placement="top" data-toggle="tooltip" title="Historial" class="btn"> <span class="glyphicon glyphicon-folder-open"></span></a></li>-->
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Horus</a>
+			        <a href="#" class="btn btn-default">N&oacute;mina</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+ 
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">	
+		<!-- <div class="content-forms"> -->
+			<?php 	
+			$form = $this->form; 
+			$form->prepare(); 
+			echo $this->form()->openTag($form);
+			?>
+			<fieldset class="responsive-fieldset fieldset">
+				<legend class="legend amaranth"><span class="glyphicon glyphicon-user"></span> Consultar por empleado</legend>			
+
+		  		<div class="form-group">
+		    		<div class="row">
+		    			<div class="col-md-6 col-md-offset-3">
+		    			<?php echo $this->formRow($form->get('employee')); ?>
+		    			</div>
+		    		</div>
+		  		</div>
+		
+			</fieldset>
+			
+			<?php echo $this->form()->closeTag(); ?>
+			<hr>
+		<!-- </div> -->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+		  		<!-- Default panel contents -->
+		  		<div class="panel-heading">Historial de n&oacute;mina</div>
+		  		<div class="panel-body">
+		    		<p>Detalle de n&oacute;mina.</p>
+		  		<!-- Table -->
+		  		<table id="historypayroll" class="table">
+		    		<thead>
+		    			<tr>
+		    				<th>Fecha</th>
+		    				<th>Monto</th>
+		    				<th>Tipo</th>
+		    				<th>Descripci&oacute;n</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    		</tbody>
+		  		</table>
+		  		</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+var $basePath = "<?php echo $this->basePath();?>";
+</script>

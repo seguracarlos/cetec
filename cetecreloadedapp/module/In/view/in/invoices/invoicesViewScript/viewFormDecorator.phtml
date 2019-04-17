@@ -1,0 +1,148 @@
+<?php 
+$this->headScript()
+	 ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/invoicesFunctions.js'))
+	 ->appendFile($this->baseUrl('/public/masonry/loadItem.js')); ;
+
+	 $layout = Zend_Layout::getMvcInstance();
+ 	 $view = $layout->getView(); 
+ 
+ ?>
+<script>
+var BASE_URL = "<?php echo $this->baseUrl(); ?>";
+var SEPARATOR = "<?php echo SeparatorString::SEPARATOR;?>";
+
+$(function() {
+    $( "#customer" ).autocomplete({
+    	source: BASE_URL + "/In/invoices/searchcustomer",
+    	minLength: 2,
+    	select: function( event, ui ) {
+    		//accion para cuando selecccionas un elemento de la lista
+    		
+    		$("#customer").val(ui.item.label);
+    		$("#businessName").val(ui.item.name_company);
+    		$("#businessRFC").val(ui.item.RFC);
+    		$("#streetAndNumber").val(ui.item.street + "-" + ui.item.number);
+    		$("#city").val(ui.item.name);
+    		$("#neighborhood").val(ui.item.colony);
+    		$("#delegation").val(ui.item.name);
+    		$("#state").val(ui.item.state);
+    		$("#postalCode").val(ui.item.postalcode);
+    	}
+    });
+    
+  });
+
+</script>
+
+<?= $this->element->getElement('ID');?>
+<?= $this->element->getElement('purchaseItems');?>
+<?=$this->element->getElement('hiden'); ?>
+<div id="fieldsetForm" class="forms">
+		<div class="containerinvoice">
+			<legend id="legendhelp">* Datos requeridos</legend>
+			<fieldset>
+				<legend>Datos Generales</legend>
+				<div class="maininvoice">
+					<div>
+						<label for="invoicedate">* Fecha:</label>
+						 <?=$this->element->getElement('date_invoice'); ?>
+					</div>
+					<div>
+						<span><label for="customer">* Cliente:</label>
+						<?=$this->element->getElement('customer'); ?></span>
+						<a href="javascript:addit();"><img class="iconOpacity"
+										src="<?php echo $this->baseUrl('/public/img/icons/'.$view->iconset.'/iconplus.png');?>"> </a>
+					</div>
+					<table>
+						<tr>
+							<td><label for="businessName">Raz&oacute;n Social: </label></td>
+							<td><label for="businessRFC">RFC: </label></td>
+						</tr>
+						<tr>
+							<td><?=$this->element->getElement('businessName'); ?></td>
+							<td><?=$this->element->getElement('businessRFC'); ?></td>
+						</tr>
+						</table>
+					<table>
+						<tr>
+							<td><label for="streetAndNumber">Calle y N&uacute;mero: </label></td>
+							<td><label for="city">Ciudad: </label></td>
+							<td><label for="neighborhood">Colonia: </label></td>
+						</tr>
+						<tr>
+							<td><?=$this->element->getElement('streetAndNumber'); ?></td>
+							<td><?=$this->element->getElement('city'); ?></td>
+							<td><?=$this->element->getElement('neighborhood'); ?></td>
+						</tr>
+						<tr>
+							<td><label for="delegation">Delegaci&oacute;n: </label></td>
+							<td><label for="state">Estado: </label></td>
+							<td><label for="postalCode">C.P: </label></td>
+						</tr>
+						<tr>
+							<td><?=$this->element->getElement('delegation'); ?></td>
+							<td><?=$this->element->getElement('state'); ?></td>
+							<td><?=$this->element->getElement('postalCode'); ?></td>
+						</tr>
+					</table>	
+					</div>		
+			</fieldset>
+			<fieldset>
+				<legend>Desglose de conceptos</legend>
+				<div class="maininvoiceLow">
+					<div>
+						<div>
+							<img id="load" src="<?php echo $this->baseUrl('/public/img/default-loader.gif')?>">
+							<table id="invoicedetail" class="display">
+								<thead>
+									<tr>
+										<th>Cantidad</th>
+										<th>Concepto</th>
+										<th>Unidad de Medida</th>
+										<th>Importe Unit.</th>
+										<th>Importe</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="asideinvoiceLow">
+					<div></div>
+					<div></div>
+					<div>
+						<label for="subtotal">Subtotal:</label>
+					</div>
+					<div>
+						<?=$this->element->getElement('subtotal'); ?>
+					</div>
+					<div>
+						<label for="tax">I.V.A.:</label>&nbsp;&nbsp;
+					</div>
+					<div>
+						<?=$this->element->getElement('tax'); ?>
+					</div>
+					<div>
+						<label for="total">Total:</label>
+					</div>
+					<div>
+						<?=$this->element->getElement('total'); ?>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<div class="center">
+					<label for="fName">Observaciones:</label><br>
+					<?=$this->element->getElement('observations')  ; ?>
+					</br>
+				</div>
+			</fieldset>
+			<div class="center">
+<!-- 			    <a href="javascript:document.forms['invoiceForm'].submit();" class="horusBtn big icon-iconsave">Guardar</a> -->
+			    <?=$this->element->getElement('Guardar')  ; ?>
+			    <a href="javascript:location.href='<?=$this->baseUrl("/In/invoices/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+			</div>
+		</div>
+</div>

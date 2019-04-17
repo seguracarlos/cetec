@@ -1,0 +1,95 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addCategory.js'));
+$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupStockDiscount.css'))
+?>
+<?php
+	$helpUser = $this->helps->finishedproductIndex;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#products', 7);	
+});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerIn">Cat&aacute;logo de Mercanc&iacute;a</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSCATALOGFULLVIEWER]):?>	
+				<li class="iconOpacity ">
+					<a href="<?php echo $this->baseUrl('/In/catalog/fullviewer') ?>"><img title="Catalogo de Productos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcatalog.png');?>" /></a>
+				</li>
+			<?php endif; ?>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="products" class="display">
+	<thead>
+		<tr>
+			<th>Clave</th>
+			<th>Producto</th>
+			<th>Departamento</th>
+			<th>Descripci&oacute;n</th>
+			<th>Existencias</th>
+			<th>Precio</th>
+			<th>Total</th>
+			<th>Foto</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	<?php if($this->products) foreach ($this->products as $product) : ?>
+	
+	<?php 
+		$percentaje = $product['purchase_percentage'] / 100;//porcentaje
+		$priceSale = $product['p_price'] * $percentaje;//ganancia
+		$priceGain = $product['p_price'] + $priceSale;//precio venta
+		
+		$total = $product['stock'] * $priceGain;//total de dienro en almacen por producto
+	?>
+		<tr>
+			<td><?=$product['p_key'] != "" ? $product['p_key'] : Profile::PENDIENTE ?></td>
+			<td><?=$product['p_name'] != "" ? $product['p_name'] : Profile::PENDIENTE?></td>
+			<td><?=$product['c_name'] != "" ? $product['c_name'] : Profile::PENDIENTE?></td>
+			<td>
+				<?php 
+						$obs = "";
+						if(strlen($product['p_description']) > 15){
+							$obs = substr($product['p_description'], 0, 15)."(...)";
+						}else{
+							$obs = $product['p_description'];
+						}
+						echo ($obs) ? $obs : Profile::PENDIENTE;
+					?> 
+			</td>
+			<td class="number"><?=$product['stock'] != "" ? $product['stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['p_price'] != "" ? Application_Util_Tools::currency($priceGain) : Profile::PENDIENTE?></td>
+			<td class="number"><?php echo Application_Util_Tools::currency($total); ?></td>
+			<td>
+				<?php if($product['p_photo'] != null):  ?>
+					<img src="data:image/png;base64,<?php echo $product['p_photo']; ?>" width="35px" height="35px" />
+				<?php else:?>
+					<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/noConozco.png');?>" width="35px" height="35px">
+				<?php endif; ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+</div>
+
+
+

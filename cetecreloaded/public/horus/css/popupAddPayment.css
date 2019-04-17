@@ -1,0 +1,305 @@
+@CHARSET "UTF-8";
+#TableOrderPurchaseBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+#title, #subtitle, #subtitle2{
+	color: #006699;
+}
+#addPaysBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#addPaysPop {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 440px;
+	width: 530px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+#addPayArea{
+	width: 500%;	
+}
+
+#btnXAddPay{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXAddPay {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnXAddPay:hover{
+	background: #00539c;
+}
+
+
+/************************************************* TABLA DE PAGOS*/ 
+	
+#TablePaysBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#TablePaysPop {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 354px;
+	width: 530px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+
+#btnXTablePay{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXTablePay {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+/*************************************************************** Tabla de compras*/
+	
+	#TableOrderPurchaseBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#btnAcceptDiv{
+	margin-top: 50px;
+	margin-left: 40%;
+}
+
+#TableOrderPurchasePop {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 354px;
+	width: 530px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+
+#btnXOrderPay{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXOrderPay {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+/********************** Formulario para nueva tecnologia o rol **********************************/
+
+#addNewTechBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+#addNewTech {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 250px;
+	width: 430px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+#title, #subtitle{
+	color: #006699;
+}
+#formulario{
+	width: 100%;
+	height: 100%;
+}
+#btnXAddTech{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+#btnXAddTech {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnXAddTech:hover{
+	background: #00539c;
+}
+
+/* ]]]]]]]]]]]]]]] estilos de subir imagenes }}}}}}}}}}}}}}} */
+#loaderAjaxTeam, #loaderAjaxMat, #loaderAjaxInv, #loaderAjaxProg{
+	display: none;
+}
+.title{
+	margin-left: 140px;
+}
+#contenedorImagenTeam, #contenedorImagenProg, #contenedorImagenMat, #contenedorImagenInv{
+	width: 40%;
+	height: 40%;
+	border: 1px solid #ccc;
+	-moz-border-radius: 8px 8px 8px 8px;
+	-webkit-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;
+	margin: auto;
+	margin-bottom: 30px;
+}
+.fotografia{
+	width:99%;
+	height:100%;
+	border: 1px solid #ccc;
+	-moz-border-radius: 8px 8px 8px 8px;
+	-webkit-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;
+}
+
+#addImageTeam, #addImageMat, #addImageProg, #addImageInv{
+	width:30px;
+	height:30px;
+	margin-left: 40%;
+	cursor: pointer;
+}
+
+/***************************** dialogo para registrar citas a los clientes prospecto***********/
+
+#tablePaymentsBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#tablePaymentsPop {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 490px;
+	width: 560px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	border-radius: 16px;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+
+#btnXtablePayments{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXtablePayments{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnXtablePayments:hover{
+	background: #00539c;
+}

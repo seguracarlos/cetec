@@ -1,0 +1,98 @@
+<h3 class="centerIn">Exámenes</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/cxc/calendar') ?>">
+					<img title="Ver calendario" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcalendar.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/invoices/index')?>">
+					<img title="Ver facturas" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconmulti.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<div id="mensajes"></div>
+
+<div>
+<h1>Exámenes a contestar</h1>
+<center>
+<?php 
+if($this->exam){ ?>
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="table">
+	<thead style="background-color:activeborder;">
+	<tr>
+		<th style="color:#1E90FF">Examen</th>
+		<th style="color:#1E90FF">Area</th>
+		<th style="color:#1E90FF">Descripci&oacute;n</th>
+		<th style="color:#1E90FF">Duraci&oacute;n</th>
+		<th style="color:#1E90FF">Desde</th>
+		<th style="color:#1E90FF">Hasta</th>
+		<th style="color:#1E90FF">Status</th>
+	</tr>
+	</thead>
+	<tbody style="background-color:white">
+	<?php foreach ($this->exam as $exams): ?>
+		    <tr>
+	    	<td><font size=2><?php echo $exams['topic_name'];?></font></td>
+    		<td><font size=2><?php echo $exams['project_name'];?></font></td>
+    		<td><font size=2><?php echo $exams['description'];?></font></td>
+    		<td><font size=2><?php echo $exams['time'];?></font></td>
+    		<td><font size=2><?php echo $exams['startDate'];?></font></td>
+    		<td><font size=2><?php echo $exams['endDate'];?></font></td>
+    		<td>
+    			<?php 
+    			 $dactual=date("d");
+    			 $mactual=date("m");
+    			 $aactual=date("Y");
+    			 $fechaI =$exams['startDate'];
+    			 $fechaF =$exams['endDate'];
+    			 $separa1 = explode("/",$fechaF);
+    			 $separa2 = explode("/",$fechaI);
+    			 $diaLimite = $separa1[0];
+    			 $mesLimite = $separa1[1];
+    			 $anoLimite = $separa1[2];
+    			 $diaInicio=$separa2[0];
+    			 $mesInicio=$separa2[1];
+    			 $anoInicio=$separa2[2];
+    			
+    			 if($dactual>=$diaInicio&&$mactual>=$mesInicio&&$aactual>=$anoInicio){ ?>
+    				<a href="#" onclick="answerExam(<?php echo $exams['id_topic']; ?>,<?php echo $this->user; ?>)"><font size=2>Responder</font></a></td>
+    			<?php }else{ ?>
+    				<font size=2>Desactivado</font></a></td>
+    				<?php }?>	
+	        </tr>
+	<?php endforeach;?>
+	</tbody>
+</table>
+<?php }else{?>
+<h1>No hay exámenes disponibles por el momento</h1>
+<?php }?>
+</center>
+</div>
+<h1><?php echo $this->user2; ?></h1>
+</div>
+
+<script type="text/javascript">
+function answerExam(exam,user){
+	var del = confirm("¿Deseas responder este examen?");
+	var baseUrl= "<?php echo $this->baseUrl('Horus/exams/replyexam') ?>";
+	var params = "?exam="+exam+"&u="+user;
+	var replyExam = baseUrl+params;
+	if(del == true){
+		//alert(replyExam);
+		//window.location.href = repyExam;
+		$(location).attr('href',replyExam);
+	}else{
+		return false;
+	}
+}
+</script>
+

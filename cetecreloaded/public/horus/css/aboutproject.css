@@ -1,0 +1,79 @@
+#about{
+	 width: 100%; 
+	 text-align: center;
+	 font-family: sans-serif;
+	 font-size: 12px;
+}
+#aboutContent{
+	 width: 50%;
+	 text-align: left;
+	 margin: auto;
+	 padding: 1%;
+	-webkit-box-shadow:  6px 8px 12px 6px #6E6E6E;
+    -moz-box-shadow:  6px 8px 12px 6px #6E6E6E;
+    box-shadow:  6px 8px 12px 6px #6E6E6E;
+    -webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+}
+#submenu{
+	text-align: center;
+	padding: 1%;
+	border-bottom: 1px solid black;
+}
+br{
+	margin: 0.3% 0;
+}
+#titleDate{
+	margin: 2%;
+}
+.firstLine span:FIRST-CHILD {
+	margin-left: 2%;
+}
+.firstLine span{
+	margin: 4%;
+}
+span label{
+	font-weight: bold;
+}
+.group span{
+	margin: 10%;
+}
+.group span:FIRST-CHILD {
+	margin-left: 2%;
+}
+#client, #men, #detail{
+	margin: 2%;	
+}
+#detail{
+	margin-bottom: 6%;	
+}
+#docs{
+	margin-top: -1%;
+	right: 27%;	
+}
+#devs{
+	margin: -14px 0 0 0; 
+	left: 34%;
+}
+.over{
+	width: 130px;
+	height: 100px;
+	overflow: auto;
+	position: absolute;
+}
+.overContent{
+	width: 110px;
+	height: 100px;
+}
+.push{
+	padding: 2%;
+}
+#tableBtn button{
+	margin-left: 5%;
+	width: auto;
+	padding: 4px;
+}
+.border{
+	border: 1px solid black;
+}

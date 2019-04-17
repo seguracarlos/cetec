@@ -1,0 +1,390 @@
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/addDatesOfPayment.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/projects.js'; ?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Agregar Cot. viaje</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Viajes</a>
+			        <a href="#" class="btn btn-default">Agregar</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<p class="triangle-border text-size-20 amaranth">Ingresa los datos de la cotizaci&oacute;n del viaje.</p>
+	
+	<div class="content-forms">
+	
+		<?php 
+		$form = $this->form;
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		echo $this->formElement($form->get('type_project')->setValue(2));
+		echo $this->formElement($form->get('ID'));
+		echo $this->formElement($form->get('costtable'));
+		echo $this->formElement($form->get('dates'));
+		echo $this->formElement($form->get('developersIds'));
+		echo $this->formElement($form->get('servicesIds'));
+		?>
+	
+		<div style="text-align:right;">
+			<span style="text-align:right;" class="label label-info">* Datos requeridos</span>
+		</div>
+		
+		<fieldset class="responsive-fieldset fieldset">
+		
+			<legend class="legend amaranth">
+				<span class="glyphicon glyphicon-tag"></span> Ingresa los datos generales
+			</legend>
+			
+			<div class="col-md-12">
+			
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Cliente:</label>
+						<?php echo $this->formElement($form->get('company_ID')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="text-amaranth">* Nombre:</label>
+						<?php echo $this->formElement($form->get('project_name')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<label for="name" class="text-amaranth">* Estatus:</label><br/>
+					<?php $this->formRadio()->setSeparator('</div><div class="radio-inline">'); ?>
+					<div class="radio-inline">
+    					<?php echo $this->formRadio($form->get('status')->setValue(1)) ?>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="col-md-12">
+			
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="text-amaranth">* Inicio:</label>
+						<?php echo $this->formElement($form->get('start_date')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="text-amaranth">* Fin:</label>
+						<?php echo $this->formElement($form->get('end_date')); ?>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="padding-right-30 padding-left-30 col-md-12">
+				<label class="text-amaranth">Descripci&oacute;n:</label>
+				<?php echo $this->formElement($form->get('description')); ?>
+			</div>
+			
+		</fieldset>
+
+		<fieldset class="responsive-fieldset fieldset">
+			
+			<legend class="legend amaranth">
+				<i class="fa fa-users"></i> Asigna los recursos humanos
+			</legend>
+
+			<div class="col-md-12">
+				
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="text-amaranth">Recursos Disponibles:</label>
+						<?php
+						echo $this->formElement($form->get('users_disp'));
+						?>
+					</div>
+				</div>
+				
+				<div class="col-md-2" style="text-align: center;">
+					 <button type="button" class="btn btn-primary" id="destination_users">
+					 	<span class="glyphicon glyphicon-chevron-right"></span>
+					 	<span class="glyphicon glyphicon-chevron-right"></span>
+					 </button>
+					 <br><br>
+					 <button type="button" class="btn btn-primary" id="origin_users">
+					 	<span class="glyphicon glyphicon-chevron-left"></span>
+					 	<span class="glyphicon glyphicon-chevron-left"></span>
+					 </button>
+				</div>
+				
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="text-amaranth">Recursos Asignados:</label>
+						<?php
+						echo $this->formElement($form->get('users_asig'));
+						?>
+					</div>
+				</div><!-- Fin div col-md-5 -->
+			
+			</div>
+
+		</fieldset>
+		
+		<fieldset class="responsive-fieldset fieldset">
+		
+			<legend class="legend amaranth">
+				<span class="glyphicon glyphicon-tag"></span> Asigna Servicios
+			</legend>
+			
+			<div class="col-md-12">
+				
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="text-amaranth">Servicios Disponibles:</label>
+						<?php
+						echo $this->formElement($form->get('services_disp'));
+						?>
+					</div>
+				</div>
+				
+				<div class="col-md-2" style="text-align: center;">
+					 <button type="button" class="btn btn-primary" id="destination_services">
+					 	<span class="glyphicon glyphicon-chevron-right"></span>
+					 	<span class="glyphicon glyphicon-chevron-right"></span>
+					 </button>
+					 <br><br>
+					 <button type="button" class="btn btn-primary" id="origin_services">
+					 	<span class="glyphicon glyphicon-chevron-left"></span>
+					 	<span class="glyphicon glyphicon-chevron-left"></span>
+					 </button>
+				</div>
+				
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="text-amaranth">Servicios Asignados:</label>
+						<?php
+						echo $this->formElement($form->get('services_asig'));
+						?>
+					</div>
+				</div><!-- Fin div col-md-5 -->
+			
+			</div>
+			
+		</fieldset>
+		
+		<fieldset class="responsive-fieldset fieldset">
+		
+			<legend class="legend amaranth">
+				<span class="glyphicon glyphicon-usd"></span> Revisa los costos
+			</legend>
+			
+			<div class="col-md-11">
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Cantidad:</label>
+						<?php echo $this->formElement($form->get('quantity')); ?>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Concepto:</label>
+						<?php echo $this->formElement($form->get('concept')); ?>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Precio:</label>
+						<?php echo $this->formElement($form->get('unityPrice')); ?>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">Importe:</label>
+						<?php echo $this->formElement($form->get('price')); ?>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1">
+				<button type="button" id="add_button" class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</div>
+			<div class="padding-right-30 padding-left-30 col-md-12">
+				<div class="panel panel-info">
+  					<div class="panel-heading">
+    					<h3 class="panel-title"><span class="glyphicon glyphicon-list-alt"></span></h3>
+  					</div>
+					<div class="panel-body">
+					    <table id="tableListData" class="table table-striped">
+							<thead>
+								<tr>
+									<th>Cantidad</th>
+									<th>Concepto</th>
+									<th>Precio</th>
+									<th>Importe</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+		</fieldset>
+		
+		<fieldset class="responsive-fieldset fieldset">
+		
+			<legend class="legend amaranth">
+				<span class="glyphicon glyphicon-usd"></span> Condiciones de pago
+			</legend>
+			
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="text-amaranth">* Numero de pagos:</label>
+						<div class="input-group input-group-lg">
+							
+		                    <?php echo $this->formElement($form->get('numberofpayments')->setValue(1)); ?>
+		                    <span class="input-group-btn">
+		                        <button type="button" id="buttonModalPayments" class="btn btn-warning">
+		                        	<span class="glyphicon glyphicon-calendar"></span>
+		                        </button>
+		                    </span>
+		                </div>
+	                </div>
+					<!-- <div class="form-group">
+						<label class="text-amaranth">* Numero de pagos:</label>
+						<?php /*echo $this->formElement($form->get('numberofpayments')->setValue(1));*/ ?>
+					</div> -->
+				</div>
+				<!-- <div class="col-md-1">
+					<buttom id="paysCalendar" class="btn btn-primary">Boton</buttom>
+					 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalPayments" data-backdrop="static" data-keyboard="false">
+  						<span class="glyphicon glyphicon-user"></span>
+					</button>
+					<button type="button" id="buttonModalPayments" class="btn btn-warning">
+  						<span class="glyphicon glyphicon-usd"></span>
+					</button>
+				</div>-->
+			</div>
+			
+			<div class="col-md-12">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="text-amaranth">* Repetir cobranza:</label>
+						<?php echo $this->formElement($form->get('repeat')); ?>
+					</div>
+				</div>
+			</div>
+
+			<div class="padding-right-30 padding-left-30 col-md-12">
+			
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">
+						<span class="glyphicon glyphicon-list-alt"></span> Detalle
+					</legend>
+					
+					<div class="col-md-12">
+						<div class="col-md-6">
+							<table class="table">
+								<tr>
+									<td class="text-amaranth">Costo</td>
+									<td><?php echo $this->formElement($form->get('cost')); ?></td>
+								</tr>
+								<tr>
+									<td class="text-amaranth">Importe</td>
+									<td><?php echo $this->formElement($form->get('amount')); ?></td>
+								</tr>
+								<tr>
+									<td class="text-amaranth">Anticipo</td>
+									<td><?php echo $this->formElement($form->get('advance')); ?></td>
+								</tr>
+								<tr>
+									<td class="text-amaranth">Descuento</td>
+									<td><?php echo $this->formElement($form->get('descto')); ?></td>
+								</tr>
+								<tr>
+									<td class="text-amaranth">Subtotal</td>
+									<td><?php echo $this->formElement($form->get('subtotal')); ?></td>
+								</tr>
+								<tr>
+									<td class="text-amaranth">IVA</td>
+									<td><?php echo $this->formElement($form->get('tax')); ?></td>
+								</tr>
+								<tr>
+									<td class="text-amaranth">Total</td>
+									<td><?php echo $this->formElement($form->get('total')); ?></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-6">
+						</div>
+					</div>
+				
+				</fieldset>
+
+			</div>
+			
+			<hr>
+			
+			<div class="clearfix padding-bottom-20">
+				<div class="col-md-6">
+					<label></label>
+					<?php echo $this->formElement($form->get('submitbutton')); ?>
+				</div>
+				<div class="col-md-6">
+					<label></label>
+					<a href="<?php echo $this->basePath()."/in/prospects-projects/index";?>" class="btn btn-danger btn-lg btn-block">Cancelar</a>
+				</div>
+			</div>
+			
+		</fieldset>
+		
+		<?php
+		echo $this->form()->closeTag();
+		?>
+		
+	</div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalPayments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        		<h4 class="modal-title text-primary" id="myModalLabel">Especifique las fechas de cobro.</h4>
+      		</div>
+		    <div class="modal-body" id="modal-body-payments">
+		    </div>
+		    <div class="modal-footer">
+		    	<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var $basePath     = "<?php echo $this->basePath(); ?>";
+	var $district     = 0;
+	var $neighborhood = 0;
+</script>

@@ -1,0 +1,114 @@
+<?php
+include_once APPLICATION_PATH . '/Constants/Constants.php';
+
+ $this->headScript()
+		->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPurchase.js'));
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#purchaseTable');
+});
+</script>
+
+<h3 class="centerIn">Ingresar productos al almac&eacute;n</h3>
+<ul id="icons" class="toolbar">
+	<li class="iconOpacity icon"
+		style="background-image: url(<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondet.png');?>)">
+	<a href="<?php echo $this->baseUrl('/warehouse/index') ?>"> Almac&eacute;n </a></li>
+	<li class="iconOpacity icon"
+		style="background-image: url(<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondet.png');?>)">
+	<a href="<?php echo $this->baseUrl('/warehouse/inventory') ?>"> Productos en el almac&eacute;n </a></li>
+	<li class="iconOpacity icon"
+		style="background-image: url(<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>)"
+		onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las oredenes de compra')">
+	<a>Ayuda</a></li>
+</ul>
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+
+
+<div id="overflow">
+	
+	<table id="purchaseTable" class="display">
+		<thead>
+			<tr>
+				<th>Orden</th>
+				<th>Proveedor</th>				
+				<th>Estatus</th>
+				<th>Ingresar</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+		
+			<?php if(count($this->purchaseOrders)>0){?>
+			<?php foreach ($this->purchaseOrders as $order): ?>
+				<tr>
+					<td><?php echo $order->getOrder_Id()?></td><!-- orden -->
+					<td><?php echo $order->getId_company()?></td><!-- nombre de cliente -->					
+					<td>
+					<?php
+						$statusVisual = "";
+						switch ($order->getStatus()) {
+							case StatusPurchaseOrder::NOT_DELIVERED:
+								$statusVisual = "No entregada";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+								$statusVisual = "Entregada incompleta";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_COMPLETE:
+								$statusVisual = "Entregada completa";								
+								break;							
+							default:								
+								break;
+						}
+						echo $statusVisual;
+					?>
+					</td><!-- estatus de la orden -->					
+					<td>						
+						<a href="<?php echo $this->baseUrl('/warehouse/order/id').'/'.$order->getOrder_Id() ?>">
+							<img border="0" src="<?php echo $this->baseUrl('/public/img/incoming_arrow.png')?>" alt="Ingresar elementos al almac&eacute;n" title="Ingresar elementos al almac&eacute;n"/>
+						</a>
+					</td><!-- Link oara ingresar productos -->					
+				</tr>
+			<?php endforeach; ?>
+			<?php }?>
+		</tbody>
+	</table>
+	
+</div>
+
+<!-- 
+    Inicia popup
+    
+<div id="TableOrderPurchasePop">
+		<div id="btnXOrderPay" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+		</div>
+		<div id="message"></div>
+		<div id="tablaPayDiv" >
+    		<table class="display" id="OrderTablePay">
+    			<thead>
+    				<tr>
+    					<td>N&deg;</td>
+    					<td>Nombre</td>
+    					<td>Cantidad</td>
+    					<td>Precio</td>
+    				</tr>
+    			</thead>
+    			<tbody>
+    			</tbody>
+    		</table>	
+	     </div>
+	     <div id="btnAcceptDiv">
+	     	<input type="button" value="Aceptar" id="btnAccept">
+	     </div>
+	</div>
+	<div id="TableOrderPurchaseBack"></div>
+ 
+    termina popup
+-->

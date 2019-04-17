@@ -1,0 +1,167 @@
+<link href="<?php echo $this->basePath() . '/public/css/editProfile.css';?>" rel="stylesheet">
+<script src="<?php echo $this->basePath() . '/public/js/editProfile.js';?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+	    <div style="font-size: 30px; vertical-align:middle; float:left; line-height: 38px" class="col-align-left fredoka-one blanco">
+	   		<div class="btn-group" style="margin-top:-9px;">
+        		<button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+       				<span class="glyphicon glyphicon-th-list"></span>
+        		</button>
+
+        		<ul class="dropdown-menu" role="menu">
+            		<li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Action 1</a></li>
+            		<li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Action 2</a></li>
+            		<li><a href="#"><span class="glyphicon glyphicon-music"></span> Action 3</a></li>
+        		</ul>
+    		</div> Modificar perfil
+	    </div>
+	    <div style="vertical-align:middle; float:right; line-height: 38px" class="col-align-right">
+	    	<div class="btn-group btn-breadcrumb">
+		    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+		        <a href="#" class="btn btn-default">Sistema</a>
+		        <a href="#" class="btn btn-default">Perfil</a>
+		        <a href="#" class="btn btn-default">Editar</a>
+			</div>
+	    </div>
+	    <div style="clear: both;"></div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+ 
+<section style="background:#fff;">
+	<div class="container">
+		<div class="board">
+			
+            <div class="board-inner">
+	        	<ul class="nav nav-tabs" id="myTab">
+	            	<div class="liner"></div>
+	                <li class="active">
+		            	<a href="#profile" data-toggle="tab" title="perfil">
+		                   	<span class="round-tabs one">
+		                		<i class="glyphicon glyphicon-user"></i>
+		                    </span> 
+		                </a>
+		         	</li>
+	                <li>
+	                	<a href="#password" data-toggle="tab" title="cambiar contraseña">
+	                    	<span class="round-tabs two">
+	                        	<i class="glyphicon glyphicon-lock"></i>
+	                     	</span> 
+	           			</a>
+	           		</li>
+				</ul>
+			</div><!-- Fin board-inner -->
+
+			<div class="tab-content">
+				
+                	<div class="tab-pane fade in active" id="profile">
+						
+						<?php 	
+						$form = $this->form; 
+						$form->prepare(); 
+						echo $this->form()->openTag($form);
+						echo $this->formRow($form->get('user_id')); 
+						?>
+						<!--  <form id="formEditProfile" role="form" method="post"> -->
+							<hr class="colorgraph">
+							<div class="row">
+                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <div class="form-group">
+                                        <!-- <input type="text" name="name" id="name" class="form-control input-lg" placeholder="Nombre(s)" tabindex="1"/>  -->
+                                        <?php echo $this->formRow($form->get('name')); ?>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <div class="form-group">
+                                        <!-- <input type="text" name="surname" id="surname" class="form-control input-lg" placeholder="Apellido materno" tabindex="2"/> -->
+                                    	 <?php echo $this->formRow($form->get('surname')); ?>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <div class="form-group">
+                                        <!-- <input type="text" name="lastname" id="lastname" class="form-control input-lg" placeholder="Apellido paterno" tabindex="3"/> -->
+                                    	<?php echo $this->formRow($form->get('lastname')); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <!-- <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Nombre a mostrar" tabindex="4"> -->
+                           		<?php echo $this->formRow($form->get('display_name')); ?>
+                            </div>
+                            <div class="form-group">
+                                <!-- <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Correo Electronico" tabindex="5"> -->
+                            	<?php echo $this->formRow($form->get('email')); ?>
+                            </div>
+                            <div class="form-group">
+                            	 <!-- <input type="tel" name="phone" id="phone" class="form-control input-lg" placeholder="Telefono" pattern="[0-9]" tabindex="6"> -->
+                            	<?php echo $this->formRow($form->get('phone')); ?>
+                            </div>
+                            
+                            <hr class="colorgraph">
+                            <div class="row">
+                                <div class="col-md-6">
+                                	<!--  <input type="submit" id="editProfile" value=Guardar class="btn btn-success btn-block btn-lg" tabindex="7"> -->
+                               		<?php echo $this->formRow($form->get('editProfile')); ?>
+                                </div>
+                                <div class="col-md-6">
+                                	<input type="button" value="Cancelar" class="btn btn-danger btn-block btn-lg">
+                                </div>
+                            </div>
+						<!--</form> -->
+						<?php echo $this->form()->closeTag(); ?>
+						
+					</div><!-- Fin div #profile -->
+					
+                    <div class="tab-pane fade" id="password">
+                    	<h3 class="head text-center">::Cambiar contraseña::</h3>
+                    	
+                    	<div class="row" id="rowPassReal" style="">
+                    		<p class="text-center">Ingresa tu contraseña actual para cambiarla</p>
+                    		<div class="col-md-8 col-md-offset-2">
+                    			<input type="password" id="inputPassReal" class="input-lg form-control" placeholder="Contraseña"/>
+                    			<br>
+                    			<input type="button" id="nextPass" class="col-xs-12 btn btn-info btn-load btn-lg" value="Siguiente">
+                    		</div>
+                    	</div>
+						
+						<div class="row" id="rowPassChange" style="display: none">
+							<form id="formPass" action="" method="post">
+								<div class="col-sm-8 col-sm-offset-2">
+									<p class="text-center">Utiliza el formulario de abajo para cambiar tu contraseña. Tu contraseña no puede ser el mismo que tu nombre de usuario.</p>
+									<form method="post" id="passwordForm">
+										<input type="password" class="password input-lg form-control" name="password1" id="password1" placeholder="Nueva Contraseña" autocomplete="off">
+										<div class="row">
+											<div class="col-sm-6">
+												<span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 8 caracteres de longitud<br>
+												<span id="ucase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Una letra mayúscula
+											</div>
+											<div class="col-sm-6">
+												<span id="lcase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Una letra minúscula<br>
+												<span id="num" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Un número
+											</div>
+										</div>
+										<input type="password" class="password input-lg form-control" name="password2" id="password2" placeholder="Repetir contraseña" autocomplete="off">
+										<div class="row">
+											<div class="col-sm-12">
+												<span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Las contraseñas no son iguales
+											</div>
+										</div>
+										<input type="submit" id="changePass" class="col-xs-12 btn btn-info btn-load btn-lg" data-loading-text="Changing Password..." value="Cambiar contraseña">
+									</form>
+								</div><!--/col-sm-8-->
+							</form>
+						</div><!--/row-->
+						
+					</div><!-- Fin div #password -->
+
+					<div class="clearfix"></div>
+			</div><!-- Fin div tab-content -->
+
+		</div><!-- Fin div Board -->
+	</div><!-- Fin container -->
+</section><!-- Fin section -->
+
+<script>
+	var $basePath = "<?php echo $this->basePath(); ?>";					
+</script>

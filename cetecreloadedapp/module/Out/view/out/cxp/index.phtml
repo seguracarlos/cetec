@@ -1,0 +1,156 @@
+<?php
+ require_once APPLICATION_PATH . '/util/StaticTools.php'; 
+ $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addPaymentCxp.js'))
+  					->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPayment.js'));
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+ $helpUser = $this->helps->cxpIndex;
+?>
+
+<h3 class="centerOut"> Cuentas por Pagar</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<?php $i = 1;?>
+<div id="overflow">
+	<table id="cxpTable" class="display">
+		<thead>
+			<tr>
+				<th>N&deg; de orden</th>
+				<th>Proveedor</th>
+				<th>Pago</th>
+				<th>Importe</th>
+				<th>Fecha de pago</th>
+				<th>¿Entregado?</th>
+				<th>Estatus</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+	<?php if($this->cxp != 0): ?>
+		<?php foreach ($this->cxp as $order):?>
+				<?php // if($order->getAmount_total() != 0.0):?>
+					<tr>
+						<td><?php echo Application_Util_Tools::format($order->getOrder_id(), 4); ?></td>
+						<td><a href="javascript:;" onclick="showMadePaymetsCxp('<?php echo $order->getName_company(); ?>', '<?php echo $order->getOrder_id(); ?>', '<?php echo Application_Util_Tools::format($order->getOrder_id(), 4); ?>', '<?php echo $order->getNumberofpayments(); ?>');"><?php echo $order->getName_company(); ?></a></td>
+						<td><?php echo $order->getNPay()."/".$order->getNumberofpayments()?></td>
+						<?php if($order->getAmount_total() == '0.00'):?>
+							<td><?php echo Application_Util_Tools::currency($order->getAmountShow());?></td>
+						<?php else: ?>
+							<td><?php echo Application_Util_Tools::currency($order->getAmount_total());?></td>
+						<?php endif; ?>
+						<td><?php echo $order->getDatePayment(); ?></td>
+						<td>
+						<?php
+							$statusVisual = "";
+							switch ($order->getStatus()) {
+								case StatusPurchaseOrder::NOT_DELIVERED:
+									$statusVisual = "No entregada";								
+									break;
+								case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+									$statusVisual = "Entrega incompleta";								
+									break;
+								case StatusPurchaseOrder::DELIVERED_COMPLETE:
+									$statusVisual = "Entrega completa";								
+									break;							
+								default:								
+									break;
+							}
+							echo $statusVisual;
+						?>
+						</td>
+						<td>
+							<?php 
+								if($order->getStatusCxp() == '1'){
+									echo "Pagado"; 
+									$classId = "inputStat".$order->getOrder_id(); ?>							
+									<input type="hidden" class="<?php echo $classId; ?>" value="<?php echo $order->getStatusCxp(); ?>"/>
+							<?php }else{ 
+									echo "Pendiente"; 
+									$classId = "inputStat".$order->getOrder_id();?>
+									<input type="hidden" class="<?php echo $classId; ?>" value="<?php echo $order->getStatusCxp(); ?>"/>
+							<?php }	?>
+						</td>
+						<?php if($order->getStatus() != 1){?>
+							<td><a href='javascript:;' onclick="horusAlert ('No se puede agregar un pago hasta que la orden de compra este entregada')">Agregar Pago</a></td>
+						<?php }else {?>
+							<?php 
+								if($order->getStatusCxp() == '1'){ ?>
+									<td>
+										Facturar pago
+									</td>
+								<?php }else{ ?>
+									<td>
+										<a href="javascript:;" onclick="addPaymenPurchase(this, '<?php echo $order->getAmount_total(); ?>', '<?php echo $order->getTotal();?>', '<?php echo $order->getName_company(); ?>', '<?php echo $order->getId_paymentorder();?>', '<?php echo $order->getOrder_id();?>',  '<?php echo $order->getNPay()."/".$order->getNumberofpayments()?>');">Agregar Pago</a>
+									</td>
+								<?php } ?>
+						<?php }?>			
+					</tr>
+					
+				<?php // endif; ?>
+		<?php endforeach; ?>	
+	<?php endif;?>
+		</tbody>
+	</table>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="addPaysPop" class="popHorus">
+		<div id="btnXAddPay" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<span id="subtitle"></span>
+		<div class="center">
+			<img id="load" src="<?php echo $this->baseUrl('/public/img/default-loader.gif')?>">
+		</div>
+		<div id="message"></div>
+		<br /><br />
+		    <?php echo $this->form ;?>
+	</div>
+	<div id="addPaysBack"></div>
+<!-- 
+    termina popup
+-->
+
+<!-- 
+    Inicia popup
+-->
+	<div id="tablePaymentsPop" class="popHorus">
+		<div id="btnXtablePayments" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<h2 id="subtitleTable"></h2>
+		<h2 id="totalPay"></h2>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/default-loader.gif')?>">
+			<div id="tablePayments" >
+	    		<table class="display" id="Payments">
+	    			<thead>
+	    				<tr>
+	    					<th>N&deg;</th>
+	    					<th>Monto</th>
+	    					<th>Cuenta</th>
+	    					<th>Referencia</th>
+	    					<th>D&iacute;a de pago</th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    			</tbody>
+	    		</table>	
+		     </div>
+		 
+		     <div>
+		     	<button type="button" id="btnAccept" class="btn btn-default">Aceptar</button>
+		     </div>
+	     </div>
+	</div>
+	<div id="tablePaymentsBack"></div>
+<!-- 
+    termina popup
+-->

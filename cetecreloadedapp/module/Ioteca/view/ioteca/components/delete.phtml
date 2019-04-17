@@ -1,0 +1,11 @@
+<div style="text-align: center;"> 
+<p><h4 style="color: red;">Borrar la componente de: 
+<?php echo $this->escape($this->components['name']); ?>? 
+</h4></p> 
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post"> 
+<div> 
+  <input type="hidden" name="component_id" value="<?php echo $this->components['component_id']; ?>" /> 
+  <input type="submit" name="del" value="Si" /> 
+  <input type="submit" name="del" value="No" /> 
+</div> 
+</div>

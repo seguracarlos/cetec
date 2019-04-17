@@ -1,0 +1,130 @@
+<div class="breadcrumbs">
+  <div class="container">
+    <div class="col-md-4">
+      <div class="row"><p class="title-breadcrumbs">Revisi&oacute;n de Examen</p></div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+
+        </div>
+      </div>
+    </div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+<div class="container">
+  <div class="panel panel-primary">
+      <div class="panel-heading">
+       <label class="pull-right">Fecha del Examen:<?php echo $this->exam['info']['date']; ?></label>
+	   <label>Nombre del Alumno: <?php echo $this->exam['info']['name'];?></label></br>
+	   <label>Trimestre: <?php echo $this->exam['info']['trim'];?></label></br>
+	   <label>Aciertos: <?php echo $this->exam['info']['successAnswers'].'/20' ?></label></br>
+	   <label>Calificaci&oacute;n: <?php echo $this->exam['info']['score'] ?></label>
+      </div>
+      
+      <div class="panel-body">
+ 		<div class="col-md-12">
+			<?php if(isset($this->exam['questions'])){?>
+			  <?php foreach($this->exam['questions'] as $index => $question){?>
+			  <?php $nQuestion = $index+1; ?>
+			    <div class="panel panel-info">
+			      	<div class="panel-heading">
+				      	<div class="title">
+				        <b><?php echo $nQuestion;?></b>&nbsp;
+				        <span class="text"><?php echo $question['question_name'];?></span>
+				        <?php if($question['userAnswer'] == $question['correctAnswer']){
+				        	echo "<span style='color:green' class='glyphicon glyphicon-ok pull-right' aria-hidden='true'></span>";?>
+				        <?php }else{
+	       					  echo "<span style='color:red' class='glyphicon glyphicon-remove pull-right' aria-hidden='true'></span>";
+				         }?>
+	      				</div>
+      				</div>
+     		 <div class="panel-body">
+    		  <ol class="answer-list">
+			      <?php foreach($question['options'] as $answer){?>
+				      <?php if($question['userAnswer'] == $question['correctAnswer'] && $question['userAnswer'] == $answer['id_resp']){ ?>
+							 <li class="answer list-group-item-success">
+					            <span class="text "><?php echo $answer['nombre'];?></span>
+			<!-- 		            <span class='glyphicon glyphicon-ok-sign pull-right' aria-hidden='true'></span>; -->
+			        	    </li> 
+			        <?php }elseif($question['userAnswer'] != $question['correctAnswer'] && $question['userAnswer'] == $answer['id_resp']){?>
+			        		<li class="answer list-group-item-danger">
+					           <span class="text "><?php echo $answer['nombre'];?></span>
+					           <span class='glyphicon glyphicon-user pull-right' aria-hidden='true'></span>;
+			        	    </li> 
+			        <?php }elseif($answer['id_resp'] == $question['correctAnswer'] && $question['userAnswer'] != $answer['id_resp']){?>
+						  <li class="answer list-group-item-success">
+					         <span class="text "><?php echo $answer['nombre'];?></span>
+					         <span class='glyphicon glyphicon-ok-sign pull-right' aria-hidden='true'></span>;
+			        	  </li> 
+			        <?php }elseif($answer['id_resp'] != $question['correctAnswer'] && $question['userAnswer'] != $answer['id_resp']){?>
+			        	  <li class="answer">
+					         <span class="text "><?php echo $answer['nombre'];?></span>
+			        	  </li> 
+			       <?php }?>
+			        <?php }?>
+			       </ol>
+			    </div>
+   		 </div>
+
+<?php }?>
+<?php }?>
+
+  <?php if(isset($this->exam['questions'])){
+  			if(count($this->exam['questions'])<20){
+  				echo "<label>El alumno no completo el examen</label>";
+		  	}?>
+  	<?php } else{
+  	echo "<label>El alumno salio del examen y no respondio ninguna pregunta</label>";
+  	 }?>
+  </div>
+  </div>     	
+      	
+      	
+      </div>
+    </div>
+</div>
+
+
+
+
+<style>
+	
+.back{
+	  border: 1px solid #F0F0F0;
+  border-radius: 1px;
+  background-color: white;
+  box-shadow: 0 1px 4px #F4F4F4;
+}
+
+.card {
+  border: 1px solid #F0F0F0;
+  border-radius: 1px;
+  background-color: white;
+  box-shadow: 0 1px 4px #F4F4F4;
+}
+.question {
+  border: 1px solid #F0F0F0;
+  border-radius: 1px;
+  background-color: white;
+  box-shadow: 0 1px 4px #F4F4F4;
+  margin: 12px 0;
+  padding: 0;
+}
+.question > .title {
+  padding: 10px;
+  border-bottom: 1px solid #F0F0F0;
+}
+ol.answer-list {
+  list-style-type: upper-alpha;
+  margin: 0;
+}
+.answer {
+  padding: 10px 10px 10px 2px;
+  border: 1px solid #FFFFFF;
+}
+.answer .controls {
+  opacity: 0.02;
+}
+
+	
+</style>

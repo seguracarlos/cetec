@@ -1,0 +1,90 @@
+<script type="text/javascript">
+$(function(){
+    // 6 create an instance when the DOM is ready
+    $('#jstree').jstree({ 'core' : {
+      'data' :
+    	<?php
+    		echo $this->tree;
+    	?>
+    },
+    "types" : {
+ 	      "root" : {
+ 	        "icon" : "<?php echo $this->baseUrl('/public/img/images/tree-icon.png')?>"
+ 	      },
+ 	    "folder" : {
+ 	        "icon" : "<?php echo $this->baseUrl('/public/img/images/folder.ico')?>"
+ 	      },
+ 	    "file" : {
+ 	      "icon" : "<?php echo $this->baseUrl('/public/img/images/file.png')?>"
+ 	    }
+ 	    },
+ 	    "plugins" : [ "state", "types" ]
+    });
+  });
+</script>
+<script>
+function linkContentTopic(id){
+    window.location.href = "<?php echo $this->baseUrl('Gutenberg/docs_usermanual/consultusermanual?t='); ?>"+id;
+}
+function parentLink(){
+	window.location.href = "<?php echo $this->baseUrl('Gutenberg/docs_usermanual/consult') ?>";
+}
+function linkContent(idc){
+	window.location.href = "<?php echo $this->baseUrl('Gutenberg/docs_usermanual/consultusermanual?t='); ?>"+idc;
+}
+</script>
+<h3 class="centerIn">Manuales de usuario</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/cxc/calendar') ?>">
+					<img title="Ver calendario" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcalendar.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/invoices/index')?>">
+					<img title="Ver facturas" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconmulti.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<div id="mensajes"></div>
+
+<div id="jstree"  style="width:20%; height:100%; float:left; overflow-x : auto;">
+
+</div>
+<div style="width:80%; height:100%; float:left;">
+<h1 ALIGN="center" >Lista de Manuales de Usuario</h1>
+</br>
+<center>
+<?php if($this->usermanual){ ?>
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="table">     
+	    <thead>
+		    <tr>
+		        <th style="color:#1E90FF">Memorias</th>
+		        <th style="color:#1E90FF">Proyecto</th>
+		        <th style="color:#1E90FF">Descripci&oacute;n</th>
+		    </tr>
+	    </thead>
+	    <tbody style="background-color:#white">
+	       <?php foreach ($this->usermanual as $usermanual): ?>
+	        <tr>
+    			<td><font size=2><?php echo $usermanual['topic_name'];?></font></td>
+    			<td><font size=2><?php echo $usermanual['project_name'];?></font></td>
+    			<td><font size=2><?php echo $usermanual['description'];?></font></td>
+	        </tr>
+	    <?php endforeach;?>
+	    </tbody>
+	    </table>
+	    <?php
+	     } else{?>
+	    	<h3>Aun no existe ninguna memoria.</h3>
+	        <?php } ?>
+</center>
+</div>

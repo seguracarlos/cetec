@@ -1,0 +1,148 @@
+<div class="breadcrumbs">
+	<div class="container">
+	    <div style="font-size: 30px; vertical-align:middle; float:left; line-height: 38px" class="col-align-left fredoka-one blanco">
+	   		<div class="btn-group" style="margin-top:-9px;">
+        		<button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+       				<span class="glyphicon glyphicon-th-list"></span>
+        		</button>
+
+        		<ul class="dropdown-menu" role="menu">
+            		<li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Action 1</a></li>
+            		<li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Action 2</a></li>
+            		<li><a href="#"><span class="glyphicon glyphicon-music"></span> Action 3</a></li>
+        		</ul>
+    		</div> Detalle cliente
+	    </div>
+	    <div style="vertical-align:middle; float:right; line-height: 38px" class="col-align-right">
+	    	<div class="btn-group btn-breadcrumb">
+		    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+		        <a href="#" class="btn btn-default">Patrocinadores</a>
+		        <a href="#" class="btn btn-default">Empresas</a>
+		        <a href="#" class="btn btn-default">Detalle</a>
+			</div>
+	    </div>
+	    <div style="clear: both;"></div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">
+				<span class="glyphicon glyphicon-tag"></span>
+				<?php echo $data["name_company"]; ?>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-3 col-lg-3">
+				<center>
+					<img height="200" width="200" alt="Foto" src="https://media.licdn.com/mpr/mpr/p/3/005/054/197/301e6a0.jpg" class="img-circle">
+				</center>
+			</div>
+			<div class="col-md-9 col-lg-9">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Informaci&oacute;n general</legend>
+							<div class="table-responsive">
+								<table class="table amaranth text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>Razon social:</td>
+			                       			<td><?php echo $data["name_company"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Marca:</td>
+			                       			<td><?php echo $data["brand"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>RFC:</td>
+			                       			<td><?php echo $data["rfc"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Giro cormecial:</td>
+			                       			<td><?php echo $data["business"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+					                    	<td>Interesado en:</td>
+					                    	<td><?php echo $data["interestingin"]; ?></td>
+					                    </tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Detalle contacto</legend>
+							<div class="table-responsive">
+								<table class="table amaranth text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>Nombre:</td>
+			                       			<td><?php echo $data["name_contact"]." ".$data['surname_contact']; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Telefono:</td>
+			                       			<td><?php echo $data["phone_contact"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Correo:</td>
+			                       			<td><?php echo $data["mail_contact"]; ?></td>
+			                      		</tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">Direcci&oacute;n</legend>
+					<div class="table-responsive">
+						<table class="table amaranth text-size-15">
+							<tbody>
+								<tr>
+	                        		<td>Calle:</td>
+	                       			<td><?php echo $data["street"]; ?></td>
+	                      		</tr>
+								<tr>
+	                        		<td>Estado:</td>
+	                       			<td><?php echo $data["name_state"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Delegaci&oacute;n o Municipio:</td>
+	                       			<td><?php echo $data["name_district"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Colonia:</td>
+	                       			<td><?php echo $data["name_neighborhood"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Exterior:</td>
+	                       			<td><?php echo $data["number"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Interio:</td>
+	                       			<td><?php echo $data["interior"]; ?></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>C&oacute;digo Postal:</td>
+	                       			<td><?php echo $data["postalcode"]; ?></td>
+	                      		</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="clearfix">
+				<a class="btn btn-default pull-right" href="<?php echo $this->basePath("/in/customers/index")?>">
+					<span class="glyphicon glyphicon-repeat"></span>
+					Regresar
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

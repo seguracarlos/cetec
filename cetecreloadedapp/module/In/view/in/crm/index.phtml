@@ -1,0 +1,78 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Clientes prospectos</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Prospectos</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">Informaci&oacute;n de clientes prospectos</h3>
+		</div>
+		<div class="panel-body">
+			<p>La siguiente tabla contiene informaci&oacute;n relacionada a los clientes</p>
+			<table id="companies" class="table table-striped table-hover table-condensed">
+				<thead>
+					<th>Cliente</th>
+					<th>Contacto</th>
+					<th>Tel&eacute;fono</th>
+					<th>Correo</th>
+					<th>Registro</th>
+					<th>Proyectos</th>
+					<th></th>
+					<th></th>
+					<th>
+						<a class="btn btn-success" href="<?php echo $this->basePath()."/in/crm/add"?>">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</a>
+					</th>
+				</thead>
+				<tbody>
+			    	<?php foreach($this->companies as $comp) : ?>
+					<tr>
+				        <td>
+				        	<a class="btn" href="<?php echo $this->basePath()."/in/crm/detail/".$comp["id_company"]; ?>">
+				        		<span class="glyphicon glyphicon-search"></span>
+				        		<?php echo $comp["name_company"]; ?>
+				        	</a>
+				        </td>
+				        <td><?php echo $comp["name"]." ".$comp["surname"]; ?></td>
+						<td><?php echo $comp["phone"]; ?></td>
+						<td><?php echo $comp["email"]; ?></td>
+						<td><?php echo $comp["record_date"]; ?></td>
+						<td>Proyectos</td>
+				        <td><a class="btn btn-primary" href="<?php echo $this->basePath().'/in/crm/edit/'.$comp["id_company"]; ?>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+				        <td><a class="btn btn-danger" href="<?php echo $this->basePath().'/in/crm/delete/'.$comp["id_company"];?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+			    		<td><a class="btn btn-warning" href=""><span class="glyphicon glyphicon-user"></span></a></td>
+			    	</tr>
+			    	<?php endforeach; ?>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$("#companies").dataTable();
+});
+</script>

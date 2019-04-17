@@ -1,0 +1,16 @@
+<h3 class="centerIn">Agregar Proyecto</h3>
+<?php 
+$helpUser = $this->helps->projectCreateview;
+?>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity"><a href="<?php echo $this->baseUrl('/In/projects/index')?>"><img title="Proyectos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icongear.png')?>"/></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+					<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<?php echo $this->form ;?>

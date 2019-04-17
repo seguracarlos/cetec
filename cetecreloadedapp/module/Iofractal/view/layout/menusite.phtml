@@ -1,0 +1,220 @@
+<link rel="stylesheet" href="<?php echo $this->basePath() . '/public/horus/css/icon-minimal.css';?>"/>
+<?php
+	//echo $this->headLink()->appendStylesheet($this->basePath('/public/menuOsiris.css'));
+?>
+<link rel="stylesheet" href="<?php echo $this->basePath()."/public/bootstrap-3.3.1/dist/css/user-menu.css" ?>" />
+
+<script>
+var BASE_URL = '<?php echo $this->basePath(); ?>';
+var ICONS='<?php echo $this->iconset;?>';
+var idRolUser = "<?php echo $this->roleId; ?>";
+
+$(document).ready(function(){
+
+	
+
+	$('#ingMenu').mouseover(function(){
+		menuIng();
+		$('.min').hide();
+ 	}).mouseout(function(){
+		//no hace nada
+	});
+
+	
+
+	$('.hor').mouseover(function(){
+		$('.hor').show();
+	}).mouseout(function(){
+		$('.hor').hide();
+	});
+
+	
+		$('#ioMenu').hover(function(){
+		menuIo();
+	});
+		$('#guMenu').hover(function(){
+		menuGut();
+	});
+
+});
+
+function showMinMenu(classs){
+	$("."+classs).show();
+}
+function hideMinMenu(classs){
+	$("."+classs).hide();
+}
+function menuActiveGo(path, menu){
+	location.href = path;
+}
+function openAlerts(){
+	$('#modalAlertsSystem').modal('show');
+}
+</script>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+
+		<div class="navbar-header">
+			<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+            	<span class="sr-only">Toggle navigation</span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+          	</button>
+          	<a href="<?php echo $this->basePath().'/horus/welcome/index';?>" class="navbar-brand" data-toggle="tooltip" data-placement="bottom" title="<?php echo $this->userProfile['brand']; ?>">
+          		<img alt="Brand" src="<?php echo $this->userProfile['logo']; ?>" style="width:45px; margin:-11px;" class="img-rounded">
+          	</a>
+		</div>
+
+        <div class="navbar-collapse collapse" id="navbar">
+			<ul class="nav navbar-nav">
+
+            <?php if ($this->roleId == Privilege::CONSULTOR) : ?>
+				<li>
+					<a href="<?php echo $this->basePath() .'/system/profile/index' ?>">
+						<img src="<?php echo $this->basePath("/public/horus/img/icons/".$this->iconset."/iconprofile.png")?>">
+					</a>
+				</li>
+			<?php elseif ($this->roleId == Privilege::ADMINISTRADOR || $this->roleId == Privilege::SUPERUSUARIO) : ?>
+				<li>
+					<a href="<?php echo $this->basePath() .'/horus/welcome/index' ?>">
+						<img src="<?php echo $this->basePath("/public/horus/img/icons/".$this->iconset."/iconbuilding.png")?>">
+					</a>
+				</li>
+			<?php else: ?>
+				<li>
+					<a href="<?php echo $this->basePath() .'/system/profile/index' ?>">
+						<img src="<?php echo $this->basePath("/public/horus/img/icons/".$this->iconset."/iconprofile.png")?>">
+					</a>
+				</li>
+			<?php endif;?>
+
+					<?php if($this->mmenu != null): ?>
+							<!-- INCOME -->
+								<?php
+									foreach($this->mmenu as $menusite){
+										$appName = "";
+										$subi = "";
+										$subB = "";
+										foreach($menusite as $resource):
+										if ($appName != $resource->app) : ?>
+											<!-- notification-menu-item highlight -->
+											<?php if($this->active == $resource->app):?>
+										    	<li id="liIngresos" class='dropdown active' >
+										    <?php else:?>
+<!-- 										    <li id="liIngresos" class='dropdown' > -->
+										    	
+										    	<li id="liIngresos" class='' >
+										    <?php endif;?>
+													<div id="ingMenu" class="imgMenu dropdown-toggle menuHoverCont" data-toggle="dropdown"></div>
+													<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+														<?php  echo $resource->app; ?>
+														<b class="caret"></b>
+													</a>
+												<ul class="dropdown-menu">
+													<!--<div id="contMenuIng">-->
+												<?php  endif; ?>
+													<?php if($subB == $resource->sub): ?>
+														<li class="selectMenuIngresos" onclick="menuActiveGo('<?php echo $this->basePath('/').$resource->path;?>', 'liIngresos');" >
+																<a href="javascript:;" class="ico<?php echo $resource->pather; ?>">
+																	&nbsp;&nbsp;<?php echo $resource->nameMenu; ?>
+																</a>
+														</li>
+													<?php else:?>
+
+														<?php if($subi != $resource->sub):?>
+															<li class="dropdown-submenu">
+															<?php $subi = $resource->sub; ?>
+																	<a id="menuDad" onmouseover="showMinMenu('<?php echo $subi; ?>'); " onmouseout="hideMinMenu('<?php echo $subi; ?>'); " tabindex="-1" href="#" class="icoarrow">&nbsp;&nbsp;<?php echo $resource->sub; ?></a>
+
+																		<ul class="dropdown-menu min <?php echo $subi; ?>"  onmouseover="showMinMenu('<?php echo $subi; ?>'); " onmouseout="hideMinMenu('<?php echo $subi; ?>'); ">
+																			<div>
+																			<?php foreach ($menusite as $resource):?>
+																				<?php if($resource->sub == $subi):?>
+																						<li class="selectMenuIngresos" onclick="menuActiveGo('<?php echo $this->basePath('/').$resource->path;?>', 'liIngresos');">
+																							<a href="javascript:;"  class="ico<?php echo $resource->pather; ?>">
+																							&nbsp;&nbsp;<?php echo $resource->nameMenu; ?>
+																							</a>
+																						</li>
+																				<?php endif;?>
+																			<?php endforeach; ?>
+																			</div>
+																		</ul>
+																</li>
+														<?php endif;?>
+													<?php endif; ?>
+								<?php
+									$appName = $resource->app;
+									endforeach; ?>
+													<!--comebtado</div>-->
+													<?php if($this->roleId == Privilege::SUPERUSUARIO || $this->roleid == Privilege::ADMINISTRADOR) :?>
+														<!--<div id="contMediaIng" class="punteado center" style="display: block">
+															<img alt="" id="loadContIng" width="80px;" height="80px" src="<?php echo $this->basePath('/public/horus/img/load.gif'); ?>">
+														</div>-->
+													<?php endif; ?>
+												</ul>
+											</li>
+								<!-- ENDINCOME -->
+					<?php }
+					endif; ?>
+          	</ul>
+
+        	<!-- Navbar Right Menu -->
+          	<!--<div class="navbar-custom-menu">-->
+        	<ul id="profileMenu" class="profile nav navbar-nav navbar-right">
+        		<?php $photoFile =  ($this->userProfile['photofile'] != "") ? $this->userProfile['photofile'] : $this->basePath()."/public/bootstrap-3.3.1/dist/img/icon-user.png";
+        		?>
+				<!-- User Account: style can be found in dropdown.less -->
+<!--               	<li class="dropdown user user-menu"> -->
+              	<li class="user user-menu">
+              	
+                	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  		<img src="<?php echo $photoFile; ?>" class="user-image" alt="User Image"/>
+                  		<span class="hidden-xs"><?php echo $this->userProfile['user_name']; ?></span>
+                	</a>
+                	<ul class="dropdown-menu">
+                  		<!-- User image -->
+                  		<li class="user-header">
+                    		<img src="<?php echo $photoFile; ?>" class="img-circle" alt="User Image" />
+                    		<p>
+                      			<?php echo $this->userProfile['user_name']." - ".$this->userProfile['name_job']; ?>
+                      			<small><?php echo "Rol: ".$this->userProfile['rol_name']; ?></small>
+                    		</p>
+                  		</li>
+                  		<!-- Menu Body -->
+                  		<li class="user-body">
+                    		<!--<div class="col-xs-4 text-center">
+                      			<a href="#">Followers</a>
+                    		</div>
+                    		<div class="col-xs-4 text-center">
+                      			<a href="#">Sales</a>
+                    		</div>
+                    		<div class="col-xs-4 text-center">
+                      			<a href="#">Friends</a>
+                    		</div>-->
+                  		</li>
+                  		<!-- Menu Footer-->
+                  		<li class="user-footer">
+                    		<div class="pull-left">
+                      			<a href="<?php echo $this->basePath()."/system/profile/index"; ?>" class="btn btn-default btn-flat">Perfil</a>
+                    		</div>
+                    		<div class="pull-right">
+                      			<a href="<?php echo $this->basePath()."/logout"; ?>" class="btn btn-default btn-flat">
+								Salir
+								<span class="glyphicon glyphicon-off"></span>
+                      			</a>
+                    		</div>
+                  		</li>
+               	 	</ul>
+              	</li>
+             
+            </ul>
+          	<!--</div>-->
+
+
+		</div><!--/.nav-collapse -->
+
+	</div>
+</nav>

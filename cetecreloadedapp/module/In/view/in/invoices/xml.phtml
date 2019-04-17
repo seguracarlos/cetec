@@ -1,0 +1,207 @@
+<?php  echo  $this->headScript() ->appendFile($this->baseUrl('/public/bootstrap/js/bootstrap.file-input.js')); ?>
+<script>
+var iconsFile = "<?php echo $this->iconset; ?>";
+
+$(document).ready(function(){
+	$("#file").bootstrapFileInput();
+
+
+	$('input[type="file"]').change(function () {
+		var files = this.files[0];
+
+		if(files){
+			uploadFile();
+		}else{
+			horusAlert("Debes seleccionar almenos un archivo");
+		}
+	});
+
+	jqueryTable('#xmls', 3);
+
+	$("#backXml").click(function(){
+		$("#tableXml").show('slow');
+		$("#showXml").hide('slow');
+	});
+});
+
+
+function _(el){ return document.getElementById(el); }
+
+function uploadFile(){
+	var formdata = new FormData($("form#filesForm")[0]); 
+	var ajax = new XMLHttpRequest();
+	
+	 ajax.upload.addEventListener("progress", progressHandler, false); 
+	 ajax.addEventListener("load", completeHandler, false); 
+	 ajax.addEventListener("error", errorHandler, false);
+	 ajax.addEventListener("abort", abortHandler, false); 
+	 ajax.open("POST", BASE_URL + "/In/invoices/xml"); 
+	 ajax.send(formdata); 
+}
+function progressHandler(event){
+	var percent = (event.loaded / event.total) * 100; 
+	 $('.progress .progress-bar').css('width', Math.round(percent) + '%');
+     $(".progress-bar").css('background-color', '#5cb85c');
+	$("#textLoad").html(Math.round(percent)+"% subiendo... espere porfavor"); 
+}
+function IsJsonString(jsonResponse) {
+	var response = "";
+	
+    try {
+    	$.parseJSON(jsonResponse.target.responseText);
+    	response = true;
+    } catch (e) {
+    	response = null;
+    }
+    
+    return response;
+}
+function completeHandler(event){ 
+	//respuesta del servidor, json
+	var validJson = IsJsonString(event) ;
+	if(validJson){
+		var response = $.parseJSON(event.target.responseText);
+		
+		if(response.response == "ok"){
+			horusAlert(response.msj);
+			$("#textLoad").html("Carga completa");
+
+			var urlDelete = BASE_URL + "/public/img/icons/"+iconsFile+"/iconminus.png";
+			var urlShow = BASE_URL + "/public/img/icons/"+iconsFile+"/xml.png";
+			var t = "xmls";
+			var uad = "/In/invoices/xml?del=1";
+			
+			
+			var oTableA = $("#xmls").dataTable();
+			
+			for(var i = 0; i <= response.xmls.length-1; i++){
+				var file = response.xmls[i];
+				var deleteAction = '<a href="javascript:;" onclick="deleteRecord('+"'"+t+"'"+', this, '+"'"+file.id_xml+"'"+' , '+"'"+uad+"'"+');" ><img src="'+urlDelete+'" title="Eliminar xml" alt="Eliminar xml"></a>';		
+				var showAction = '<a href="javascript:;" onclick="showXml('+"'"+file.id_xml+"'"+', '+"'"+file.name+"'"+')" ><img title="Ver xml" alt="Ver xml" src="'+urlShow+'"></a>';
+				var actions =  deleteAction + " " + showAction;
+				
+				oTableA.fnAddData( [
+				                  file.id_xml,
+				                  file.name,
+				                  file.date,
+				                   actions
+				                   ] );		 	
+			}
+			
+		}else{
+			if(response.code == "05"){
+				var MsjErrorJson = "";
+				
+				for(var i = 0; i < response.xmls.length; i++){
+					var item =  response.xmls[i];
+
+					MsjErrorJson = item.name + " <br /> "  + item.error + " <br /> " + MsjErrorJson;
+				}
+				
+				horusAlert(response.msj + "<br /> " +MsjErrorJson);
+							
+			}else{
+				horusAlert(response.msj);
+			}
+			
+			$(".progress-bar").css('background-color', '#d9534f');
+			$("#textLoad").html("Error");
+		}
+	}else{
+		horusAlert("Ocurrió un error desconocido, consulta al administrador");
+		$(".progress-bar").css('background-color', '#d9534f');
+		$("#textLoad").html("Error");
+	}
+ }
+
+function errorHandler(event){
+	$("#textLoad").html("Error al cargar");
+	$(".progress-bar").css('background-color', '#d9534f');
+} 
+function abortHandler(event){ 
+	$("#textLoad").html("Carga interrumpida");
+	$(".progress-bar").css('background-color', '#f0ad4e');
+}
+
+
+function showXml(id, name_xml){
+	$("#tableXml").hide('slow');
+	$("#showXml").show('slow');
+
+	$("#nameXml").html(name_xml);
+
+	$.ajax({
+		  type: 'GET',
+		  url: BASE_URL + "/In/invoices/xml?gXi=1",
+		  cache: false,
+		  data: {"id_xml": id},
+		  dataType: "json",
+		  success: function(response){
+			  alert(response);
+		  }
+	});
+}
+</script>
+
+<h3 class="centerIn">Cargar xml</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity"
+			onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')"><a><img
+				title="Ayuda"
+				src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>
+</ul>
+
+<div id="overflow">
+
+	<div id="tableXml">
+		<form id="filesForm">
+			<input type="file" id="file" name="files[]" multiple="multiple" title="Cargar XML" /> 
+		</form>
+		
+		<div class="progress">
+		  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+		   <span id="textLoad">0%</span>
+		  </div>
+		</div>
+		<table id="xmls" class="display">
+	 		<thead>
+	 			<tr>
+	 				<th>N&deg;</th>
+	 				<th>Nombre</th>
+	 				<th>Fecha</th>
+	 				<th></th>
+	 			</tr>
+	 		</thead>
+	 		<tbody>
+	 			<?php foreach($this->xml as $xml):?>
+	 			
+	 			<tr>
+	 				<td><?php echo $xml['id_xml']; ?></td>
+	 				<td><?php echo $xml['name']; ?></td>
+	 				<td><?php echo $xml['date']; ?></td>
+	 				<td>
+	 					<a href="javascript:;" onclick="deleteRecord('xmls',this,'<?php echo $xml['id_xml']; ?>','/In/invoices/xml?del=1');">
+	 						<img src="<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/iconminus.png");?>" />
+	 					</a>
+	 					<a href="javascript:;" onclick="showXml('<?php echo $xml['id_xml']; ?>', '<?php echo $xml['name']; ?>')">
+	 						<img src="<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/xml.png");?>" />
+	 					</a>
+	 				</td>
+	 			</tr>
+	 			
+	 			<?php endforeach;?>
+	 		</tbody>
+	 	</table>
+	</div>
+ 	<div id="showXml" style="display: none;">
+ 		<h1 class="center">Detalles de factura <span id="nameXml"></span></h1>
+	 		<div id="fieldsetForm" class="forms">
+	 			
+	 		</div>
+ 		<button id="backXml" type="button" class="btn btn-danger" style="margin-left: 50%;">Regresar</button>
+ 	</div>
+</div>

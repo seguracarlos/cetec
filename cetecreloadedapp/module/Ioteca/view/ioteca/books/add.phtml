@@ -1,0 +1,22 @@
+<h3 class="centerHor"> Agregar Libro </h3>
+	
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a title="Libros" href="<?php echo $this->baseUrl('/Ioteca/books/index')?>">
+					<img title="Libros" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconbook.png')?>" />
+				</a>
+			</li>			
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a>
+					<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+  
+<div id="overflow">
+	<p class="triangle-border" >Ingresa los datos del libro.</p>
+	 <?php echo $this->form; ?>
+</div>

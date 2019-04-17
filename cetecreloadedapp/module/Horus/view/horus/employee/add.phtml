@@ -1,0 +1,333 @@
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Agregar alumno</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Cetec</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Alumnos</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Agregar</a> -->
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<p class="triangle-border text-size-20 font-open-sans">Ingresa los datos del alumno.</p>
+	
+	<div class="content-forms">
+		
+		
+		<?php
+// 		$form = $this->form;
+// 		$form->prepare();
+// 		echo $this->form()->openTag($form);
+// 		echo $this->formElement($form->get('user_id'));
+// 		?>
+<form id="datos" class="form-horizontal" method="post" action="<?php echo $this->basePath()."/horus/employee/add" ?>">
+			
+			<fieldset class="responsive-fieldset fieldset">
+				<legend class="legend amaranth">
+					<span class="glyphicon glyphicon-tag"></span> Datos Personales
+				</legend>
+			
+
+							<div class="form-group">
+    							<label class="col-sm-4 control-label">Nombre:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="name" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Apellido Paterno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="lastname" required>
+   						    	</div>
+   						    </div>
+   						    
+   						   	<div class="form-group">
+    							<label class="col-sm-4 control-label">Apellido Materno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="surname" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Sexo:</label>
+   								<div class="col-sm-8">
+   								<label class="radio-inline"><input type="radio" name="sexo" id="sexo" value="H" required>Masculino</label>
+   						    	<label class="radio-inline"><input type="radio" name="sexo" id="sexo" value="M">Femenino</label>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label" required>CURP:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" id="curp" name="curp">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Fecha de Nacimiento:</label>
+   								<div class="col-sm-8">
+     							<input type="text" name="fecha" id="fecha" class="form-control">
+								</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-4 control-label">Email:</label>
+   								<div class="col-sm-8">
+   								<input name="email" type="email" class="form-control" required="required">
+   						    	</div>
+   						    </div>
+   						    
+   						     <div class="form-group">
+    							<label class="col-sm-4 control-label">Contrase&ntilde;a:</label>
+   								<div class="col-sm-8">
+   								<input name="password" type="password" class="form-control" required="required">
+   								</div>
+   						    </div>
+   						    
+    					</fieldset>
+  			
+					
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">Direcci&oacute;n</legend>
+				
+							<div class="form-group">
+    							<label class="col-sm-1 control-label">Calle:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="calle" required>
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Ext:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="numExt" required>
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Int:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="numInt">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-1 control-label">Colonia:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="colonia" required>
+   						    	</div>
+   						    	
+   						    	<label class="col-sm-2 control-label">CP:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="cp" required>
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label class="col-sm-3 control-label">Del. o Municipio:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="delegacion" required>
+   						    	</div>
+   						    	
+   						    	<label class="col-sm-2 control-label">Ciudad:</label>
+   								<div class="col-sm-4">
+     							<input type="text" class="form-control" name="ciudad" required>
+   						    	</div>
+   						    </div>
+   						    
+   						      <div class="form-group">
+    							<label class="col-sm-4 control-label">Pais:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="pais" required>
+   						    	</div>
+   						    	
+   						    </div>
+   					
+				</fieldset>
+		
+				
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Datos de Facturaci&oacute;n(Opcionales)</legend>
+							
+								
+							<div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Nombre(s) o Raz&oacute;n social:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="nombreFact">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Apellido Paterno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="apellidopFact">
+   						    	</div>
+   						    </div>
+   						    
+   						   	<div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Apellido Materno:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="apellidomFact">
+   						    	</div>
+   						    </div>
+   						    
+   						       <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">RFC:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" id="rfcFact" name="rfcFact">
+   						    	</div>
+   						    </div>
+   						    <hr>
+   						    <label>Domicilio Fiscal</label>
+   						    <hr>
+   						    
+							<div class="form-group">
+    							<label for="inputEmail3" class="col-sm-1 control-label">Calle:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="calleFact">
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Ext:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="numExtFact">
+   						    	</div>
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Num Int:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control" name="numIntFact">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-1 control-label">Colonia:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="coloniaFact">
+   						    	</div>
+   						    	
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">CP:</label>
+   								<div class="col-sm-2">
+     							<input type="text" class="form-control numericInput" name="cpFact">
+   						    	</div>
+   						    </div>
+   						    
+   						    <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-3 control-label">Del. o Municipio:</label>
+   								<div class="col-sm-3">
+     							<input type="text" class="form-control" name="delegacionFact">
+   						    	</div>
+   						    	
+   						    	<label for="inputEmail3" class="col-sm-2 control-label">Ciudad:</label>
+   								<div class="col-sm-4">
+     							<input type="text" class="form-control" name="ciudadFact">
+   						    	</div>
+   						    </div>
+   						    
+   						      <div class="form-group">
+    							<label for="inputEmail3" class="col-sm-4 control-label">Pais:</label>
+   								<div class="col-sm-8">
+     							<input type="text" class="form-control" name="paisFact">
+   						    	</div>
+   						    	
+   						    </div>
+						</fieldset>
+			</div>
+			<div class="col-md-6">
+					<input type="submit" id="send" class="btn btn-success btn-lg btn-block " value="Guardar"/>
+					
+				</div>
+				<div class="col-md-6">
+					<a href="<?php echo $this->basePath()."/horus/employee/index";?>" class="btn btn-danger btn-lg btn-block">Cancelar</a>
+				</div>
+		</div>
+			
+		</div>
+			</div>
+	</div>
+	
+</div>
+
+			</form>	
+<script>
+	var $basePath  = "<?php echo $this->basePath(); ?>";
+	var $nameView  = "add_employee";
+	var $role_user = 0;
+
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+
+		$.datepicker.regional['es'] =
+		{
+			closeText: 'Cerrar',
+			prevText: 'Previo',
+			nextText: 'Pr�ximo',
+			   
+			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+			  'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+			monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+			  'Jul','Ago','Sep','Oct','Nov','Dic'],
+			monthStatus: 'Ver otro mes', yearStatus: 'Ver otro a�o',
+			dayNames: ['Domingo','Lunes','Martes','Mi�rcoles','Jueves','Viernes','S�bado'],
+			dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','S�b'],
+			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+			dateFormat: 'dd-mm-yy', firstDay: 0,
+			initStatus: 'Selecciona la fecha', isRTL: false
+		};
+
+		$.datepicker.setDefaults($.datepicker.regional['es']);
+
+		
+		
+		$( "#fecha" ).datepicker({
+		      changeMonth: true,
+		      changeYear: true,
+		      yearRange: '1970:2005',
+		        minDate: new Date('1979/01/01'),
+		        maxDate: '+30Y',
+		});
+
+		    $(".numericInput").keypress(function (e) {
+		        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){ 
+		           return false;
+		        }
+		    });
+		});
+
+	$(document).on("click","#send",function(e) {
+		var rfc = $("#rfcFact").val();
+		var curp = $("#curp").val();
+		var regexrfc = /^[A-Z]{4}\d{6}[a-zA-Z0-9]{3}$/;
+		var regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" +
+						"(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" +
+						"[HM]{1}" +
+						"(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" +
+						"[B-DF-HJ-NP-TV-Z]{3}" +
+					 	"[0-9A-Z]{1}[0-9]{1}$";
+
+		if(curp != ""){			 	
+			if(!(curp.match(regexCurp))){
+				e.preventDefault();
+			    alertify.alert("El CURP ingresado no es valido");
+				return false;
+			}
+		}
+					 	
+		if(rfc != ""){
+		    if (!(rfc.match(regexrfc))) {
+				e.preventDefault();
+			    alertify.alert("El RFC ingresado no es valido");
+			    return false;
+		    }
+		}
+	});
+	
+</script>

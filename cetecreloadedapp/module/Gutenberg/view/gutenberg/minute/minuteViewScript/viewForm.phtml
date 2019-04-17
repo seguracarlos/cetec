@@ -1,0 +1,73 @@
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+<fieldset>
+		<legend>Datos del Minute</legend>
+    <table>
+    		<tbody>
+    			<tr>
+    				<td><?=$this->element->getElement('componente_id'); ?></td>
+    			</tr>
+    			<tr>
+	                <td>*Objetivo: </td>
+					<td>*Fecha: </td>
+					<td>*Duraci&oacute;n: </td>
+	            </tr>
+	    		<tr>
+	    		    <td><?=$this->element->getElement('objective'); ?></td>
+	    		    <td><?=$this->element->getElement('time'); ?></td>
+	    		    <td><?=$this->element->getElement('hora'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>*Convoc&oacute;: </td>
+					<td>*Cronometraje: </td>
+					<td>*Telefono: </td>
+	            </tr>
+	    		<tr>
+	    		    <td><?=$this->element->getElement('convened'); ?></td>
+	    		    <td><?=$this->element->getElement('timekeeper'); ?></td>
+	    		    <td><?=$this->element->getElement('phone'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Asistentes: </td>
+					<td>*Ubicaci&oacute;n: </td>
+					<td>*Tipo de Junta: </td>
+	            </tr>
+	    		<tr>
+	    		    <td><?=$this->element->getElement('attendees'); ?></td>
+	    		    <td><?=$this->element->getElement('location'); ?></td>
+	    		    <td><?=$this->element->getElement('meetingType'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>*Moderador: </td>
+					<td>Anotaciones: </td>
+					<td>Articulos de Agenda: </td>
+	            </tr>
+	    		<tr>
+	    		    <td><?=$this->element->getElement('moderator'); ?></td>
+	    		    <td><?=$this->element->getElement('annotations'); ?></td>
+	    		    <td><?=$this->element->getElement('agendaItems'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Nuevos Temas Acordados: </td>
+					<td>Otras Notas: </td>
+					<td>Leer: </td>
+	            </tr>
+	    		<tr>
+	    		    <td><?=$this->element->getElement('newActionItem'); ?></td>
+	    		    <td><?=$this->element->getElement('otherNotes'); ?></td>
+	    		    <td><?=$this->element->getElement('read'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Traer: </td>
+	            </tr>
+	    		<tr>
+	    		    <td><?=$this->element->getElement('bring'); ?></td>
+	            </tr>  		
+	       </tbody>		
+    </table>
+</fieldset>
+<dir class="center">
+	<?=$this->element->getElement('Guardar'); ?>
+    <a href="javascript:location.href='<?=$this->baseUrl("/Gutenberg/minute/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+</dir>
+</div>

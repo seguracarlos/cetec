@@ -1,0 +1,201 @@
+<!--<script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>-->
+<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+<script src="<?php echo $this->basePath() . '/public/horus-security/js/CryptoJS/sha3.js'; ?>"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="<?php echo $this->basePath() . '/public/horus-security/js/lg-iof/lg-iof.js'; ?>"></script>
+<?php
+	$flash = $this->flashMessenger()
+	        ->setMessageOpenFormat('<div%s>')
+	        ->setMessageSeparatorString('')
+	        ->setMessageCloseString('</div>');
+?>
+
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) :
+?>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+	
+	<?php
+    foreach ($flashMessage as $msg) :
+    	foreach ($msg as $type => $message) :
+    ?>
+        <div class="alert alert-danger" role="alert">
+        	<p class="<?php echo 'text-center animated flash '.$type; ?>">
+        		<strong><?php echo $message; ?></strong>
+        	</p>
+        </div>
+    	<?php endforeach; ?>
+    <?php endforeach; ?>
+	</div>
+</div>
+<?php endif; ?>
+
+<div class="row loginForm">
+
+	<div class="col-md-6 col-md-offset-3">
+			
+		<?php echo $flash->render('add_correcto',array('alert', 'alert-success', 'text-center'));?>
+		
+   		<div class="panel panel-default">
+
+			<div class="panel-heading">
+				<center><h3 class="panel-title nunito animated flip">Por favor, inicia sesi&oacute;n</h3></center>
+			</div>
+
+			<div class="panel-body">
+
+				<!--<h1 class="h1-tittle">::Enlasa::</h1>-->
+				<img id="profile-img" class="profile-img-panel img-circle center-block animated pulse" src="<?php echo $this->basePath()."/public/horus-security/img/logotipo_sm2.png"; ?>" />
+
+				<p id="profile-name" class="profile-name-panel"></p>
+
+				<center>
+					<span id="span-info-auth" class="poiret-one">Ingresa tu usuario y contrase&ntilde;a para acceder al panel.</span>
+				</center>
+
+				<?php
+	            $form = $this->loginForm;
+	            $form->prepare();
+	            echo $this->form()->openTag($form);
+	            ?>
+                	<fieldset>
+
+                		<span id="reauth-email" class="reauth-email"></span>
+
+						
+						<?php echo $this->formElement($form->get('try')->setValue( $this->try)); ?>
+
+                		<div style="margin-top: 25px;" id="inputEmail" class="input-group">
+                  			<span class="input-group-addon">
+                  			<i class="glyphicon glyphicon-user"></i></span>
+                        	<!--<?php echo $this->formlabel($form->get('email'));?>-->
+			    		    <?php echo $this->formElement($form->get('email')); ?>
+                 		</div>
+                 		<span class="common-error-msg"><?php echo $this->formElementErrors($form->get('email'));?></span>
+
+                		<div style="margin-top: 25px;" class="input-group">
+                  			<span class="input-group-addon">
+                  			<i class="glyphicon glyphicon-lock"></i></span>
+                        	<?php echo $this->formElement($form->get('password')); ?>
+                 		</div>
+                 		<span class="common-error-msg"><?php echo $this->formElementErrors($form->get('password'));?>
+						</span>
+			    		<hr/>
+			    		<div id="div-recaptcha" class="row hidden">
+			    			<div style="margin-bottom:15px;" class="col-md-12">
+			    				<div class="g-recaptcha" data-sitekey="6Lfo1Q4TAAAAAHGI7NPGsqRCam3xle_vlnkc_Doj" data-theme="dark"></div>
+			    			</div>
+			    		</div>
+
+			    		<?php
+	                    echo $this->formRow($form->get('loginCsrf'));
+	                    echo $this->formElement($form->get('btn_login'));
+                    	?>
+						
+						<div class="clearfix">
+						<a class="pull-right btn btn-link" style="margin-top:15px; padding-right:0px;" href="<?php echo $this->basePath().'/registrationusers'; ?>">
+						<span class="glyphicon glyphicon-link"></span> Crear cuenta
+						</a>
+						<a href="#" id="openModal" class="pull-left btn btn-link" style="margin-top:15px; padding-right:5px;">
+							<span class="glyphicon glyphicon-tag"></span> Olvidaste tu contrase&ntilde;a?
+						</a>			
+						</div>
+						
+                    	<div style="margin-top:15px;" class="acount-new text-center hide">
+                    		<a href="#" class="btn btn-link">Iniciar sesi&oacute;n con una cuenta nueva</a>
+                    	</div>
+
+			    	</fieldset>
+				<?php echo $this->form()->closeTag($form); ?>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<!-- Recuperar Contraseña -->
+  <div class="modal fade" id="mail" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background: #1f224d; color: #fff; border-radius: 6px 6px 0px 0px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Recuperar Contrase&ntilde;a</h4>
+        </div>
+        <div class="modal-body">
+        <div class="row">
+        <center>
+        <label>Ingresa el correo electronico con el que te registraste</label>
+ 
+       
+   		<input name="email" type="email" id="correo" class="form-control" style="width:60%;" required>
+   		<span id="msg"></span>
+   		</center>
+   		</div>
+   		<p></p>
+   		
+      
+        </div>
+        <div class="modal-footer" style="background: #1f224d; color: #fff; border-radius: 6px 6px 0px 0px;">
+          <button id="requestPass" class="btn btn-success">Enviar</button>
+          <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var $basePath = "<?php echo $this->basePath(); ?>";
+	
+$(document).ready(function(){
+
+
+		$("#openModal").click(function(e) {
+			e.preventDefault();
+			$("#mail").modal('show');	
+		});
+
+	  $(document).on("click","#requestPass",function(e) {
+		  var $email = $("#correo").val();
+		  
+		  if($email!=""){
+			  $("#load").fadeIn();
+			  $.ajax({
+					type: 'POST',
+					url: $basePath + '/recoverypass/recovery/validatemail',
+					data: { 'email' : $email},
+					dataType: 'json',
+					success: function(response){
+		
+					if(response.response=="unknow"){
+						$('#msg').empty();
+						$('#msg').append('Este correo no se encuentra asociado a ninguna cuenta').fadeIn("slow");
+						setTimeout("$('#msg').hide();", 4000);
+					}else if(response.response=="send"){
+						$('#msg').empty();
+// 						$('#msg').append('Te hemos enviado un link para la recuperacion de tu contraseña, verifica tu correo').fadeIn("slow");
+// 						setTimeout("$('#msg').hide();", 4000);
+						alertify.alert('Te hemos enviado un link para la recuperacion de tu contrase\u00f1a, verifica tu correo');
+						$("#mail").modal('hide');
+					}
+					$("#btn_login").prop('disabled', false);
+					},
+					error: function(){
+					 console.log(response.data); 
+					}
+				});
+		  
+			}else{
+				$('#msg').empty();
+				$('#msg').append('Ingrese una direccion de correo valida').fadeIn("slow");
+				setTimeout("$('#msg').hide();", 4000);
+			}
+		});
+			  
+});
+
+</script>

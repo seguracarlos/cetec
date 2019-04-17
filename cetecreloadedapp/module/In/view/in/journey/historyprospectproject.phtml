@@ -1,0 +1,75 @@
+<?php 
+      $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupTeam.css'))
+                       ->appendStylesheet($this->baseUrl('/public/css/popupCustomerDetails.css'));
+      $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getTeam.js'))
+	                     ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js')); 
+?>
+<?php 
+$texthelp = "Este Historial reflejara a los proyectos que antes fueron prospectos "
+?>
+<?php
+$service = new ProjectsServiceImpl();
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#prospectProjectsHistory', 3);
+});
+</script>
+<h3 class="centerIn">Historial de Prospectos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity"><a href="<?php echo $this->baseUrl('/In/projects/index')?>">
+				<img title="Proyectos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icongear.png')?>"/></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+					<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+<div id="overflow">
+<table id="prospectProjectsHistory" class="display">
+	<thead>
+		<tr>
+			<th>Proyecto</th>
+			<th>Descripci&oacute;n</th>
+			<th>Status</th>
+			<th>Tiempo Trato</th>
+			
+			
+		</tr>
+	</thead>
+	<tbody> 
+	<?php if($this->prospectProjectsHistory): ?>
+        <?php foreach ($this->prospectProjectsHistory as $prospect) : ?>
+        <tr>
+	        <td class="alpha"><?php echo $prospect->getName_project();?></td>
+	      	<td class="alpha"><?php	echo $prospect->getDescription();?></td>
+			<td class="alpha"><?php echo $prospect->getStatus();?></td>
+			<td class="alpha"><?php echo $prospect->getTreatmenttime()." ". "dias";?>
+        </tr>
+        <?php endforeach; endif;?>
+        </tbody>
+	</table>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDetails" class="popHorus">
+			<div id="btnClose" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<div id="content">
+			<div id="data">
+				<div id="layer">
+					<div class="center">
+						<img id="load" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundDetails"></div>
+<!-- 
+    termina popup
+-->

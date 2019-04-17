@@ -1,0 +1,176 @@
+<?php 
+		$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupCustomerDetails.css')) 
+									->appendStylesheet($this->baseUrl('/public/css/popupMaps.css'));
+	  $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js'))
+									->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getMaps.js')); 
+
+	  $helpUser = $this->helps->customerDetalleview;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#customerDetail', 10);	
+});
+</script>
+
+<h3 class="centerIn">Direcci&oacute;n del Cliente</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/customers/index');?>">
+					<img title="Clientes" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icongroup.png')?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index')?>">
+					<img title="Ver contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/customers/historycustomer')?>">
+					<img title="Historial" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="customerDetail" class="display">
+	<thead>
+		<tr>
+			<th>Raz&oacute;n Social</th>
+			<th>RFC</th>
+			<th>Calle</th>
+			<th># Exterior</th>
+			<th># Interior</th>
+			<th>Colonia</th>									
+			<th>Delegaci&oacute;n</th>
+			<th>C&oacute;digo postal</th>			
+			<th>Estado</th>
+			<th>Estatus</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody> 
+        <?php foreach ($this->datacompany as $clientes) : ?>
+            <tr>
+				<td class="alpha">
+                    <?php echo $clientes['name_company'] ? $clientes['name_company'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['rfc'] ? $clientes['rfc'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['street'] ? $clientes['street'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $clientes['number'] ? $clientes['number'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $clientes['interior'] ? $clientes['interior'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['colony'] ? $clientes['colony'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['name'] ? $clientes['name'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $clientes['postalcode'] ? $clientes['postalcode'] : Profile::PENDIENTE; ?>
+                </td>                                                                                
+				<td class="alpha">
+                    <?php echo $clientes['state'] ? $clientes['state'] : Profile::PENDIENTE; ?>
+                </td>
+                <td class="alpha">
+                    <?php echo 'Activo'; ?>
+                </td>
+				<td>
+					<?php if ( isset($clientes['state_id']) && isset($clientes['district']) && $clientes['state_id'] != 0 && $clientes['district'] != 0  ):?>
+				<a href="<?php echo $this->baseUrl('/In/customers/updateview/id/'.$clientes['id_company'].'/state/'.$clientes['state_id'].'/district/'.$clientes['district'])?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>"
+						title="Editar detalles" alt="Editar detalles">
+				</a> 
+					<?php else:?>
+				<a href="<?php echo $this->baseUrl('/In/customers/updateview/id/'.$clientes['id_company'])?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>"
+						title="Editar detalles" alt="Editar detalles">
+				</a> 
+					<?php endif;?>
+
+					 <a class="viewContact" onclick="viewContact('<?php echo ($clientes['id_company'])?>')"> <img class="iconOpacity"
+						src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" title="Datos de contacto"
+						alt="Datos de contacto">
+					</a>
+
+				<?php if ($clientes['url_map']): ?>
+				 <a class="viewMaps" onclick="viewMaps('<?php echo ($clientes['id_company'])?>', '<?php echo $clientes['url_map']; ?>')"> <img class="iconOpacity"
+						src="<?php echo $this->baseUrl('/public/img/maps.png')?>" title="Ver mapa"
+						alt="Ver mapa">
+				</a>
+				<?php else:?>
+					<a class="disabled">
+				 		<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/maps.png')?>" title="No existe mapa relacionado" alt="No existe mapa relacionado" >
+				 	</a>
+				<?php endif;?>
+				</td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+</table>
+</div>
+
+<div class='center'>
+<a id="subPay" href='javascript:history.back();'>Regresar</a>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDetails" class="popHorus">
+			<div id="btnClose" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<div id="content">
+			<div id="data">
+				<div id="layer">
+					<div class="center">
+						<img id="load" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundDetails"></div>
+<!-- 
+    termina popup
+-->
+	
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupMaps" class="popHorus"> 
+			<div id="btnXPopup" title="Cerrar ventana">X</div>
+		<h1 id="title_maps"></h1>
+		<div id="content_maps">
+			<div id="data_maps">
+				<div id="layer_maps">
+					<div class="center_maps">
+						<img id="load_maps" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div_maps">
+						<iframe id="iframe" src="#" width="700px;" height="450px;"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundMaps"></div>
+<!-- 
+    termina popup
+-->	
+
+	

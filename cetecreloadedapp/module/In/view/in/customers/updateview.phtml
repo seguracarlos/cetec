@@ -1,0 +1,33 @@
+<h3 style="text-align: center;" class="centerIn">Actualizar datos del Cliente</h3>
+<?php
+$helpUser = $this->helps->customerUpdate; 
+?>
+
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/customers/index');?>">
+					<img title="Clientes" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icongroup.png')?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/customers/detalleview')?>">
+					<img title="Consultar direcciones de los Clientes" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconinventory.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+
+				<a href="<?php echo $this->baseUrl('/Horus/contact/add')?>">
+					<img title="Agregar contacto" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div class="center">
+</div>
+<?php echo $this->form; ?>

@@ -1,0 +1,32 @@
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/documentsStyle.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/documentsFunctions.js')); 
+?>
+<script>
+
+var idDocument = "<?php echo $_GET['id']; ?>";
+
+	$(document).ready(function(){
+		var idDocument = $('#id_document').val();
+		
+			if(idDocument != null){
+			    editDocument(idDocument);	
+			}else{
+				location.href = "/documents/index";
+			}
+	});
+</script>
+<h3 class="centerIn">Modificar Documento</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/index') ?>"><img title="Documentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondocgear.png');?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')">
+				<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<?php echo $this->formulario; ?>

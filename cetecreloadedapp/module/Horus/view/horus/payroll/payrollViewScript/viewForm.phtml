@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		addKey(); 
+	}); 
+</script>
+<span style="display: none;"><?=$this->element->getElement('dateBonus'); ?></span>
+<div id="dialog-form" title="Agregar pago">
+<fieldset>
+	<table>
+		<tbody>
+		<!--	<tr>
+				<td>*Monto:</td>
+				<td><?=$this->element->getElement('amount'); ?></td>
+			</tr>		-->	
+			
+			<tr>
+				<td><div class="center">*Claves disponibles:</div></td>
+				<td></td>
+				<td><div class="center">Claves asignadas:</div></td>
+			</tr>
+			<tr>
+				<td><div class="center"><?=$this->element->getElement('availableKey'); ?></div></td>
+				<td><div class="center"><?=$this->element->getElement('toKey'); ?> <br /> <br /> <?=$this->element->getElement('toavailableKey'); ?></div></td>
+				<td><div class="center"><?=$this->element->getElement('key'); ?></div></td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<tbody> 
+			<tr>
+				<td>Descripci&oacute;n</td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('description'); ?></td>
+			</tr>
+			<tr></tr>
+		</tbody>
+	</table>
+</fieldset>
+	<div class="center">
+		<?=$this->element->getElement('guardarBonus');?>
+		<?=$this->element->getElement('cancelar'); ?>
+	</div>
+</div>

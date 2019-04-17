@@ -1,0 +1,61 @@
+<?php 
+$this->headLink()->appendStylesheet($this->baseUrl('/public/css/invoicesStyle.css'));
+$util = new StaticTools();
+?>
+<h3 class="centerSis">Detalle de Factura</h3>
+<ul class="toolbar">
+		<div id="icons">
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','')">
+					<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+				<div id="clock"></div>
+		</div>	
+</ul>
+
+<div id="fieldsetForm" class="forms">
+	<div id="title" style="margin-bottom: 10px;" class="center">
+		<h1 id="title"><span id="title2"><?php echo $this->customer; ?></span></h1>
+	</div>
+	<div id="DateInv" >Fecha:<span id= "Text"><?php echo $this->dateof; ?></span></div>
+	<div id="Customer" >Cliente: <span id="Text"><?php echo $this->customer; ?></span></div>
+	<div id="Customer" >Direccion : <span id="Text"><?php echo $this->customerDirection; ?></span></div>
+	<div id="Customer" >RFC: <span id="Text"><?php echo $this->rfc; ?></span></div>
+
+	<div id="tablePurchase">
+		<table id="invoicesDetails">
+			<thead>
+				<tr>
+					<th>Cantidad</th>
+					<th>Concepto</th>
+					<th>Precio Unitario</th>
+					<th>Precio Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($this->producto as $product):?>
+					<tr>
+						<td><?php echo $product['quantity']; ?></td>
+						<td><?php echo $product['name']; ?></td>
+						<td><?php echo $util->currency($product['price']); ?></td>
+						<td><?php echo $util->currency($product['remaining_quantity']); ?></td>
+					</tr>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+	</div>
+<div>
+	<div id="DateInv" >Subtoital:<span id="Text"><?php echo $util->currency($this->subtotal); ?></span></div>
+	<div id="DateInv">IVA:<span id="Text"><?php echo $util->currency($this->tax); ?></span></div>
+	<div id="DateInv">Total:<span id="Text"><?php echo $util->currency($this->total); ?></span></div>
+<div>
+     <div id="ImpNumer">Importe con Letra:<span id="Text"><?php echo NumberToLetterTool::num2letras($this->total); ?></span></div>
+</div>
+	
+</div>	
+</div>
+
+
+<div class='center'>
+	<a href="#" class="arriba" id="subPay">Ir arriba</a>
+	<a id="subPay" href='javascript:history.back();'>Regresar</a>
+</div>

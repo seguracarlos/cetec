@@ -1,0 +1,161 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupCustomerDetails.css')) 
+->appendStylesheet($this->baseUrl('/public/css/popupMaps.css'));
+	   $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js'))
+->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getMaps.js')); 
+	   $helpUser = $this->helps->crmDetalle;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#prospectsDetail', 10);
+	
+});
+</script>
+
+<h3 class="centerIn">Direcci&oacute;n del Prospecto</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/crm/index')?>">
+					<img title="Prospectos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconbulb.png');?>"/>
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a>
+					<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<div id="overflow">
+<table id="prospectsDetail" class="display">
+	<thead>
+		<tr>
+			<th>Raz&oacute;n Social</th>
+			<th>Marca</th>
+			<th>RFC</th>
+			<th>Calle</th>
+			<th># Exterior</th>
+			<th># Interior</th>
+			<th>Colonia</th>									
+			<th>Delegaci&oacute;n</th>
+			<th>C&oacute;digo Postal</th>			
+			<th>Estado</th>
+			<th>Estatus</th>
+			<th ></th>
+		</tr>
+	</thead>
+	<tbody> 
+        <?php foreach ($this->dataProspects as $prospectos) : ?>
+            <tr>
+				<td class="alpha">
+                    <?php echo $prospectos['name_company'] ? $prospectos['name_company'] : Profile::PENDIENTE; ?>
+                </td>
+                <td class="alpha">
+                    <?php echo $prospectos['brand'] ? $prospectos['brand'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $prospectos['rfc'] ? $prospectos['rfc'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $prospectos['street'] ? $prospectos['street'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $prospectos['number'] ? $prospectos['number'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $prospectos['interior'] ? $prospectos['interior'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $prospectos['colony'] ? $prospectos['colony'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $prospectos['name'] ? $prospectos['name'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $prospectos['postalcode'] ? $prospectos['postalcode'] : Profile::PENDIENTE; ?>
+                </td>                                                                                
+				<td class="alpha">
+                    <?php echo $prospectos['state'] ? $prospectos['state'] : Profile::PENDIENTE; ?>
+                </td>
+                <td class="alpha">
+                    <?php echo 'Activo'; ?>
+                </td>
+				<td>
+						<?php if ( isset($prospectos['state_id']) && isset($prospectos['district']) && $prospectos['state_id'] != 0 && $prospectos['district'] != 0  ):?>
+					<a href="<?php echo $this->baseUrl('/In/crm/update/id/'.$prospectos['id_company'].'/state/'.$prospectos['state_id'].'/district/'.$prospectos['district'])?>">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>"
+							title="Editar detalles" alt="Editar detalles">
+					</a> 
+						<?php else:?>
+					<a href="<?php echo $this->baseUrl('/In/crm/update/id/'.$prospectos['id_company'])?>">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>"
+							title="Editar Proveedor" alt="Editar Proveedor">
+					</a> 
+						<?php endif;?>
+
+					<a class="viewContact" onclick="viewContact('<?php echo ($prospectos['id_company'])?>')"> <img class="iconOpacity"
+						src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" title="Datos de contacto"
+						alt="Datos de contacto">
+					</a>
+				 	<a class="viewMaps" onclick="viewMaps('<?php echo ($prospectos['id_company'])?>', '<?php echo $prospectos['url_map']; ?>')"> <img class="iconOpacity"
+						src="<?php echo $this->baseUrl('/public/img/maps.png')?>" title="Ver mapa"
+						alt="Ver mapa">
+					</a>
+			</td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+</table>
+</div>
+<div class="center">
+	<a href="javascript:history.back();" id="subPay">Regresar</a>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDetails" class="popHorus">
+			<div id="btnClose" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<div id="content">
+			<div id="data">
+				<div id="layer">
+					<div class="center">
+						<img id="load" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundDetails"></div>
+<!-- 
+    termina popup
+-->
+	
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupMaps" class="popHorus">
+			<div id="btnXPopup" title="Cerrar ventana">X</div>
+		<h1 id="title_maps"></h1>
+		<div id="content_maps">
+			<div id="data_maps">
+				<div id="layer_maps">
+					<div class="center_maps">
+						<img id="load_maps" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div_maps">
+						<iframe id="iframe" src="#" width="700px;" height="450px;"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundMaps"></div>
+<!-- 
+    termina popup
+-->	

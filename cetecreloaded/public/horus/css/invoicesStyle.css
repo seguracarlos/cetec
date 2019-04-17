@@ -1,0 +1,89 @@
+#tablePurchase{
+	width: 90%;
+	top: 50px;
+	text-align: center;
+	padding-left: 30px;
+	padding-top: 20px;
+	margin: 4%;
+}
+/*tabla invoices */
+#invoicesDetails{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 20px;
+	margin: auto;
+	width: 90%;
+	text-align: center;
+	border-collapse: collapse;
+	border: 1px solid #69c;
+	margin-bottom: 20px;
+}
+
+#invoicesDetails th{
+	font-weight: normal;
+	font-size: 20px;
+	padding-left: 10px;
+	text-align: center;
+	color: #039;
+	border-bottom: 1px dashed #69c;
+}
+#invoicesDetails td{
+	color: #669;
+	border-bottom: 1px dashed #69c;
+}
+#invoicesDetails tbody tr:hover td{
+	color: #339;
+	background: #d0dafd;
+}
+#title{
+font-size: 34px;
+position:relative;
+color: #000;
+font-weight: 400;
+text-shadow: 0px 0px 1px rgba(0,0,0,0.3);
+padding: 20px;text-transform: uppercase;
+text-align: center;
+}
+#title2{
+font-size: 30px;
+color: blue;
+}
+#DateInv{
+margin-left: 77%;
+margin-top:5px;
+font-weight: bold;
+color: black;
+font-size: 15px;
+text-shadow: 0px 0px 1px rgba(0,0,0,0.3);
+border-collapse: collapse;
+border: 1px solid #69c;
+width: 15%;
+
+}
+#Customer{
+margin-left: 11%;
+margin-top:15px;
+font-weight: bold;
+color: black;
+font-size: 15px;
+width: 30%;
+border-collapse: collapse;
+border: 1px solid #69c;
+}
+#Text{
+font-size: 18px;
+color: black;	
+}
+#ImpNumer{
+margin-left: 11%;
+margin-top:-50px;
+font-weight: bold;
+color: black;
+font-size: 15px;
+width: 55%;
+border-collapse: collapse;
+border: 1px solid #69c;
+}
+#Cuadro{
+border-collapse: collapse;
+border: 1px solid #69c;
+}

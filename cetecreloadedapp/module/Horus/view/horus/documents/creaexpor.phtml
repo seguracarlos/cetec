@@ -1,0 +1,115 @@
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/proposalsStyle.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/documentsFunctions.js'));  
+?>
+
+<script type="text/javascript">
+var separator = "<?php echo SeparatorString::SEPARATOR; ?>";
+var separator2 = "<?php echo SeparatorString::SEPARATOR2; ?>";
+var idDoc = "<?php echo $_GET['idDoc']; ?>";
+$(document).ready(function() {
+	$('a.arriba').click(function(){ //Id del elemento cliqueable
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+	});
+	$('.enviarDoc').click(function(){
+		SaveFormDoc();
+	});
+});
+</script>
+<h3 class="centerIn">Documentos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/index?CreAnExp=true') ?>"><img title="Documentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondocgear.png');?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<div id="fieldsetForm" class="forms">
+	<div id="title" style="margin-bottom: 10px;" class="center">
+		<h2 style="font-size: 34px;position:relative;color: #000;font-weight: 400;text-shadow: 0px 0px 1px rgba(0,0,0,0.3);padding: 20px;text-transform: uppercase;text-align: center;">Llena los datos del documento para exportarlo</h2>
+		<br />
+	</div>
+	
+	<div style="margin-left: 20px;">
+		<div id="descDoc" style="font-size: 15px; font-weight: bold;"> Descripcion Documento: <span id="contDesc" style=" font-size: 15px; font-weight: normal;"><?php echo $this->document['description']; ?></span></div>
+	</div>
+	<br/>
+	<br/>
+	<div id="contentDoc" style="padding:10px; border: graytext dashed;">
+		<div id="nameDoc" style=" width:60%; font-size: 30px; text-align: center; margin-top: 20px; margin-bottom: 40px; margin-left: 15%;">
+			<span id="nameDocText"><?php echo $this->document['name']; ?></span>
+		</div>
+			<?php 
+				$pos = "";
+				$maxWith = "";
+				$minWith = "";
+				$cont = 0;
+				foreach ($this->field as $field): ?>
+				<?php if($field['type'] == 1){ ?>
+				   <?php if($field['position'] == 1):?>
+						<?php $pos = "35%"; ?>
+				   <?php elseif ($field['position'] == 3):?>
+						<?php $pos = "65%"; ?>
+				   <?php else : ?>
+						<?php $pos = "3%"; ?>
+			       <?php endif; ?>
+					<div <?php echo 'style="width: 300px; margin-left:'.$pos.';"'; ?>>
+						<input id="<?php echo $field['id_field']; ?>" type="text" class="element" placeholder="<?php echo $field['label']; ?>"/>
+						<input type="hidden" class="position" value="<?php echo $field['position'] . "-*-" . $field['id_field']; ?>">
+						<input id="<?php echo "cont-".$cont++; ?>" type="hidden" class="contentField">
+					</div>
+					<br />
+			   <?php }elseif ($field['type'] == 2){ ?>
+			  	   <?php if($field['position'] == 2):?>
+						<?php 
+							$pos = "3%;";
+							$maxWith = "250px";
+							$minWith = "250px"; 
+						?>
+				   <?php elseif ($field['position'] == 3):?>
+						<?php 
+							$pos = "60%";
+							$maxWith = "250px";
+							$minWith = "250px";  
+						?>
+				   <?php else : ?>
+						<?php 
+							$pos = "3%";
+							$maxWith = "800px";
+							$minWith = "800px"; 
+						?>
+			       <?php endif; ?>
+			        <div>
+						<textarea id="<?php echo $field['id_field']; ?>" class="element" style="<?php echo "margin-top:20px; margin-left:$pos; max-width:$maxWith; min-width:$minWith;"?>" placeholder="<?php echo $field['label']; ?>"></textarea>
+						<input type="hidden" class="position" value="<?php echo $field['position'] . "-*-" . $field['id_field']; ?>">
+						<input id="<?php echo "cont-".$cont++; ?>" type="hidden" class="contentField">
+					</div>
+					<br />
+				<?php } ?>
+			<?php endforeach; ?>
+	</div>
+	<input type="hidden" id="contentReal">
+	<div class="center" style="margin-top: 40px;">
+		<script>
+			var idDoc = "<?php echo $_GET['idDoc']; ?>";
+			var v = "<?php echo (isset($_GET['v']))? $_GET['v'] : ""; ?>";
+
+			function backList(){
+				if(v == "show"){
+					location.href = BASE_URL + '/Horus/documents/versions?idDoc=' + idDoc ;
+				}else{
+					location.href = BASE_URL + '/Horus/documents/index?CreAnExp=true';
+				}
+			}
+		</script>
+		<button class="enviarDoc" id="subPay" >Enviar</button>
+		<button id="subPay" onclick="javascript:backList();">Regresar</button>
+	</div>
+</div>

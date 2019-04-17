@@ -1,0 +1,150 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Detalle empleado</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Horus</a>
+			        <a href="#" class="btn btn-default">Empleados</a>
+			        <a href="#" class="btn btn-default">Detalle</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">
+				<span class="glyphicon glyphicon-tag"></span>
+				<?php echo $user[0]["name"]." ".$user[0]["surname"]." ".$user[0]["lastname"]; ?>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-3 col-lg-3">
+				<center>
+					<img height="200" width="200" alt="Foto usuario" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle">
+				</center>
+			</div>
+			<div class="col-md-9 col-lg-9">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Informaci&oacute;n general</legend>
+							<div class="table-responsive">
+								<table class="table amaranth text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>N&uacute;mero de Empleado:</td>
+			                       			<td>N&uacute;mero de Empleado</td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Nombre:</td>
+			                       			<td><?php echo $user[0]["name"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Apellido Paterno:</td>
+			                       			<td><?php echo $user[0]["surname"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Apellido Materno:</td>
+			                       			<td><?php echo $user[0]["lastname"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+					                    	<td>Correo:</td>
+					                    	<td><?php echo $user[0]["email"]; ?></td>
+					                    </tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Detalles</legend>
+							<div class="table-responsive">
+								<table class="table amaranth text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>Usuario:</td>
+			                       			<td>Usuario</td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Fecha de Ingreso:</td>
+			                       			<td>Fecha de Ingreso</td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Tel&eacute;fono:</td>
+			                       			<td><?php echo $user[0]["phone"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>M&oacute;vil:</td>
+			                       			<td>M&oacute;vil</td>
+			                      		</tr>
+			                      		<tr>
+					                    	<td>Cumplea&ntilde;os</td>
+					                    	<td>Cumplea&ntilde;os</td>
+					                    </tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">Direcci&oacute;n</legend>
+					<div class="table-responsive">
+						<table class="table amaranth text-size-15">
+							<tbody>
+								<tr>
+	                        		<td>Estado:</td>
+	                       			<td>Estado</td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Delegaci&oacute;n o Municipio:</td>
+	                       			<td>Delegaci&oacute;n o Municipio</td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Colonia:</td>
+	                       			<td>Colonia</td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Interio:</td>
+	                       			<td>N&uacute;mero Interior</td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>N&uacute;mero Exterior:</td>
+	                       			<td>N&uacute;mero Exterior</td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>C&oacute;digo Postal:</td>
+	                       			<td>C&oacute;digo Postal</td>
+	                      		</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="clearfix">
+				<a class="btn btn-default pull-right" href="<?php echo $this->basePath("/horus/employee/index")?>">
+					<span class="glyphicon glyphicon-repeat"></span>
+					Regresar
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

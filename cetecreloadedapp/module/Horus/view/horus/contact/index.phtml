@@ -1,0 +1,69 @@
+<?php $helpUser = $this->helps->contactIndex; ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#contacts', 8);
+	
+});
+</script>
+
+<h3 class="centerHor">Agenda</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/add') ?>">
+					<img title="Agregar nuevo contacto" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>">
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="contacts" class="display">
+	<thead>
+		<tr>
+			<th>Raz&oacute;n social</th>
+			<th>Tipo</th>
+			<th>Nombre</th>
+			<th>A. Paterno</th>
+			<th>A. Materno</th>
+			<th>E-mail</th>
+			<th>Cargo</th>
+			<th>Tel. Local</th>
+			<th>
+				<a href="<?php echo $this->baseUrl('/Horus/contact/add') ?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>"
+						title="Agregar nuevo contacto">
+				</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	  <?php if ($this->contacts):?>
+	    <?php foreach ($this->contacts as $contacts) : ?>
+	        <tr>
+	        	<td><?php echo $contacts['name_company']; ?></td>
+	        	<td><?php echo ($contacts['cust_type'] == 1)? "Proveedor" : "Cliente"; ?></td>
+	        	<td><a href="<?php echo $this->baseUrl('/Horus/contact/details?c='.$contacts['privateKey']); ?>"><?php echo $contacts['real_name']; ?></a></td>
+	        	<td><?php echo $contacts['surname']; ?></td>
+	        	<td><?php echo $contacts['lastname']; ?></td>
+	        	<td class="alpha"><a href="mailto:<?=$contacts['mail'];?>?Subject=Contacto"><?= $contacts['mail'];?></a></td> 
+	        	<td><?php echo $contacts['name_job']; ?></td>
+	        	<td><?php echo $contacts['local_phone']; ?></td>
+				<td>
+						<a href="<?php echo $this->baseUrl('/Horus/contact/update?c='.$contacts['privateKey'])?>"> 
+									<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+						</a>	
+						 <a onclick="javascript:deleteRecord('contacts',this,'<?php echo $contacts['id']; ?>','/Horus/contact/delete')"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+						 </a>
+				</td>
+			</tr> 
+	    <?php endforeach; endif;?> 
+    </tbody>
+</table>
+</div>

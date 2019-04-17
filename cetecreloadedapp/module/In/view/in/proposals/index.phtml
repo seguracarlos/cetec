@@ -1,0 +1,331 @@
+<?php
+ $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPriceProduct.js'));
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+?>
+<?php 
+	$helpUser = $this->helps->proposalsIndex;
+?>
+<script type="text/javascript">
+var oTableO;
+$(document).ready(function() {
+	jqueryTable('#purchaseTable', 7);
+	$('#purchaseTable').show();
+	oTableO= jqueryTablePopup('#OrderTablePay', 4);
+});
+
+function changeProspectToProject(table ,tr , projectId) {
+	var accept =  confirm("¿Desea cambiar esta cotizaci\u00f3n a una venta?");
+	var oTable = jQuery($("#"+table)).dataTable();
+	if(accept){
+		confirm("Esta seguro ? Esta es su última oportunidad.");
+		$.post(BASE_URL + '/In/proposals/changestoproject' ,{projectId: projectId},function(response){
+		})
+		.success(function(response) {
+		})
+		.complete(function() {
+			var selected = jQuery(tr).parent().parent()[0];
+			oTable.fnDeleteRow( selected );
+		});
+	}else{
+		alert("Cancelo la autorizaci\u00f3n");
+	}
+}
+
+</script>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupTeam2" class="popHorus">
+	<h1 id="titleMail"></h1>
+	<h4></h4>
+		<div class="center">
+			<img style="width:150px;
+     					height:150px;
+     					position:absolute;
+     					left:70%;
+    					top:50%;
+     					margin:-75px 0 0 -135px;" id="load" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+		</div>
+		<div id="message"></div>
+	</div>
+	<div id="backgroundTeam2"></div>
+<!-- 
+    termina popup
+-->
+
+<h3 class="centerIn">Cotizaci&oacute;n de Productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+				<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEHiSTORY]):?>
+					<li class="iconOpacity"><a href="<?php echo $this->baseUrl('/In/proposals/history') ?>">
+						<img title="Ver cotizaciones" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png')?>"/></a>
+					</li>
+				<?php  endif; ?>
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n', '<?php echo $helpUser ?>')">
+						<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+				<div id="clock"></div>
+	</div>	
+</ul>
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+	
+<?php if(isset($_GET['er'])): ?>
+
+	<?php if($_GET['er'] == 'notK'):?>
+		<script type="text/javascript">
+			messajes('Falta Id de la orden intentalo otra vez. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'savOr'):?>
+		<script type="text/javascript">
+			messajes('Error al guardar la orden, intentalo de nuevo. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'savPu'):?>
+		<script type="text/javascript">
+			messajes('Error al guardar la compra, intentalo de nuevo. :(', "error");
+		</script>
+	<?php elseif($_GET['er'] == 'MisIdProd'):?>
+		<script type="text/javascript">
+			messajes('Error, la orden solicitada no existe. :(', "error");
+		</script>
+	<?php endif;?>
+	
+<?php endif;?>
+
+
+<div id="overflow">
+	
+	<table id="purchaseTable" class="display">
+		<thead>
+			<tr>
+				<th>N&deg;</th>
+				<th>Cliente</th>
+				<th>Fecha de entrega</th>
+				<th>Subtotal</th>
+				<th>Iva</th>
+				<th>Total</th>
+				<!--<th>Estatus</th>-->
+				<!--<th>¿Entregado?</th>-->
+				<th>Condiciones</th>
+				<th>
+				<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEADDORDER]) :?>
+					<a href="<?php echo $this->baseUrl("/In/proposals/addorder"); ?>" >
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Cotizaci&oacute;n de Productos" />
+					</a>
+					<?php endif; ?>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php $i = 1;?>
+		<?php if($this->orders != 0) : ?>
+			<?php foreach ($this->orders as $order): ?>
+				<tr><?php // echo $order->getOrder_Id();?>
+					<td><?php echo Application_Util_Tools::format($order->getOrder_Id(), 3); ?></td><!-- orden -->
+					<td>
+					<?php if($order->getCust_Type() == 2) : ?>
+						<a href="<?php echo $this->baseUrl('/In/crm/detalle?id='.$order->getId_company());?>" 
+						   title="Ver detalles">
+						    <?php echo $order->getName_company()?> 
+						</a>
+					<?php else : ?>
+						<a href="<?php echo $this->baseUrl('/In/customers/detalleview?id='.$order->getId_company());?>" 
+						   title="Ver detalles">
+						    <?php echo $order->getName_company()?> 
+						</a>
+					<?php endif; ?>
+					</td>
+					<td><?php echo Application_Util_Tools::dateFrontFormat('-', $order->getStart_date()); ?></td><!-- fecha de fin -->
+					<td><?php echo Application_Util_Tools::currency($order->getSubtotal()); ?></td>
+					<td><?php echo Application_Util_Tools::currency($order->getIva()); ?></td>
+					<td><?php echo Application_Util_Tools::currency($order->getTotal()); ?></td>
+					<!--<td>
+					<?php
+						$statusVisual = "";
+						switch ($order->getStatus()) {
+							case StatusPurchaseOrder::NOT_DELIVERED:
+								$statusVisual = "No entregada";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+								$statusVisual = "Entrega incompleta";								
+								break;
+							case StatusPurchaseOrder::DELIVERED_COMPLETE:
+								$statusVisual = "Entrega OK";								
+								break;							
+							default:								
+								break;
+						}
+						echo $statusVisual;
+					?>
+					
+					
+					</td>-->
+					<!--<td>
+						<?php if($this->id_role != Privilege::PROVEEDOR): 
+						
+						switch ($order->getStatus()) {
+							case StatusPurchaseOrder::NOT_DELIVERED:
+								$icon = "iconaddin.png";
+								$ur = $this->baseUrl('/In/warehouse/order/id').'/'.$order->getOrder_Id();
+								$msj = "No entregada";
+								break;
+							case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+								$icon = "warning.gif";
+								$msj = "Pendiente";
+								$ur = $this->baseUrl('/In/warehouse/order/id').'/'.$order->getOrder_Id();
+								break;
+							case StatusPurchaseOrder::DELIVERED_COMPLETE:
+								$icon = "ok.png";
+								$ur = '#';
+								$msj = "Completa";
+								break;							
+							default:								
+								break;
+						}
+						
+						endif; ?>
+							<a href="<?php echo $ur; ?>">
+								<img border="0" src="<?php echo $this->baseUrl('/public/img/'.$icon)?>" width="16px" height="16px" alt="Ingresar elementos al almac&eacute;n" title="Ingresar elementos al almac&eacute;n"/>
+								<?php echo $msj;?>
+							</a>
+					</td>-->
+					<td>
+						<?php 
+							$obs = "";
+							if(strlen($order->getConditions()) > 15){
+								$obs = substr($order->getConditions(), 0, 15)."(...)";
+							}else{
+								$obs = $order->getConditions();
+							}
+							echo ($obs) ? $obs : Profile::PENDIENTE; 
+						?> 
+					</td><!-- condiciones -->
+					<td>
+					
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEEDITORDER]):?>	
+						<a href="<?php echo $this->baseUrl() . "/In/proposals/editorder?idOrder=" . $order->getOrder_id()."&supplier=".$order->getId_company(); ?>">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar Cotizaci&oacute;n de productos" alt="Actualizar">
+						</a>
+					<?php endif; ?>
+	
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEEDITORDER]):?>	<!--  modificar permiso  -->	
+						<a href="#" onclick="javascript:deleteRecord('purchaseTable',this, '<?php echo $order->getOrder_Id();?>','/In/proposals/deleteorder')">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+						</a>
+					<?php endif; ?>
+
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPROPOSALSINDEX]):?>	
+						<a href="#" onclick="javascript:showPurchase('<?php echo Application_Util_Tools::format($order->getOrder_Id(), 3); ?>', '<?php echo $order->getOrder_Id();?>')">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconinventory.png')?>" title="Ver Detalles"	alt="Ver Detalles">
+						</a>
+					<?php endif; ?>
+
+						<!--  <a href="<?php echo $this->baseUrl('/In/proposals/export?idOrder='.$order->getOrder_Id()); ?>"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconprint.png')?>" title="Imprimir"	alt="Imprimir">
+						</a> -->
+						
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICECHAGEPROYECTPROSP]):?>	
+						<a onclick="changeProspectToProject('purchaseTable',this,'<?php echo $order->getOrder_id()?>')"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconexport.png')?>" title="Cambiar a una venta"
+								alt="cambiar">
+						</a>
+					<?php endif; ?>
+					
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEPDFORDER]):?>	
+						<a href="<?php echo $this->baseUrl('/In/proposals/pdf?idProd='.$order->getOrder_Id()); ?>"> 
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/imprimirPDF.png')?>" title="pdf"	alt="pdf">
+						</a>
+					<?php endif; ?>
+					
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEMAILORDER]):?>	
+						<a href="<?php echo $this->baseUrl('/In/proposals/sendmail?id='.$order->getOrder_Id());?>" > 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/mail.png')?>" title="Enviar cotizacion por email"
+								alt="enviar cotizaci&oacute;n">
+						</a>
+					<?php endif; ?>	
+					
+					<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSPRICEMAILORDER]):?>
+						<a href="#" onclick="javascript:sendmail(<?php echo $order->getOrder_Id(); ?>)"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/mail.png')?>" title="Enviar Cotizacion"
+								alt="Enviar Cotizacion">
+						</a>
+					<?php endif; ?>
+					
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		<?php endif; ?>
+		</tbody>
+	</table>
+	
+</div>
+
+<!-- 
+    Inicia popup
+-->
+<div id="TableOrderPurchasePop" class="popHorus">
+		<div id="btnXOrderPay" title="Cerrar ventana">X</div>
+		<h1 id="titleTable"></h1>
+		<div class="center">
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+		</div>
+		<div id="message"></div>
+		<div id="tablaPayDiv" >
+    		<table class="display" id="OrderTablePay">
+    			<thead>
+    				<tr>
+    					<td>Clave</td>
+    					<td>Nombre</td>
+    					<td>Unidad</td>
+    					<td>Cantidad</td>
+    					<td>Precio</td>
+    				</tr>
+    			</thead>
+    			<tbody>
+    			</tbody>
+    		</table>	
+	     </div>
+	     <div id="btnAcceptDiv">
+	     	<button id="btnAccept" class="btn btn-primary" value="Cerrar">Cerrar</button>
+	     </div>
+	</div>
+	<div id="TableOrderPurchaseBack"></div>
+<!-- 
+    termina popup
+-->
+
+<style>
+	#backgroundTeam2 {
+		display: none;
+		position: fixed;
+		_position: absolute; /* hack for internet explorer 6*/
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		background: #000000;
+		border: none;
+		z-index: 1;
+	}
+	
+	#popupTeam2 {
+		position: fixed;
+		_position: absolute; /* hack for internet explorer 6*/
+		height: 284px;
+		width: 328px;
+		/*background: #000000;*/
+		opacity: 0.5;
+		/*border: 10px solid #cecece;*/
+		z-index: 2;
+		padding: 12px;
+		font-size: 13px;
+	}
+	#popupTeam2 h1 {
+		text-align: center;
+		color: #6FA5FD;
+		font-size: 22px;
+		font-weight: 700;
+	}
+</style>

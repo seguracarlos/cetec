@@ -1,0 +1,549 @@
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/select2-331/css/select2.css'; ?>" rel="stylesheet" />
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/select2-331/css/select2-bootstrap3.3.1.css'; ?>" rel="stylesheet" />
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/select2-331/js/select2.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/journey.js'; ?>"></script>
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/table-clients.js'; ?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Agregar orden de env&iacute;o</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Envios</a>
+			        <a href="#" class="btn btn-default">Agregar</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<p class="triangle-border text-size-20 amaranth">Ingresa los datos de la orden de env&iacute;o.</p>
+
+	<div clasS="content-forms">
+
+		<?php
+		$form = $this->form;
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		echo $this->formElement($form->get('id_shipping'));
+		?>
+
+		<div style="text-align:right;">
+			<span style="text-align:right;" class="label label-info">* Datos requeridos</span>
+		</div>
+
+
+		<fieldset class="responsive-fieldset fieldset">
+
+			<legend class="legend amaranth">
+				<span style="border-radius:100%;" class="label label-warning">1</span> Primer paso
+			</legend>
+
+			<div class="row">
+
+				<div class="col-md-6">
+
+					<fieldset class="responsive-fieldset fieldset">
+
+						<legend class="legend amaranth">Datos Generales</legend>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="text-amaranth">Folio Interno:</label>
+									<?php echo $this->formElement($form->get('internal_folio')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="text-amaranth">* Cliente:</label>
+									<?php echo $this->formElement($form->get('company_ID')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="text-amaranth">* Promocional / Terminado / Mixto:</label>
+									<?php echo $this->formElement($form->get('promotional_finished')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="text-amaranth">* Folio Cliente:</label>
+									<?php echo $this->formElement($form->get('client_folio')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="text-amaranth">* Fecha:</label>
+									<?php echo $this->formElement($form->get('start_date')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="name" class="text-amaranth">* Consolidado:</label>
+									<br>
+									<?php $this->formRadio()->setSeparator('</div><div class="radio-inline">'); ?>
+									<div class="radio-inline">
+			    					<?php echo $this->formRadio($form->get('consolidated')->setValue(2)) ?>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<?php echo $this->formElement($form->get('detail_table')); ?>
+
+					</fieldset>
+
+				</div>
+
+				<div class="col-md-6">
+
+					<fieldset class="responsive-fieldset fieldset">
+
+						<legend class="legend amaranth">Detalle viaje</legend>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="text-amaranth">Lugar de origen:</label>
+									<?php echo $this->formElement($form->get('place_origin')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="text-amaranth">* Destino:</label>
+									<?php echo $this->formElement($form->get('id_destination')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="name" class="text-amaranth">* Local / Foraneo:</label>
+							<br>
+							<?php $this->formRadio()->setSeparator('</div><div class="radio-inline">'); ?>
+							<div class="radio-inline">
+    							<?php echo $this->formRadio($form->get('type_destination')) ?>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="name" class="text-amaranth">* Directo / Ruta:</label>
+							<br>
+							<?php $this->formRadio()->setSeparator('</div><div class="radio-inline">'); ?>
+							<div class="radio-inline">
+    							<?php echo $this->formRadio($form->get('direct_route')) ?>
+							</div>
+						</div>
+
+						<?php echo $this->formElement($form->get('citys_delivery')); ?>
+						<div id="panel-city-add" style="display:none;" class="panel panel-primary">
+  							<div class="panel-heading">
+    							<h3 class="panel-title">Ciudades adicionales <span id="span-city-add"></span> </h3>
+  							</div>
+  							<div class="panel-body">
+
+								<div id="fields">
+  								<div class="form-group group-city">
+
+									<div class="input-group input-group-lg">
+		                        		<input class="form-control" name="city" type="text" placeholder="Ciudad adicional" />
+		                    			<span class="input-group-btn">
+		                            		<button class="btn btn-success buttonAddCity" type="button">
+		                                		<span class="glyphicon glyphicon-plus"></span>
+		                            		</button>
+		                        		</span>
+		                    		</div>
+
+								</div>
+								</div>
+
+   		 						<small>Presiona <span class="glyphicon glyphicon-plus gs"></span> para agregar otro campo.</small>
+  							</div>
+						</div>
+
+						<?php echo $this->formElement($form->get('detail_table2')); ?>
+
+					</fieldset>
+
+				</div> <!-- /.col-md-7 -->
+
+
+			</div> <!-- /.row -->
+
+
+
+			<div class="row">
+				<div class="col-md-12">
+
+					<fieldset class="responsive-fieldset fieldset">
+
+						<legend class="legend amaranth">Datos clientes consolidados</legend>
+
+						<div class="row">
+
+							<div class="col-md-6">
+
+								<div class="panel panel-primary">
+  									<!-- Default panel contents -->
+  									<div class="panel-heading">
+  										<i class="fa fa-users"></i> Clientes
+  									</div>
+  									<div class="panel-body">
+    									<p style="margin:0;">Lista de los clientes consolidados.</p>
+									</div> <!-- /.panel-body -->
+
+									<!-- Table -->
+									<table id="table-clients-send" class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr style="background-color:#337ab7; color:#fff;">
+												<th class="text-center">Cliente</th>
+												<th class="text-center">N&deg; de cajas</th>
+												<th class="text-center"></th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr style="background-color:#337ab7; color:#fff;">
+												<th></th>
+												<th>Cajas <span id="total-box">0</span></th>
+												<th>
+													<a id="add_row" class="btn btn-sm btn-success" disabled="disabled">
+														<span class="glyphicon glyphicon-plus-sign"></span>
+													</a>
+												</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											<tr id="addr0" data-id="0" class="">
+												<td data-name="clients">
+													<?php echo $this->formElement($form->get('company_ID2')); ?>
+												</td>
+												<td data-name="box">
+													<input type="text" name="box" class="form-control sumbox input-numeric" placeholder="Cajas" disabled="disabled">
+												</td>
+												<td data-name="delete">
+													<button type="button" name="delete" class='btn btn-sm btn-danger glyphicon glyphicon-remove row-remove'></button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+								</div> <!-- /.panel -->
+
+							</div> <!-- /.col-md-6 -->
+
+							<div class="col-md-6">
+
+								<div id="container-clients-delivery">
+								</div> <!-- /#container-clients-delivery -->
+
+										<div class="panel-group" id="accordion" role="tablist">
+
+											<!--<div id="collapse-clients-delivery" class="">-->
+												<div class="panel panel-primary" data-parent="addr0">
+													<div class="panel-heading" role="tab" id="headingaddr0">
+				      									<h4 class="panel-title">
+				        									<a data-toggle="collapse" data-parent="#accordion" href="#collapseaddr0" aria-expanded="true">
+				          											1. Clientes de:
+				        									</a>
+				      									</h4>
+				    								</div>
+				    								<div id="collapseaddr0" class="panel-collapse collapse in" role="tabpanel">
+				    									<div class="panel-body">
+				    										<p style="margin:0;">Lista de los clientes mayoristas y representantes.</p>
+				    									</div>
+				        									<table class="table table-striped table-bordered table-hover">
+				        										<thead>
+																	<tr style="color:gray">
+																		<th class="text-center">Cliente</th>
+																		<th class="text-center">Folio factura</th>
+																		<th class="text-center">N&deg; de cajas</th>
+																		<th class="text-center"></th>
+																	</tr>
+																</thead>
+																<tfoot>
+																	<tr style="color:gray">
+																		<th></th>
+																		<th></th>
+																		<th>Cajas <span class="total-delivery">0</span></th>
+																		<th>
+																			<a class="btn btn-sm btn-success add_row_delivery">
+																				<span class="glyphicon glyphicon-plus-sign"></span>
+																			</a>
+																		</th>
+																	</tr>
+																</tfoot>
+																<tbody>
+																	<tr id='addr1' data-id="1">
+																		<td data-name="client_delivery">
+																			<?php //echo $this->formElement($form->get('company_ID3')); ?>
+																			<input type="text" class="form-control tags" placeholder="Cliente">
+																		</td>
+																		<td data-name="folio_delivery">
+																			<input type="text" name="folio_delivery" class="form-control" placeholder="Folio">
+																		</td>
+																		<td data-name="box_delivery">
+																			<input type="text" name="box_delivery" class="form-control sumbox input-numeric" placeholder="Cajas">
+																		</td>
+																		<td data-name="delete_delivery">
+																			<button type="button" name="delete_delivery" class='btn btn-sm btn-danger glyphicon glyphicon-remove row-remove_delivery'></button>
+																		</td>
+																	</tr>
+																</tbody>
+				        									</table>
+
+				    								</div>
+												</div>
+											<!--</div>--> <!-- /#collapse-clients-delivery -->
+
+										</div>
+
+							</div> <!-- /.col-md-6 -->
+
+						</div> <!-- /.row -->
+
+					</fieldset>
+
+				</div> <!-- /.col-md-12 -->
+			</div> <!-- /.row -->
+
+
+		</fieldset>
+
+		<fieldset class="responsive-fieldset fieldset">
+
+			<legend class="legend amaranth">
+				<span style="border-radius:100%;" class="label label-warning">2</span> Segundo paso
+			</legend>
+
+			<div clasS="row">
+
+				<div class="col-md-6">
+					<fieldset  class="responsive-fieldset fieldset">
+						<legend class="legend amaranth">Asignar unidad</legend>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="text-amaranth">* Unidad:</label>
+									<?php echo $this->formElement($form->get('id_truck')); ?>
+								</div>
+
+								<div style="display:none;" class="box-2 datos-unidad">
+	                				<div class="box-icon">
+	                    				<span class="fa fa-4x fa-truck"></span>
+	                				</div>
+	                				<div class="info">
+	                					<h4 class="text-center"><span class="nombre-unidad"></span></h4>
+	                					<p class="text-muted">Placa: <span class="nombre-placa"></span> </p>
+										<p class="text-muted">Marca: <span class="nombre-marca"></span> </p>
+										<p class="text-muted">Modelo: <span class="nombre-modelo"></span> </p>
+										<p class="text-muted">Capacidad: <span class="nombre-capacidad"></span> </p>
+	                				</div>
+	            				</div>
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<label for="name" class="text-amaranth">* Tipo de unidad:</label>
+								<?php $this->formRadio()->setSeparator('</div><div class="radio">'); ?>
+								<div class="radio">
+	    							<?php echo $this->formRadio($form->get('chilled_dry')->setValue(1)) ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="text-amaranth">* Kilometraje Inicial:</label>
+									<?php echo $this->formElement($form->get('starting_mileage')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="text-amaranth">* Tipo de combustible:</label>
+									<?php echo $this->formElement($form->get('type_gasoline')); ?>
+								</div>
+							</div>
+						</div>
+
+					</fieldset>
+				</div>
+
+				<div class="col-md-6">
+					<fieldset class="responsive-fieldset fieldset">
+						<legend class="legend amaranth">Asignar personal</legend>
+
+						<div class="row">
+							<div class="col-md-12">
+								<?php echo $this->formElement($form->get('amount_operator')); ?>
+								<div class="form-group">
+									<label class="text-amaranth">* Operador:</label>
+									<?php echo $this->formElement($form->get('id_operator')); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 contenedor_ayudantes">
+							<?php echo $this->formElement($form->get('ids_assistants')); ?>
+								<?php echo $this->formElement($form->get('ids_ayudantes')); ?>
+								<?php echo $this->formElement($form->get('amount_assistant')); ?>
+								<div class="form-group entry">
+									<label class="text-amaranth">* Ayudante:</label>
+									<div class="input-group input-group-lg">
+			                    		<?php echo $this->formElement($form->get('id_assistant')); ?>
+			                    		<span class="input-group-btn">
+			                        		<button type="button" id="" class="btn btn-primary buttonAddAssistant">
+			                        			<span class="glyphicon glyphicon-plus-sign"></span>
+			                        		</button>
+			                    		</span>
+			                		</div>
+								</div>
+							</div>
+						</div>
+
+					</fieldset>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="text-amaranth">* Comentarios:</label>
+						<?php echo $this->formElement($form->get('description')); ?>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+
+		<div style="margin-top: 10px;" class="row">
+			<div class="col-md-6">
+				<?php echo $this->formElement($form->get('submitbutton')); ?>
+			</div>
+			<div class="col-md-6">
+				<a href="<?php echo $this->basePath()."/in/journey/index";?>" class="btn btn-danger btn-lg btn-block">Cancelar</a>
+			</div>
+		</div>
+
+
+		<?php
+		echo $this->form()->closeTag();
+		?>
+
+	</div>
+
+</div>
+
+
+
+
+
+<div id="collapse-clients-delivery" class="hidden">
+	<div class="panel panel-primary">
+		<div class="panel-heading" role="tab" id="headingOne">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">
+					1. Clientes de:
+				</a>
+			</h4>
+		</div>
+		<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel">
+			<div class="panel-body">
+				<p style="margin:0;">Lista de los clientes mayoristas y representantes.</p>
+			</div>
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr style="color:gray">
+						<th class="text-center">Cliente</th>
+						<th class="text-center">Folio factura</th>
+						<th class="text-center">N&deg; de cajas</th>
+						<th class="text-center"></th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr style="color:gray">
+						<th></th>
+						<th></th>
+						<th>
+							Cajas <span class="total-delivery">0</span>
+						</th>
+						<th>
+							<a class="btn btn-sm btn-success add_row_delivery">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</a>
+						</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr id='addr1' data-id="1">
+						<td data-name="client_delivery">
+							<?php //echo $this->formElement($form->get('company_ID3')); ?>
+							<input type="text" class="form-control tags" placeholder="Cliente">
+						</td>
+						<td data-name="folio_delivery">
+							<input type="text" name="folio_delivery" class="form-control" placeholder="Folio">
+						</td>
+						<td data-name="box_delivery">
+							<input type="text" name="box_delivery" class="form-control sumbox input-numeric" placeholder="Cajas">
+						</td>
+						<td data-name="delete_delivery">
+							<button type="button" name="delete_delivery" class='btn btn-sm btn-danger glyphicon glyphicon-remove row-remove_delivery'></button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<style>
+/*.table-sortable tbody tr {
+    cursor: move;
+}*/
+</style>
+
+<script>
+var $basePath     = "<?php echo $this->basePath(); ?>";
+</script>

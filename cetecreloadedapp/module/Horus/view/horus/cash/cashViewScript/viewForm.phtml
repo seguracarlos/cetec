@@ -1,0 +1,49 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/bankandCashStyle.css' )); ?>
+<div id="fieldsetForm" class="forms">
+	<?php echo $this->element->getElement('type');?> <?php if($this->element->getElement('type')->getValue() == "1"): ?>
+		<legend id="legendhelp">* Datos requeridos</legend>
+		<?php echo $this->element->getElement('id_cash'); ?>
+		<?php echo $this->element->getElement('id_account_cash'); ?>
+		<fieldset>
+				<table>
+					<tr>
+						<td>* Nombre:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('name_cash'); ?></td>
+					</tr>
+					<tr>
+						<td>Descripci&oacute;n :</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('description'); ?></td>
+					</tr>
+				</table>
+		</fieldset>
+		<div class="center">
+			<?=$this->element->getElement('Guardar'); ?>
+			<?=$this->element->getElement('Cancelar'); ?>
+		</div>
+	<?php elseif($this->element->getElement('type')->getValue() == "2"):?>
+		<fieldset>
+				<table>
+					<tr>
+						<td>Monto :</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('amount'); ?></td>
+					</tr>
+					<tr>
+						<td>Descripci&oacute;n:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('description'); ?></td>
+					</tr>
+				</table>
+		</fieldset>
+		<div class="center">
+			<?=$this->element->getElement('Guardar'); ?>
+			<?=$this->element->getElement('Cancelar'); ?>	
+		</div>
+	<?php endif;?>
+</div>

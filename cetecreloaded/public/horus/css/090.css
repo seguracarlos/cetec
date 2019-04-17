@@ -1,0 +1,208 @@
+acronym {
+	cursor: help;
+}
+h3 {
+/*	background: rgb(238,238,238);  Old browsers */
+/*	background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%);  FF3.6+ */
+/*	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1)));  Chrome,Safari4+ */
+/*	background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);  Chrome10+,Safari5.1+ */
+/*	background: -o-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);  Opera 11.10+ */
+/*	background: -ms-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);  IE10+ */
+/*	background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);  W3C */
+/*	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );  IE6-9 */
+	/*height: 15px;*/
+	height: auto;
+	margin-top: 0;
+	padding: 3px;
+/*	color: rgb(88,88,88);*/
+	font-size: 23px;
+	border-bottom: 1px solid #000;
+}
+/* Intro Section */
+#intro {
+	width: 100%;
+	height: 170px;
+}
+html > body div#intro {
+	position: absolute;
+	bottom: 0px;
+}
+html*#intro {
+	border-bottom: 3px solid #fff;
+	position: fixed;
+	bottom: -10px;
+}
+/* start IE5Mac Nav hack \*/
+#intro {
+	height: 286px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	height: auto;
+}
+#pageHeader h1, #pageHeader h2 {
+	display: none;
+}
+#quickSummary {
+	background: url(../img/quickSum_bg.gif) repeat-x top right;
+	border-right: 3px solid #fff;
+	margin: 0 240px 0 590px;
+	height: 10px;
+	padding: 52px 0 0 0;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+}
+#quickSummary p {
+	margin: 0 10px 10px 10px;
+	color: #fff;
+}
+#quickSummary a:link, #quickSummary a:active, #quickSummary a:active {
+	color: #fff;
+}
+#quickSummary a:hover {
+	color: #ddd;
+}
+#subtitle{
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+}
+#quickSummaryWelcome {
+	text-align: center;
+	padding: 10px;
+}
+#quickSummaryWelcome span{
+	font-family: serif;
+	font-size: 12px;
+	margin: 10px;
+}
+#explanation, #participation, #benefits {
+	background-color: #282828;
+	/*     background-image:url("../img/dark-tile.gif");*/
+	margin: 0 240px 0 0;
+	border-right: 3px solid #fff;
+}
+#participation, #benefits {
+	padding-top: 15px;
+}
+#explanation h3 {
+	text-align: left;
+	/*	 margin-left:5px;*/
+	padding-left: 10px;
+	padding-top: 5px;
+	background: url(../img/exp_h3_bg.gif) no-repeat top left;
+	height: 35px;
+}
+#explanation {
+	position: relative;
+	top: 3px;
+	width: 100%;
+	overflow: visible;
+}
+#menu {
+	overflow: visible;
+}
+#participation h3 {
+	background: url(../img/part_h3_bg.gif) no-repeat top left;
+	height: 51px;
+}
+#benefits h3 {
+	background: url(../img/ben_h3_bg.gif) no-repeat top left;
+	height: 51px;
+}
+#explanation h3 span, #participation h3 span, #benefits h3 span{
+	display: inline;
+}
+#date {
+	background: #d6e0ee;
+	margin: 0 332px 0 0;
+	border-right: 3px solid #fff;
+	border-top: 3px solid #fff;
+	border-bottom: 3px solid #fff;
+	padding: 15px 0;
+	text-align: center;
+}
+html > body #date {
+	background: transparent;
+	position: absolute;
+	right: 0;
+	top: 10px;
+	padding: 0;
+	margin: 0 100px 0 0;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 0;
+	text-align: left;
+}
+html > body #footer {
+	background: transparent;
+	position: fixed;
+	right: 0;
+	bottom: 261px;
+	padding: 0;
+	margin: 0 160px 0 0;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 0;
+	text-align: left;
+}
+#footer a:link, #footer a:active, #footer a:visited {
+	color: #1E2E43;
+}
+#footer a:hover {
+	color: #fff;
+}
+/* Ugly Opera 7 Hacks Section */
+@media all and (min-width: 0px) {
+	div#intro {
+		position: absolute;
+		right: 0;
+		width: 100%;
+		height: 118px;
+		top: 0;
+		z-index: 0;
+		border-bottom: 3px solid #fff;
+	}
+	div#footer {
+		position: absolute;
+		right: 0;
+		top: 12px;
+	}
+}
+/* extraDivs */
+#extraDiv1, #extraDiv2, #extraDiv3, #extraDiv4, #extraDiv5, #extraDiv6 {
+	display: none;
+}
+
+	.exito, .error {
+	       font-family:Arial, Helvetica, sans-serif; 
+	       font-size:20px;
+	       border: 1px solid;
+	       margin: 10px 0px;
+	       padding:15px 10px 15px 50px;
+	       background-repeat: no-repeat;
+	       background-position: 10px center;
+	       position:relative;
+	       width: 40%;
+	       margin: auto;
+	}
+	
+	.exito {
+		   display: none;
+	       color: #4F8A10;
+	       background-color: #DFF2BF;
+	       background-image:url('../img/exito.png');
+	}
+	
+	.error {
+		   display: none;
+	       color: #D8000C;
+	       background-color: #FFBABA;
+	       background-image: url('../img/error.png');
+	}
+
+	
+	table.display tr.odd { background-color:#CEECF5 ; }
+    table.display tr.even { background-color: #FAFAFA; }
+    table.display tr.odd  td.sorting_1{ background-color: #CEECF5  ; }
+    table.display tr.even td.sorting_1 { background-color: #FAFAFA; }
+  

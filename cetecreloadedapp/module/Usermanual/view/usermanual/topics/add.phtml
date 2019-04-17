@@ -1,0 +1,160 @@
+<script type="text/javascript">
+$(function(){
+    // 6 create an instance when the DOM is ready
+    $('#jstree').jstree({ 'core' : {
+      'data' :
+    	<?php
+    		echo $this->tree;
+    	?>
+    },
+    "types" : {
+ 	      "root" : {
+ 	        "icon" : "<?php echo $this->basePath('/img/images/tree-icon.png')?>"
+ 	      },
+ 	    "folder" : {
+ 	        "icon" : "<?php echo $this->basePath('/img/images/folder.ico')?>"
+ 	      },
+ 	    "file" : {
+ 	      "icon" : "<?php echo $this->basePath('/img/images/file.png')?>"
+ 	    }
+ 	    },
+ 	    "plugins" : [ "state", "types" ]
+    });
+
+    $('#id_parent').val(<?php echo $this->id_parent ?>);
+  });
+  
+</script>
+<script>
+
+function linkContent(idc){
+	$("#paramform").attr("action","<?php echo $this->basePath('/contents/contents'); ?>");
+	$('#id_topic_content').val(idc);
+    document.paramform.submit();
+}
+function linkContentTopic(id){
+	$("#paramform").attr("action","<?php echo $this->basePath('/topics/index'); ?>");
+    $('#id_topic_content').val(id);
+    document.paramform.submit();
+}
+function parentLink(){
+	window.location.href = "<?php echo $this->basePath('/usermanual/index') ?>";
+}
+
+
+function getBack(){
+    javascript:history.back();
+}
+function validatorForm(){
+    if($('input:radio[name=type]:checked').val() == "file" || $('input:radio[name=type]:checked').val() == "folder" ){
+        
+    }else{
+    	alert("Debes elegir el tipo de elemento a agregar.");
+    	return false;   
+    }
+    if($('#topic_name').val() == ''){
+        alert("Debes escribir el nombre del elemento.");
+        return false;
+    }
+    return true;
+}
+</script>
+<?php
+	$paramform		= $this->formparam;
+	$form			= $this->form;
+	$paramformLabel	= $this->plugin('formLabel');
+	echo $this->form()->openTag($paramform);
+?>
+<div class="container-responsive">
+	<div class="row">
+		<div class="col-md-4"><h3>CETEC</h3></div>
+		<div id="mensajes" class="col-md-6 col-md-offset-2"></div>
+	</div>
+	
+	<div id="overflow" class="">
+		<!-- <div id="mensajes" class=""></div> -->
+		
+		<div id="jstree"  class="col-md-3" style="overflow-x: auto; overflow-y: auto; max-height: 500px;"></div>
+		
+		<div class="col-md-9">
+			<div id="textContent">
+				<div class="wrap2" id="add" name="add" >
+					<div style="display:none">
+						<?php 
+// 							echo $this->formparam;
+						?>
+					</div>
+					<div class="col-md-12" align="center">
+						<h1 >Nuevo elemento
+						<?php
+// 						print_r( $this->topic_parent);
+						foreach($this->topic_parent as $topic_parent):
+						if($topic_parent['parent'] == 2){
+							?> a la clase:</br> 
+							<?php 
+							echo $topic_parent['topic_name'];
+						}else{
+							?> a la carpeta:</br> 
+							<?php 
+							echo $topic_parent['topic_name'];
+						}
+						endforeach;
+						?>
+						</h1>
+					</div>
+					<?php
+					if(isset($this->errorMessage)){
+						echo $this->errorMessage;
+					}
+					?>
+					<form method="post" name="addTopic" id="addTopic" onsubmit="return validatorForm()" action="#">
+						<div class="col-md-12" align="center">
+							<div style="display:none">
+								<?php 
+									echo $this->formElement($paramform->get('id_topic'));
+								?>
+								<?php 
+									echo $this->formElement($paramform->get('id_topic_add'));
+									echo $this->formElement($paramform->get('id_topic_content'));
+									echo $this->formElement($form->get('id_parent'));
+								?>
+								
+							</div>
+							<div class="col-md-6">
+								
+									<?php 
+										echo $this->formElement($form->get('topic_name'));
+									?>
+								
+							</div>
+							<div class="col-md-6">
+								
+									<?php 
+										echo $this->formElement($form->get('type'));
+									?>
+								
+							</div>
+							</br>
+							</br>
+							<div class="col-md-6">
+								<?php 
+// 									echo $this->form->Guardar; 
+									echo $this->formElement($form->get('Guardar'));
+								?>
+							</div>
+							<div class="col-md-6">
+								<?php 
+// 									echo $this->form->Cancelar; 
+									echo $this->formElement($form->get('Cancelar'));
+								?>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php 
+	echo $this->form()->closeTag(); 
+?>

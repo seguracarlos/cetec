@@ -1,0 +1,32 @@
+<div id="fieldsetForm" class="forms">
+<?=$this->element->getElement('idlink'); ?>
+<legend id="legendhelp">* Datos requeridos</legend>
+<fieldset>
+		<legend>Datos del Link</legend>
+    <table>
+    		<tbody> 		
+	    		<tr align="center">
+	                <td>*Nombre del link:</td>
+					<td>*Url</td>
+	            </tr>
+	    		<tr align="center">
+	    		    <td><?=$this->element->getElement('name'); ?></td>
+	    		    <td><?=$this->element->getElement('url'); ?></td>
+	            </tr>
+	            <tr style="text-align: center;">
+               		<td colspan="5">Descripci&oacute;n:</td>
+	            </tr>
+	            <tr style="text-align: center;">
+	               	<td colspan="5"><?=$this->element->getElement('description'); ?></td>
+	            </tr>
+	       </tbody>		
+    </table>
+</fieldset>
+<div class="center">
+	<?=$this->element->getElement('Guardar'); ?>
+	<!--  
+    <a href="javascript:document.forms['linksForm'].submit();" class="horusBtn big icon-iconsave">Guardar</a>
+    -->
+    <a href="javascript:location.href='<?=$this->baseUrl("/Ioteca/link/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+</div>
+</div>

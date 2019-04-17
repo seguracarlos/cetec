@@ -1,0 +1,221 @@
+<?php
+			$helpUser = $this->helps->activitiesIndex;
+			echo $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=UTF-8' )."\n";
+			
+			$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/fillTableByUserId.js'));
+			$this->headLink()->appendStylesheet($this->baseUrl('/public/css/calendar.css' ));
+?>
+<h3 class="centerHor">Bitácora por unidad</h3>
+<script type="text/javascript">
+$(document).ready(function() {
+	fillTableByUser();
+
+	$('a.arriba').click(function(){ //Id del elemento cliqueable
+		$('html, body').animate({scrollTop:0}, 1250);
+		return false;
+	});
+	
+	$("#activitiesindex_next").click(function(){
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+       	   totals += parseInt($(this).html());
+      		});
+        $("#superTotal").html(totals);
+	});
+	$("#activitiesindex_previous").click(function(){
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+       	   totals += parseInt($(this).html());
+      		});
+        $("#superTotal").html(totals);
+	});
+	$("#activitiesindex_last").click(function(){
+
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+       	   totals += parseInt($(this).html());
+      		});
+        $("#superTotal").html(totals);
+	});
+	$("#activitiesindex_first").click(function(){
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+       	   totals += parseInt($(this).html());
+      		});
+        $("#superTotal").html(totals);
+	});
+	$(".fg-button").click(function(){
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+       	   totals += parseInt($(this).html());
+      		});
+        $("#superTotal").html(totals);
+	});
+	$(".ui-widget-header").click(function(){
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+       	   totals += parseInt($(this).html());
+      		});
+        $("#superTotal").html(totals);
+	});
+	$("#activitiesindex_filter input").keyup(function(){
+		var totals = 0;
+		
+		 $.each($(".totales"), function() {
+      	   totals += parseInt($(this).html());
+     		});
+       $("#superTotal").html(totals);
+	});
+});
+</script>
+<style>
+	#filtersActivities{
+		bottom: 40px;
+    	left: 10%;
+   	 	margin-top: 8%;
+   		position: relative;
+    	width: 90%;
+	}
+	#ProjectsUser{
+		width: 35%;
+		float: left;
+	}
+	#UserProjects{
+		width: 35%;
+		float: left;
+	}
+	#projectSelect, #userSelect{
+		margin: 20px 10px 0 0;
+		width: 200px;
+	}
+	#selectProject, #selectUser{
+		margin: 20px 10px 0 0;
+		width: 200px;
+	}
+</style>
+<ul class="toolbar">
+	<div id="icons">
+		<?php if (Privilege::CONSULTOR == $this->id_role){?>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/welcome');?>"><img title="Inicio" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconstats.png')?>" /></a>
+			</li>
+		<?php  }else{ ?>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/Horus/activities/graphs');?>"><img title="Gr&aacute;ficas" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconstats.png')?>"/></a>
+			</li>
+		<?php } ?>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+	</div>	
+</ul>
+
+
+<?php if($this->permissions[KeysGlobalPermissions::HORUSACTIVITIESGETUSERSWITHACTIVITIES]) {?>
+<div id="filtersActivities" class="center">
+	<div id="ProjectsUser">
+		<h2>Buscar por Proyectos</h2>
+		<select id="selectProject">
+		   <option value="0">Seleccione un proyecto</option>
+		   <?php foreach ($this->listProyects as $userList):?>
+		   <option value="<?php echo $userList->getId()?>"><?php echo $userList->getName_project()?></option>
+		   <?php endforeach;?>
+		</select>
+		<br/>
+		<select id="selectUser">
+			   <option value="0">Seleccione un usuario</option>
+		</select>
+	</div>
+	<div id="UserProjects">
+		<h2>Buscar por Maquinaría</h2>
+		<select id="userSelect">
+		   <option value="0">Seleccione un usuario</option>
+		   
+		   <?php foreach ($this->listUsers as $userList):?>
+		   <option value="<?php echo $userList->getUserId()?>"><?php echo $userList->getUserName() . "  - " . $userList->getRealName() . " " . $userList->getSurname() ?></option>
+		   <?php endforeach;?>
+		</select>
+		<br/>
+		<select id="projectSelect">
+			   <option value="0">Seleccione un proyecto</option>
+		</select>
+	</div>
+</div>
+
+<div id="overflow">
+
+<table id="activitiesindex" class = "display"  >
+	<thead>
+		<tr>
+			<th id="labelTh">Proyecto</th>
+			<th>Semana</th>
+			<th>Periodo</th>
+			<th>Horas por semana</th>
+		</tr>	
+	</thead>
+		<tbody>
+		</tbody>
+	<tfoot>
+		<tr>
+			<th>Total de horas:</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</tfoot>		
+	</table>
+     
+</div>
+
+<?php  } ?>
+
+
+<?php if ($this->id_role ==  Privilege::CONSULTOR):?>
+<div id="overflow">
+
+<table id= "activitiesindex2" class = "display"  >
+	<thead>
+		<tr>
+			<th>Proyecto</th>
+
+			<th>Agregar actividades</th>
+		</tr>	
+	</thead>
+		<tbody>
+		     <?php if (!empty($this->pro_id)):?>
+		      <?php  foreach ($this->pro_id as $project ) :	?> 
+			<tr>
+				<td>
+					<a   href="<?php echo $this->baseUrl('/Horus/activities/activitiesview/id/'.$project->getProjects_ID());?>"  title="Actividades">
+						<?php echo $project->getName_project();?>
+				    </a>
+				</td>
+				<td>
+					<a href="<?php echo $this->baseUrl('/Horus/activities/activitiesview/id/'.$project->getProjects_ID()) ?>"> 
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar actividad">
+					</a>
+				</td>
+			</tr> 
+	<?php endforeach; endif; ?>
+		</tbody>
+	</table>
+</div>
+<?php  endif; ?>
+<!-- 
+    Inicia popup
+-->
+	<div id="popWait">
+			<div class="center">
+				<label id="wait">Espere por favor...</label>
+				<hr/>
+				<img id="loader" src="<?php echo $this->baseUrl('/public/img/loader.gif')?>">
+			</div>
+	</div>
+<div id="waitBack"></div>
+<div class="center"><a href="#" class="arriba" id="subPay">Ir arriba</a></div>

@@ -1,0 +1,202 @@
+th {
+	text-align: left;
+}
+
+form#feef {
+	background: #9cbc2c;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 20px;
+	width: 310px;
+}
+
+form#feef fieldset {
+	border: none;
+	margin-bottom: 10px;
+}
+
+form#feef fieldset:last-of-type {
+	margin-bottom: 0;
+}
+
+form#feef legend {
+	color: #384313;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	text-shadow: 0 1px 1px #c0d576;
+}
+
+form#feef > fieldset > legend:before {
+	content: " Honorarios: ";
+}
+
+form#feef fieldset fieldset legend {
+	color: #111111;
+	font-size: 13px;
+	font-weight: normal;
+	padding-bottom: 0;
+}
+
+/* td
+*/
+table {
+}
+
+dl, dt, dd{
+	background: #b9cf6a;
+	background: rgba(255,255,255,.3);
+/*	border-color: #e3ebc3;*/
+/*	border-color: rgba(255,255,255,.6);*/
+/*	border-style: solid;*/
+/*	border-width: 2px;*/
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 10px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+}
+
+form#feef ol ol li {
+	background: none;
+	border: none;
+	float: left;
+}
+
+#invoice {
+	left:380px;
+	top:187px;
+	position: absolute;
+}
+
+/* Invoice */
+
+form#invoicef {
+	background: #0D3349;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 20px;
+	width: 310px;
+}
+
+form#invoicef fieldset {
+	border: none;
+	margin-bottom: 10px;
+}
+
+form#invoicef fieldset:last-of-type {
+	margin-bottom: 0;
+}
+
+form#invoicef legend {
+	color: #F6F6F6;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	text-shadow: 0 1px 1px #F646F4;
+}
+
+form#invoicef > fieldset > legend:before {
+	content: " Factura: ";
+}
+
+form#invoicef fieldset fieldset legend {
+	color: #111111;
+	font-size: 13px;
+	font-weight: normal;
+	padding-bottom: 0;
+}
+
+form#invoicef ol li {
+	background: #b9cf6a;
+	background: rgba(255,255,255,.3);
+	border-color: #e3ebc3;
+	border-color: rgba(255,255,255,.6);
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 30px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+}
+
+form#invoicef ol ol li {
+	background: none;
+	border: none;
+	float: left;
+}
+
+#salary {
+	left:750px;
+	top:187px;
+	position: absolute;
+}
+
+/* Salary */
+	
+form#salaryf {
+	background: #550000;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 20px;
+	width: 310px;
+}
+
+form#salaryf fieldset {
+	border: none;
+	margin-bottom: 10px;
+}
+
+form#salaryf fieldset:last-of-type {
+	margin-bottom: 0;
+}
+
+form#salaryf legend {
+	color: #E0F2BE;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	text-shadow: 0 1px 1px #c0d576;
+}
+
+form#salaryf > fieldset > legend:before {
+	content: " Nómina: ";
+}
+
+form#salaryf fieldset fieldset legend {
+	color: #111111;
+	font-size: 13px;
+	font-weight: normal;
+	padding-bottom: 0;
+}
+
+form#salaryf ol li {
+	background: #b9cf6a;
+	background: rgba(255,255,255,.3);
+	border-color: #e3ebc3;
+	border-color: rgba(255,255,255,.6);
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 30px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+}
+
+form#salaryf ol ol li {
+	background: none;
+	border: none;
+	float: left;
+}
+

@@ -1,0 +1,230 @@
+ <!-- Add IntroJs styles -->
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/css/intro/introjs.css'; ?>" rel="stylesheet">
+
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/intro/intro.js'; ?>"></script>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Inventario</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<!--<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>-->
+					<li>
+						<a href="javascript:void(0);" class="btn" onclick="startIntro();" data-toggle="tooltip" data-placement="bottom" title="Ayuda">
+							<span class=" glyphicon glyphicon-question-sign"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Horus</a>
+			        <a href="#" class="btn btn-default">Inventario</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title font-raleway text-size-20">Informaci&oacute;n del inventario</h3>
+		</div>
+		<div class="panel-body">
+			<p>La siguiente tabla contiene informaci&oacute;n relacionada al inventario</p>
+			<table id="inventories" class="table table-striped table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Placa</th>
+						<th>Descripci&oacute;n</th>
+						<th>Marca</th>
+						<th>Modelo</th>
+						<th>Tipo cami&oacute;n</th>
+						<th></th>
+						<th></th>
+						<th id="step1">
+							<a class="btn btn-success" href="<?php echo $this->basePath()."/horus/inventory/add"?>" data-toggle="tooltip" data-placement="top" title="Agregar Inventario">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($this->inventory as $i) : ?>
+					<tr>
+						<td><?php echo $i['id_inventories']; ?></td>
+						<td><?php echo $i['id_product']; ?></td>
+						<td><?php echo $i['article']; ?></td>
+						<td><?php echo $i['brand']; ?></td>
+						<td><?php echo $i['model']; ?></td>
+						<td>
+						<?php echo ($i['chilled_dry'] == 1) ? "Seca" : "Refrigerada"; ?>
+						</td>
+						<td id="step2">
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalDetailInventory" data-inventory="<?php echo $i['id_inventories']; ?>" data-tool="tooltip" data-placement="top" title="Detalle Inventario" data-backdrop="static" data-keyboard="false">
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</button>
+							<!-- <button type="button" class="btn btn-info btn-detail-inventory" data-inventory="<?php echo $i['id_inventories']; ?>" data-toggle="tooltip" data-placement="top" title="Detalle Inventario"><span class="glyphicon glyphicon-info-sign"></span></button> -->
+						</td>
+						<td id="step3"><a href="<?php echo $this->basePath()."/horus/inventory/edit/".$i['id_inventories'];?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar Inventario"><span class="glyphicon glyphicon-pencil"></span></a></td>
+						<td  id="step4"><a href="<?php echo $this->basePath()."/horus/inventory/delete/".$i['id_inventories'];?>" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar Inventario"><span class="glyphicon glyphicon-trash"></span></a></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalDetailInventory">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 style="font-weight: 700;" class="modal-title font-lato text-info text-uppercase">Detalle de inventario</h4>
+      		</div>
+			<div class="modal-body">
+				<h1 style="display: none;">Titulo oculo</h1>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+var $basePath = "<?php echo $this->basepath(); ?>";
+$(document).ready(function(){
+
+	$('[data-toggle="tooltip"]').tooltip();
+	$("#inventories").dataTable({
+		"aoColumnDefs" : [ {
+	    	'bSortable' : false,
+	        'aTargets' : [ 6, 7, 8 ]
+		} ],
+		"order": [[ 1, "asc" ]]
+	});
+
+	/*$(document).on("click", ".btn-detail-inventory", function(){
+		var $idShipping           = $(this).data("inventory");
+		var $modalDetailInventory = $("#modalDetailInventory").modal();
+		$modalDetailInventory.find(".modal-body #idShipping").val($idShipping);
+	});*/
+	// Mostrar Informacion del inventario
+	$("#modalDetailInventory").on('show.bs.modal', function(event){
+		console.log("Mostrando modal");
+    	// Get button that triggered the modal
+    	var button = $(event.relatedTarget);
+    	// Obtener el data-inventory del boton
+    	var $id_inventory = button.data('inventory');
+		// Funcion cargar detalle
+    	getDetailInventory($(this),$id_inventory);
+	});
+});
+
+//Funcion cargar informacion de inventario
+function getDetailInventory(modal, id)
+{
+	var $html = '<center><img style="" src="'+$basePath+'/public/img/gif-load.gif"> cargando...</center>';
+	modal.find(".modal-body").html($html);
+	//$($html).hide().appendTo(modal.find(".modal-body")).fadeIn(3000);
+
+	//modal.find(".modal-body").html('<center><img style="" src="'+$basePath+'/public/img/gif-load.gif"> cargando...</center>');
+	//modal.find(".modal-body h1").fadeIn(3000);
+	$.ajax({
+		url    : $basePath + "/horus/inventory/detail",
+		method : "POST",
+		data   : {id_inv:id}
+	})
+	.done(function(response) {
+		var $obj 		 = jQuery.parseJSON(response);
+		var $chilled_dry = ( $obj.data[0].chilled_dry == 1 ) ? 'Seca' : 'Refrigerada';
+
+		var  $detalle = '<div class="container-fluid">'
+			 		  + 	'<div class="row">'
+			 		  + 		'<div class="col-md-12">'
+					  + 			'<h1 class="text-center font-lato text-info">'+$obj.data[0].id_product+'</h1>'
+					  +				'<p class="text-muted font-lato"> Descripci&oacute;n: '+$obj.data[0].article+'</p>'
+					  + 			'<p class="text-muted font-lato"> Marca: '+$obj.data[0].brand+'</p>'
+					  +				'<p class="text-muted font-lato"> Modelo: '+$obj.data[0].model+'</p>'
+					  +				'<p class="text-muted font-lato"> # Serie: '+$obj.data[0].serialnumber+'</p>'
+					  +				'<p class="text-muted font-lato"> # Motor: '+""+'</p>'
+					  +				'<p class="text-muted font-lato"> Tipo: '
+					  +				$chilled_dry
+					  +				'</p>'
+					  +				'<p class="text-muted font-lato"> Departamento: '+$obj.data[0].d_name+'</p>'
+					  + 		'</div>'
+					  + 	'</div>'
+					  + '</div>';
+		modal.find(".modal-body").hide().html($detalle).fadeIn(3000);
+		console.log( "success" );
+	})
+	.fail(function() {
+		console.log( "error" );
+	})
+	.always(function() {
+		console.log( "complete" );
+	});
+}
+
+/*
+	MOSTRAR TUTORIAL
+*/
+var intro = introJs();
+
+function startIntro(){
+
+    intro.setOptions({
+        steps: [
+            {
+            	intro: "<p class='text-center'><strong><span class='glyphicon glyphicon-pushpin'></span> Lista del inventario.</strong></p>",
+            },
+            {
+            	element: document.querySelector('#step1'),
+            	intro: "Agregar al inventario, click aqui.",
+            	position: 'left'
+            },
+            {
+            	element: document.querySelector('#step2'),
+            	intro: "Conocer el detalle de inventario, click aqui.",
+                position: 'right'
+            },
+            {
+                element: '#step3',
+                intro: 'Modificar inventario, click aqui.',
+                position: 'left'
+            },
+            {
+                element: '#step4',
+                intro: "Eliminar del inventario, click aqui.",
+                position: 'left'
+            }
+        ],
+        nextLabel : "Siguiente <span class='glyphicon glyphicon-arrow-right'></span>", // Etiqueta siguiente botón
+        prevLabel : "<span class='glyphicon glyphicon-arrow-left'></span> Anterior", // Etiqueta del botón Anterior
+        skipLabel : "<span class='glyphicon glyphicon-remove'></span> Omitir", // Etiqueta del botón Saltar
+        doneLabel : "<span class='glyphicon glyphicon-ok'></span> Completo", // Etiqueta del botón Completo
+        exitOnEsc: false, // Introducción Salir al pulsar el botón Escape, verdadero o falso
+        exitOnOverlayClick : false, // Introducción Salir al hacer clic en la capa de revestimiento, verdadero o falso
+        showStepNumbers: false, // Mostrar los pasos del número en el círculo rojo o no, verdadero o falso
+		keyboardNavigation: true, // Navegar con el teclado o no, verdadero o falso
+        showButtons : true, // Botones de navegación Mostrar introducción o no, verdadero o falso
+		showBullets : true, // Mostrar balas introducción o no, verdadero o falso
+		showProgress : true, // Mostrar progreso introducción o no, verdadero o falso
+		//overlayOpacity : 0.9, // Ajuste la opacidad de superposición, Número
+		scrollToElement : true, // Auto de desplazamiento para el elemento resaltado, si está fuera de la ventana gráfica, verdadera o falsa
+    });
+
+    intro.start();
+}
+</script>

@@ -1,0 +1,126 @@
+<?php
+	 include_once APPLICATION_PATH . '/util/Tools.php';
+	 echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/projectsStyle.css'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$('a.arriba').click(function(){
+		$('html, body').animate({scrollTop:0}, 1250);
+		return false;
+	});
+	
+	var detail = ( '<?php echo $this->detail ?>' && '<?php echo $this->detail ?>' != "") ? true : false;
+	console.log(detail);
+	if(detail){
+		$('#visionDetails').hide();
+		$('.report').show();
+	}else {
+		$('.report').hide();
+		$('userDetails').show();
+		jqueryTable('#visionDetails', 13);
+	}
+});
+</script>
+<h3 class="centerHor"> Detalles de Minuta</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Minute" href="<?php echo $this->baseUrl('/Gutenberg/minute/index')?>">
+				<img title="Minute" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminute.png')?>" /></a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a class="tooltipcenter" title="Ayuda">
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+<tbody id="detail">
+	<div id="fieldsetForm" class="forms">
+		<fieldset>
+			<legend><span class="title">Informaci&oacute;n General</span></legend>
+				<br />
+				<div>
+					<span class="format">Objetivo : </span>
+					<span class="result" ><?php  echo $this->minute['objective']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Fecha : </span>
+					<span class="result" ><?php  echo $this->minute['time']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Duraci&oacute;n : </span>
+					<span class="result" ><?php  echo $this->minute['hora']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Convoco : </span>
+					<span class="result" ><?php  echo $this->minute['convened']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Cronometraje : </span>
+					<span class="result" ><?php  echo $this->minute['timekeeper']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Telefono : </span>
+					<span class="result" ><?php  echo $this->minute['phone']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Asistentes : </span>
+					<span class="result" ><?php  echo $this->minute['attendees']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Ubicaci&oacute;n : </span>
+					<span class="result" ><?php  echo $this->minute['location']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Tipo de Junta : </span>
+					<span class="result" ><?php  echo $this->minute['meetingType']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Moderador : </span>
+					<span class="result" ><?php  echo $this->minute['moderator']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Anotaciones : </span>
+					<span class="result" ><?php  echo $this->minute['annotations']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Articulos de Agenda : </span>
+					<span class="result" ><?php  echo $this->minute['agendaItems']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Nuevos Temas Acordados : </span>
+					<span class="result" ><?php  echo $this->minute['newActionItem']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Otras Notas : </span>
+					<span class="result" ><?php  echo $this->minute['otherNotes']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Leer : </span>
+					<span class="result" ><?php  echo $this->minute['read']; ?></span>
+				</div>
+				<br />
+				<div>
+					<span class="format">Traer : </span>
+					<span class="result" ><?php  echo $this->minute['bring']; ?></span>
+				</div>
+		</fieldset>
+</tbody>
+</div>

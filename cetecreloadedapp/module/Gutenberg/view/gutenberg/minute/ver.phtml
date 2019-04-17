@@ -1,0 +1,86 @@
+<!-- 
+     Archivo: vista de ver 
+     Autores: Jesus y Nadia
+ -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<h1></h1>
+     <a href="<?php echo $this->baseUrl('/minute/index') ?>"><img style="opacity:0.4;filter:alpha(opacity=40)" onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseout="this.style.opacity=0.4;this.filters.alpha.opacity=40" alt="regresar" src="<?php echo $this->baseUrl('/public/img/returnIOF.png') ?>" ></a>
+
+	<h1>GRAD – Green Rapid Application Development</h1>
+<img alt="GRAD" src="<?php echo $this->baseUrl('/public/img/IOFractalLogoSM.png') ?>">
+
+<img onclick="enviarCorreo()" style="opacity:0.4;filter:alpha(opacity=40)" onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseout="this.style.opacity=0.4;this.filters.alpha.opacity=40" src="<?php echo $this->baseUrl('/public/img/mail.png') ?>" title="Enviar Correo">
+
+<a href="<?php echo $this->url(array('controller'=>'minute',
+'action'=>'exportpdf', 'usuario' => $this->user));?>"><img  style="opacity:0.4;filter:alpha(opacity=40)" onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseout="this.style.opacity=0.4;this.filters.alpha.opacity=40"  width="100px" height="110px" onclick="exportarPdf()"  src="<?php echo $this->baseUrl('/public/img/imprimirPDF.png') ?>" title="Exportar PDF" ></a>
+
+<fieldset>
+<legend><h1>Minuta del usuario <?php echo $this->user?></h1></legend>
+
+<?php echo $this->form ;?>
+</fieldset>
+
+<fieldset>
+<legend><h1>Temas acordados en la junta anterior</h1></legend>
+<textarea rows="20" cols="80"><?php echo $this->form2 ;?></textarea>
+</fieldset>
+
+<script>
+	function enviarCorreo(){
+
+		$("#dialog:ui-dialog").dialog("destroy");
+		$("#dialogoEnviaCorreo").dialog({
+			resizable: false,
+			height: 300,
+			modal: true,
+		});
+		
+		}
+
+	function mailSelected(){
+		
+	var emails = '';
+		$.each($(".emails"), function(index, item){  
+			if($(item).is(":checked"))
+				emails = emails + $(item).val()  + ',';			
+     });
+		var texEmail = document.all;
+		 texEmail.email.value += emails + ",";
+	    // alert("emails: " + emails);
+
+	}
+
+</script>
+
+<div id="dialogoEnviaCorreo" title="Enviar Correo" style="display:none">
+<p><span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 20px 0;"></span>
+selecciona de que proyecto
+</p>
+<form id="enviarCorreo" action="<?php echo $this->url(array('action'=>'sendmail'));?>" method="post"> 
+<select name="project" onchange="proyectos.value = this.options[this.selectedIndex].text">
+   <option >Selecciona una opcion</option>
+<?php foreach ($this->proyectos as $proyectos):?>
+	<option value="<?php echo $this->escape($proyectos->ID);?>"><?php echo $this->escape($proyectos->name_project);?></option>
+<?php endforeach;?>
+</select>
+<p><span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 20px 0;"></span>
+Selecciona a quienes enviar el correo
+</p>
+
+<?php foreach ($this->emails as $email):?>
+   <?php echo $this->escape($email->mail)?><input name="checkEmail" class="emails"  type="checkbox" value="<?php echo $this->escape($email->mail);?>" id="<?php echo $this->escape($email->id);?>"/>
+   <?php echo "</br>"?>
+<?php endforeach;?>
+
+<p>_____________________________________</p>
+<input type="hidden" name="email" id="email"/>
+<input type="hidden" name="proyectos" id="proyectos"/>
+<button id="TBsubmit" onclick="mailSelected()" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all" name="boton" value="Si">
+<span class="ui-button-text">Enviar</span></button>
+<button  id="TBcancel" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all" name="boton" value="No">
+<span class="ui-button-text">Cancelar</span></button>
+</form>
+</div>
+
+

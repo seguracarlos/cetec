@@ -1,0 +1,103 @@
+#backgroundDetails {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000;
+	border: none;
+	z-index: 1;
+}
+
+#popupDetails {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 460px;
+	width: 645px;
+	background: #fff;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+}
+
+#content{
+	margin: 0;
+	padding: 0;
+	height: 432px;
+	width: 642px;
+	overflow: auto;
+}
+
+#popupDetails h1 {
+	text-align: left;
+	color: #6FA5FD;
+	font-size: 22px;
+	font-weight: 700;
+	border-bottom: 2px solid #D3D3D3;
+	padding-bottom: 4px;
+	margin-bottom: 10px;
+}
+
+#btnClose {
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background: #00539c;
+}
+
+/* Información desplegada */
+#data{
+	display: none;
+}
+#data #layer{
+	display: none;
+}
+#data th a{
+	margin-left: 40px;
+}
+.contact{
+	font-size: 14px;
+}
+.contact legend{
+	font-size: 18px;
+	font-style: italic;
+	color: #6FA5FD;
+}
+.contact label{
+	color: #00539c;
+	margin-right: 10px;
+	line-height: 24px;
+}
+#data .seeMore .more{
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000;
+	padding: 5px 10px;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#data .seeMore .more:hover{
+	color: #ffffff;
+	background: #00539c;
+}
+
+#dialogConfirmation{
+	display: none;	
+}

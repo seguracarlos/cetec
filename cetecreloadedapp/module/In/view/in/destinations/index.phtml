@@ -1,0 +1,79 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Destinos</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Destinos</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">Informaci&oacute;n de los destinos</h3>
+		</div>
+		<div class="panel-body">
+			<table id="destinations" class="table table-striped table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>N.</th>
+						<th>Tipo</th>
+						<th>Destino/Ruta</th>
+						<th>Nombre</th>
+						<th></th>
+						<th>
+							<a class="btn btn-success" href="<?php echo $this->basePath()."/in/destinations/add"?>" data-toggle="tooltip" data-placement="top" title="Agregar destino">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($this->data as $row) : ?>
+					<tr>
+						<td><?php echo $row['id_destination']?></td>
+						<td>
+						<?php echo ($row['type_destination'] == 1) ? '<span class="label label-primary">Local</span>' : '<span class="label label-warning">Foraneo</span>' ;?>
+						</td>
+						<td>
+						<?php echo ($row['direct_route'] == 1) ? '<span class="label label-success">Directo</span>' : '<span class="label label-info">Ruta</span>' ;?>
+						</td>
+						<td><?php echo $row['name_destination']?></td>
+						<td><a class="btn btn-primary" href="<?php echo $this->basePath().'/in/destinations/edit/'.$row["id_destination"]; ?>"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="Editar destino"></span></a></td>
+				        <td><a class="btn btn-danger" href="<?php echo $this->basePath().'/in/destinations/delete/'.$row["id_destination"];?>"><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar destino"></span></a></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+<script>
+$(document).ready(function(){
+	$("#destinations").dataTable({
+		"aoColumnDefs" : [ {
+	    	'bSortable' : false,
+	        'aTargets' : [ 4, 5 ]
+		} ]
+	});
+});
+</script>

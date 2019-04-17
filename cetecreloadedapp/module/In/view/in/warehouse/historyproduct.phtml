@@ -1,0 +1,123 @@
+<?php
+include_once APPLICATION_PATH . '/Constants/Constants.php';
+
+ $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/viewPurchase.js'));
+ $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAddPayment.css')) ;
+?>
+<script type="text/javascript">
+var oTableO;
+$(document).ready(function() {
+	jqueryTable('#historyTable');
+	
+	oTableO = $('#OrderTablePay').dataTable({
+		   "bPaginate": true,
+           "bLengthChange": true,
+           "bFilter": true,
+           "bSort": true,
+           "bInfo": true,
+           "iDisplayLength" : 10,
+           "bAutoWidth": false,
+           "aoColumns": [
+                           null,
+                           null,
+                           null,
+                           null
+                         ],
+             "oLanguage": {
+          	   "oPaginate": {
+          	   "sPrevious": "Anterior",
+          	   "sNext": "Siguiente",
+          	   "sLast": "Ultima",
+          	   "sFirst": "Primera"
+          	   },
+
+          	   "sLengthMenu": 'Mostrar <select>'+
+          	   '<option value="10">10</option>'+
+          	   '<option value="20">20</option>'+
+          	   '<option value="30">30</option>'+
+          	   '<option value="40">40</option>'+
+          	   '<option value="50">50</option>'+
+          	   '<option value="-1">Todos</option>'+
+          	   '</select> registros',
+
+          	   "sInfo": "Mostrando del _START_ a _END_ (Total: _TOTAL_ resultados)",
+          	   "sInfoFiltered": " - filtrados de _MAX_ registros",
+          	   "sInfoEmpty": "No hay resultados de búsqueda",
+          	   "sEmptyTable": "No hay registros a mostrar",
+          	   "sZeroRecords": "No hay registros a mostrar",
+          	   "sProcessing": "Espere, por favor...",
+          	   "sSearch": "Buscar:"
+          } 
+	});
+});
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerIn">Historial de Productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity info1">
+			<a href="<?php echo $this->baseUrl('/warehouse/index') ?>" class="tooltipcenter" title="Almac&eacute;n materia prima"> 
+				<img  src="<?php echo $this->baseUrl('/public/img/iconbrick.png')?>" > 
+			</a>
+		</li>
+		<li class="iconOpacity info1">
+			<a href="<?php echo $this->baseUrl('/purchaseorder/index') ?>" class="tooltipcenter" title="Ord&eacute;n de Compra"> 
+				<img  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconorder.png')?>" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las ordenes de compra')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter"><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+
+
+<div id="overflow">
+	
+	<table id="historyTable" class="display">
+		<thead>
+			<tr>
+				<th>Producto</th>
+				<th>Tipo de producto</th>
+				<th>Entrada</th>
+				<th>Salida</th>
+				<th>Existencias</th>
+				<th>M&iacute;nimo Existencias</th>
+				<th>M&aacute;ximo en Existencias</th>				
+				<th>fecha Realizada</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if(count($this->history) > 0) {?>
+				<?php foreach ($this->history as $value): ?>
+					<tr>
+						<td><?php echo $value->getPname()?></td>
+						<td><?php echo $res = ($value->getTypeProduct() == 0)?"Materia Prima":"Producto Terminado";?></td>
+						<td><?php echo $val = ($value->getAmount() == "")? 0 : $value->getAmount(); ?></td>
+						<td><?php echo $val = ($value->getOut() == "")?0:$value->getOut(); ?></td>
+						<td><?php echo $value->getStock()?></td>
+						<td><?php echo $value->getMinstock()?></td>
+						<td><?php echo $value->getMaxstock()?></td>
+						<td><?php echo $value->getDate()?></td>
+					</tr>
+				<?php endforeach;?>
+			<?php }?>
+		</tbody>
+	</table>
+	
+</div>
+

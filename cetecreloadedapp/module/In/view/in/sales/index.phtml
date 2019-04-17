@@ -1,0 +1,85 @@
+<?php
+$this->headScript ()
+//->appendFile ( $this->baseUrl ( '/public/js/jsFunctions/ajax/salesFunctions.js' ) )
+//->appendFile ( $this->baseUrl ( '/public/js/jsFunctions/validateForm.js' ) )
+->appendFile ( $this->baseUrl ( '/public/masonry/loadItem.js' ) );
+$util = new StaticTools ();
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		jqueryTableWithTotal('#invoices', 6,null,null,3);
+		
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+
+		var resp = '<?php echo $this->resp;?>';
+		var tax = '<?php echo $this->tax; ?>';
+		
+		//console.log(tax);
+		if(resp){
+			alert("Factura Agregada");
+		}
+	});
+	function test(){
+		alert('test');
+	}
+</script>
+<h3 class="centerHor">Punto de Venta</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl("/In/sales/add"); ?>">
+				<img title="Agregar Venta" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las oredenes de compra')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div style="display: none;"><?php  echo $this->salesForm?></div>
+<div id="overflow">
+	<table id="invoices" class="display">
+		<thead>
+			<tr>
+				<th>Folio</th>
+				<th>Cliente</th>
+				<th>Fecha</th>
+				<th>Subtotal</th>
+				<th>iva</th>
+				<th>Total</th>
+				<th colspan="2"></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php if($this->sales != null): ?>
+			<?php foreach ($this->sales as $sales) {?>
+				<tr>
+						<td><?=$sales['id_sale']; ?></td>
+						<td><?=$sales['nameClient']?></td>
+						<td><?=$sales['date']?></td>
+						<td><?=$util->currency($sales['subtotal']); ?></td>
+						<td><?=$util->currency($sales['tax']); ?></td>
+						<td><?=$util->currency($sales['total']); ?></td>
+						<td>
+							<a onClick="enviaFactura('<?=$sales['id_sale']?>','<?=$sales['nameClient']?>','<?=$sales['date']?>','<?=$sales['subtotal']?>','<?=$sales['tax']?>','<?=$sales['total']?>');">
+							<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconmulti.png');?>"title="Facturar">
+							</a>
+						</td>
+				</tr>
+			<?php }?>
+		<?php endif; ?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th style="text-align: right" colspan="3">Total:</th>
+				<th></th>
+				<th colspan="3"></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>

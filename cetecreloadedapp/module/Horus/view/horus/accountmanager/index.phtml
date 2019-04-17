@@ -1,0 +1,162 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/2000.js')); 
+$this->headLink()->appendStylesheet($this->baseUrl('/public/css/bankandCashStyle.css'));
+?>
+<script>
+	var iconsFile = "<?php echo $this->iconset; ?>";
+</script>
+<h3 class="centerHor">Cuentas Contables</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li id="liAddACC">
+		  				<a id="addAcountCat" class="iconOpacity" class="tooltipcenter actionCat" title="Agregar nueva Subcuenta" href="javascript:;" onclick="showFormSaveAccount();">
+		  					<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar nueva SubCuenta"/>
+		  				</a> 
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','atuda')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			
+			<div id="clock"></div>
+	</div>
+</ul>
+
+<div id="divAccountRoot">
+	<div id="overflow">
+	<div id="fieldsetForm" class="forms"  style="width:70%;margin-left:auto;margin-right:auto;">
+		<fieldset>
+		<div id="selectCategory" class="center">
+		  <h2>Selecciona una Cuenta Mayor</h2>
+		  <select id="category" name="category">
+		    <option value="-">--Seleccione--</option>
+		  </select>
+		  <img id="load" style="display: none;" src="<?php echo $this->baseUrl('/public/img/default-loader.gif')?>">
+		  <img id="editCategory" class="actionCat" onclick="showEditCategory();" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png');?>" />
+		  <img id="deleteCategory" class="actionCat" onclick="deleteCategorys();" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png');?>" />
+		</div>
+		<legend>Saldos</legend>	
+		<div id="options">
+				<img id="loaderinitialbanks" src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+				<table>
+					<tr>
+						<td >
+						    <span style="font-size: 18px;">Saldo en cuentas: </span>
+							<span id="GeneralBalanceInAllAccounts" style="font-size: 20px; color: black;">$0.00</span>
+						</td>
+						<td >
+						    <span style="font-size: 18px;">Saldo en cuenta seleccionada: </span>
+							<span id="GeneralBalanceInAccountSelect" style="font-size: 20px; color: black;">$0.00</span>
+						</td>
+					</tr>
+				</table>
+		</div>
+		</fieldset>
+	</div>
+		<table id="categoryAccountTable" class="display">
+			<thead>
+				<tr>
+					<th>Cuenta</th>
+					<th>SubCuenta</th>
+					<th>Nombre</th>
+					<th>Saldo</th>
+					<th>Descripci&oacute;n</th>
+					<th>
+		  				<a id="addAcountCat" class="tooltipcenter actionCat" title="Agregar nueva Subcuenta" href="javascript:;" onclick="showFormSaveAccount();"><img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar nueva SubCuenta"/></a> 
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div id="overflow">
+	<div id="contentTable" style="display: none;">
+		<h1 class="center">Cuenta mayor  <span id="accountTextRoot"></span></h1>
+		<input id="id_account" type="hidden" />
+		<div id="fieldsetForm" class="forms"  style="width:70%;margin-left:auto;margin-right:auto;">
+		<fieldset>
+		<legend>Movimientos de la SubCuenta <span id="accountText"></span> - <span id="accountTexName"></span></legend>		
+		<div id="options">
+			<table>
+					<tr>
+						<td>Fecha Inicio:</td>
+						<td><input id="initialDate" type="text"/></td>
+						<td>Fecha Fin:</td>
+						<td><input id="endDate" type="text"/></td>
+						<td>
+							<a href="javascript:;" id="searchByDate">
+									<img title="Buscar" src="<?php echo $this->baseUrl('/public/img/icons/'. $this->iconset  .'/iconsearch.png')?>" />
+							</a>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td><span style="font-size: 18px;">Saldo Actual</span></td>
+						<td><span id="initialBalance" style="font-size: 18px;"></span></td>
+					</tr>
+				</table>
+		</div>
+		</fieldset>
+		</div>	
+		<br />
+		<div id="actionTx" style="margin-left: 80%">
+			<table>
+				<tr>
+					<td><a href="javascript:;" class="tooltipcenter" title="Realizar Abono" onClick="showFormAddSubaccount(1);"><img style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>"/></a></td>
+					<td><a href="javascript:;" class="tooltipcenter" title="Realizar Cargo" onClick="showFormAddSubaccount(2);"><img style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>"/></a></td>
+				</tr>
+			</table>
+		</div>
+		<div id="actionTxNo" style="display:none; margin-left: 80%">
+			<table>
+				<tr>
+					<td><a href="javascript:;" class="tooltipcenter" title="Regresar al mes actual de transacciones" onClick="backToActualTx();">regresar actual</a></td>
+				</tr>
+			</table>
+		</div>
+		<div class="movements">
+	                <table id="movementAccountTable">
+	                    <tr>
+	                        <td>N&deg;</td>
+							<td>Fecha</td>
+							<td>Hora</td>
+							<td>Descripci&oacute;n</td>
+							<td>Cargo</td>
+							<td>Abono</td>
+							<td>Saldo</td>
+							<td>Acciones</td>
+	                    </tr>
+	                    	<tr id="emptyTable" class="contentTr">
+	                			<td colspan="8"><h2 class="center">No existen movimientos</h2></td>
+	                		</tr>
+	                </table>
+		</div>
+		<br />
+		<div class="center">
+			<button class="back" id="subPay" onclick="javascript:showAccountRoot();">Regresar</button>
+		</div>
+	</div>
+</div>
+
+<!-- 
+    Inicia popup bank
+-->
+<div id="popupAccountBank" class="popHorus">
+	<div id="btnCloseAccountBank" title="Cerrar ventana">X</div>
+	<div id="formAccountBank">
+		<div class="center">
+			<h2 id="title"></h2>
+			<h3 id="accountRoot"></h3>
+			
+			<img id="loaderAccountAjax" src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+			<div id="hiddenAccountForm"></div>
+		</div>
+	</div>
+</div>
+<div id="backgroundAccountBank"></div>
+<!-- 
+	Termina popup bank
+-->

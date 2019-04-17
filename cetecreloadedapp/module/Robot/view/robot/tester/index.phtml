@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="<?php echo $this->baseUrl("/public/testStyle/css/style.css");?>">
+<script type="text/javascript" src="<?php echo $this->baseUrl("/public/testStyle/js/script.js");?>"></script>
+
+<h3 class="centerOut"> Tester </h3>
+<ul class="toolbar">
+	<div id="icons">
+
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<div id="fieldsetForm" class="forms">
+		<h1 class="center">Pruebas </h1>
+		</br></br>
+		<div id="load"><img id="loadGift" src="<?php echo $this->baseUrl("/public/testStyle/img/load.gif");?>" width="60px" height="60px" /></div>
+		<ol id="listItems" class="rounded-list">
+		    	<li id="addNItem"><img src="<?php echo $this->baseUrl("/public/testStyle/img/add.png");?>" />Agregar nuevo item</li>     
+		
+		</ol>
+		
+
+		<div id="overlayPageTests">
+		   	<h2>Test de item <span id="nameTest"></span></h2>
+		   	<input id="id_itemTests" name="id_itemTests" type="hidden" />
+		   
+		   	<div id="sectionTests">
+		   		<ol id="listTests" class="circle-list">
+		   			 <li id="addNtest"><img src="<?php echo $this->baseUrl("/public/testStyle/img/add.png");?>" />Agregar nueva prueba</li> 
+		   			 
+		   		</ol>
+		   	</div>
+		   	<div class="buttonsTest">
+				<span><input id="guardarTest" class="btnSaveTest" onclick="getCheck();" value="Guardar" type="button" /></span>
+				<span><input id="cancelarTest" class="btnCancelTest" value="Cancelar" type="button" /></span>
+			</div>
+		</div>
+		<div id="overlayPageVersionTest">
+			<h2>Versiones de las prueba</h2>
+			<div id="noVersiones" >No hay versiones de las pruebas</div>
+			
+			<div id="sectionTestsVersions" style="display: none">
+		   		<ol id="listVersionsTests" class="rectangle-list">
+		   			 <li> </li>
+		   		</ol>
+		   	</div>
+		</div>
+		<div id="fadeTest"></div>
+		
+		
+		
+		<div id="overlay">
+		    <div id="formulario"></div>
+		</div>
+		<div id="fade"></div>
+	</div>
+</div>

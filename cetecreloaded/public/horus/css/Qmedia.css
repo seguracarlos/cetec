@@ -1,0 +1,225 @@
+@media  only screen and (max-width: 480px) {
+ #contMediaHor, #contMediaIng, #contMediaEgr, #contMediaSis, #contMediaIo, #contMediaGut{
+    	display: none;
+    }
+    
+    #imgLogoCompany{
+    	display: none;
+    }
+    #nameContent{
+    	font-size: 5px;
+    }
+    #menuContent{
+    	width: 100%;
+    }
+	#greetingDiv{
+		display: none;
+	}
+
+}
+
+@media  only screen and (max-width: 767px) {
+
+	#navLogo{
+  		display: none;
+    }
+   
+    /*#geek{
+    	top: 25px;
+    }*/
+    #ghost{
+    	width: 70%;
+    }
+    #dropDownMenu{
+    	height: 60px;
+    	white-space: pre-wrap;
+    }
+    #clock{
+    	display: none;
+    }
+    #logaout{
+    	right: 20px;
+    }
+     #contMediaHor, #contMediaIng, #contMediaEgr, #contMediaSis, #contMediaIo, #contMediaGut{
+    	display: none;
+    }
+    
+    #greting{
+		font-size: 10px;
+	}
+	
+	#greetingDiv{
+		width: 18%;
+	}
+	
+	#rolShow{
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 768px)  { 
+
+	 .navbar .nav > li {
+	  font-size: 8px;
+	}
+	
+	#greetingDiv{
+		width: 18%;
+		font-size: 10px;
+	}
+	#rolShow{
+		display: none;
+	}
+	
+}
+
+@media  only screen and  (max-width: 979px) {
+
+	.dropdown-menu{
+		height: auto;
+	}
+	#navLogo{
+  		display: none;
+    }
+
+    .dropdown-toggle{
+    	width: 100%;
+    	margin-bottom: 30px;
+    }
+    .dropdown-menu{
+   	 width: 100%;
+    }
+    #dropDownMenu{
+    	width: 100%;
+    	height: 60px;
+    	white-space: pre-wrap;
+    }
+    #ghost{
+    	padding-top: 20px;
+    }
+    #clock{
+    	display: none;
+    }
+    #logaout{
+    	right: 20px;
+    	height: 40px;
+    }
+    
+		
+    .navbar .nav > li {
+	  float: none;
+	  font-size: 9px;
+	}
+	
+	.navbar .nav > li :hover {
+	  float: none;
+	}
+    
+
+     #contMenu, #contMenuIng, #contMenuEgr, #contMediaRobot, #contMenuSis, #contMenuIo, #contMenuGut{
+    	float: none;
+    	width: 100%;
+    }
+
+    #horMenu, #ingMenu, #egMenu,  #sisMenu, #robMenu, #ioMenu, #guMenu{
+    	width: 100%;
+    }
+    
+    #contMediaHor, #contMediaIng, #contMediaRobot, #contMediaEgr, #contMediaSis, #contMediaIo, #contMediaGut{
+    	display: none;
+    }
+
+    .menuHoverCont{
+    	display: none;
+    }
+    
+    /* inicio - modificacion espacios en menu */
+    	#menuDad{
+    		width: 100%;
+		  line-height: 23px;
+			border-left: solid graytext left;
+		}
+		#contMenu > li > a {
+		 width: 100%;
+		  line-height: 23px;
+		}
+		#contMenuIng > li > a {
+		 width: 100%;
+		 line-height: 23px;
+		}
+		#contMenuEgr > li > a {
+		  width: 100%;
+		  line-height: 23px;
+		}
+		#contMenuSis > li > a {
+		   width: 100%;
+		  line-height: 23px;
+		}
+		#contMenuIo > li > a {
+		   width: 100%;
+		  line-height: 23px;
+		}
+		#contMenuGut > li > a {
+		  width: 100%;
+		  line-height: 23px;
+		}
+		
+		#geek{
+		font-size: 10px;
+	}
+    /* fin - modificacion espacios en menu */
+}
+
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1000px) {
+
+	.navbar .nav > li {
+		font-size: 9px;
+	}
+	#rolShow{
+		display: none;
+	}
+	
+	#geek{
+		font-size: 14px;
+	}
+}
+
+
+@media only screen and (min-width: 1200px) {
+	.dropdown-menu.fin{
+		width: 500px;
+	}
+	
+	#mounts{
+		margin-left: 0px;
+	}
+	
+	.navbar .nav > li {
+			font-size: 12px;
+	}
+	
+	#greting{
+		font-size: 15px;
+	}
+	
+	#greetingDiv{
+		width: 25%;
+	}
+	
+	#rolShow{
+		display: block;
+	}
+	
+	#geek{
+		font-size: 14px;
+	}
+}
+
+
+@media only screen and (max-width: 1200px) {
+	#geek{
+		font-size: 14px;
+	}
+}

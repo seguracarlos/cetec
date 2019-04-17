@@ -1,0 +1,92 @@
+<script type="text/javascript">
+function menuActiveGo(path, menu){
+  location.href = path;
+}
+</script>
+ <nav>
+	<ul class="nav navbar-nav"> 
+		<?php $appName = "";
+		if (count($this->layout()->mmenu) != null ):
+		for($i=0;$i < count($this->layout()->mmenu);$i++){
+			foreach ($this->layout()->mmenu[$i] as $resource):
+			if ($appName != $resource->app) :
+				if($this->active == $resource->app):  ?>
+				<li id="liPrueba" class='dropdown active'>
+	            <?php else:?>
+	            <li id="liPrueba" class='dropdown'>
+	            <?php endif;?>
+	            	<a class="dropdown-toggle" data-toggle="dropdown">
+	                	<?php  echo $resource -> app; ?>
+	                    <span class="caret"></span>
+	              	</a>
+	             	<ul class="dropdown-menu final">
+			<?php  endif; ?>
+	              		<li class="selectMenuGutenberg" onclick="menuActiveGo('<?php echo $this->basePath('/').$resource->path;?>', 'liPrueba');">
+	               			<a href="javascript:;" class="ico<?php  echo $resource->pather; ?>">
+	                          &nbsp;&nbsp;<?php echo $resource->nameMenu; ?> 
+	                        </a>
+	                  	</li>
+			<?php $appName = $resource -> app;
+			endforeach; ?>  
+					</ul>
+				</li>
+		<?php }
+		endif; ?>     
+	</ul>
+</nav>
+
+
+<script type="text/javascript">
+function menuActiveGo(path, menu){
+  location.href = path;
+}
+</script>
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a><!-- /nav-collapse -->
+        <div class="nav-collapse collapse">
+            <ul class="nav top-2">
+                <?php $appName = "";
+		if (count($this->layout()->mmenu) != null ):
+		for($i=0;$i < count($this->layout()->mmenu);$i++){
+			foreach ($this->layout()->mmenu[$i] as $resource):
+			if ($appName != $resource->app) :
+				if($this->active == $resource->app): ?>
+				<li id="liHorus" class='dropdown active'>
+	            <?php else:?>
+	            <li id="liHorus" class='dropdown'>
+	            <?php endif;?>
+	            	<a class="dropdown-toggle" data-toggle="dropdown">
+	                	<?php  echo $resource -> app; ?>
+	                    <span class="caret"></span>
+	              	</a>
+	             	<ul class="dropdown-menu final">
+			<?php  endif; ?>
+	              		<li class="selectMenuGutenberg" onclick="menuActiveGo('<?php echo $this->basePath('/').$resource->path;?>', 'liPrueba');">
+	               			<a href="javascript:;" class="ico<?php echo $resource->pather; ?>">
+	                          &nbsp;&nbsp;<?php echo $resource->nameMenu; ?> 
+	                        </a>
+	                  	</li>
+			<?php $appName = $resource -> app;
+			endforeach; ?>  
+					</ul>
+				</li>
+		<?php }
+		endif; ?>
+                <li><a class="search"><i class="icon-search search-btn"></i></a></li>                               
+            </ul>
+            <div class="search-open">
+                <div class="input-append">
+                    <form>
+                        <input type="text" class="span3" placeholder="Search" />
+                        <button type="submit" class="btn-o">Go</button>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /nav-collapse -->
+    </div><!-- /navbar-inner -->
+</div><!-- /navbar -->

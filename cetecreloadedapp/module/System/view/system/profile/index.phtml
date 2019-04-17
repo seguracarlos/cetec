@@ -1,0 +1,382 @@
+<script src="<?php echo $this->basePath() . '/public/horus-security/js/CryptoJS/sha3.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/elevatezoom/jquery.elevateZoom-3.0.8.min.js'; ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/js/users.js'; ?>"></script>
+
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title font-raleway text-size-20">
+				<span class="glyphicon glyphicon-tag"></span>
+				<?php echo $user[0]["name"]." ".$user[0]["lastname"]." ".$user[0]["surname"]; ?>
+			</h3>
+		</div>
+		
+					<form action="" method="post">
+		<div class="panel-body">
+			<div class="col-md-3 col-lg-3">
+				<center>
+			
+					<input type="file" class="input-file" accept="image/*" id="file" name="file">
+                    <input type="hidden" value="" id="photofilename" name="photofilename">                    
+                    <input type="hidden" value="" id="photofile" name="photofile">                    
+                    <strong><p class="text-center font-raleway">Foto de perfil:</p></strong>
+                    <div class="thumbnail" id="preview">
+                        <a class="btn btn-info" id="file-select" href="#" style="display: none;">Elegir archivo</a>
+                        <?php if($user[0]["photofile"]==""){?>
+                        <img data-id=0 src="<?php echo $this->basePath()?>/public/img/user-male-icon.png" style="width:200px; height:200px;">
+                        <?php }else{?>
+                        <img data-id=1; src="<?php echo $user[0]["photofile"];?>" style="width:200px; height:200px;">
+                        <?php } ?>
+                    </div>
+            		<p>*Los cambios en la foto de perfil se reflejaran en todo el sitio la proxima vez que inicies sesi&oacute;n</p>
+				</center>
+				
+			</div>
+			<div class="col-md-9 col-lg-9">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Informaci&oacute;n general</legend>
+							<div class="table-responsive">
+								<table class="table font-raleway text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>N&uacute;mero de Usuario:</td>
+			                       			<td><?php echo Util_Tools::format($user[0]["user_id"], 4); ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Nombre:</td>
+			                       			<td><?php echo $user[0]["name"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Apellido Paterno:</td>
+			                       			<td><?php echo $user[0]["lastname"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Apellido Materno:</td>
+			                       			<td><?php echo $user[0]["surname"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+					                    	<td>Correo:</td>
+					                    	<td><?php echo $user[0]["email"]; ?></td>
+					                    </tr>
+					                    <tr>
+					                    	<td>Contrase&ntilde;a:</td>
+					                    	<td><a href="#" id="openModal">Cambiar Contrase&ntilde;a</a></td>
+					                    </tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</fieldset>
+					</div>
+<!-- 				<div class="col-md-6 col-lg-6"> -->
+<!-- 						<fieldset class="responsive-fieldset fieldset"> -->
+<!-- 							<legend class="legend amaranth">Informaci&oacute;n Adicional</legend> -->
+<!-- 							<div class="table-responsive"> -->
+<!-- 								<table class="table font-raleway text-size-15"> -->
+<!-- 									<tbody> -->
+<!-- 										<tr> -->
+<!-- 			                        		<td>CURP:</td> -->
+			                       			<td><?php //echo $user[0]["curp"]; ?></td>
+<!-- 			                      		</tr> -->
+<!-- 			                      		<tr> -->
+<!-- 			                        		<td>RFC:</td> -->
+			                       			<td><?php //echo $user[0]["rfc"]; ?></td>
+<!-- 			                      		</tr> -->
+			                     
+<!-- 									</tbody> -->
+<!-- 								</table> -->
+								
+<!-- 							</div> -->
+<!-- 						</fieldset> -->
+<!-- 					</div> -->
+<!-- 					</div> -->
+				
+				<div class="col-md-12 col-lg-12">
+				<fieldset class="responsive-fieldset fieldset">
+					<legend class="legend amaranth">M&aacute;s sobre ti:</legend>
+					<input type="hidden" name="status" value="<?php echo $this->action;?>">
+					<input type="hidden" name="id_user" value="<?php echo $user[0]["user_id"]; ?>">
+					
+					<div class="table-responsive">
+						<table class="table font-raleway text-size-15">
+							<tbody>
+								<tr>
+	                        		<td>Empleo:</td>
+	                       			<td><input type="text" id="job" data-job="<?php if(isset($this->profileInfo[0]['job'])){echo $this->profileInfo[0]['job'];}?>" class="form-control profile" name="job" disabled value="<?php if(isset($this->profileInfo[0]['job'])){echo $this->profileInfo[0]['job'];}?>"></td>
+	                      		</tr>
+								<tr>
+	                        		<td>Intereses:</td>
+	                       			<td><input type="text" id="interest" data-interest="<?php if(isset($this->profileInfo[0]['interest'])){echo $this->profileInfo[0]['interest'];}?>" class="form-control profile" name="interest" disabled value="<?php if(isset($this->profileInfo[0]['interest'])){echo $this->profileInfo[0]['interest'];}?>"></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Musica favorita:</td>
+	                       			<td><input type="text" id="music" data-music="<?php if(isset($this->profileInfo[0]['music'])){echo $this->profileInfo[0]['music'];}?>" class="form-control profile" name="music" disabled value="<?php if(isset($this->profileInfo[0]['music'])){echo $this->profileInfo[0]['music'];}?>"></td>
+	                      		</tr>
+								<tr>
+	                        		<td>Hobbies:</td>
+	                       			<td><input type="text" id="hobbies" data-hobbies="<?php if(isset($this->profileInfo[0]['hobbies'])){echo $this->profileInfo[0]['hobbies'];}?>" class="form-control profile" name="hobbies" disabled value="<?php if(isset($this->profileInfo[0]['hobbies'])){echo $this->profileInfo[0]['hobbies'];}?>"></td>
+	                      		</tr>
+	                      		<tr>
+	                        		<td>Informaci&oacute;n sobre ti:</td>
+	                       			<td><input type="text" id="about" data-about="<?php if(isset($this->profileInfo[0]['about'])){echo $this->profileInfo[0]['about'];}?>" class="form-control profile" name="about" disabled value="<?php if(isset($this->profileInfo[0]['about'])){echo $this->profileInfo[0]['about'];}?>"></td>
+	                      		</tr>
+							</tbody>
+						</table>
+					</div>
+					</form>
+				</fieldset>
+				</div>
+				<a class="btn btn-primary pull-right edit" href="#" data-toggle="tooltip" data-placement="top" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>
+				</div>
+				<center>
+				<a class="btn btn-success pull save"  style="display:none;" href="#" data-toggle="tooltip" data-placement="top" title="Guardar">Guardar</a>
+				<a class="btn btn-danger pull cancel" style="display:none;" href="#" data-toggle="tooltip" data-placement="top" title="Cancelar">Cancelar</a>
+				</center>
+				
+			</div>				
+		</div>
+		<div class="panel-footer">
+			<div class="clearfix">
+			<span class="pull-right">
+			
+				</a>
+			</span>
+			</div>
+		</div>		
+	</div>
+</div>
+<center><a class="btn btn-warning" href="<?php echo $this->basePath("/horus/welcome/index")?>" data-toggle="tooltip" data-placement="top">Regresar</a></center>
+<br>
+</div>
+
+
+<div id="myModal" class="modal fade">
+ 	<div class="modal-dialog">
+     	<div class="modal-content">
+            <div class="modal-header" style="background: #1f224d; color: #fff; border-radius: 6px 6px 0px 0px;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cambiar Contrase&ntilde;a</h4>
+            </div>
+            <div class="modal-body">
+            	<div class="form" id="form">
+	           		<div class="row">
+	           			<div class="col-md-6">
+	           				<label>Contrase&ntilde;a actual</label>
+			        	    <input type="password"  name="actualpass" id="actualpass" class="pass form-control">
+	           			</div>
+	           			<div class="col-md-6">
+			        		<label></label><p></p>
+	           				<span id="originalPass"></span>		   
+	           			</div>     
+		        	</div>
+					<div class="row">	
+	           			<div class="col-md-6">
+			        	    <label>Nueva Contrase&ntilde;a</label>
+			        	    <input type="password"  name="newpass" id="pass" class="pass form-control"> 
+			        	</div>
+			        	<div class="col-md-6">
+			        		<label></label><p></p>
+	           				<span id="passstrength"></span>		   
+	           			</div>     
+			    	</div>
+			   		<div class="row">
+			   			<div class="col-md-6">
+			        	<label>Confirmar Nueva Contrase&ntilde;a</label>
+			      		<input type="password"  id="newpass2" name="newpass2" class="pass form-control">    
+			   			</div>
+			   			<div class="col-md-6">
+			        		<label></label><p></p>
+	           				<span id="passValidate"></span>		   
+	           			</div>    
+			   		</div>
+            	</div>
+            	<br>	
+            	<div id="load" style="display:none;">
+            	<center>
+            		<img style="" src="<?php echo $this->basePath().'/public/img/loader-30.gif';?>">
+            	</center>
+            	</div>
+		   	</div>
+            <div class="modal-footer" style="background: #1f224d; color: #fff; border-radius: 6px 6px 0px 0px;">
+                <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+                <button type="button" id="cancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+    	</div>
+	</div>
+</div>
+
+		
+<script>
+
+	var $basePath = "<?php echo $this->basePath()?>";
+
+
+	var job = $("#job").data("job");
+	var interest = $("#interest").data("interest");
+	var music = $("#music").data("music");
+	var hobbies = $("#hobbies").data("hobbies");
+	var about = $("#about").data("about");
+	
+	$(document).ready(function() {
+		$('.image-zoom').elevateZoom();
+	});
+
+	$(".edit").click(function (e) {
+		$('#preview a').fadeIn();
+
+		$(this).css('display','none');
+		$('.cancel').fadeIn();
+		$('.save').fadeIn();
+		e.preventDefault();
+		$('.profile').each(function(i, obj) {
+		    $(this).prop('disabled', false);
+		});
+	});
+
+	$(".cancel").click(function (e) {
+		e.preventDefault();
+		$(this).fadeOut();
+		$('#preview a').fadeOut();
+		$('#preview img').attr("src","<?php echo $this->basePath()?>/public/img/user-male-icon.png")
+		$('.save').fadeOut();
+		$('.edit').fadeIn();
+		$('.profile').each(function(i, obj) {
+		    $(this).prop('disabled', true);
+		});
+		$("#job").val(job);
+		$("#interest").val(interest);
+		$("#music").val(music);
+		$("#hobbies").val(hobbies);
+		$("#about").val(about);
+	});
+
+	$(".save").click(function(e){
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: $basePath + '/system/profile/edit',
+			data: $('form').serialize(),
+			dataType: 'json',
+			success: function(response){
+				$("#job").val(response.data.job);
+				job = response.data.job;
+				$("#interest").val(response.data.interest);
+				interest = response.data.interest;
+				$("#music").val(response.data.music);
+				music = response.data.music;
+				$("#hobbies").val(response.data.hobbies);
+				hobbies = response.data.hobbies;
+				$("#about").val(response.data.about);
+				about = response.data.about;
+				$('.profile').each(function(i, obj) {
+				    $(this).prop('disabled', true);
+				});
+
+
+				if($('#preview img').attr("data-id") == 0){
+					$('#preview a').fadeOut();
+				    $('#preview img').attr("src","<?php echo $this->basePath()?>/public/img/user-male-icon.png")
+				}
+
+				$('.save').fadeOut();
+				$('.cancel').fadeOut();
+				$('.edit').fadeIn();
+			},
+			error: function(){ console.log("Fallo, intentalo otra vez"); }
+		});
+	});
+
+	$("#openModal").click(function(e) {
+		e.preventDefault();
+		//$("#form").css('display','block');
+		//$("#myModal").find('#message').css('display','none');
+		$("#myModal").modal('show');	
+	});
+
+	$("#guardar").click(function(e){
+		e.preventDefault();
+	
+        if($("#pass").val()==""){
+          $('#passstrength').html("La contrase&ntilde;a no puede quedar vacia").addClass('short');
+		}else{
+		$('#passstrength').html("").removeClass();	
+	    if($("#pass").val()==$("#newpass2").val()){
+			$('#passValidate').html("").removeClass();
+			var $newPass  = sha3($("#pass").val());
+			var $actualpass = sha3($('#actualpass').val());
+
+			
+			$("#load").fadeIn();
+			$.ajax({
+			type: 'POST',
+			url: $basePath + '/system/profile/changepassword',
+			data: { 'actualpass' : $actualpass ,'newpass' :$newPass },
+			dataType: 'json',
+			success: function(response){
+			console.log(response.data);
+			if(response.response=="ok"){
+				//$("#form").fadeOut();
+				//$(".modal-body").append("<label id='message'>La contrase&ntilde;a se cambio exitosamente</label>");
+				$(".pass").val('');
+  			  	$("#passstrength").html("").removeClass();
+    			$("#originalPass").html("").removeClass();
+    			$("#passValidate").html("").removeClass();
+    			$("#load").fadeOut();
+    			//setTimeout(function(){
+				$("#myModal").modal('hide');
+				//}, 1000);
+				alertify.success("La contrase&ntilde;a se cambio exitosamente");
+			}else if(response.response="Diferentes"){
+					 $('#originalPass').html("Contrase&ntilde;a Incorrecta").addClass('short');
+					 $("#load").fadeOut();
+			}
+			},
+			error: function(){
+			 console.log(response.data); 
+			}
+			});
+
+		}else{
+			$('#passValidate').html("Las contrase&ntilde;as no coinciden").addClass('short');
+		}
+
+		}
+	
+	});
+
+	$("#cancelar").click(function(e) {
+    	$(".pass").val('');
+    	$("#originalPass").html("").removeClass();
+    	$("#passstrength").html("").removeClass();
+	});
+
+	var sha3 = function(value) {
+		return CryptoJS.SHA3(value).toString();
+		}
+</script>
+
+<style>
+.imagenQuestion{
+    width: 250px; 
+    height: 230px; 
+    margin: 20px 0 0 0;
+    background:#F5F5F5 url(../public/img/AGREGARIMAGEN.png) no-repeat center center;
+    border:1px dashed #DADADA;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    position: relative;
+    border-radius: 5px;
+}
+
+.photoQuestion{width: 250px; height: 230px; vertical-align: middle; display: block; position: absolute; margin-top: 24px;}
+
+.thumb{width: 250px; height: 230px; vertical-align: middle; border: 0; margin-top: -25px;padding: 0;border-radius: 5px;}
+
+.cerrarImagenPreg{width: 19px; height:19px; position: absolute; top:0; left:40px; cursor: pointer; overflow: visible; }
+
+
+</style>

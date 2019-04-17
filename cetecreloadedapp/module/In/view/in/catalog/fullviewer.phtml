@@ -1,0 +1,198 @@
+<script type="text/javascript">
+var IconSet = "<?php echo $this->iconset; ?>";
+</script>
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/masonry/style.css'));
+?>
+<?php 
+	echo $this->headScript()->appendFile($this->baseUrl('/public/masonry/jquery.masonry.min.js'))
+					   ->appendFile($this->baseUrl('/public/masonry/jquery.imagesloaded.js'))
+					   ->appendFile($this->baseUrl('/public/masonry/modernizr-transitions.js'))
+					   ->appendFile($this->baseUrl('/public/masonry/loadItem.js'));
+?>
+<script>
+
+
+var oTableCar = "";
+	
+	$(document).ready(function(){
+		$(".nextProd").click(function(){
+			$("#load").show();
+			morProducts();
+		});
+		
+		oTableCar = jqueryTablePopup("#carTableShop", 4);
+		
+		howManyItems();
+		
+		$("#detailProduct").click(function(){
+			disablePopup("detailProductBack", "detailProduct");
+		});
+		
+		$("#detailProductBack").click(function(){
+			disablePopup("detailProductBack", "detailProduct");
+		});
+		
+		$("#btnXDetailsProd").click(function(){
+			disablePopup("detailProductBack", "detailProduct");
+		});
+
+	});
+</script>
+<h3 class="centerHor">Cat&aacute;logo de Productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<?php if ($this->permissions[KeysGlobalPermissions::INGRESOSCATALOGINDEX]):?>	
+				<li class="iconOpacity">
+					<a class="tooltipcenter" title="Punto de venta" href="<?php echo $this->baseUrl("/In/sales/add"); ?>">
+						<img title="Punto de venta" class="tooltip" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcart.png');?>">
+					</a>
+				</li>
+			<?php endif; ?>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','catalogo de productos')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter">
+					<img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<?php if(isset($_GET['nProd'])): ?>
+	<input id="next" type="hidden" value="0">
+<?php else:?>
+	<input id="next" type="hidden" value="3">
+<?php endif;?>
+<?php $count = 0;?>
+
+<div id="overflow">
+	<div id="cCatalog">
+		<div id="shopcarrDiv">
+			<div id="imgShop" onclick="showShopCar();">
+					<div class="TitleCart">Carrito de compras</div>
+				 	<img id="shop" src="<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/iconcart.png"); ?>"> <span id="myCar">mi carro (0)</span>
+					<div class="TitleCart">Total en Carrito <span id="totalCartAmount">$0.00</span></div>
+					<input id="prodIncar" type="hidden" >
+			</div>
+		</div>
+		
+		<div id="catalogContainer" class="transitions-enabled infinite-scroll clearfix">
+			<?php foreach($this->products as $product):?>
+			<?php 
+				$percentaje = $product['purchase_percentage'] / 100;//porcentaje
+				$priceSale = $product['p_price'] * $percentaje;//ganancia
+				$priceGain = $product['p_price'] + $priceSale;//precio venta
+			?>
+			<?php //echo rand(1, 4) ?>
+					<div class="box col3" onmouseover="showLincks('<?php echo $count;?>')" onmouseout="hideLincks('<?php echo $count;?>')">
+						<div id="titleProd">
+							<div id="inf">
+								<span class="Tp">Nombre: </span><?php echo $product['p_name']?>
+								<br />
+								<span class="Tp">Clave: </span><?php echo $product['p_key']?>
+								<br />
+								<span class="Tp">Precio: </span><span class="price"><?php echo Application_Util_Tools::currency($priceGain);?></span>
+							</div>
+							<div id="<?php echo $count;?>" class="car">
+									<img title="Agregar al carrito" src="<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/iconcart.png"); ?>" onclick="addToCart('<?php echo $product['id_products']; ?>');" height="40px">
+							</div>
+						</div>
+	
+						<?php if($product['p_photo'] != ""):?>
+							<img id="imgProd" class="openModal" onclick="openModalDetailProd('<?php echo $product['id_products']; ?>');" alt="" src="<?php echo "data:image/png;base64,".$product['p_photo']; ?>" width="100px;" height="150px;">
+						<?php else: ?>
+							<img id="imgProd" class="openModal" onclick="openModalDetailProd('<?php echo $product['id_products']; ?>');" src="<?php echo $this->baseUrl("/public/img/noConozco.jpg");?>" width="100px;" height="150px;">
+						<?php endif; ?>
+					</div>
+					<?php $count++; ?>
+			<?php endforeach;?>
+		</div> <!-- #container -->
+	</div>
+	
+	<div class="center">
+		<img id="load" style="display:none; margin-left: 30%;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+	</div>
+	
+	<div class="center">
+		<button type="button" class="nextProd btn btn-info">M&aacute;s</button>
+		<?php if(isset($_GET['nProd'])): ?>
+			<button class="back"  class="nextProd btn btn-warning"  onclick="javascript:history.back();">Regresar</button>
+		<?php endif;?>
+	</div>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="shopcarPop" class="popHorus">
+		<div id="btnXtablecar" title="Cerrar ventana">X</div>
+		<h1 id="titleTable">Articulos en el Carrito</h1>
+		<div >Total en Carrito <span id="totalCart">$0.00</span></div>
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+			<div id="tableCar" >
+	    		<table class="display" id="carTableShop">
+	    			<thead>
+	    				<tr>
+	    					<th>Clave</th>
+	    					<th>Nombre</th>
+	    					<th>Cantidad</th>
+	    					<th>Precio</th>
+	    				<!-- <th>Fecha</th> -->
+	    					<th></th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    			</tbody>
+	    		</table>	
+		     </div>
+		 <div class="center">
+		     <div>
+		     	<button type="button"  class="btn btn-info" id="btnAcceptar">Aceptar</button>
+		     </div>
+	     </div>
+	</div>
+	<div id="shopcarBack"></div>
+<!-- 
+    termina popup
+-->
+
+	<div id="detailProduct" class="popHorus">
+		<div id="contProduct">
+			<div id="btnXDetailsProd" title="Cerrar ventana">X</div>
+	    	<img id="loadProduct" src="<?php echo $this->baseUrl("/public/img/load.gif"); ?>"/>
+	        <h1 id="prodName"></h1>     
+	        <table width="100%;">
+	        	<tr>
+	        		<td></td>
+	        		<td>
+	        			<div id="addProd" class="tooltip" title="Agregar al carrito">
+	        				<img id="shop" src="<?php echo $this->baseUrl("/public/img/icons/".$this->iconset."/iconcart.png"); ?>">
+	        			</div>
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>
+	        			<img id="imgP" width="300px" height="250px">
+	        		</td>
+	        		<td>
+	        			 <div id="infProduct">
+				        	<p>Clave: <span id="keyP" class="textP"></span></p>
+				        	<p>Precio: <span id="priceP" class="textP"></span></p>
+				        	<p>Categoria: <span id="categP" class="textP"></span></p>
+				        	<p>Unidad de Medida: <span id="unitP" class="textP"></span></p>
+				        	<p>En Stock: <span id="stockP" class="textP"></span></p>
+				        </div>
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td colspan="3">
+	        			<div id="infProduct">
+		        			Descripci&oacute;n: 
+		        			<br /><br />
+		        			<p id="descP"></p>
+	        			</div>
+	        		</td>
+	        	</tr>
+	        </table>
+	    </div>
+	</div>
+	<div id="detailProductBack"></div>

@@ -1,0 +1,49 @@
+<div style="width:90%;margin-left:auto;margin-right:auto;">
+<div id="fieldsetForm" class="forms">
+	<legend id="legendhelp">* Datos requeridos</legend>
+	<fieldset>
+
+		<legend>Informaci&oacute;n General</legend>
+		<div style="margin:auto; width:750px;">
+		<table>
+			<tr>
+				<td>* Asunto:&nbsp;&nbsp;&nbsp; <?=$this->element->getElement('asunto'); ?></td>
+				<td>* Para:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=$this->element->getElement('destino'); ?></td>
+			</tr>
+
+			<tr>
+				<td>* Su email: <?=$this->element->getElement('email'); ?></td>
+				<td>* Su nombre: <?=$this->element->getElement('nombre'); ?></td>
+			</tr>
+
+			<!-- <tr>
+				<td>Empresa:&nbsp;&nbsp; <?=$this->element->getElement('empresa'); ?></td>
+				<td>Website:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?=$this->element->getElement('website'); ?></td>
+			</tr>  -->
+
+			<tr>
+				<td><?=$this->element->getElement('file'); ?></td>
+			</tr>
+			
+			<!--<tr>
+				<td colspan="2"><?=$this->element->getElement('mensaje'); ?></td>
+			</tr>-->
+
+		</table>
+		<div align="center" style="height:350px;">
+		<table>
+			<tr>
+				<td colspan="2"><?=$this->element->getElement('mensaje'); ?></td>
+			</tr>
+		</table>
+		</div>
+		</div>
+
+	</fieldset>
+
+	<div class="center" >
+	<?=$this->element->getElement('submit'); ?>
+	<?=$this->element->getElement('Cancelar'); ?>
+	</div>
+</div> 	
+</div>

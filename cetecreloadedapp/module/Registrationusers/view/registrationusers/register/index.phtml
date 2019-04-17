@@ -1,0 +1,997 @@
+<script src="<?php echo $this->basePath() . '/public/horus-security/js/CryptoJS/sha3.js'; ?>"></script>
+
+<div class="row vertical-offset-100">
+	<div class="col-md-6 col-md-offset-3">
+
+		<?php
+		$flash = $this->flashMessenger()
+	            ->setMessageOpenFormat('<div%s>')
+	            ->setMessageSeparatorString('')
+	            ->setMessageCloseString('</div>');
+		?>
+
+		<?php 
+		echo $flash->render('duplicado',array('alert', 'alert-danger'));
+		?>
+		
+   		<div class="panel panel-default">
+			<div class="panel-heading">
+				<center><h3 class="panel-title nunito animated flip">Crear cuenta</h3></center>
+			</div>
+			<div class="panel-body">
+
+				<!--<h1 class="h1-tittle">::Enlasa::</h1>-->
+				<!--<img class="img-circle center-block animated pulse" alt="enlasa" src="/ProyectosZF2/ProyectoHorus/horusbase/horus/public/iofractal/img/logotipo_sm3.jpg">-->
+				<center>
+					<span class="poiret-one">Ingresa tus datos para poder acceder.</span>
+				</center>
+
+				<br>
+				<?php
+				$form = $this->form;
+				$form->prepare();
+				$formLabel = $this->plugin('formLabel');
+				echo $this->form()->openTag($form);
+				?>
+				
+				<fieldset>
+				
+				<input type="hidden" name="user_id">
+
+<!-- 				<div class="form-group"> -->
+					<?php
+// 	    			$name = $form->get('nombre');
+// 	    			//echo $formLabel->openTag().$name->getOption('label')." ";
+// 	    			echo $this->formInput($name);
+// 	    			echo $this->formElementErrors($name);
+// 	    			//echo $formLabel->closeTag();
+// 					?>
+<!-- 				</div> -->
+
+<!-- 				<div class="form-group"> -->
+					<?php
+// 	    			$surname = $form->get('surname');
+// 	    			//echo $formLabel->openTag().$name->getOption('label')." ";
+// 	    			echo $this->formInput($surname);
+// 	    			echo $this->formElementErrors($surname);
+// 	    			//echo $formLabel->closeTag();
+// 					?>
+<!-- 				</div> -->
+				
+				
+<!-- 				<div class="form-group"> -->
+					<?php
+// 	    			$surname = $form->get('lastname');
+// 	    			//echo $formLabel->openTag().$name->getOption('label')." ";
+// 	    			echo $this->formInput($surname);
+// 	    			echo $this->formElementErrors($surname);
+// 	    			//echo $formLabel->closeTag();
+// 					?>
+<!-- 				</div> -->
+
+				<div class="form-group">
+					<?php
+				    $email = $form->get('email');
+				    //echo $formLabel->openTag().$email->getOption('label')." ";
+				    echo $this->formInput($email);
+				    //echo $this->formElementErrors($email);
+				    if(isset($error["email"])){
+				      echo $error["email"]['emailAddressInvalidHostname'];
+				    }
+				    //echo $formLabel->closeTag();
+					?>
+				</div>
+
+				<div class="form-group">
+					<?php
+					$pass = $form->get('password');
+					//echo $formLabel->openTag().$pass->getOption('label')." ";
+					echo $this->formInput($pass);
+					echo $this->formElementErrors($pass);
+					//echo $formLabel->closeTag();
+					?>
+				</div>
+				
+				<div class="form-group">
+					<?php
+					$pass = $form->get('passwordConfirm');
+					//echo $formLabel->openTag().$pass->getOption('label')." ";
+					echo $this->formInput($pass);
+					echo $this->formElementErrors($pass);
+					//echo $formLabel->closeTag();
+					?>
+				</div>
+				
+				
+			<center>Al hacer click en enviar aceptas los <a href="#" data-toggle="modal" data-target="#terms">t&eacute;rminos y condiciones</a>
+			<br>y nuestro <a href="#" data-toggle="modal" data-target="#priv">aviso de privacidad</a>
+			</center>
+				 
+				<hr>
+
+				<?php
+				echo $this->formElement($form->get('submitbtn'));
+				?>
+				</fieldset>
+				<?php
+				echo $this->form()->closeTag();
+				?>
+				
+
+				<div class="clearfix">
+					<a class="pull-right btn btn-link" style="margin-top:15px; padding-right:0px;" href="<?php echo $this->basePath().'/login'; ?>">
+						<span class="glyphicon glyphicon-link"></span> Inicia sesi&oacute;n
+					</a>	
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+  <!-- Terminos -->
+  <div class="modal fade" id="terms" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">T&eacute;rminos y Condiciones</h4>
+        </div>
+        <div class="modal-body terminos">
+         	<p>
+   <center> Condiciones de servicio de Bachillerato CTEC en l&iacute;nea</center>
+  <br/>
+    Estas Condiciones de servicio (<strong>Condiciones</strong>) rigen el acceso del usuario, el uso de los servicios, incluidos nuestros diversos sitios
+web, SMS, API, notificaciones de correo electr&oacute;nico, aplicaciones, botones, widgets, anuncios y servicios de comercio (los     <strong>Servicios de Bachillerato en l&iacute;nea CTEC</strong>) y cualquier otro servicio que est&eacute; relacionado con estas Condiciones
+    (conjuntamente, los <strong>Servicios</strong>), y cualquier informaci&oacute;n, texto, gr&aacute;fico, foto u otro material subido, bajado o que
+    aparezca en los Servicios (conjuntamente, el <strong>Contenido</strong>). El acceso y uso de los Servicios est&aacute;n sujetos a su
+    aceptaci&oacute;n y cumplimiento de las presentes Condiciones. Al acceder o usar estos Servicios, se compromete a aceptar estas Condiciones.
+</p>
+<p>
+    1. Condiciones b&aacute;sicas
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC proporcionar&aacute; el material necesario para el estudio y presentaci&oacute;n de los ex&aacute;menes
+    correspondientes con el fin de obtener un certificado de Bachillerato emitido por la SEP (DGETI Acuerdo DGETI201010001890), en un plazo estimado de 18
+    meses. Este plazo depender&aacute; de la entrega correcta y en tiempo de la <u>documentaci&oacute;n requerida</u>, de la aprobaci&oacute;n de
+    ex&aacute;menes y de los pagos hechos en tiempo y forma.
+</p>
+<p>
+    Es responsabilidad de usted el ingresar correctamente sus datos en el formato de inscripci&oacute;n, realizar los cambios y modificaciones
+    correspondientes en su caso y el estudio del material proporcionado, la presentaci&oacute;n y aprobaci&oacute;n de ex&aacute;menes para
+    conseguir la obtenci&oacute;n de su certificado de Bachillerato emitido por la SEP.
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC recibir&aacute; la documentaci&oacute;n requerida y entregar&aacute; un comprobante a usted.
+    Adem&aacute;s, ingresar&aacute; la documentaci&oacute;n a la SEP, en la siguiente fecha establecida para ello por la misma
+    secretar&iacute;a y una vez concluidos los estudios, completado el tiempo m&iacute;nimo de estudio y cubierto el total de las cuotas,
+    tramitar&aacute; el certificado de bachillerato correspondiente ante la SEP.
+</p>
+<p>
+    Los tiempos de entrega del certificado a usted depender&aacute; de que hayan sido cubiertos todos los requisitos antes expuestos, en tiempo y forma y
+    en caso de que exista alguna anomal&iacute;a o situaci&oacute;n imprevista ser&aacute; notificado. Una vez cubiertos todos los requisitos el
+    tiempo de entrega del certificado ser&aacute; de 30 d&iacute;as naturales a partir de la siguiente fecha de cierre establecida por la SEP.
+    Bachillerato en l&iacute;nea CTEC no se hace responsable por cualquier demora generada por la Secretar&iacute;a de Educaci&oacute;n
+    P&uacute;blica, pero lo mantendremos informado a trav&eacute;s de correo electr&oacute;nico o de nuestra p&aacute;gina de los tiempos,
+    retrasos o cualquier otra situaci&oacute;n que se pudiera presentar.
+</p>
+<p>
+    Usted es responsable del uso de los Servicios, de cualquier Contenido que publique en los Servicios y de cualquier otra consecuencia que esto origine. Todo
+    el contenido que usted env&iacute;e, publique o exponga a trav&eacute;s de los Servicios de Bachillerato en l&iacute;nea CTEC es
+    p&uacute;blico por defecto y podr&aacute; ser visto por otros usuarios y a trav&eacute;s de servicios y sitios web de terceros. Usted
+    &uacute;nicamente deber&aacute; publicar aquel Contenido con el que se sienta c&oacute;modo a la hora de compartirlo seg&uacute;n estas
+    Condiciones.
+</p>
+<p>
+    Usted &uacute;nicamente podr&aacute; usar estos Servicios si acepta un contrato vinculante y el aviso de privacidad con Bachillerato en
+    l&iacute;nea CTEC y cuenta con la autorizaci&oacute;n para recibir dichos Servicios seg&uacute;n las leyes de M&eacute;xico, Estados Unidos
+    u otra jurisdicci&oacute;n aplicable. Si acepta estas Condiciones y usa los Servicios en nombre de una empresa, organizaci&oacute;n, gobierno u
+    otra entidad legal, declara y garantiza que est&aacute; autorizado para hacerlo. Usted solo podr&aacute; hacer uso de dichos Servicios conforme a
+    dichas Condiciones y a toda ley, normativa o reglamento aplicable de car&aacute;cter local, estatal, nacional o internacional.
+</p>
+<p>
+    <br/>
+    Los Servicios que Bachillerato en l&iacute;nea CTEC presta est&aacute;n siempre evolucionando, y la forma y la naturaleza de dichos Servicios
+    podr&aacute; cambiar eventualmente sin previo aviso. Adem&aacute;s, Bachillerato en l&iacute;nea CTEC podr&aacute; dejar de prestar (de
+    forma permanente o temporal) los Servicios (o cualquier caracter&iacute;stica incluida en los Servicios) a usted o a los usuarios en general y sin
+    previo aviso. Tambi&eacute;n se reserva el derecho de establecer l&iacute;mites sobre el uso y almacenamiento seg&uacute;n su &uacute;nico
+    entender, en cualquier momento y sin previo aviso.
+</p>
+<p>
+    <strong>Tiempos de inscripci&oacute;n</strong>
+</p>
+<p>
+Usted podr&aacute; inscribirse a Bachillerato en l&iacute;nea CTEC en cualquier momento e iniciar sus estudios en cuanto concluyan con los    <u>requisitos de inscripci&oacute;n </u>indispensables. Sin embargo, es necesario recalcar que el periodo de 18 meses ofrecido para la
+    obtenci&oacute;n del Bachillerato, puede no coincidir con la fecha de inicio de estudios, dado que la SEP abre cuatro fechas durante el a&ntilde;o para la
+    entrega y recepci&oacute;n de documentaci&oacute;n. Dado lo anterior, los papeles que usted entregue, se ingresar&aacute;n en la fecha
+    inmediata posterior a la entrega completa de documentaci&oacute;n y una vez cubiertas las cuotas requeridas.
+</p>
+<p>
+    <strong>Requisitos de inscripci&oacute;n</strong>
+</p>
+<p>
+<ul>
+    <li> Proporcionar la informaci&oacute;n requerida por Bachillerato CTEC en su p&aacute;gina de inicio y en su formato de inscripci&oacute;n.
+	</li>	
+</p>
+<p>
+    <li> Aceptaci&oacute;n de t&eacute;rminos y condiciones
+	</li>	
+</p>
+
+    <li>
+        Aceptaci&oacute;n de Aviso de Privacidad
+    </li>
+
+<p>
+    <li> Entrega de documentaci&oacute;n requerida por la SEP
+    </li>
+</p>
+<p>
+    <li> Pago de cuotas correspondientes (inscripci&oacute;n y primera mensualidad)
+    </li>
+</p>
+</ul>
+<p>
+    Las fechas de entrega a la SEP antes mencionadas var&iacute;an, ya que la secretar&iacute;a las establece conforme va avanzando el a&ntilde;o pero
+    generalmente son en los meses de febrero, mayo, agosto y noviembre. Estas mismas fechas son las que utiliza la SEP para entrega de solicitud de
+    certificados una vez concluidos los estudios. En virtud de lo anterior Bachillerato CTEC no se hace responsable por retrasos ocasionados por el
+    incumplimiento de cualquiera de los requisitos solicitados a usted, ni por cambios de fecha o retrasos ocasionados por la SEP.<strong></strong>
+</p>
+<p>
+    <strong>Documentaci&oacute;n Requerida</strong>
+</p>
+<p>
+    Esta es la documentaci&oacute;n que requiere la Secretar&iacute;a de Educaci&oacute;n P&uacute;blica (DGETI Acuerdo DGETI201010001890) y
+    consiste en:
+</p>
+<ul>
+    <li>
+        Acta de nacimiento (original y copia)
+    </li>
+    <li>
+        Certificado de secundaria (original y copia)
+    </li>
+    <li>
+        CURP (copia)
+    </li>
+</ul>
+<p>
+    <li> Identificaci&oacute;n oficial con fotograf&iacute;a (copia)
+    </li>
+</p>
+<ul>
+    <li>
+        Comprobante de domicilio (copia)
+    </li>
+</ul>
+<p>
+    <li> Fotos (6) tama&ntilde;o infantil, blanco y negro, papel mate, de frente en cuadro
+    </li>
+</p>
+<p>
+    <li> Fotos (6) tama&ntilde;o credencial, blanco y negro, papel mate, de frente en ovalo.
+    </li>
+</p>
+<p>
+    La documentaci&oacute;n antes mencionada deber&aacute; entregarse en la siguiente direcci&oacute;n:
+</p>
+<p>
+    Ribera de San Cosme 7, Col Santa Mar&iacute;a la Ribera C.P. 06400, delegaci&oacute;n Cuauht&eacute;moc, Ciudad de M&eacute;xico.
+</p>
+<p>
+    <strong>Horas m&iacute;nimas requeridas de estudio </strong>
+</p>
+<p>
+    Usted deber&aacute; cumplir con un m&iacute;nimo de horas requeridas de estudio, es decir de horas conectado mediante su cuenta a Bachillerato en
+    l&iacute;nea CTEC, para poder tener la opci&oacute;n de presentar ex&aacute;menes, poder acceder al siguiente trimestre y en su caso concluir
+    con los requisitos y poder solicitar su certificado de bachillerato.
+</p>
+<p>
+    Usted tiene tres oportunidades para aprobar cada uno de los ex&aacute;menes, en caso de no aprobar en ninguna de ellas deber&aacute; repetir el
+    trimestre correspondiente.
+</p>
+<p>
+    Las horas m&iacute;nimas requeridas son:
+</p>
+<p>
+    <li> 80 horas por trimestre
+    </li>
+</p>
+<p>
+    Nota: En caso de abandonar el sitio principal del bachillerato, se detendr&aacute; el contador y no se tomar&aacute; en cuenta ese tiempo como
+    parte del requerido para completar los estudios. En caso de salir a otros sitios (ejemplos: youtube, Wikipedia, o cualquier otro.) ese tiempo no se
+    considera como tiempo acumulable de estudio. El tiempo dedicado a ver los videos que se encuentran dentro del sitio de Bachillerato en l&iacute;nea
+    CTEC s&iacute; se considera como tiempo de estudio.
+</p>
+<p>
+    <strong>Entrega de certificados</strong>
+</p>
+<p>
+    Una vez cumplido con el tiempo m&iacute;nimo requerido de estudio, entregada la papeler&iacute;a completa solicitada, presentados y aprobados todos
+    los ex&aacute;menes y cubiertas todas las cuotas podr&aacute; solicitarse la emisi&oacute;n del certificado de bachillerato, el cual se
+    entregar&aacute; en los tiempos establecidos, siempre y cuando no se incurra en alguna de las siguientes causas:
+</p>
+<p>
+    <li> No entrega de documentaci&oacute;n dentro de los periodos correspondientes,
+    </li>
+</p>
+<ul>
+    <li>
+        Falta de pago oportuno.
+    </li>
+</ul>
+<p>
+    <li> No aprobar los ex&aacute;menes dentro de los tiempos destinados.
+    </li>
+</p>
+<p>
+    <li> Reprobar un mismo examen m&aacute;s de tres veces.
+    </li>
+</p>
+<p>
+    <br/>
+    Los Servicios pueden incluir anuncios, los cuales pueden estar referidos al Contenido o a la informaci&oacute;n de los Servicios, consultas hechas a
+    trav&eacute;s de dichos Servicios u otra informaci&oacute;n. El tipo y la extensi&oacute;n de la publicidad incluidos en el Bachillerato en
+    l&iacute;nea CTEC est&aacute;n sujetos a cambios. Para que Bachillerato en l&iacute;nea CTEC pueda ofrecer y mantener tarifas bajas, usted
+    acepta que Bachillerato en l&iacute;nea CTEC, sus proveedores externos y sus socios puedan incluir publicidad en los Servicios o en relaci&oacute;n
+    con la reproducci&oacute;n del Contenido o con la informaci&oacute;n que usted u otros provean a trav&eacute;s de nuestros Servicios.
+</p>
+<p>
+    La publicidad podr&aacute; estar incluida en cualquiera de las p&aacute;ginas de Bachillerato en l&iacute;nea CTEC, en correos, avisos (pop
+    ups), o cualquier otra notificaci&oacute;n o medio que Bachillerato en l&iacute;nea CTEC considere conveniente.
+</p>
+<p>
+    <strong>Cuotas</strong>
+</p>
+<p>
+    Las cuotas ser&aacute;n las siguientes:
+</p>
+<p>
+    Cuota de inscripci&oacute;n: $2,400.00 (dos mil cuatrocientos pesos 00/100 M.N.), se paga inscripci&oacute;n al inicio del bachillerato, y al
+    inicio del quinto trimestre.
+</p>
+<p>
+    Cuota Mensual: $1,250.00 (mil pesos doscientos cincuenta 00/100 M.N.), son 18 mensualidades
+</p>
+<p>
+    Las cuotas podr&aacute;n variar, previa notificaci&oacute;n, de un trimestre al otro. Se entiende por trimestre el periodo de estudio para la
+    aprobaci&oacute;n de las materias o temas asignados a cada m&oacute;dulo.
+</p>
+<p>
+    <strong>Condiciones de comercio y formas de pago</strong>
+</p>
+<p>
+    De momento la forma de pago es en ventanilla o bien por transferencia electr&oacute;nica o SPEI en el Banco BBVA BANCOMER, cuenta 0452217252, clabe
+    012180004522172524, a nombre de Data Base Administration SA de CV y el comprobante de pago deber&aacute; ser enviado por correo a la cuenta
+    pagos@ctecenlinea.mx.
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC se reserva el derecho de ofrecer, en un futuro, otras formas como pueden ser pago con tarjeta de cr&eacute;dito o
+    d&eacute;bito, ya sea en l&iacute;nea o en sitio, por ejemplo.
+</p>
+<p>
+    Los pagos realizados a Bachillerato en l&iacute;nea CTEC podr&aacute;n ser facturados, previa solicitud y env&iacute;o de datos fiscales,
+    solicitados en el formato de inscripci&oacute;n. Los montos deducibles y las condiciones son los expuestos por la SHCP.
+</p>
+<p>
+    <strong>Promociones/Obsequios</strong>
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC podr&aacute; decidir, de manera totalmente opcional y sin ning&uacute;n compromiso u obligaci&oacute;n de
+    hacerlo, dar incentivos y/o alg&uacute;n obsequio al realizar la inscripci&oacute;n o en cualquier otro momento durante el tiempo que duren los
+    estudios, sin que ello conlleve la obligaci&oacute;n de hacer validas garant&iacute;as, reparaciones, servicio o cualquier otro requerimiento
+    relacionado con dichos obsequios o incentivos.
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC se reserva el derecho de retirar los obsequios, reemplazarlos por otros nuevos del mismo tipo o bien por otros
+    totalmente diferentes, sin necesidad de dar aviso previo o reemplazar aquellos ya entregados.
+</p>
+<p>
+    Las caracter&iacute;sticas, configuraciones, capacidades y marcas de los obsequios o incentivos ser&aacute;n decisi&oacute;n exclusiva de
+    Bachillerato en l&iacute;nea CTEC.
+</p>
+<p>
+    El uso de los obsequios o incentivos antes mencionados ser&aacute; responsabilidad total y completa de usted (el alumno), quien lo reciba y/o lo
+    utilice por lo que cualquier informaci&oacute;n, uso o aplicaci&oacute;n concerniente a dicho obsequio o incentivo queda a resguardo de la o las
+    personas antes mencionadas sin que esto implique responsabilidad alguna para Bachillerato en l&iacute;nea CTEC.
+</p>
+<p>
+    2. Privacidad
+</p>
+<p>
+Cualquier informaci&oacute;n que usted u otros usuarios faciliten a Bachillerato en l&iacute;nea CTEC est&aacute; sujeta a nuestra    <a href="http://twitter.com/privacy">Pol&iacute;tica de privacidad</a>, que rige la recogida y el uso de su informaci&oacute;n. Usted entiende que,
+    a trav&eacute;s del uso de los Servicios, da su consentimiento a la recopilaci&oacute;n y el uso (como se indica en la Pol&iacute;tica de
+    Privacidad) de esta informaci&oacute;n, incluida la transferencia de dicha informaci&oacute;n a los Estados Unidos, Irlanda y/u otros
+    pa&iacute;ses para su almacenamiento, procesamiento y uso por parte de Bachillerato en l&iacute;nea CTEC. Como parte de la prestaci&oacute;n de
+    los Servicios, es posible que tengamos que enviarle algunas comunicaciones como, por ejemplo, anuncios de servicios y mensajes administrativos. Estas
+    comunicaciones se consideran parte de los Servicios y de su cuenta, y es posible que no pueda optar por no recibirlas.
+</p>
+<p>
+    La informaci&oacute;n proporcionada por usted, ser&aacute; compartida con la Secretar&iacute;a de Educaci&oacute;n P&uacute;blica, de
+    acuerdo a los requerimientos de esta.
+</p>
+<p>
+    Adem&aacute;s, dichas comunicaciones podr&aacute;n contener, adem&aacute;s de los mensajes que Bachillerato en l&iacute;nea CTEC desea
+    transmitirle, avisos de patrocinadores.
+</p>
+<p>
+    <strong>Nota</strong>
+    : Puede controlar la informaci&oacute;n contenida en "Mi Perfil" y que es la &uacute;nica que se muestra a usted como usuario, en caso de requerir
+    que se modifique la informaci&oacute;n proporcionada en su formato de inscripci&oacute;n, llenar y firmar una solicitud de cambio de
+    informaci&oacute;n en nuestras oficinas ubicadas en Ribera de San Cosme 7, Col Santa Mar&iacute;a la Ribera C.P. 06400, delegaci&oacute;n
+    Cuauht&eacute;moc, Ciudad de M&eacute;xico.
+</p>
+<p>
+    3. Contrase&ntilde;as
+</p>
+<p>
+    Usted es responsable de proteger la contrase&ntilde;a que usa para acceder a los Servicios y para cualquier otra actividad o acci&oacute;n para la cual
+    necesite su contrase&ntilde;a. Le recomendamos utilizar contrase&ntilde;as seguras (contrase&ntilde;as que utilizan la combinaci&oacute;n de letras may&uacute;sculas
+    y min&uacute;sculas, n&uacute;meros y s&iacute;mbolos) en su cuenta. Bachillerato en L&iacute;nea CTEC no puede responsabilizarse, ni se
+    responsabilizar&aacute;, de cualquier p&eacute;rdida o da&ntilde;o derivados del incumplimiento de los requisitos anteriores.
+</p>
+<p>
+    4. Contenido de los Servicios
+</p>
+<p>
+    La responsabilidad de todo Contenido, publicado de forma p&uacute;blica o privada, recae en el autor de dicho Contenido. No podemos supervisar ni
+    controlar el Contenido publicado a trav&eacute;s de los Servicios y no nos hacemos responsables de dicho Contenido. Queda bajo su exclusiva
+    responsabilidad el uso o la confianza que usted pueda prestar a cualquier Contenido o material reproducido a trav&eacute;s de los Servicios o que haya
+    obtenido a trav&eacute;s de los Servicios.
+</p>
+<p>
+    <br/>
+    No aprobamos, apoyamos, manifestamos o garantizamos que el Contenido o las comunicaciones realizadas a trav&eacute;s de los Servicios sean completos,
+    veraces, precisos ni fiables, ni aprobamos las opiniones expresadas a trav&eacute;s de los Servicios. Usted entiende que el uso de los Servicios puede
+    exponerle a Contenido ofensivo, da&ntilde;ino, err&oacute;neo o inapropiado, o en algunos casos, a mensajes etiquetados incorrectamente o enga&ntilde;osos.
+    Bachillerato en l&iacute;nea CTEC no se responsabilizar&aacute;, bajo ninguna circunstancia y de ning&uacute;n modo, de ning&uacute;n
+    Contenido, incluidos, entre otros, cualquier error u omisi&oacute;n en el Contenido o cualquier p&eacute;rdida o da&ntilde;o de cualquier tipo como
+    resultado de la utilizaci&oacute;n de cualquier Contenido publicado, enviado por correo electr&oacute;nico, transmitido o puesto a
+    disposici&oacute;n a trav&eacute;s de los Servicios o emitido en otros medios de difusi&oacute;n.
+</p>
+<p>
+    La publicidad y cualquier otro contenido que terceros (ejemplo: youtube, Wikipedia o cualquier otro) publique es responsabilidad de ese tercero.
+    Bachillerato en l&iacute;nea CTEC se libera de cualquier responsabilidad por la publicidad o contenidos que terceras partes, como los ejemplos citados,
+    puedan publicar.
+</p>
+<p>
+    5. Derechos del usuario
+</p>
+<p>
+    Usted es el titular de los derechos que le amparan sobre cualquier Contenido que env&iacute;e, reproduzca o exponga en los Servicios o a
+    trav&eacute;s de estos. Mediante el env&iacute;o, la reproducci&oacute;n o la exposici&oacute;n de Contenido en los Servicios o a
+    trav&eacute;s de estos, usted concede a Bachillerato en l&iacute;nea CTEC una licencia mundial, no-exclusiva y gratuita (as&iacute; como el
+    derecho de sub-licenciar) sobre el uso, la copia, la reproducci&oacute;n, el procesamiento, la adaptaci&oacute;n, modificaci&oacute;n,
+    publicaci&oacute;n, transmisi&oacute;n, exposici&oacute;n y distribuci&oacute;n de tal Contenido a trav&eacute;s de cualquier medio o
+    m&eacute;todo de distribuci&oacute;n presente o futuro.
+</p>
+<p>
+    Usted acepta que este permiso otorga el derecho a Bachillerato en l&iacute;nea CTEC de proporcionar, promover y mejorar los Servicios y de poner a la
+    disposici&oacute;n de otras compa&ntilde;&iacute;as, organizaciones o individuos asociados con Bachillerato en l&iacute;nea CTEC el Contenido
+    presentado a trav&eacute;s de los Servicios para la sindicaci&oacute;n, difusi&oacute;n, distribuci&oacute;n o publicaci&oacute;n de
+    dicho Contenido en otros medios y servicios, seg&uacute;n nuestros t&eacute;rminos y condiciones para utilizarlo.
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC y otras compa&ntilde;&iacute;as, organizaciones o personas asociadas con Bachillerato en l&iacute;nea CTEC
+    podr&aacute;n llevar a cabo tales usos adicionales sin compensarlo de ninguna manera por el Contenido que usted env&iacute;e, publique, transmita o
+    ponga a disposici&oacute;n a trav&eacute;s de los Servicios.
+</p>
+<p>
+    <br/>
+    Bachillerato en l&iacute;nea CTEC puede modificar o adaptar el Contenido del usuario a fin de transmitirlo, mostrarlo o distribuirlo a
+    trav&eacute;s de la red as&iacute; como en diversos medios de comunicaci&oacute;n y/o realizar los cambios necesarios para ajustar y adaptar
+    dicho Contenido a cualquier requisito o limitaci&oacute;n de redes, dispositivos, servicios o medios de comunicaci&oacute;n.
+</p>
+<p>
+    <br/>
+    Usted es responsable del uso de los Servicios, de todo Contenido que proporcione y de cualquier otra consecuencia que esto origine, incluido el uso de su
+    Contenido por parte de otros usuarios y socios de terceros. Usted entiende que su Contenido puede ser sindicado, transmitido, distribuido o publicado por
+    nuestros socios y que, si usted no poseyera el derecho de presentar dicho Contenido para tal uso, la responsabilidad ser&iacute;a suya.
+    Seg&uacute;n estas Condiciones, Bachillerato en l&iacute;nea CTEC no se har&aacute; responsable del uso del Contenido del usuario por parte de
+    Bachillerato en l&iacute;nea CTEC. Usted manifiesta y garantiza que tiene todos los derechos, poderes y autoridad necesarios para conceder los derechos
+    otorgados mediante este documento de todo Contenido que env&iacute;e.
+</p>
+<p>
+    6. Licencia del usuario para utilizar los Servicios
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC le proporciona licencia personal, con cobertura mundial, sin derecho de transferencia y sin exclusividad para el uso
+    del software que Bachillerato en l&iacute;nea CTEC ofrece como parte de los Servicios. Esta licencia tiene como &uacute;nico prop&oacute;sito
+    permitir que usted utilice y disfrute los beneficios de los Servicios prestados por Bachillerato en l&iacute;nea CTEC del modo estipulado en estas
+    Condiciones.
+</p>
+<p>
+    7. Derechos de Bachillerato en l&iacute;nea CTEC
+</p>
+<p>
+    Todo derecho, t&iacute;tulo o inter&eacute;s en relaci&oacute;n con los Servicios (excepto el Contenido proporcionado por los usuarios) son y
+    seguir&aacute;n siendo propiedad exclusiva de Bachillerato en l&iacute;nea CTEC y sus cedentes. Los Servicios est&aacute;n protegidos por leyes
+    de derechos de autor y marca comercial, y por otras leyes tanto de M&eacute;xico, Estados Unidos como de otros pa&iacute;ses. Estas Condiciones no
+    le otorgan derecho alguno de utilizar el nombre, las marcas comerciales, los logotipos, los dominios u otras caracter&iacute;sticas distintivas de la
+    marca pertenecientes a Bachillerato en l&iacute;nea CTEC. Toda respuesta, comentario o sugerencia que usted proporcione con respecto a Bachillerato en
+    l&iacute;nea CTEC o a los Servicios es completamente voluntaria y Bachillerato en l&iacute;nea CTEC es libre de utilizar tal
+    informaci&oacute;n, comentarios o sugerencias que considere oportunos sin ninguna obligaci&oacute;n hacia el usuario.
+</p>
+<p>
+    8. Restricciones en el Contenido y uso de los Servicios
+</p>
+<p>
+    Nos reservamos el derecho en todo momento (pero no tendremos la obligaci&oacute;n) de borrar o negarnos a distribuir cualquier Contenido en los
+    Servicios y de suspender o eliminar usuarios o reclamar nombres de usuarios. Tambi&eacute;n nos reservamos el derecho de acceder a cualquier
+    informaci&oacute;n, as&iacute; como de leer, preservar, y hacer p&uacute;blica dicha informaci&oacute;n, que consideremos necesaria para
+    (i) cumplir con cualquier ley, reglamentaci&oacute;n, proceso legal o petici&oacute;n del gobierno aplicable; (ii) hacer cumplir las Condiciones,
+    incluida la investigaci&oacute;n de sus posibles violaciones; (iii) detectar, prevenir o solucionar fraudes o problemas t&eacute;cnicos o de
+    seguridad; (iv) responder a las solicitudes de soporte del usuario; o (v) proteger los derechos, la propiedad o la seguridad de Bachillerato en
+    l&iacute;nea CTEC, sus usuarios y el p&uacute;blico.
+</p>
+<p>
+    <strong>Nota</strong>
+    : Bachillerato en l&iacute;nea CTEC no revela informaci&oacute;n personal que permita identificar a terceros excepto seg&uacute;n lo dispuesto
+    en nuestra <a href="https://twitter.com/privacy">Pol&iacute;tica de Privacidad</a> y leyes aplicables.
+</p>
+<p>
+    <strong>Nota</strong>
+    : Bachillerato en l&iacute;nea CTEC fomenta y permite la reutilizaci&oacute;n del Contenido de los Servicios de Bachillerato en l&iacute;nea
+    CTEC.
+</p>
+<p>
+    Si usted utiliza las caracter&iacute;sticas de pago de los Servicios que requieren informaci&oacute;n de tarjeta de cr&eacute;dito o
+d&eacute;bito, como la caracter&iacute;stica Comprar Ahora, acepta nuestras    <a href="https://support.twitter.com/articles/20171943">Condiciones de comercio de Bachillerato en l&iacute;nea CTEC</a>.
+</p>
+<p>
+    <br/>
+    Usted no est&aacute; autorizado a realizar ninguna de las siguientes acciones al acceder a los Servicios o al utilizarlos: (i) acceder, manipular
+    indebidamente o utilizar &aacute;reas no p&uacute;blicas de los Servicios, los sistemas inform&aacute;ticos de Bachillerato en l&iacute;nea
+    CTEC o los sistemas t&eacute;cnicos de ejecuci&oacute;n de proveedores de Bachillerato en l&iacute;nea CTEC; (ii) examinar, escanear o probar
+    la vulnerabilidad de ning&uacute;n sistema o red, o traspasar o franquear cualquier medida de seguridad o autenticaci&oacute;n; (iii) acceder,
+    investigar o intentar acceder o investigar los Servicios mediante cualquier m&eacute;todo (automatizado o no) que no sea a trav&eacute;s de las
+interfaces que Bachillerato en l&iacute;nea CTEC ha dispuesto y publicado (y &uacute;nicamente conforme a los    <a href="http://twitter.com/apirules">t&eacute;rminos y condiciones</a> aplicables), a menos que usted haya sido espec&iacute;ficamente autorizado
+    a hacerlo en un acuerdo adicional con Bachillerato en l&iacute;nea CTEC ; (iv) falsificar cualquier encabezado de paquete TCP/IP o cualquier parte de
+    la informaci&oacute;n del encabezado en cualquier correo electr&oacute;nico o publicaci&oacute;n, o la utilizaci&oacute;n del Servicio para
+    enviar informaci&oacute;n de identificaci&oacute;n alterada, enga&ntilde;osa o de fuente falsa; o (v) interferir en el acceso (al igual que alterarlo o
+    tratar de alterarlo) de cualquier usuario, servidor o red, entre las que se incluyen las siguientes acciones: el env&iacute;o de virus, la sobrecarga,
+    el desbordamiento, el env&iacute;o de correo basura, el bombardeo de correo electr&oacute;nico de los Servicios o el uso de scripts para la
+    creaci&oacute;n del Contenido de tal manera que interfiera o genere una carga indebida en los Servicios.
+</p>
+<p>
+    9. Pol&iacute;tica de derechos de autor
+</p>
+<p>
+    Bachillerato en l&iacute;nea CTEC respeta la propiedad intelectual de otros y espera que los usuarios de los Servicios hagan lo mismo. Bachillerato en
+    l&iacute;nea CTEC responder&aacute; a notificaciones de supuesta vulneraci&oacute;n de los derechos de autor que cumplan con la ley vigente y
+    sean proporcionadas a Bachillerato en l&iacute;nea CTEC de manera apropiada. Si usted creyera que su Contenido ha sido copiado de manera que constituye
+    una violaci&oacute;n de los derechos de autor, Bachillerato en l&iacute;nea CTEC pide encarecidamente que proporcione la siguiente
+    informaci&oacute;n: (i) una firma f&iacute;sica o electr&oacute;nica del propietario de los derechos de autor o de la persona autorizada para
+    actuar en su representaci&oacute;n; (ii) identificaci&oacute;n del material sujeto a los derechos de autor que alegan haber sido violados; (iii)
+    identificaci&oacute;n del material que se alega haber sido violado o estar sujeto a la actividad de violaci&oacute;n y que debe ser eliminado, o
+    cuyo acceso debe prohibirse, y toda informaci&oacute;n pertinente para permitir a Bachillerato en l&iacute;nea CTEC la localizaci&oacute;n del
+    material; (iv) la informaci&oacute;n de contacto del usuario, incluidos la direcci&oacute;n, el n&uacute;mero de tel&eacute;fono y la
+    direcci&oacute;n de correo electr&oacute;nico; (v) la declaraci&oacute;n del usuario que cree de buena fe que el titular de los derechos de
+    autor, su representante o la ley, no ha autorizado el uso del material seg&uacute;n la manera en que ha sido expuesto; y (vi) una
+    declaraci&oacute;n que confirme que la informaci&oacute;n de la notificaci&oacute;n es precisa y, bajo pena de perjurio, que el usuario
+    est&aacute; autorizado a actuar en representaci&oacute;n del titular de los derechos de autor.
+</p>
+<p>
+    <br/>
+    Bachillerato en l&iacute;nea CTEC se reserva el derecho de quitar Contenido que presuntamente infrinja estos derechos sin previo aviso,
+    seg&uacute;n nuestro &uacute;nico entender y sin ninguna responsabilidad ante usted. En determinadas circunstancias, Bachillerato en
+    l&iacute;nea CTEC podr&aacute; tambi&eacute;n cerrar la cuenta de un usuario si se determina que este ha infringido estas disposiciones en
+    m&aacute;s de una ocasi&oacute;n o de forma grave y/o dolosa.
+</p>
+<p>
+    10. Finalizaci&oacute;n de estas condiciones
+</p>
+<p>
+    Las Condiciones seguir&aacute;n aplic&aacute;ndose hasta que usted o Bachillerato en l&iacute;nea CTEC las den por finalizadas de la siguiente
+    manera:
+</p>
+<p>
+    <br/>
+    Usted puede poner fin a su acuerdo legal con Bachillerato en l&iacute;nea CTEC en cualquier momento y por cualquier raz&oacute;n. Sin embargo,
+    deber&aacute; notificar a Bachillerato CTEC su intenci&oacute;n de cancelar el servicio y solicitar por escrito la devoluci&oacute;n de sus
+    documentos al siguiente correo: controlescolar@ctecenlinea.mx. Si deja de utilizar los Servicios sin notificarlo, es posible que Bachillerato en
+    l&iacute;nea CTEC las desactive debido a inactividad prolongada.
+</p>
+<p>
+    <br/>
+    Bachillerato en l&iacute;nea CTEC puede suspender o cancelar sus cuentas o dejar de proporcionarle la totalidad o una parte de los Servicios, en
+    cualquier momento y por cualquier raz&oacute;n, por los siguientes motivos, entre otros: si Bachillerato en l&iacute;nea CTEC cree (i) que usted ha
+    violado estas Condiciones o las <a href="http://support.twitter.com/articles/18311-the-twitter-rules">Reglas de Bachillerato en l&iacute;nea CTEC</a>,
+    (ii) que usted crea un riesgo o una posible exposici&oacute;n legal para Bachillerato en l&iacute;nea CTEC; (iii) que la prestaci&oacute;n de
+    los Servicios por parte de Bachillerato en l&iacute;nea CTEC ya no es comercialmente viable para Bachillerato en l&iacute;nea CTEC; o (iv) que
+    usted deje de pagar las cuotas correspondientes. Bachillerato en l&iacute;nea CTEC realizar&aacute; esfuerzos razonables para notificarle a
+    trav&eacute;s de la direcci&oacute;n de correo electr&oacute;nico asociada a su cuenta o la pr&oacute;xima vez que usted intente acceder a
+    su cuenta.
+</p>
+<p>
+    <br/>
+    En dichos casos, se dar&aacute;n por finalizadas las Condiciones, incluida, entre otras, su licencia de uso de los Servicios.
+</p>
+<p>
+    <br/>
+    Ninguna disposici&oacute;n de la presente secci&oacute;n afectar&aacute; los derechos de Bachillerato en l&iacute;nea CTEC de cambiar,
+    limitar o detener la prestaci&oacute;n de los Servicios sin previo aviso, seg&uacute;n lo dispuesto en la secci&oacute;n 1.
+</p>
+<p>
+    11. Renuncia y limitaciones de responsabilidad
+</p>
+<p>
+    Lea esta secci&oacute;n atentamente debido a que limita la responsabilidad de Bachillerato en l&iacute;nea CTEC y sus compa&ntilde;&iacute;as madre,
+    sus subsidiarios, sus afiliados, sus empresas relacionadas, oficiales, empleados, agentes, representantes, socios y cedentes (denominados Entidades de
+    Bachillerato en l&iacute;nea CTEC). Cada subsecci&oacute;n a continuaci&oacute;n solo se aplica hasta la medida m&aacute;xima permitida
+    conforme a la ley aplicable. Algunas jurisdicciones no permiten la renuncia de responsabilidad de garant&iacute;as impl&iacute;citas o la
+    limitaci&oacute;n de responsabilidad en contratos, por lo que el contenido de esta secci&oacute;n puede no ser aplicable. Ninguna
+    disposici&oacute;n de la presente secci&oacute;n est&aacute; destinada a limitar ning&uacute;n derecho del que usted disponga y que no se
+    puede limitar legalmente.
+</p>
+<p>
+    A. Los Servicios est&aacute;n disponibles TAL CUAL
+</p>
+<p>
+    El acceso y uso de los Servicios o de cualquier Contenido se realizar&aacute; bajo su propia responsabilidad. Usted entiende y acepta que los Servicios
+    se ofrecen TAL CUAL y COMO EST&Aacute;N DISPONIBLES. Sin perjuicio de lo expresado anteriormente, y en la medida m&aacute;xima permitida por la
+    ley aplicable, LAS ENTIDADES DE BACHILLERATO EN L&Iacute;NEA CTEC NIEGAN TODA GARANT&Iacute;A, EXPRESA O IMPL&Iacute;CITA, DE MERCANTIBILIDAD,
+    ADECUACI&Oacute;N PARA UN DETERMINADO PROP&Oacute;SITO O NO VULNERACI&Oacute;N DE LOS DERECHOS DE AUTOR.
+</p>
+<p>
+    <br/>
+    Las Entidades de Bachillerato en l&iacute;nea CTEC no realizan declaraci&oacute;n ni ofrecen garant&iacute;a alguna y se exoneran de toda
+    responsabilidad derivada de lo siguiente: (i) la integridad, exactitud, disponibilidad, puntualidad, seguridad o fiabilidad de los Servicios o cualquier
+    Contenido; (ii) los da&ntilde;os en alg&uacute;n sistema inform&aacute;tico, la p&eacute;rdida de datos o cualquier otro da&ntilde;o producto del acceso a o
+    la utilizaci&oacute;n de estos Servicios o cualquier Contenido; (iii) la supresi&oacute;n o la falla de almacenamiento o de transmisi&oacute;n
+    de cualquier Contenido u otro comunicado mantenido por los Servicios; y (iv) el hecho de que los Servicios cumplan las exigencias del usuario o
+    est&eacute;n disponibles ininterrumpidamente, de manera segura o sin errores. Ning&uacute;n aviso ni informaci&oacute;n, en formato oral o
+    escrito, obtenido de las Entidades de Bachillerato en l&iacute;nea CTEC o a trav&eacute;s de los Servicios, crear&aacute; garant&iacute;a
+    alguna que no se encuentre de manera expresa en el presente texto.
+</p>
+<p>
+    <strong>B. Enlaces</strong>
+</p>
+<p>
+    Los Servicios pueden contener enlaces a sitios web o recursos de terceros. Usted reconoce y acepta que las Entidades de Bachillerato en l&iacute;nea
+    CTEC no son responsables de lo siguiente: (i) la disponibilidad o precisi&oacute;n de tales sitios web o recursos o (ii) el contenido, los productos o
+    los servicios de estos sitios web o recursos, o que est&eacute;n disponibles en tales sitios web o recursos. Los enlaces a estos sitios web o recursos
+    no implican apoyo por parte de las Entidades de Bachillerato en l&iacute;nea CTEC a tales sitios o recursos, ni al contenido, los productos o los
+    servicios disponibles en tales sitios o recursos. Usted conoce y asume toda responsabilidad y riesgo derivado del uso de cualquiera de estos sitios web o
+    recursos.
+</p>
+<p>
+    <strong>C. Limitaci&oacute;n de responsabilidad</strong>
+</p>
+<p>
+    EN LA MEDIDA M&Aacute;XIMA PERMITIDA POR LA LEY APLICABLE, LAS ENTIDADES DE BACHILLERATO EN L&Iacute;NEA CTEC NO SER&Aacute;N RESPONSABLES DE
+    DA&ntilde;OS INDIRECTOS, INCIDENTALES, ESPECIALES, CONSECUENTES O PUNITIVOS NI DE LA P&Eacute;RDIDA DE BENEFICIOS O GANANCIAS, YA SEAN DIRECTOS O INDIRECTOS,
+    NI DE CUALQUIER P&Eacute;RDIDA DE DATOS, USO, BUENA VOLUNTAD U OTRAS P&Eacute;RDIDAS INTANGIBLES, COMO RESULTADO DE (i) SU ACCESO A, USO O
+    IMPOSIBILIDAD DE ACCEDER A O UTILIZAR EL SERVICIO; (ii) CUALQUIER CONTENIDO O CONDUCTA DE CUALQUIER TERCERO SOBRE LOS SERVICIOS, INCLUIDOS, ENTRE OTROS,
+    CUALQUIER ACTO OFENSIVO O DE DIFAMACI&Oacute;N O CUALQUIER ACTO ILEGAL DE OTROS USUARIOS O TERCEROS; (iii) CUALQUIER CONTENIDO OBTENIDO DE LOS
+    SERVICIOS; O (iv) EL ACCESO, EL USO O LA ALTERACI&Oacute;N NO AUTORIZADOS DE SUS TRANSMISIONES O SU CONTENIDO; (v) CUALQUIER CONTENIDO QUE LA LEY
+    SE&Ntilde;ALE COMO DELITO.
+</p>
+<p>
+    <br/>
+    EN NING&Uacute;N CASO LA RESPONSABILIDAD TOTAL DE LAS ENTIDADES DE BACHILLERATO EN L&Iacute;NEA CTEC EXCEDER&Aacute; EL VALOR DE $1,000.00 (UN
+    MIL PESOS 00/100 M.N.) O EL VALOR QUE EL USUARIO PAG&Oacute; A BACHILLERATO EN L&Iacute;NEA CTEC, EN CASO DE QUE HAYA PAGADO ALGUNO, EN EL
+    &Uacute;LTIMO MES POR LOS SERVICIOS QUE OCASIONARON LA RECLAMACI&Oacute;N.
+</p>
+<p>
+    <br/>
+    LAS LIMITACIONES DE ESTA SUBSECCI&Oacute;N APLICAR&Aacute;N A CUALQUIER TEOR&Iacute;A DE RESPONSABILIDAD, YA SEA BASADA EN
+    GARANT&Iacute;AS, CONTRATOS, ESTATUTOS, AGRAVIOS (INCLUYENDO NEGLIGENCIA) O CUALQUIER OTRA TEOR&Iacute;A LEGAL, YA SEA QUE LAS ENTIDADES DE
+    BACHILLERATO EN L&Iacute;NEA CTEC EST&Eacute;N INFORMADAS DE LA POSIBILIDAD DE TALES DA&Ntilde;OS O NO, Y AUNQUE UN RECURSO ESTIPULADO EN ESTE DOCUMENTO
+    HAYA FRACASADO EN SU PROP&Oacute;SITO ESENCIAL.
+</p>
+<p>
+    12. Condiciones generales
+</p>
+<p>
+    <strong>A. Cl&aacute;usula de cesi&oacute;n y nulidad parcial</strong>
+</p>
+<p>
+    La incapacidad de Bachillerato en l&iacute;nea CTEC de hacer cumplir cualquier derecho o disposici&oacute;n de estas Condiciones no se
+    considerar&aacute; como una cesi&oacute;n de tal derecho o disposici&oacute;n. En caso de que cualquier disposici&oacute;n de estas
+    Condiciones se considere inv&aacute;lida o inaplicable, dicha disposici&oacute;n se limitar&aacute; o eliminar&aacute; en la
+    m&iacute;nima medida necesaria, y las disposiciones restantes de estas Condiciones permanecer&aacute;n en pleno vigor y efecto.
+</p>
+<p>
+    <strong>B. Ley aplicable y jurisdicci&oacute;n competente</strong>
+</p>
+<p>
+    Estas Condiciones o cualquier otra acci&oacute;n relativa a ellas se regir&aacute;n por las leyes del Distrito Federal sin considerar ni aplicar
+    las cl&aacute;usulas de conflicto de leyes del estado o pa&iacute;s de residencia del usuario. Toda reclamaci&oacute;n, procedimiento legal o
+    litigio surgido en relaci&oacute;n con estos Servicios tendr&aacute; lugar &uacute;nicamente en los tribunales federales o estatales ubicados
+    en el Distrito Federal, M&eacute;xico, y usted acepta dicha jurisdicci&oacute;n y acci&oacute;n en tales tribunales y renuncia a cualquier
+    objeci&oacute;n en cuanto a la inconveniencia del foro.
+</p>
+<p>
+    <strong>C. Totalidad del acuerdo y convenio entre las partes</strong>
+</p>
+<p>
+Estas Condiciones, para los Servicios de Bachillerato en l&iacute;nea CTEC y nuestra Pol&iacute;tica de Privacidad constituyen el acuerdo completo y exclusivo entre Bachillerato en
+    l&iacute;nea CTEC y usted en relaci&oacute;n con los Servicios (excluyendo aquellos servicios para los que tiene un acuerdo separado con
+    Bachillerato en l&iacute;nea CTEC que se considera una adici&oacute;n o un reemplazo expl&iacute;citos respecto de estas Condiciones), y las
+    presentes Condiciones sustituyen y reemplazan cualquier acuerdo anterior entre usted con respecto a Bachillerato en l&iacute;nea CTEC y los Servicios.
+    M&aacute;s all&aacute; de los miembros del grupo de empresas de las que Bachillerato en l&iacute;nea CTEC es la empresa matriz, ninguna otra
+    persona o empresa ser&aacute; un tercero beneficiario de estas Condiciones.
+</p>
+<p>
+    <br/>
+    Podemos revisar estas Condiciones peri&oacute;dicamente; las versiones m&aacute;s actuales siempre estar&aacute;n disponibles. Si la
+    revisi&oacute;n, seg&uacute;n nuestro &uacute;nico entender, es relevante, se lo notificaremos por medio de un correo electr&oacute;nico
+    enviado a la direcci&oacute;n de correo electr&oacute;nico asociada a su cuenta. Al continuar accediendo a o utilizando los Servicios
+    despu&eacute;s de efectuadas las revisiones, usted acepta quedar obligado por las Condiciones revisadas.
+</p>
+<p>
+    <br/>
+    Si tiene alguna duda sobre estas condiciones, contacte con nosotros.
+</p>
+<p>
+    Tel&eacute;fono: 56064524
+</p>
+<p>
+    Correo: contacto@ctecenlinea.mx
+</p>
+<p>
+    Direcci&oacute;n: Ribera de San Cosme 7, Col Santa Mar&iacute;a la Ribera C.P. 06400, Delegaci&oacute;n Cuauht&eacute;moc, Ciudad de
+    M&eacute;xico
+</p>
+         	
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Aviso de privacidad -->
+  <div class="modal fade" id="priv" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><center>Aviso de privacidad</center></h4>
+        </div>
+        <div class="modal-body privacidad">
+         <p align="center">
+		</p>
+		<p>
+		    Su privacidad es muy importante para <strong>CTEC EN L&Iacute;NEA</strong>, empresa socialmente responsable, por ello desea dar a conocer su Aviso de Privacidad
+		    Corto, los datos a recabar y su uso, de acuerdo a la LEY FEDERAL DE PROTECCI&Oacute;N DE DATOS PERSONALES EN POSESI&Oacute;N DE LOS PARTICULARES, publicada el 5 de Julio
+		    del 2010, en el Diario Oficial de la Federaci&oacute;n.
+		</p>
+		<p>
+    <strong>I. DEFINICIONES</strong>
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>I. Datos Personales: </strong>
+		    Cualquier informaci&oacute;n concerniente a una persona f&iacute;sica identificada o identificable.
+		</p>
+		<p>
+		    <strong>II. Datos Personales sensibles: </strong>
+		    Aquellos datos personales que afecten a la esfera m&aacute;s &iacute;ntima de su titular, o cuya utilizaci&oacute;n indebida pueda dar origen a discriminaci&oacute;n o conlleve un
+		    riesgo grave para &eacute;ste. En particular, se consideran sensibles aquellos que puedan revelar aspectos como origen racial, &eacute;tnico, estado de salud presente y
+		    futura, informaci&oacute;n gen&eacute;tica, creencias religiosas, filos&oacute;ficas y morales, afiliaci&oacute;n sindical, opiniones pol&iacute;ticas, preferencia sexual.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>III. Derechos ARCO: </strong>
+		    Derechos de acceso, rectificaci&oacute;n, cancelaci&oacute;n y oposici&oacute;n previstos en la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>IV. Encargado: </strong>
+		    La persona f&iacute;sica o jur&iacute;dica que sola o conjuntamente con otras trate datos personales por cuenta del responsable, ajeno a su organizaci&oacute;n.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>V. Ley: </strong>
+		    Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>VI. Lineamientos: </strong>
+		    Lineamientos del Aviso de Privacidad.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>VII. Reglamento: </strong>
+		    Reglamento de la Ley Federal de Protecci&oacute;n de Datos Personales
+		</p>
+		<p>
+		    en Posesi&oacute;n de los Particulares.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>VIII. Responsable</strong>
+		    : Persona F&iacute;sica o Moral, de car&aacute;cter privado que decide sobre el tratamiento de los Datos Personales.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>II. DATOS DEL RESPONSABLE</strong>
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>CENTRO DE ESTUDIOS EMPRESARIALES S.C.,</strong>
+		    con domicilio en Allende 378,
+		</p>
+		<p>
+		    Tlalpan Centro, C&oacute;digo Postal: 14000 Delegaci&oacute;n: Tlalpan, M&eacute;xico, D.F., es responsable de recibir sus datos personales, del uso que se le d&eacute; a los mismos y
+		    de su protecci&oacute;n.
+		</p>
+		<p>
+		    <strong>III: INFORMACI&Oacute;N PROPORCIONADA POR EL TITULAR </strong>
+		</p>
+		<p>
+		    Sus datos personales solicitados, ser&aacute;n: nombre completo, fecha de nacimiento, direcci&oacute;n, tel&eacute;fono, Registro Federal de Contribuyentes (en caso de ser
+		    mayor de edad), CURP y correo electr&oacute;nico. Tambi&eacute;n se recaba el certificado de secundaria y fotograf&iacute;as correspondientes. En caso de requerir factura
+		    digital, tambi&eacute;n se requieren los datos fiscales para poder emitirla.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>IV. FINALIDAD DEL TRATAMIENTO DE DATOS</strong>
+		</p>
+		<p>
+		    1. La finalidad principal, de solicitar sus datos personales, ser&aacute; para darle a usted ingreso al Bachillerato, ingresar su documentaci&oacute;n a la SEP (DGETI
+		    201010001890) para el reconocimiento oficial de estudios, dar seguimiento a su avance, proporcionar el acceso a los ex&aacute;menes y sus resultados, para
+		    posteriormente tramitar su certificado de Bachillerato, si los requerimientos estipulados en el documento T&Eacute;RMINOS Y CONDICIONES, aceptados por usted al
+		    ingreso a CTEC EN L&Iacute;NEA se cumplen.
+		</p>
+		<p>
+		    2. La finalidad secundaria, del uso de sus datos, ser&aacute; para enviar notificaciones y comunicados del Bachillerato en L&iacute;nea, as&iacute; como informaci&oacute;n
+		    complementaria del mismo y/o de terceros que ofrezcan productos o servicios que puedan ser de inter&eacute;s para usted.
+		</p>
+		<p>
+		    <strong>V. TRANSFERENCIA DE DATOS</strong>
+		</p>
+		<p>
+		    Sus Datos Personales, incluyendo el certificado de secundaria, ser&aacute;n transferidos a la Secretar&iacute;a de Educaci&oacute;n P&uacute;blica, quien otorga el certificado de
+		    Bachillerato con reconocimiento oficial.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>VI. LIMITACI&Oacute;N DE USO Y DIVULGACI&Oacute;N DE LOS DATOS</strong>
+		</p>
+		<p>
+		    El Responsable ha adoptado los niveles de seguridad y de protecci&oacute;n de Datos Personales requeridos por Ley, adicionalmente, podr&aacute; implementar otros medios
+		    y medidas t&eacute;cnicas que se encuentren a su alcance para evitar la p&eacute;rdida, mal uso, alteraci&oacute;n, acceso no autorizado y robo de los Datos Personales
+		    proporcionados por el Titular.
+		</p>
+		<p>
+		Usted podr&aacute; limitar el uso y divulgaci&oacute;n de sus Datos Personales a trav&eacute;s del env&iacute;o de un correo electr&oacute;nico a la direcci&oacute;n    <a href="mailto:datos_personales@bachilleratocetec.com.mx">datos_personales@ctecenlinea.mx</a>
+		</p>
+		<p>
+		    en donde podr&aacute; solicitar el formulario y datos requeridos para el ejercicio de los DERECHOS ARCO.
+		</p>
+		<p>
+		    <strong> </strong>
+		</p>
+		<p>
+		    <strong>VII. MEDIOS PARA EJERCER LOS DERECHOS ARCO</strong>
+		</p>
+		<p>
+		    El Titular, por s&iacute; o mediante representante legal debidamente acreditado, tiene reconocidos y podr&aacute; ejercitar los derechos de acceso, rectificaci&oacute;n,
+		    cancelaci&oacute;n y oposici&oacute;n frente al Responsable.
+		</p>
+		<p>
+		    Para ello el Titular o su representante legal podr&aacute;n solicitar el formulario de ejercicio
+		</p>
+		<p>
+		    de Derechos ARCO a la direcci&oacute;n de correo electr&oacute;nico: <a href="mailto:datos_personales@bachilleratocetec.com.mx">datos_personales@ctecenlinea.mx</a>.
+		    Dicho formato se deber&aacute; llenar y firmar y devolver a la misma direcci&oacute;n de correo electr&oacute;nico acompa&ntilde;ado de la siguiente documentaci&oacute;n escaneada, a fin de
+		    que pueda llevarse a cabo la autenticaci&oacute;n del titular que quiera ejercer sus Derechos ARCO:
+		</p>
+		<p>
+		    1. Identificaci&oacute;n oficial vigente del Titular (Credencial del Instituto Nacional Electoral, Pasaporte emitido por la Secretar&iacute;a de Relaciones Exteriores,
+		    vigente, Cartilla del servicio Militar Nacional o C&eacute;dula Profesional)
+		</p>
+		<p>
+		    2. En los casos en que el ejercicio de los Derechos ARCO se realice a trav&eacute;s del representante legal del Titular, adem&aacute;s de la acreditaci&oacute;n de la identidad
+		    de ambos, se deber&aacute; entregar el poder notarial correspondiente, carta poder firmada ante dos testigos o declaraci&oacute;n en comparecencia del Titular.
+		</p>
+		<p>
+		    3. Cuando se quiera ejercer el derecho de rectificaci&oacute;n, se tendr&aacute; que entregar la documentaci&oacute;n que acredite el cambio solicitado de acuerdo a los datos
+		    personales a rectificar.
+		</p>
+		<p>
+		    4. La respuesta a dicho formato, se llevar&aacute; a cabo por el Responsable en un m&aacute;ximo de 20 d&iacute;as h&aacute;biles contados a partir de la fecha en que fue recibido el
+		    mismo. El Responsable podr&aacute; ampliar &eacute;ste plazo hasta por 20 d&iacute;as h&aacute;biles m&aacute;s, cuando el caso lo amerite, previa notificaci&oacute;n de esto al Titular.
+		</p>
+		<p>
+		    La resoluci&oacute;n adoptada por el Responsable ser&aacute; comunicada al Titular a trav&eacute;s de las opciones elegidas por &eacute;ste, las cuales se encuentran establecidas en
+		    el formato de ejercicio de Derechos ARCO que solicitar&aacute; por correo electr&oacute;nico.
+		</p>
+		<p>
+		    En los casos en que el Titular desee revocar la autorizaci&oacute;n otorgada al Responsable respecto de los Datos Personales proporcionados, deber&aacute; realizar la
+		    solicitud correspondiente en los mismos t&eacute;rminos establecidos en el presente aviso de privacidad para ejercer los derechos ARCO.
+		</p>
+		<p>
+		    En aquellos casos en los que se desee ejercer el derecho de Acceso a sus Datos Personales, la informaci&oacute;n solicitada ser&aacute; proporcionada a trav&eacute;s del medio
+		    que usted haya decidido en la solicitud de ejercicio de derechos ARCO y en el supuesto de que el Responsable no cuente con sus Datos Personales, se lo
+		    informaremos por los medios a trav&eacute;s de los cu&aacute;les realiz&oacute; la solicitud.
+		</p>
+		<p>
+		Para cualquier duda o aclaraci&oacute;n respecto del presente proceso favor de enviar un correo a la    <a href="mailto:datos_personales@bachilleratocetec.com.mx">datos_personales@ctecenlinea.mx</a>
+		</p>
+		<p>
+		    <strong>VIII. RESPONSABLE DE LOS DATOS PERSONALES</strong>
+		    . La Lic. Rosario Cort&eacute;s, ser&aacute; la persona que se encargue del manejo y seguridad de los Datos Personales del Titular.
+		</p>
+		<p>
+		    <strong>IX. CAMBIOS AL AVISO DE PRIVACIDAD: </strong>
+		    Mediante nuestro sitio web, notificaremos las modificaciones/actualizaciones, as&iacute; como la fecha en que realicemos cambios a nuestro Aviso de Privacidad
+		</p>
+		<p>
+		    <strong>X.</strong>
+		    <strong>INFORMACI&Oacute;N T&Eacute;CNICA:</strong>
+		    En nuestro sitio web, no se recopila ninguna informaci&oacute;n, de forma autom&aacute;tica.
+		</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+	.terminos ,.privacidad{
+		text-align:justify;
+		margin: 30px;
+	}
+</style>
+
+<script>
+	$(document).on("click","#send",function(e) {
+		var value = $("#pass").val();
+		var confirm = $("#passConfirm").val();
+		if(value != "" && confirm != ""){
+			if(confirm == value){
+				if(value.length >= 8){
+					var hash  = sha3(value);
+					$("#pass").val(hash);
+					$("#passConfirm").val(hash);
+					return true;
+				}else{
+					alertify.alert("La contrase\u00f1a debe contener m\u00ednimo 8 caracteres");
+					return false;
+					}
+			}else{
+				alertify.alert("Las contrase\u00f1as no coinciden");
+				return false;
+			}
+		}
+		
+	})
+	
+	var sha3 = function(value) {
+	return CryptoJS.SHA3(value).toString();
+	}
+</script>

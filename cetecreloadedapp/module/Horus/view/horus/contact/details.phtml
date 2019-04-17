@@ -1,0 +1,76 @@
+<?php $helpUser = $this->helps->contactDetails;
+	echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/projectsStyle.css'));
+?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#contacts', 11);
+	
+	$('a.arriba').click(function(){ //Id del elemento cliqueable
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+	});
+});
+</script>
+
+
+<h3 class="centerHor">Detalles del Contacto</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index') ?>"><img title="Contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>"></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+	
+<div id="overflow">
+	<div class="reports">
+		<tbody id="details">
+			<div id="fieldsetForm" class="forms">
+				<?php if($this->contacts): ?>
+					<?php foreach ($this->contacts as $contact ) : ?>
+					<fieldset>
+						<legend><span class="title">Informaci&oacute;n General</span></legend>
+							<br />
+							<div><span class="format">Tipo de Contacto : </span><span class="result" ><?php  echo ($contact['type_principal'] == 1) ? "Principal" : "Secundario"; ?></span></div>
+							<br />
+							<div><span class="format">Nombre : </span><span class="result" ><?php  echo $contact['name_contact']; ?></span></div>
+							<br />
+							<div><span class="format">Apellido Paterno : </span><span class="result" ><?php  echo $contact['surname_contact']; ?></span></div>
+							<br />
+							<div><span class="format">Apellido Materno : </span><span class="result" ><?php  echo ($contact['lastname_contact']  != "" ) ? $contact['lastname_contact'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">E-mail : </span><span class="result" ><a href="mailto:<?php  echo $contact['mail_contact']; ?>?Subject=Hola%20fractal"><?php  echo $contact['mail_contact']; ?></a></span></div>
+							<br />
+							<div><span class="format">Puesto : </span><span class="result" ><?php  echo $contact['name_job']; ?></span></div>
+							<br />
+							<div><span class="format">Tel&eacute;fono : </span><span class="result" ><?php  echo $contact['phone_contact']; ?></span></div>
+							<br />
+							<div><span class="format">Tel&eacute;fono M&oacute;vil : </span><span class="result" ><?php  echo ($contact['cellphone_contact'] != "") ? $contact['cellphone_contact'] : Profile::PENDIENTE; ?></span></div>
+						</fieldset>
+					<fieldset>
+						<legend><span class="title">Datos de la Empresa</span></legend>
+							<br />
+							<div><span class="format">Raz&oacute;n Social : </span><span class="result" ><?php  echo ($contact['name_company'] != "" ) ? $contact['name_company'] :  Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Sitio Web : </span><span class="result" ><a href="<?php  echo ($contact['website'] != "" ) ? $contact['website'] :  "#"; ?>" target="_blank"><?php  echo ($contact['website'] != "" ) ? $contact['website'] :  Profile::PENDIENTE; ?></a></span></div>
+							<br />
+							<div><span class="format">Giro o Servicio : </span><span class="result" ><?php  echo ($contact['business'] != "")? $contact['business'] : Profile::PENDIENTE; ?></span></div>
+							<br />
+							<div><span class="format">Fecha de Registro : </span><span class="result" ><?php  echo Application_Util_Tools::dateFrontFormat('-', $contact['record_date']); ?></span></div>
+					</fieldset> 
+			</div>
+				   <?php  endforeach; endif;?>
+		</tbody>
+	</div>
+</div>
+
+
+<div class='center'>
+	<a href="#" class="arriba" id="subPay">Ir arriba</a>
+	<a id="subPay" href='javascript:history.back();'>Regresar</a>
+</div>

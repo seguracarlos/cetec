@@ -1,0 +1,135 @@
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+<?=$this->element->getElement('idvision'); ?>
+<fieldset>
+		<legend>Datos del Vision</legend>
+    <table>
+    		<tbody> 
+	    		<tr>
+	                <td>*Fecha: </td>
+	                <td>*Nombre del Cliente: </td>
+	                <td>*Nombre del Proyecto: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('fecha'); ?></td>
+	                <td><?=$this->element->getElement('name_customers'); ?></td>
+	                 <td><?=$this->element->getElement('name_project'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Problema: </td>
+	                <td>Afecta a: </td>
+	                <td>Cuyo impacto ocasiona: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('problem'); ?></td>
+	                <td><?=$this->element->getElement('affects'); ?></td>
+	                 <td><?=$this->element->getElement('impact'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Una solucion exitosa: </td>
+	                <td>Ambiente de Operaci&oacute;n: </td>
+	                <td>Ambiente de Usuario: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('solutions'); ?></td>
+	                <td><?=$this->element->getElement('operating_environment'); ?></td>
+	                 <td><?=$this->element->getElement('user_environment'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Perfiles de Usuario: </td>
+	                <td>Necesidades de los Clientes: </td>
+	                <td>Necesidades del Corporativo: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('user_profiles'); ?></td>
+	                <td><?=$this->element->getElement('customers'); ?></td>
+	                 <td><?=$this->element->getElement('corporate'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Necesidades del Distribuidor: </td>
+	                <td>Vista General del Proyecto: </td>
+	                <td>Login: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('distribuitor'); ?></td>
+	                <td><?=$this->element->getElement('view_project'); ?></td>
+	                 <td><?=$this->element->getElement('login'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Activaciones: </td>
+	                <td>Activar Tarjetas: </td>
+	                <td>Asignar Puntos: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('activations'); ?></td>
+	                <td><?=$this->element->getElement('activate_card'); ?></td>
+	                 <td><?=$this->element->getElement('assign_points'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Promociones: </td>
+	                <td>Comunicador: </td>
+	                <td>Consultar Tarjetas Activadas: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('promotion'); ?></td>
+	                <td><?=$this->element->getElement('comunicator'); ?></td>
+	                 <td><?=$this->element->getElement('activate_card_check'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Puntos Otorgados: </td>
+	                <td>Puntos Redimidos: </td>
+	                <td>Noticias: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('points_awarded'); ?></td>
+	                <td><?=$this->element->getElement('points_redeemed'); ?></td>
+	                 <td><?=$this->element->getElement('news'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Datos Personales: </td>
+	                <td>Balance de Puntos: </td>
+	                <td>Consultar Promociones: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('personal_data'); ?></td>
+	                <td><?=$this->element->getElement('points_balance'); ?></td>
+	                 <td><?=$this->element->getElement('see_promotions'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Consultar Noticias: </td>
+	                <td>Promociones: </td>
+	                <td>Tienda: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('the_news'); ?></td>
+	                <td><?=$this->element->getElement('promotions'); ?></td>
+	                 <td><?=$this->element->getElement('store'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Otros Requerimientos: </td>
+	                <td>Estandres Aplicados: </td>
+	                <td>Requerimientos del Sistema: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('other_requerimnets'); ?></td>
+	                <td><?=$this->element->getElement('applicable_standard'); ?></td>
+	                 <td><?=$this->element->getElement('system_requeriments'); ?></td>
+	            </tr>
+	            <tr>
+	                <td>Requerimientos de Desempe&nacute;o: </td>
+	                <td>Requerimientos de Ambiente: </td>
+	                <td>Perspectiva del Proyecto: </td>
+	            </tr>
+	    		<tr>
+	                <td><?=$this->element->getElement('peformance_requeriments'); ?></td>
+	                <td><?=$this->element->getElement('environmental_requirements'); ?></td>
+	                <td><?=$this->element->getElement('perspective_project'); ?></td>
+	            </tr>
+    		</tbody>		
+    </table>
+</fieldset>
+<div class="center">
+	<?=$this->element->getElement('Guardar'); ?>
+    <a href="javascript:location.href='<?=$this->baseUrl("/Gutenberg/vision/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+</div>
+</div>

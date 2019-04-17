@@ -1,0 +1,440 @@
+#options{
+	margin: auto;
+	width:80%;
+}
+#options table{
+	margin: auto;
+}
+.actionCat{
+	display: none;
+}
+.movements {
+	margin: auto;
+	width:80%;
+	box-shadow: 5px 5px 2px #888888;
+	border:1px solid #000000;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.movements table{
+	width:100%;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+.movements tr:last-child td:last-child {
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.movements table tr:first-child td:first-child {
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.movements table tr:first-child td:last-child {
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+}
+.movements tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+}
+.movements tr:hover td{
+	background-color: #208efc;
+	color: white;
+}
+
+.movements tr.cero:hover td{
+	background-color: white;
+	color: black;
+	-webkit-box-shadow:  0.3px 0.3px 2px 2px ;
+    box-shadow:  0.3px 0.3px 2px 2px ;
+}
+
+.movements tr:nth-child(odd){ background-color: #a5d2ff; }
+.movements tr.cero:nth-child(odd){
+	background-color: gray;
+	font-size: 14px;
+}
+
+.movements tr:nth-child(even){ background-color:#ffffff; }
+.movements tr.cero:nth-child(even){
+	background-color: gray;
+	font-size: 14px;
+}
+
+.movements td{
+	vertical-align:middle;
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align: center;
+	padding:5px;
+	font-size:10px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#000000;
+}
+.movements tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}
+.movements tr.cero:last-child td{
+	font-size: 13px;
+}
+
+.movements tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}
+.movements tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.movements tr:first-child td{
+	background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
+	background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
+	background-color:#005fbf;
+	border:0px solid #000000;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#ffffff;
+}
+.movements tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
+	background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
+	background-color:#005fbf;
+}
+.movements tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.movements tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+
+
+.spaceTable{
+	background-color: transparent;
+	border-width:0px 0px 0px 0px;
+}
+
+/* ************* inicio - popup bank replacement ***************/
+
+#backgroundBank{
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupBank{
+	position: static;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 400px;
+	width: 600px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 10px;
+	font-size: 12px;
+	text-align: left;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	font-family: sans-serif;
+	top:20px;
+}
+
+#formBank{
+	width: 100%;	
+}
+
+#tableBank{
+	overflow: auto;
+	height: 800px;
+	width: 650px;
+}
+
+#hiddenForm{
+	width: 90%;
+}
+
+#btnCloseBank{
+	right: 2px;
+	top: 2px;
+	padding: 1px 4px;
+}
+
+#btnCloseBank{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnCloseBank:hover{
+	background: #00539c;
+}
+#loaderAjax{
+	display: none;
+}
+
+/* ************* fin - popup bank replacement ***************/
+
+/* ************* inicio - popup bank ***************/
+
+#backgroundAccountBank{
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupAccountBank{
+	position: static;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 500px;
+	width: 600px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 10px;
+	font-size: 12px;
+	text-align: left;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	font-family: sans-serif;
+	top:20px;
+}
+
+#formAccountBank{
+	width: 100%;	
+}
+
+#tableAccountBank{
+	overflow: auto;
+	height: 800px;
+	width: 650px;
+}
+
+#hiddenAccountForm{
+	width: 90%;
+}
+
+#btnCloseAccountBank{
+	right: 2px;
+	top: 2px;
+	padding: 1px 4px;
+}
+
+#btnCloseAccountBank{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnCloseAccountBank:hover{
+	background: #00539c;
+}
+#loaderAccountAjax{
+	display: none;
+}
+
+/************ inicio - popup cash reposition ************/
+
+#backgroundCash{
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupCash{
+	position: static;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 400px;
+	width: 600px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 10px;
+	font-size: 12px;
+	text-align: left;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	font-family: sans-serif;
+	top:20px;
+}
+
+#formCash{
+	width: 100%;	
+}
+
+#btnCloseCash{
+	right: 2px;
+	top: 2px;
+	padding: 1px 4px;
+}
+
+#btnCloseCash{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnCloseCash:hover{
+	background: #00539c;
+}
+
+/************ fin - popup cash reposition ************/
+
+/***************************** incio popup cash ***************************/
+
+#backgroundAccountCash{
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupAccountCash{
+	
+	position: static;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 450px;
+	width: 600px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 10px;
+	font-size: 12px;
+	text-align: left;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	font-family: sans-serif;
+	top:20px;
+}
+
+#formAccountCash{
+	width: 100%;	
+}
+
+#tableAccountBank{
+	overflow: auto;
+	height: 800px;
+	width: 650px;
+}
+
+#btnCloseAccountCash{
+	right: 2px;
+	top: 2px;
+	padding: 1px 4px;
+}
+
+#btnCloseAccountCash{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnCloseAccountCash:hover{
+	background: #00539c;
+}
+
+
+/***************************** fin popup cash ***************************/
+
+/*************** fin - popup bank **********************/
+
+#save, #cancel{
+	width: 30%;
+	margin: 0;
+	background-color: #D5E4EE;
+	color: #000;
+	padding: 6px 0;
+	font-weight: bold;
+	font-size: 12px;
+	outline: none;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	cursor: pointer;
+	border: 2px outset buttonface;
+}
+
+.Tx{
+	float: left;
+	margin-left: 30px;
+}
+
+#transBankCashDiv{
+	display: none;
+}

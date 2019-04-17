@@ -1,0 +1,179 @@
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Cambiar contrase&ntilde;a</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Sistema</a>
+			        <a href="#" class="btn btn-default">Usuarios</a>
+			        <a href="#" class="btn btn-default">Contrase&ntilde;a</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class=" head text-center">::Cambiar contrase&ntilde;a::</h3>
+		</div>
+	</div>
+	
+	<div class="row" id="rowPassChange">
+		<div class="col-md-6 col-md-offset-3">
+			<form id="formPass" action="" method="post">
+			
+				<p class="font-lato text-center text-info">Utiliza el formulario de abajo para cambiar tu contrase&ntilde;a.</p>
+				
+				<div class="form-group">
+					<input type="password" class="password input-lg form-control" name="password1" id="password1" placeholder="Nueva Contrase&ntilde;a" autocomplete="off">
+					<div class="row">
+						<div class="col-sm-6">
+							<span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 8 caracteres de longitud<br>
+							<span id="ucase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Una letra mayÃºscula
+						</div>
+						<div class="col-sm-6">
+							<span id="lcase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Una letra minÃºscula<br>
+							<span id="num" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Un nÃºmero
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<input type="password" class="password input-lg form-control" name="password2" id="password2" placeholder="Confirmar Contrase&ntilde;a" autocomplete="off">
+					<div class="row">
+						<div class="col-sm-12">
+							<span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Las contraseÃ±as no son iguales
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<input type="submit" id="changePass" class="col-xs-12 btn btn-info btn-load btn-lg" data-loading-text="Changing Password..." value="Cambiar Contrase&ntilde;a">
+				</div>
+				
+			</form>
+		</div>
+	</div>
+	
+</div>
+
+<style>
+.head{
+	font-family: 'Lato', sans-serif;
+	font-size: 25px;
+	text-transform: uppercase;
+	padding-bottom: 10px;
+}
+.font-lato{
+	font-family: 'Lato', sans-serif;
+}
+</style>
+
+<script>
+	var $basePath = "<?php echo $this->basePath(); ?>";	
+
+	$(document).ready(function(){
+		
+		//Validaciones al escribir las contraseñas
+		$(".password").keyup(function(){
+			var ucase = new RegExp("[A-Z]+");
+			var lcase = new RegExp("[a-z]+");
+			var num   = new RegExp("[0-9]+");
+
+			//Validar longitud de caracteres de la contraseña numero 1
+			if($("#password1").val().length >= 8){
+				$("#8char").removeClass("glyphicon-remove");
+				$("#8char").addClass("glyphicon-ok");
+				$("#8char").css("color","#00A41E");
+			}else{
+				$("#8char").removeClass("glyphicon-ok");
+				$("#8char").addClass("glyphicon-remove");
+				$("#8char").css("color","#FF0004");
+			}
+
+			//Validar si hay una letra mayuscula en la contraseña numero 1
+			if(ucase.test($("#password1").val())){
+				$("#ucase").removeClass("glyphicon-remove");
+				$("#ucase").addClass("glyphicon-ok");
+				$("#ucase").css("color","#00A41E");
+			}else{
+				$("#ucase").removeClass("glyphicon-ok");
+				$("#ucase").addClass("glyphicon-remove");
+				$("#ucase").css("color","#FF0004");
+			}
+
+			//Validar si hay una letra minuscula en la contraseña numero 1
+			if(lcase.test($("#password1").val())){
+				$("#lcase").removeClass("glyphicon-remove");
+				$("#lcase").addClass("glyphicon-ok");
+				$("#lcase").css("color","#00A41E");
+			}else{
+				$("#lcase").removeClass("glyphicon-ok");
+				$("#lcase").addClass("glyphicon-remove");
+				$("#lcase").css("color","#FF0004");
+			}
+
+			//Validar si hay un numero en la contraseña numero 1
+			if(num.test($("#password1").val())){
+				$("#num").removeClass("glyphicon-remove");
+				$("#num").addClass("glyphicon-ok");
+				$("#num").css("color","#00A41E");
+			}else{
+				$("#num").removeClass("glyphicon-ok");
+				$("#num").addClass("glyphicon-remove");
+				$("#num").css("color","#FF0004");
+			}
+			
+			//Validar si las dos contraseñas son iguales
+			if($("#password1").val().length == 0 && $("#password2").val().length == 0){
+				/*$("#pwmatch").removeClass("glyphicon-ok");
+				$("#pwmatch").addClass("glyphicon-remove");
+				$("#pwmatch").css("color","#FF0004");*/
+				//alertify.alert("Estan vacios, ingresa un valor");
+				alertify.error("Escribe una contrasa\u00f1a");
+			}else{
+				if($("#password1").val() == $("#password2").val()){
+					$("#pwmatch").removeClass("glyphicon-remove");
+					$("#pwmatch").addClass("glyphicon-ok");
+					$("#pwmatch").css("color","#00A41E");
+				}else{
+					$("#pwmatch").removeClass("glyphicon-ok");
+					$("#pwmatch").addClass("glyphicon-remove");
+					$("#pwmatch").css("color","#FF0004");
+				}
+			}
+		});
+
+		// Click en el boton cambiar contrasena
+		$("#changePass").on("click", function(e){
+			e.preventDefault(); //prevenir evento por default
+		    if ($("#pwmatch").hasClass('glyphicon-ok') && $("#8char").hasClass('glyphicon-ok') && $("#lcase").hasClass('glyphicon-ok') && $("#ucase").hasClass('glyphicon-ok') && $("#num").hasClass('glyphicon-ok')){
+				alertify.confirm("<p>Estas seguro de cambiar tu contrase\u00f1a</p>", function (e) {
+					if(e){
+						$("#formPass").submit();
+					}else{
+						return false;
+					}
+				}); 
+		    }else{
+		    	alertify.alert("Tu contrase\u00f1a no es valida, verificala");
+		    }
+		});
+		
+	});				
+</script>

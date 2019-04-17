@@ -1,0 +1,234 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/proposalFunctions.js'));
+?>
+
+<?php if(isset($_GET['idOrder'])):?>
+
+<script>
+var cust_type = "<?php echo ($this->cust_type); ?>";
+var id_company = "<?php echo $this->id_company; ?>";
+
+$(document).ready(function(){
+	var stock = 0;
+
+	if (cust_type != null ) {
+		$('input[name=mybrand][value='+ cust_type +']').attr('checked', true);
+		if($("input[name='mybrand']:checked").val() == 1){
+			$("#suppl").html("* Cliente: ");	
+			$("#supplAdd").hide();
+			var check = $("input[name='mybrand']:checked").val();
+			$("#mybrand option[value="+ check +"]").attr("selected",true);
+			//chek = 1 - cliente check = 0 - prospecto	
+			getClientOrProspect(check);
+			$('#projectForm').removeAttr('onsubmit');
+			$('#projectForm').attr("onsubmit", "return isEmptyForm('projectForm',5)");
+		}else{
+			var check = $("input[name='mybrand']:checked").val();
+			$("#suppl").html("* Cliente prospecto: ");	
+			$("#supplAdd").show();
+			//chek = 1 - cliente check = 0 - prospecto	
+			getClientOrProspect(check);
+			$('#projectForm').removeAttr('onsubmit');
+			$('#projectForm').attr("onsubmit", "return isEmptyForm('projectForm',5)");
+		}
+
+		setTimeout(function() {
+			$('#id_company option[value='+id_company+']').attr('selected','selected')
+			$("#company").val(id_company);
+			$('#id_company').attr('disabled','disabled')
+			$('input[name=mybrand]').attr("disabled",true);
+		}, 3000);
+		
+	}
+	
+	//$('img.loadTable').show('slow');
+	//addPurchase();
+
+	$('#article').change(function(){
+		var text = $('#article').val();
+		var idProduct = $('#article option:selected').val();
+		var amount = $('#amount');
+		if(text != '0'){
+			amount.attr("disabled",true);
+			$.get(
+				 BASE_URL + "/In/stock/reload", { product: true , id_product :idProduct , type: 1},
+				  function(data){
+				  	 $('.stoks').show();
+					  var Json = $.parseJSON(data);
+					  for(var i = 0; i < Json.length; i++){
+						 var item = Json[i];
+						 $('#amount').val(item.p_price).formatCurrency();
+						 $('#quantity').val("");	
+						 stock = item.stock;
+						 $('#stock').val(item.stock);
+						 $('#minstock').val(item.min_stock);
+						 $('#maxstock').val(item.max_stock);
+						 $('#toS').html(stock);
+				      }			      
+				  }  
+			);
+		}else{
+			amount.attr("disabled",false);
+			$('#amount').val("");	
+			$('#quantity').val("");	
+			$('.stoks').hide();	
+		}			
+	});
+
+	
+	//evento change en monto
+	$("#amount").change(function(){
+		//al ingresar el monto de lo que va a apgar 
+		$(this).formatCurrency();
+	});
+	$("#iva").change(function(){
+		//al ingresar el monto de lo que va a apgar 
+		$(this).formatCurrency();
+	});
+	$('#Enviar').click(function(){
+			$('#amount').toNumber();
+			$('#total').toNumber();	
+			$('#subtotal').toNumber();	
+	});
+
+	currencyField("price", "Agregar");
+
+	$('#addPurchase').click(function(){	
+		  $("#max").remove();
+		  var alerta = "";
+		  
+	  	if($('#quantity').val() != "" && $('#amount').val() != "" && $('#article').val() != "0" ){
+
+	  		if(parseInt($('#quantity').val()) > parseInt($('#stock').val())){
+	  			horusAlert("No hay suficientes productos en el almacen, genera un pedido");
+			}
+			
+	  		addPurchas();
+	
+		}else if($.trim($('#quantity').val()) == "" || $.trim($('#amount').val()) == ""){
+			//$('#addPurchase').after("<label id='max' style='color:red;'><br/><-- tienes que llenar los 3 campos</label>"); 
+			$('#maxErr').show();
+		}else if($.trim($('#article').val()) == "0"){
+			$('#article').val("");
+			$('#amount').val("");
+			$('#quantity').val("");
+			//$('#addPurchase').after("<label id='max' style='color:red;'><br/><--- tienes que elegir un art&iacute;culo</label>");
+			$('#maxErr').show();
+		}
+	});	
+		
+		 $('#tableOrder').show();
+		  
+		 oTablePurchase = jqueryTablePopup('#tableOrder');
+		 oTablePurchase = $('#tableOrder').dataTable(
+					 	{
+					 		bFilter:false,
+					 		bRetrieve:true
+					 	});
+
+		$.ajax({ //incia funcion ajax
+			  type : "GET", //peticion GET
+			  dataType: "json",
+			  url : BASE_URL + "/In/proposals/editorder?idOrder=" + <?php echo $_GET['idOrder']; ?> + "&purchase=all", // offer/showformcommentoffer
+			  success : function(data) {
+				  for(var i=0;i<data.length;i++){
+					  
+						var item = data[i];
+						
+						var urlDelete = BASE_URL + "/public/img/icons/"+iconsFile+"/iconminus.png";
+						var deleteRow = '<a href="javascript:;" onclick="deleteRow(this)"><img id="delete" src="'+urlDelete+'" /></a>';
+
+						
+						oTablePurchase.fnAddData([
+						  					formatClaveNumber(item.name, 4),
+								            item.productName,
+								            item.quantity,
+								            formatNumber(item.price,"$"),
+					    					deleteRow
+								              ]);
+
+						var position =  oTablePurchase.fnSettings().aoData[$('#tableOrder tr').length-2].nTr.rowIndex;
+						$($("#tableOrder tr")[position]).attr("id", item.product_id);
+					}
+				  
+			   },//termina succes de ajax
+				  error: function(error){//inicia error de ajax
+					  //$('img.loadTable').hide('slow');
+					  $(".msj").html("error al mostrar los datos de la tabla");
+					  setTimeout(function(){
+						   $(".msj").fadeIn(3000).fadeOut(3000);
+						   }, 100);
+				  }//termina error de ajax
+			  });//TERMINA AJAX PARA GUARDAR LOS COMENTARIOS
+
+			  $('#purchaseorderForm').submit(function(event){//clcick en boton de enviar
+				  $('#iva').toNumber();
+					var rows = oTablePurchase.fnGetNodes();//obtiene todas las filas de la tabla
+					
+					if(rows.length == 0){//valida que la tabla tenga datos
+						
+						alert("debes agregar minimo un producto a la tabla");
+						return false;
+						
+					}else{//si la tabla tiene datos itera fila por fila para sacar los datos
+						
+						var productItem = null;//productos
+						for(var i = 0; i < rows.length; i++){//itero la tabla para extraer los datos
+							var row = rows[i];//obtengo fila por fila
+							
+							productItem = new Object();//objeto para las filas de la tabla
+							productItem.name = $(row).find('td:eq(0)').html();		
+							productItem.productName = $(row).find('td:eq(1)').html();//nombre del producto
+							productItem.productPrice = $(row).find('td:eq(3)').clone().toNumber().html();//precio del producto
+							productItem.productQuantity = $(row).find('td:eq(2)').html();//cantidad de productos
+							
+							var productItemParam = $.param(productItem); //el objeto de productos lo formo como parametros
+							var purchaseItemVal = $('#purchaseItem').val();//obtengo el campo de purchaseItem
+							purchaseItemVal = purchaseItemVal + productItemParam + SEPARATOR;//creo cadena con los datos de la tabla en forma de parametros
+										
+							$('#purchaseItem').val(purchaseItemVal);//le mando la cadena a el campo de texto
+							
+						}
+					}
+			  });
+	
+});
+
+</script>
+<?php endif; ?>
+
+<h3 class="centerIn">Editar una Cotizaci&oacute;n de Productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/proposals/index')?>">
+				<img title="Cotizaciones de productos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconorder.png')?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Actualizar los datos de un proyecto')">
+			<a>
+				<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div class="msj"></div>
+
+<div id="overflow">
+	<p class="triangle-border">Actualiza los datos de la cotizaci&oacute;n.</p>
+	<?php print $this->formulario; ?>
+</div>
+<!-- 
+    Inicia popup
+-->
+<div id="popupArticle" class="popHorus">
+	<div id="btnCloseArticle" title="Cerrar ventana">X</div>
+	<div id="formArticle">
+		<div class="center">
+			<?=$this->articleForm;?>
+		</div>
+	</div>
+</div>
+<div id="backgroundArticle"></div>

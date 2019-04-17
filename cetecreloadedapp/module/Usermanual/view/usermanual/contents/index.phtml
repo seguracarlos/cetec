@@ -1,0 +1,122 @@
+<script type="text/javascript">
+$(function(){
+    // 6 create an instance when the DOM is ready
+    $('#jstree').jstree({ 'core' : {
+      'data' :
+    	<?php
+    		echo $this->tree;
+    	?>
+    },
+    "types" : {
+ 	      "root" : {
+ 	        "icon" : "<?php echo $this->basePath('/img/images/tree-icon.png')?>"
+ 	      },
+ 	    "folder" : {
+ 	        "icon" : "<?php echo $this->basePath('/img/images/folder.ico')?>"
+ 	      },
+ 	    "file" : {
+ 	      "icon" : "<?php echo $this->basePath('/img/images/file.png')?>"
+ 	    }
+ 	    },
+ 	    "plugins" : [ "state", "types" ]
+    });
+    <?php 
+    	if ($this->id != '')
+    	{
+    ?>
+		$('#id_topic').val('<?php echo $this->id?>');
+    
+    <?php }?>
+  });
+</script>
+<script>
+function linkContent(idc){
+	$("#contentform").attr("action","<?php echo $this->basePath('/contents/contents'); ?>");
+    $('#id_topic_content').val(idc);
+    document.paramform.submit();
+}
+function linkContentTopic(id){
+	$("#contentform").attr("action","<?php echo $this->basePath('/topics'); ?>");
+    $('#id_topicSend').val(id);
+    document.paramform.submit();
+}
+function parentLink(){
+	window.location.href = "<?php echo $this->basePath('usermanual/index') ?>";
+}
+</script>
+
+<script>
+	$('.textContent').css({ color: "#FFFFFF"});
+</script>
+
+
+<?php
+	$Formparam		= $this->Formparam;
+	$ContentsForm	= $this->ContentsForm;
+	$formLabel		= $this->plugin('formLabel');
+	
+	echo $this->form()->openTag($ContentsForm);
+?>
+<div class="container-responsive">
+	<div class="row">
+		<div class="col-md-4"><h3>CETEC</h3></div>
+		<div id="mensajes" class="col-md-6 col-md-offset-2">
+			
+		</div>
+	</div>
+	
+	<div id="overflow" class="row">
+		<!-- <div id="mensajes" class=""></div> -->
+		
+		<div id="jstree"  class="col-md-3" style="overflow-x: auto; overflow-y: auto;  max-height: 500px;"></div>
+
+		<div class="textContent col-md-9">
+			<div style="display:none;">
+			</div>
+				
+			<div class="wrap2" class="textContent" align="center">
+				<h1 align="center">Contenido del archivo <?php 
+					echo $this->cont[0]['topic_name'];?>
+				</h1>
+				<div>
+					<script src="<?php echo $this->basePath('/js/ck_editor/ckeditor.js')?>" >
+						CKEDITOR.replace( 'editor1' );
+					</script>
+				</div>
+				<form method="post">
+					<div style="display: none;">
+						<?php 
+							echo $this->formElement($ContentsForm->get('id_content'));
+							echo $this->formElement($ContentsForm->get('id_topic_content'));
+							echo $this->formElement($ContentsForm->get('id_topic'));
+						?>
+					</div>
+					
+					<div>
+						<?php 
+							echo $this->formElement($ContentsForm->get('content'));
+						?>
+					</div>
+					</br>
+					<div class="col-md-6">
+						<?php 
+							echo $this->formElement($ContentsForm->get('Guardar'));
+						?>
+					</div>
+					</br>
+					<div class="col-md-6">
+						<?php 
+							echo $this->formElement($ContentsForm->get('Cancelar'));
+						?>
+					</div>
+					<script>
+						CKEDITOR.replace( 'editor1' );
+					</script>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<?php 
+	echo $this->form()->closeTag();
+?>

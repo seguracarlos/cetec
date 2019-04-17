@@ -1,0 +1,686 @@
+<?php
+use Iofractal\Module;
+$validResource = new Module(); 
+?>
+<script type="text/javascript">
+var basePath = "<?php echo $this->basePath(); ?>";
+var id_shipingAdd = "<?php echo $this->journey['id_journey']; ?>";
+function showaddgas(){
+	if( $('#addGas').is(":visible") ){
+	    $('#addGas').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addGas').fadeIn("slow");
+	}
+}
+function showaddcas(){
+	if( $('#addCas').is(":visible") ){
+	    $('#addCas').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addCas').fadeIn("slow");
+	}
+}
+function showaddfood(){
+	if( $('#addFood').is(":visible") ){
+	    $('#addFood').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addFood').fadeIn("slow");
+	}
+}
+function showaddVarios(){
+	if( $('#addVarios').is(":visible") ){
+	    $('#addVarios').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addVarios').fadeIn("slow");
+	}
+}
+function addGastoGasolina(){
+	var baseurl = basePath+'/out/expenses-trip/addexpensestrip';
+	var folgas = $('#folGas').val();
+	var amountgas = $('#amountGas').val();
+	if(amountgas){
+		$.ajax({
+			type: "POST",
+			url: baseurl,
+			data: {'id_viaje': id_shipingAdd,'folio' : folgas,'monto' : amountgas,type:'1',description : null},
+			dataType: "json",
+			success: function(response){
+				$('#tableAddGas').append('<tr><td>1</td><td>'+response.data[0]["reference_expensestrip"]+'</td><td>'+response.data[0]["amount_expensestrip"]+'</td></tr>');
+				$('#folGas').val('');
+				$('#amountGas').val('');
+				var totalGas = $('#totalGas').val();
+				var totalExpensesFinal = $('#totalExpensesFinal').text();
+				var newTotalGas = parseInt(totalGas)+parseInt(response.data[0]["amount_expensestrip"]);
+				var newTotalExpensesFinal = parseInt(totalExpensesFinal)+parseInt(response.data[0]["amount_expensestrip"]);
+				$('#totalGas').val(newTotalGas);
+				$('#totalExpensesFinal').text(newTotalExpensesFinal);
+				var viaticTotal = $('#viaticSum').val();
+				var newDifViatExp = parseInt(viaticTotal)-parseInt(newTotalExpensesFinal);
+				$('#difViatExp').html(newDifViatExp);
+			},
+			error: function(){
+				alert("Fallo, intentalo otra vez");
+			}
+		 })
+	}
+}
+function addGastoCaseta(){
+	var baseurl = basePath+'/out/expenses-trip/addexpensestrip';
+	var folcas = $('#folCas').val();
+	var amountcas = $('#amountCas').val();
+	if(amountcas){
+		$.ajax({
+			type: "POST",
+			url: baseurl,
+			data: {'id_viaje': id_shipingAdd,'folio' : folcas,'monto' : amountcas,type:'2',description : null},
+			dataType: "json",
+			success: function(response){
+				$('#tableAddCas').append('<tr><td>1</td><td>'+response.data[0]["reference_expensestrip"]+'</td><td>'+response.data[0]["amount_expensestrip"]+'</td></tr>');
+				$('#folCas').val('');
+				$('#amountCas').val('');
+				var totalCas = $('#totalCas').val();
+				var totalExpensesFinal = $('#totalExpensesFinal').text();
+				var newTotalCas = parseInt(totalCas)+parseInt(response.data[0]["amount_expensestrip"]);
+				var newTotalExpensesFinal = parseInt(totalExpensesFinal)+parseInt(response.data[0]["amount_expensestrip"]); 
+				$('#totalCas').val(newTotalCas);
+				$('#totalExpensesFinal').text(newTotalExpensesFinal);
+				var viaticTotal = $('#viaticSum').val();
+				var newDifViatExp = parseInt(viaticTotal)-parseInt(newTotalExpensesFinal);
+				$('#difViatExp').html(newDifViatExp);
+			},
+			error: function(){
+				alert("Fallo, intentalo otra vez");
+			}
+		 })
+	}
+}
+function addGastoAlimentos(){
+	var baseurl = basePath+'/out/expenses-trip/addexpensestrip';
+	var folfood = $('#folFood').val();
+	var amountfood = $('#amountFood').val();
+	var desfood = $('#desFood').val();
+	if(amountfood){
+		$.ajax({
+			type: "POST",
+			url: baseurl,
+			data: {'id_viaje': id_shipingAdd,'folio' : folfood,'monto' : amountfood,type:'3',description : desfood},
+			dataType: "json",
+			success: function(response){
+				$('#tableAddFood').append('<tr><td>1</td><td>'+response.data[0]["description_expensestrip"]+'</td><td>'+response.data[0]["reference_expensestrip"]+'</td><td>'+response.data[0]["amount_expensestrip"]+'</td></tr>');
+				$('#desFood').val('');
+				$('#folFood').val('');
+				$('#amountFood').val('');
+				var totalAlim = $('#totalAlim').val();
+				var totalExpensesFinal = $('#totalExpensesFinal').text();
+				var newTotalAlim = parseInt(totalAlim)+parseInt(response.data[0]["amount_expensestrip"]);
+				var newTotalExpensesFinal = parseInt(totalExpensesFinal)+parseInt(response.data[0]["amount_expensestrip"]); 
+				$('#totalAlim').val(newTotalAlim);
+				$('#totalExpensesFinal').text(newTotalExpensesFinal);
+				var viaticTotal = $('#viaticSum').val();
+				var newDifViatExp = parseInt(viaticTotal)-parseInt(newTotalExpensesFinal);
+				$('#difViatExp').html(newDifViatExp);
+			},
+			error: function(){
+				alert("Fallo, intentalo otra vez");
+			}
+		 })
+	}
+}
+function addGastoVarios(){
+	var baseurl = basePath+'/out/expenses-trip/addexpensestrip';
+	var folvarios = $('#folVarios').val();
+	var amountvarios = $('#amountVarios').val();
+	var desvarios = $('#desVarios').val();
+	if(amountvarios){
+		$.ajax({
+			type: "POST",
+			url: baseurl,
+			data: {'id_viaje': id_shipingAdd,'folio' : folvarios,'monto' : amountvarios,type:'4',description : desvarios},
+			dataType: "json",
+			success: function(response){
+				$('#tableAddVarios').append('<tr><td>1</td><td>'+response.data[0]["description_expensestrip"]+'</td><td>'+response.data[0]["reference_expensestrip"]+'</td><td>'+response.data[0]["amount_expensestrip"]+'</td></tr>');
+				$('#desVarios').val('');
+				$('#folVarios').val('');
+				$('#amountVarios').val('');
+				var totalVar = $('#totalVar').val();
+				var totalExpensesFinal = $('#totalExpensesFinal').text();
+				var newTotalVar = parseInt(totalVar)+parseInt(response.data[0]["amount_expensestrip"]);
+				var newTotalExpensesFinal = parseInt(totalExpensesFinal)+parseInt(response.data[0]["amount_expensestrip"]); 
+				$('#totalVar').val(newTotalVar);
+				$('#totalExpensesFinal').text(newTotalExpensesFinal);
+				var viaticTotal = $('#viaticSum').val();
+				var newDifViatExp = parseInt(viaticTotal)-parseInt(newTotalExpensesFinal);
+				$('#difViatExp').html(newDifViatExp);
+			},
+			error: function(){
+				alert("Fallo, intentalo otra vez");
+			}
+		 })
+	}
+}
+function addViat(){
+	var baseurl = basePath+'/out/expenses-trip/addviattrip';
+	var amountviat = $('#addViatico').val();
+	if(amountviat){
+		alertify.confirm("¿Deseas agregar un viatico por $"+amountviat+"?", function(e){
+        	if(e){
+        		$.ajax({
+        			type: "POST",
+        			url: baseurl,
+        			data: {'id_viaje': id_shipingAdd,'monto' : amountviat, type: '5','folio':null,description : null},
+        			dataType: "json",
+        			success: function(response){
+        				$('#addViatico').val('');
+        				totalViat = $('#viaticSum').val();
+        				newTotalViat = parseInt(totalViat)+parseInt(response.data[0]["amount_expensestrip"]);
+        				actualDeposit = $('#countDepositos').text();
+        				newDeposit = parseInt(actualDeposit)+1;
+        				totalExpensesFinal = $('#totalExpensesFinal').text();
+        				newTotalExpensesFinal = parseInt(totalExpensesFinal);
+        				difViatExp = newTotalViat - newTotalExpensesFinal; 
+        				if($.trim($("#viaticList").html())==''){
+        					$('#viaticList').append('$'+response.data[0]["amount_expensestrip"]);
+        				}else{
+        					$('#viaticList').append(', $'+response.data[0]["amount_expensestrip"]);
+        				}
+        				totalViat = $('#viaticSum').val(newTotalViat);
+        				$('#countDepositos').text(newDeposit);
+        				$('#difViatExp').html(difViatExp);
+        			},
+        			error: function(){
+        				alert("Fallo, intentalo otra vez");
+        			}
+        		 })    
+        	}
+        });
+	}
+}
+function addSelectGasShipping(){
+	var gasolineSelectVal = $('#typeGas').val();
+	if(gasolineSelectVal == 0){
+		alertify.alert("Porfavor elije el tipo de gasolina");
+	}else{
+		var baseurl = basePath+'/out/expenses-trip/addtypegasoline';
+		$.ajax({
+			type: "POST",
+			url: baseurl,
+			data: {'id_viaje': id_shipingAdd,'gasolineSelectVal':gasolineSelectVal},
+			dataType: "json",
+			success: function(response){
+				var gasolineadd = null;
+				if(response.data[0].name == 'GASOLINE_DISEL'){
+					gasolineadd = "Disel";
+				}else if(response.data[0].name == 'GASOLINE_MAGNA'){
+					gasolineadd = "Magna";
+				}else if(response.data[0].name == 'GASOLINE_PREMIUM'){
+					gasolineadd = "Premium";
+				}
+				$('#textTypeGasoline').html(gasolineadd);
+				alertify.alert("Tipo de gasolina agregado correctamente.");		
+			},
+			error: function(){
+				alert("Fallo, intentalo otra vez");
+			}
+		 });
+	}
+}
+$(document).ready(
+		function () {
+			$('#amountGas').numeric();
+		 }
+);
+</script>
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Gastos por viaje</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Egresos</a>
+			        <a href="#" class="btn btn-default">Gastos por viaje</a>
+			        <a href="#" class="btn btn-default">Agregar</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+<div class="container">
+	<div class="content-forms">
+		<?php 
+		if($this->journey){
+			if($this->journey['type_destination'] != 1){
+		?>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="panel panel-info">
+  					<div class="panel-heading">
+  						<div class="row">
+  							<div class="col-xs-12 col-sm-6 col- col-md-6">
+  								Gastos por viajes for&aacute;neos<br>
+  								Folio-Cliente: <?php
+  								if($this->journey['client_folio']){
+  									echo $this->journey['client_folio']; 
+  								}else{
+  									echo Util_Tools::format($this->journey['internal_folio'], 5);
+  								}
+  								?>
+  							</div>
+  							<div class="col-xs-12 col-sm-3 col-md-3"></div>
+  							<div class="col-xs-12 col-sm-3 col-md-3">
+  							<?php 
+  								if(\Privilege::SUPERUSUARIO == $this->role || \Privilege::ADMINISTRADOR == $this->role || \Privilege::SUPERVISOR == $this->role){
+  							?>
+  									<a href="<?php echo $this->basePath('/out/expenses-trip/index'); ?>"><button class="btn btn-success" id="buttonStatusSaveExpenses">Volver a la lista de viajes</button></a>
+  							<?php
+  								}
+  							?>
+  							</div>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div class="panel panel-primary">
+  					<ul class="list-group">
+  						<li class="list-group-item">Operador: <?php echo $this->journey['operador']['name']." ".$this->journey['operador']['surname']." ".$this->journey['operador']['lastname']; ?></li>
+  						<li class="list-group-item">Ayudante(s): <?php foreach($this->journey['ayudantes'] as $ayudante): echo "<br>".$ayudante['name']." ".$ayudante['surname']." ".$ayudante['lastname']; endforeach;?></li>
+  						<li class="list-group-item">Cliente: <?php echo $this->journey['cliente']; ?></li>
+  						<li class="list-group-item">Unidad: <?php  echo $this->journey['unidad']; ?></li>
+  						<li class="list-group-item">Destino(s): <?php echo $this->journey['destino']; ?></li>
+  					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div class="panel panel-primary"> 
+  					<ul class="list-group">
+  						<li class="list-group-item">Depositos: <label id="countDepositos"><?php echo count($this->expensesAll['viaticos']); ?></label></li>
+  						<li class="list-group-item">
+  							<?php
+								if($validResource->valueResourceIof('out/expenses-trip/addviattrip') && $this->journey['end_date'] == 0000-00-00){
+							?>
+  							<div class="row">
+  								<div class="col-xs-9 col-sm-9 col-md-9">
+  									<div class="input-group">
+										<label class="sr-only">Cantidad del viatico:</label>
+										<div class="input-group-addon">$</div>
+										<input type="text" class="form-control" placeholder="Viatico" id="addViatico" />
+									</div>
+  								</div>
+  								<div class="col-xs-2 col-sm-2 col-md-2">
+  									<button type="button" onclick="addViat()" class="btn btn-success pull-right" id="btViaticos"><span class="glyphicon glyphicon-plus"></span></button>
+  								</div>
+  							</div>
+  							<br>
+  							<?php
+								}
+							?>
+  							<div class="row">
+  								<div class="col-xs-2 col-sm-2 col-md-2">
+  									Viaticos:
+  								</div>
+  								<div class="col-xs-7 col-sm-7 col-md-7" id="viaticList">
+  									<?php if(count($this->expensesAll['viaticos']) > 0){
+  										$listViaticos = $this->expensesAll['viaticos']; 
+  										for($j = 0; $j < count($listViaticos);$j++){
+  											if($j > 0){
+  												echo ",";
+  											}
+  											echo " $".$listViaticos[$j]['amount_expensestrip'];
+  										}
+  									}?>
+  								</div>
+  							</div>
+  						</li>
+  						<li class="list-group-item">
+  							<div class="row">
+  								<div class="col-xs-4 col-sm-4 col-md-4">
+  									Total de viaticos:
+  								</div>
+  								<div class="col-xs-7 col-sm-7 col-md-7 input-group">
+  									<div class="input-group-addon">$</div>
+  									<input type="text" class="form-control" placeholder="Total de viaticos" id="viaticSum" value="<?php echo $this->expensesAll['totalViat']; ?>" disabled />
+  								</div>
+  							</div> 
+  						</li>
+  						<li class="list-group-item">Total de gastos: $<label id="totalExpensesFinal"><?php echo $totalExpenses = $this->expensesAll['totalGas']+$this->expensesAll['totalCas']+$this->expensesAll['totalAlim']+$this->expensesAll['totalVar']; ?></label></li>
+  						<li class="list-group-item">Diferencia entre viaticos y gastos: $<label id="difViatExp"><?php echo  $res = $this->expensesAll['totalViat']-($this->expensesAll['totalGas']+$this->expensesAll['totalCas']+$this->expensesAll['totalAlim']+$this->expensesAll['totalVar']);?></label>
+  						</li>
+  					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div class="panel panel-primary">
+  					<ul class="list-group">
+  						<li class="list-group-item">Fecha inicial: <?php echo $this->journey['fecha']; ?></li>
+  						<li class="list-group-item">Kilometraje inicial: <?php echo $this->journey['starting_mileage']; ?></li>
+  						<li class="list-group-item" id="divEndKm">
+  								Kilometraje Final: <?php echo $this->journey['end_mileage']; ?>
+  						</li>
+  						<li class="list-group-item" id="divFinalGasolineEndJourney">
+  							Carga final de gasolina: <?php echo $this->journey['end_gasoline_end_journey']; ?>
+  						</li>
+  						<li class="list-group-item"><div class="row"><div class="col-md-5">Tipo de gasolina:</div><div class="col-md-7" id="textTypeGasoline"><?php if($this->journey['type_gasoline']){
+  							if($this->journey['type_gasoline'] == 'GASOLINE_DISEL'){
+  								echo "Disel";
+  							}else if($this->journey['type_gasoline'] == 'GASOLINE_MAGNA'){
+  								echo "Magna";
+  							}else if($this->journey['type_gasoline'] == 'GASOLINE_PREMIUM'){
+  								echo "Premium";
+  							}
+  						 }else if(!$this->journey['type_gasoline']){ 
+  						 	if($validResource->valueResourceIof('out/expenses-trip/addtypegasoline')){ ?>
+  							<div class="input-group">
+  							<select class="form-control" name="typeGas" id="typeGas" onclick="typeGasSelect" >
+  								<option value="0">--Selecciona--</option>
+  								<?php foreach ($this->journey['type_gasSelect'] as $selectGas): ?>
+  									<option value="<?php echo $selectGas['id']; ?>"><?php if($selectGas['name'] == 'GASOLINE_DISEL'){ echo "Disel"; }else if($selectGas['name'] == 'GASOLINE_MAGNA'){ echo "Magna"; } ?></option>
+  								<?php endforeach; ?>
+  							</select>
+  							<div class="input-group-addon" style="background: #5cb85c;"><a href="#" style="color:white;" onclick="addSelectGasShipping()"><span class="glyphicon glyphicon-ok"></span></a></div>
+  							</div>
+  						<?php } 
+  						 } ?>
+  						</div>
+  						</div>
+  						</li>
+  					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<br>
+		
+		<div class="row">
+		
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" type="button" onclick="showaddgas()" class="btn btn-primary">Gastos de Gasolina</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable" style="display:none;background: #F5FFFA;" id="addGas">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos en gasolina:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalGas" name="totalGas" value="<?php echo $this->expensesAll['totalGas']; ?>" disabled="true"/></div>
+				</div>
+				<?php
+					if($validResource->valueResourceIof('out/expenses-trip/addexpensestrip') && $this->nameUserSession == $this->journey['operador']['name'].$this->journey['operador']['surname'].$this->journey['operador']['lastname']){
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-12 col-sm-5 col-md-4 form-group">
+						<label class="sr-only">Folio Factura:</label>
+						<input class="form-control" type="text" id="folGas" name="folGas" placeholder="Folio Factura"/>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-4 form-group">
+						<div class="input-group">
+							<label class="sr-only">Total:</label>
+							<div class="input-group-addon">$</div>
+							<input class="form-control" type="text" id="amountGas" name="amountGas" placeholder="Total"/>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2 col-md-4">
+						<button onclick="addGastoGasolina()" type="button" class="btn btn-primary pull-right" id="btnGas"><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+				</div>
+				<?php
+					}
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddGas">
+							<tr class="info">
+								<th>#</th>
+								<th>Folio Factura</th>
+								<th>Total</th>
+							</tr>
+							<?php if($this->expensesAll['gasolina']){
+								foreach($this->expensesAll['gasolina'] as $gasolinaExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $gasolinaExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $gasolinaExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $gasolinaExpenses['amount_expensestrip']; ?></td>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" type="button" onclick="showaddcas()" class="btn btn-success">Gastos de Casetas</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable" style="display:none;background: #F5FFFA;" id="addCas">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos en casetas:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalCas" name="totalCas" value="<?php echo $this->expensesAll['totalCas']; ?>" disabled="true"/></div>
+				</div>
+				<?php
+					if($validResource->valueResourceIof('out/expenses-trip/addexpensestrip') && $this->nameUserSession == $this->journey['operador']['name'].$this->journey['operador']['surname'].$this->journey['operador']['lastname']){
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-12 col-sm-5 col-md-4 form-group">
+						<label class="sr-only">Folio Tiket:</label>
+						<input class="form-control" placeholder="Folio Tiket" type="text" id="folCas" name="folCas" />
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-4 form-group">
+						<div class="input-group">
+							<label class="sr-only">Total:</label>
+							<div class="input-group-addon">$</div>
+							<input class="form-control" placeholder="Total" type="text" id="amountCas" name="amountCas"/>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2 col-md-4">
+						<button type="button" onclick="addGastoCaseta()" class="btn btn-success pull-right" id="btnCas"><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+				</div>
+				<?php
+					}
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddCas">
+							<tr class="success">
+								<th>#</th>
+								<th>Fol.Tiket</th>
+								<th>Total</th>
+							</tr>
+							<?php if($this->expensesAll['casetas']){
+									foreach($this->expensesAll['casetas'] as $casetaExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $casetaExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $casetaExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $casetaExpenses['amount_expensestrip']; ?></td>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" onclick="showaddfood()" type="button" class="btn btn-info">Gastos de Alimentos</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable" style="display:none;background: #F5FFFA;" id="addFood">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos en alimentos:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalAlim" name="totalAlim" value="<?php echo $this->expensesAll['totalAlim']; ?>" disabled="true"/></div>
+				</div>
+				<?php
+					if($validResource->valueResourceIof('out/expenses-trip/addexpensestrip') && $this->nameUserSession == $this->journey['operador']['name'].$this->journey['operador']['surname'].$this->journey['operador']['lastname']){
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-12 col-sm-3 col-md-3 form-group">
+						<label class="sr-only">Descripci&oacute;n:</label>
+						<input class="form-control" placeholder="Descripción" type="text" id="desFood" name="desFood" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 form-group">
+						<label class="sr-only">Folio Factura:</label>
+						<input class="form-control" placeholder="Folio Factura" type="text" id="folFood" name="folFood" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 form-group">
+						<div class="input-group">
+							<label class="sr-only">Total:</label>
+							<div class="input-group-addon">$</div><input class="form-control" placeholder="Total" type="text" id="amountFood" name="amountFood"/>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3">
+						<button type="button" onclick="addGastoAlimentos()"  class="btn btn-info pull-right" id="btnFood"><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+				</div>
+				<?php
+					}
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddFood">
+							<tr class="info">
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>Fol.Factura</th>
+								<th>Total</th>
+							</tr>
+							<?php if($this->expensesAll['alimentos']){
+								foreach($this->expensesAll['alimentos'] as $alimentosExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $alimentosExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $alimentosExpenses['description_expensestrip']; ?></td>
+								<td><?php echo $alimentosExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $alimentosExpenses['amount_expensestrip']; ?></td>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" onclick="showaddVarios()" type="button" class="btn btn-warning">Varios</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable"  style="display:none;background: #F5FFFA;" id="addVarios">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos variados:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalVar" name="totalVar" value="<?php echo $this->expensesAll['totalVar']; ?>" disabled="true"/></div>
+				</div>
+				<?php
+					if($validResource->valueResourceIof('out/expenses-trip/addexpensestrip') && $this->nameUserSession == $this->journey['operador']['name'].$this->journey['operador']['surname'].$this->journey['operador']['lastname']){
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-12 col-sm-3 col-md-3 form-group">
+						<label class="sr-only">Descripci&oacute;n:</label>
+						<input class="form-control" placeholder="Descripción" type="text" id="desVarios" name="desVarios" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 form-group">
+						<label class="sr-only">Folio Factura:</label>
+						<input class="form-control" placeholder="Folio Factura" type="text" id="folVarios" name="folVarios" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 form-group">
+						<div class="input-group">
+							<label class="sr-only">Total:</label>
+							<div class="input-group-addon">$</div><input class="form-control" placeholder="Total" type="text" id="amountVarios" name="amountVarios"/>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3">
+						<button type="button" onclick="addGastoVarios()" class="btn btn-warning pull-right" id="btnVarios"><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+				</div>
+				<?php
+					}
+				?>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddVarios">
+							<tr class="warning">
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>Fol.Factura</th>
+								<th>Total</th>
+							</tr>
+							<?php if($this->expensesAll['varios']){
+								foreach($this->expensesAll['varios'] as $variosExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $variosExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $variosExpenses['description_expensestrip']; ?></td>
+								<td><?php echo $variosExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $variosExpenses['amount_expensestrip']; ?></td>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+		</div>
+		<?php
+			}else{
+				if(\Privilege::SUPERUSUARIO == $this->role || \Privilege::ADMINISTRADOR == $this->role || \Privilege::SUPERVISOR == $this->role){ ?>
+				<h1>Porfavor seleccione un viaje de la lista de viajes.</h1>
+			<?php }else if(\Privilege::CONSULTOR == $this->role){ ?>
+				<h1>Aun no tienes asignado ning&uacute;n viaje foraneo, vuelve cuando lo tengas.</h1>
+			<?php }
+			} 
+		}else{ ?>
+		<div class="row">
+			<?php if(\Privilege::SUPERUSUARIO == $this->role || \Privilege::ADMINISTRADOR == $this->role || \Privilege::SUPERVISOR == $this->role){ ?>
+				<h1>Porfavor seleccione un viaje.</h1>
+			<?php }else if(\Privilege::CONSULTOR == $this->role){ ?>
+				<h1>Aun no tienes asignado ning&uacute;n viaje foraneo, vuelve cuando lo tengas.</h1>
+			<?php } ?>
+		</div>
+		<?php }?>
+	</div>	
+</div>

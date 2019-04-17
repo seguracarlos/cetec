@@ -1,0 +1,111 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Detalle de viaje</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Viajes</a>
+			        <a href="#" class="btn btn-default">Detalle</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">
+				<span class="glyphicon glyphicon-tag"></span>
+				<?php echo $data["project_name"]; ?>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Informaci&oacute;n general</legend>
+							<div class="table-responsive">
+								<table class="table amaranth text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>Cliente:</td>
+			                       			<td><?php echo $data["name_company"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Nombre:</td>
+			                       			<td><?php echo $data["project_name"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Descripci&oacute;n:</td>
+			                       			<td><?php echo $data["description"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Inicio:</td>
+			                       			<td><?php echo $data["start_date"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+					                    	<td>Termino:</td>
+					                    	<td><?php echo $data["end_date"]; ?></td>
+					                    </tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-md-6 col-lg-6">
+						<fieldset class="responsive-fieldset fieldset">
+							<legend class="legend amaranth">Informaci&oacute;n comercial</legend>
+							<div class="table-responsive">
+								<table class="table amaranth text-size-15">
+									<tbody>
+										<tr>
+			                        		<td>Descuento:</td>
+			                       			<td><?php echo Util_Tools::currency($data["discount"]); ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>N&uacute;mero de pagos:</td>
+			                       			<td><?php echo $data["numberofpayments"]; ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Anticipo:</td>
+			                       			<td><?php echo Util_Tools::currency($data["advance"]); ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>IVA:</td>
+			                       			<td><?php echo Util_Tools::currency($data["tax"]); ?></td>
+			                      		</tr>
+			                      		<tr>
+			                        		<td>Total:</td>
+			                       			<td><?php echo Util_Tools::currency($data["total"]); ?></td>
+			                      		</tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="clearfix">
+				<a class="btn btn-default pull-right" href="<?php echo $this->basePath("/in/projects/index")?>">
+					<span class="glyphicon glyphicon-repeat"></span>
+					Regresar
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

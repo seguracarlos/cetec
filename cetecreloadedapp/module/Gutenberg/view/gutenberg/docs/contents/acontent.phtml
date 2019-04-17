@@ -1,0 +1,28 @@
+<h3><p>Contenido de usuarios.</p></h3>
+</br>
+<center>
+	<?php if($this->contents){ ?>
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="publicaciones">     
+	    <thead>
+		    <tr>
+		        <th style="color:#006400">Nombre de el contenido</th>
+		        <th style="color:#006400">Author</th> 
+		        <th style="color:#006400">Date</th>
+		        <th style="color:#006400">Punto</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+	       <?php foreach ($this->contents as $contents): ?>
+	        <tr>
+    			<td><a href="../contents/content?p=<?php echo $contents['id_content']; ?>" style="color:#084B8A" ><?php /*echo $publications->setTile();*/ echo $contents['name_content'];?></a></td>
+    			<td><?php echo $containts['name_user'];?></td>
+    			<td><?php echo $containts['create_date']; ?></td>
+    		     <td><?php echo $containts['theme_name']; ?></td>
+	        </tr>
+	    	<?php endforeach;?>
+	    </tbody>
+	</table>
+	<?php }else{ ?>
+		<h2>No hay contenidos de este usuario.</h2>
+	<?php }?>
+</center>

@@ -1,0 +1,89 @@
+<?php           
+	  $this->headLink()->appendStylesheet($this->baseUrl('/public/js/jquery-Calendar/css/fullcalendar.css' ))
+         			   ->appendStylesheet($this->baseUrl('/public/js/jquery-Calendar/css/fullcalendar.print.css'),"print")
+	 				   ->appendStylesheet($this->baseUrl('/public/js/jquery-Calendar/css/jquery.weekcalendar.css' ))
+					   ->appendStylesheet($this->baseUrl('/public/css/calendar.css' ));
+?>
+
+<?php 
+	$helpUser = $this->helps->cxcCalendar;
+?>
+<script>
+$(document).ready(function(){
+	
+	var goToDate = $("#goToDate");
+	goToDate.datepicker({
+		
+		dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+		dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+		dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+		monthNames: ["Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+		monthNamesShort: ["Ene", "Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],
+		dateFormat: "dd/mm/yy",
+		altFormat: "yy-mm-dd",
+		showButtonPanel: true,
+		currentText: "Hoy",
+		closeText: "Cerrar",
+		changeYear: true,
+		changeMonth: true
+							
+	});
+
+	$("#ui-datepicker-div").click(function() {
+		$("#calendar .ui-widget-content").removeAttr("style");
+		var date = goToDate.val();
+		if(date != ""){
+			var datePart = date.match(/\d+/g);
+			var day = datePart[0];
+			var month = datePart[1], year = datePart[2];
+			var selectedDate = new Date(year+'/'+month+'/'+day);
+			$('#calendar').fullCalendar('gotoDate', selectedDate);
+			
+			var selectedDay = parseFloat(day);
+			
+			$('#calendar td').not(".fc-other-month").filter( function () {
+			    return $(this).text() == selectedDay;
+			}).css("background","#4396BD");
+
+		}
+	});
+	
+	  initCalendar();
+});
+</script>
+<h3 class="centerIn">Calendario de Cobros</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/cxc/index') ?>">
+					<img title="Ver cuentas por cobrar" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconmonadd.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<div class="center"><h2>Fechas de Cobros</h2></div>
+		<div id="cxcDatePicker" >
+			Seleccione la fecha que desea consultar: <br/>
+			<input type="text" id='goToDate'/>
+		</div>	
+	<div id='calendar'></div>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popWait">
+			<div class="center">
+				<label id="wait">Espere por favor...</label>
+				<hr/>
+				<img id="loader" src="<?php echo $this->baseUrl('/public/img/loader.gif')?>">
+			</div>
+	</div>
+<div id="waitBack"></div>
+<!-- termina popup -->

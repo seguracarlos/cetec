@@ -1,0 +1,68 @@
+<?php 
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/vitaeFunctions.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function(){
+	oTableInvoice = jqueryTable('#expWorkTab',5);	
+});
+</script>
+
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+<?=$this->element->getElement('id'); ?>
+
+<fieldset>
+	<legend>Experiencia</legend>
+	<table>
+        <tr>
+   		    <td><label for="company">* Empresa:</label></td>
+        	<td><?=$this->element->getElement('company'); ?></td>
+   		    <td><label for="rol">* Rol:</label></td>
+        	<td><?=$this->element->getElement('rol'); ?></td>        	
+    	</tr>
+        <tr>
+   		    <td><label for="startDate">* Fecha Inicio:</label></td>
+        	<td><?=$this->element->getElement('startDate'); ?></td>
+			<td><label for="endDate">* Fecha Fin:</label></td>
+        	<td><?=$this->element->getElement('endDate'); ?></td>        	
+    	</tr>
+        <tr>
+   		    <td><label for="project">* Proyecto:</label></td>
+        	<td><?=$this->element->getElement('project'); ?></td>
+    	</tr>    	
+        <tr>
+   		    <td><label for="acti">* Actividades:</label></td>
+        	<td><?=$this->element->getElement('acti'); ?></td>
+    	</tr>
+        <tr>
+   		    <td><label for="tec">* Uso de Tecnolog&iacute;a:</label></td>
+        	<td><?=$this->element->getElement('tec'); ?></td>
+        <tr>
+        	<td> 
+            <a href="javascript:addWorkExpToTable();">
+                <img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png') ?>" title="Agregar">
+            </a>
+            </td> 
+    	</tr>            	
+    </table>			
+	<table id="expWorkTab" class="display">
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>Cantidad</th>
+								<th>Concepto</th>
+								<th>Importe Unit.</th>
+								<th>Importe</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+	</table>
+</fieldset>		    
+
+	<div class="center">
+	    <a href="javascript:saveVitae(vitaeForm);" class="horusBtn big icon-iconsave">Guardar</a>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/Horus/vitae/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>

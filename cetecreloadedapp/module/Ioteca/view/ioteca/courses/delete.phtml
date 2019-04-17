@@ -1,0 +1,11 @@
+<div style="text-align: center;"> 
+<p><h4 style="color: red;">Borrar el curso de: 
+<?php echo $this->escape($this->courses['name']); ?>? 
+</h4></p> 
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post"> 
+<div> 
+  <input type="hidden" name="idcurses" value="<?php echo $this->courses['idcurses']; ?>" /> 
+  <input type="submit" name="del" value="Si" /> 
+  <input type="submit" name="del" value="No" /> 
+</div> 
+</div>

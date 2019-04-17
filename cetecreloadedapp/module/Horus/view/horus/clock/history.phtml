@@ -1,0 +1,57 @@
+<h3 class="centerHor">Registro del Reloj Checador</h3>
+	
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity" >
+				<a href="<?php echo $this->baseUrl("/clock/index");?>"><img title="Checador" src="<?php echo $this->baseUrl('/public/img/iconclock.png')?>" /></a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+	</div>	
+</ul>
+	
+<script type="text/javascript">
+	var oTableO;
+	$(document).ready(function() {
+		jqueryTable('#historyTable', 8);
+
+		$('a.arriba').click(function(){ //Id del elemento cliqueable
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+<div id="overflow">
+	<table id="historyTable" class="display">
+		<thead>
+			<th>N&deg; empleado</th>
+			<th>Nombre</th>
+			<th>A. Paterno</th>
+			<th>A. Materno</th>
+			<th>Departamento</th>
+			<th>Tipo</th>
+			<th>Fecha</th>
+			<th>Hora</th>
+			<th>Ip</th>
+		</thead>
+		<tbody>
+			<?php foreach ($this->historyClock as $userHistory): ?>
+				<tr>
+					<td><?php echo $userHistory['numberEmployee']; ?></td>
+					<td><?php echo $userHistory['real_name']; ?></td>
+					<td><?php echo $userHistory['surname']; ?></td>
+					<td><?php echo $userHistory['lastname']; ?></td>
+					<td><?php echo $userHistory['d_name']; ?></td>
+					<td>
+						<?php echo ($userHistory['type'] == 1)? "Entrada" : "Salida"; ?>
+					</td>
+					<td><?php echo Application_Util_Tools::showDateForHuman($userHistory['date']); ?></td>
+					<td><?php echo $userHistory['time']; ?></td>
+					<td><?php echo $userHistory['ip']; ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+<div class="center"><a href="#" class="arriba" id="subPay">Ir arriba</a></div>

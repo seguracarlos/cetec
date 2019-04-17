@@ -1,0 +1,62 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/bankandCashStyle.css' )); ?>
+<div id="fieldsetForm" class="forms">
+	<?php echo $this->element->getElement('type');?>
+		<?php if($this->element->getElement('type')->getValue() == "1"): ?>
+		<legend id="legendhelp">* Datos requeridos</legend>
+		<?=$this->element->getElement('id_bank'); ?>
+		<?=$this->element->getElement('id_bank_id'); ?>
+		<fieldset>
+				<table>
+					<tr>
+						<td>* Nombre del Banco :</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('name'); ?></td>
+					</tr>
+					<tr>
+						<td>* N&deg; de cuenta:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('account'); ?></td>
+					</tr>
+					<tr>
+						<td>* CLABE:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('clabe'); ?></td>
+					</tr>
+					<tr>
+						<td>* Sucursal:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('branch'); ?></td>
+					</tr>										
+				</table>
+		</fieldset>
+		<div class="center">
+			 <?=$this->element->getElement('Guardar'); ?>
+			 <?=$this->element->getElement('Cancelar'); ?>
+		 </div>
+	<?php elseif($this->element->getElement('type')->getValue() == "2"):?>
+		<fieldset>
+				<table>
+					<tr>
+						<td>Monto :</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('amount'); ?></td>
+					</tr>
+					<tr>
+						<td>Descripci&oacute;n:</td>
+					</tr>
+					<tr>
+						<td><?=$this->element->getElement('description'); ?></td>
+					</tr>
+				</table>
+		</fieldset>
+		<div class="center">
+			<?=$this->element->getElement('Guardar'); ?>
+			<?=$this->element->getElement('Cancelar'); ?>
+		</div>
+	<?php endif;?>
+</div>

@@ -1,0 +1,203 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupArticle.css'));
+	$helpUser = $this->helps->purchaseorderAddorder;
+	
+	
+?>
+<script>
+$(document).ready(function(){
+	var stock = 0;
+	
+	addPurchase();
+	listenerPop();	
+    //type = 1 - prducto terminado tpe = 2 - materia prima
+	$('#article').change(function(){
+		var text = $('#article').val();
+		var idProduct = $('#article option:selected').val();
+		var amount = $('#amount');
+		if(text != '0'){
+			amount.attr("disabled",true);
+			$.get(
+				 BASE_URL + "/In/stock/reload", { product: true , id_product :idProduct , type: 2},
+				  function(data){
+				  	 $('.stoks').show();
+					  var Json = $.parseJSON(data);
+					  for(var i = 0; i < Json.length; i++){
+						 var item = Json[i];
+						 $('#amount').val(item.p_price).formatCurrency();
+						 $('#quantity').val("");	
+						 stock = item.stock;
+						 $('#stock').val(item.stock);
+						 $('#minstock').val(item.min_stock);
+						 $('#maxstock').val(item.max_stock);
+						 $('#toS').html(item.stock);
+						 $('#mnS').html(item.min_stock);
+						 $('#mxS').html(item.max_stock);
+				      }			      
+				  }  
+			);
+		}else{
+			amount.attr("disabled",false);
+			$('#amount').val("");	
+			$('#quantity').val("");	
+			$('.stoks').hide();	
+		}			
+	});
+
+   
+	
+	//evento change en monto
+	$("#amount").change(function(){
+		//al ingresar el monto de lo que va a apgar 
+		$(this).formatCurrency();
+	});
+
+	$('#Enviar').click(function(){
+			$('#amount').toNumber();
+			$('#subtotal').toNumber();
+			$('#total').toNumber();
+			
+	});
+
+	currencyField("price", "Agregar");
+
+	$('#addPurchase').click(function(){	
+		  $("#max").remove();
+		  var alerta = "";
+		  
+	  	if($('#quantity').val() != "" && $('#amount').val() != "" && $('#article').val() != "0" ){
+	  		var newStok = parseInt($('#quantity').val()) + parseInt($('#stock').val());
+	  		
+	  		if(parseInt($('#quantity').val()) >= parseInt($('#minstock').val()) && parseInt($('#quantity').val()) <= parseInt($('#maxstock').val()) && parseInt(newStok) <= parseInt($('#maxstock').val())){
+				addPurchas();
+				$('.stoks').hide();
+			}else{
+				if(parseInt($('#stock').val()) > 0){
+					if(parseInt($('#quantity').val()) > parseInt($('#maxstock').val())){
+						alerta = "La cantidad no debe ser mayor que el maximo en el stock";
+						horusAlert(alerta);
+					}else if(parseInt(newStok) > parseInt($('#maxstock').val())){
+						alerta = "No hay suficiente espacio en el almacen";
+						horusAlert(alerta);
+					}else{
+						addPurchas();
+					    $('.stoks').hide();
+					}
+				}else{
+					if(parseInt($('#quantity').val()) < parseInt($('#minstock').val())){
+						alerta = "La cantidad no debe ser menor que el minimo en el stock";
+					}else if(parseInt($('#quantity').val()) > parseInt($('#maxstock').val())){
+						alerta = "La cantidad no debe ser mayor que el maximo en el stock";
+					}else if(parseInt(newStok) > parseInt($('#maxstock').val())){
+						alerta = "No hay suficiente espacio en el almacen";
+					}
+					horusAlert(alerta);	
+				}
+				$('#quantity').val("");
+			}	 
+		}else if($.trim($('#quantity').val()) == "" || $.trim($('#amount').val()) == ""){
+			//$('#addPurchase').after("<label id='max' style='color:red;'><br/><-- tienes que llenar los 3 campos</label>"); 
+			$('#maxErr').show();
+		}else if($.trim($('#article').val()) == "0"){
+			$('#article').val("");
+			$('#amount').val("");
+			$('#quantity').val("");
+			//$('#addPurchase').after("<label id='max' style='color:red;'><br/><--- tienes que elegir un art&iacute;culo</label>");
+			$('#maxErr').show();
+		}
+	});
+	
+	//cuando se aceptan las fechas se asignan a un campo oculto para esperar el submit
+	$("#btnAccept").click(function() {
+		var arrayDate = new Array();
+		$('#total').formatCurrency();
+		$("#dates").val(null);
+		$("#paysArea input.inputDate").each(function(index) {
+			arrayDate.push($(this).val());
+		});
+		$("#dates").val(arrayDate);
+		disablePopup("paysBack","paysPop");
+	});
+
+	 $('#tableOrder').show();
+	  
+	 oTablePurchase = $('#tableOrder').dataTable({
+		   "bPaginate": true,
+           "bLengthChange": true,
+           "bFilter": true,
+           "bSort": true,
+           "bInfo": true,
+           "iDisplayLength" : -1,
+           "bAutoWidth": false,
+           "aoColumns": [
+                           null,
+                           null,
+                           null,
+                           null,
+                           null
+                         ],
+             "oLanguage": {
+          	   "oPaginate": {
+          	   "sPrevious": "Anterior",
+          	   "sNext": "Siguiente",
+          	   "sLast": "Ultima",
+          	   "sFirst": "Primera"
+          	   },
+
+          	   "sLengthMenu": 'Mostrar <select class="canBeNull">'+
+          	   '<option value="10">10</option>'+
+          	   '<option value="20">20</option>'+
+          	   '<option value="30">30</option>'+
+          	   '<option value="40">40</option>'+
+          	   '<option value="50">50</option>'+
+          	   '<option value="-1">Todos</option>'+
+          	   '</select> registros',
+
+          	   "sInfo": "Mostrando del _START_ a _END_ (Total: _TOTAL_ resultados)",
+          	   "sInfoFiltered": " - filtrados de _MAX_ registros",
+          	   "sInfoEmpty": "No hay resultados de búsqueda",
+          	   "sEmptyTable": "No hay registros a mostrar",
+          	   "sZeroRecords": "No hay registros a mostrar",
+          	   "sProcessing": "Espere, por favor...",
+          	   "sSearch": "Buscar:"
+          } 
+	});
+		
+});
+</script>
+
+<h3 class="centerOut">Agregar Orden de Compra</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/Out/purchaseorder/index')?>">
+				<img title="Ordenes	de Compra" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconorder.png')?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n', '<?php echo $helpUser ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<?php if(isset($_GET['er']) == 'notProd') :?>
+<h2>Tienes que agregar minimo 1 producto a tu compra</h2>
+<?php endif; ?>
+
+
+<div id="overflow">
+	<p class="triangle-border" >Ingresa los datos de la orden de compra.</p>
+	<?php echo $this->formulario; ?>
+</div>
+<!-- 
+    Inicia popup
+-->
+<div id="popupArticle" class="popHorus">
+	<div id="btnCloseArticle" title="Cerrar ventana">X</div>
+	<div id="formArticle">
+		<div class="center">
+			<?=$this->articleForm;?>
+		</div>
+	</div>
+</div>
+<div id="backgroundArticle"></div>

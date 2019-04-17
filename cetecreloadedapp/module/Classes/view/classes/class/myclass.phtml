@@ -1,0 +1,538 @@
+<link rel="shortcut icon" href="<?php echo $this->basePath("/public/img/logocetec.png"); ?>">
+<title>Bachillerato CTEC</title>
+
+<!-- Atibutos meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<!--
+============================================================================================
+FILES CSS
+============================================================================================
+-->
+
+<!-- NORMALIZE CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+
+<!-- alertify.core CSS -->
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/alertify/themes/alertify.core.css';?>" rel="stylesheet">
+
+<!-- alertify.default CSS -->
+<link href="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/alertify/themes/alertify.default.css';?>" rel="stylesheet">  
+
+<!-- jquery-ui-1.10.0.custom CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/PostItAll/libs/jquery-ui-1.10.0.custom.css');?>">
+
+<!-- bootstrap.min CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/PostItAll/libs/bootstrap.min.css');?>">
+
+<!-- bootstrap-responsive.min CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/PostItAll/libs/bootstrap-responsive.min.css');?>">
+
+<!-- jquery.postitall CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/PostItAll/plugin/jquery.postitall.css');?>">
+
+<!-- For syntax highlighting - zenburn CSS-->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/reveal.js-master/lib/css/zenburn.css'); ?>">
+
+<!-- REVEAL CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/reveal.js-master/css/reveal.css'); ?>">
+
+<!-- REVEAL THEME CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath('/public/js/reveal.js-master/css/theme/default.css'); ?>" id="theme">
+
+<!-- REVEAL RELOADED CSS -->
+<link rel="stylesheet" href="<?php echo $this->basePath() . '/public/css/reveal-reloaded.css'; ?>">
+
+
+
+<!--
+============================================================================================
+FILES JS
+============================================================================================
+-->
+
+<!-- REVEAL HEAD JS -->
+<script src="<?php echo $this->basePath('/public/js/reveal.js-master/lib/js/head.min.js'); ?>"></script>
+
+<!-- REVEAL JS -->
+<script src="<?php echo $this->basePath('/public/js/reveal.js-master/js/reveal.js'); ?>"></script>
+
+<!-- JQUERY JS -->
+<script src="<?php echo $this->basePath('/public/js/jquery-2.1.0.min.js');?>"></script>
+
+<!-- jquery.stopwatch JS -->
+<script type="text/javascript" src="<?php echo $this->basePath('/public/js/timer/jquery.stopwatch.js'); ?>"></script>
+
+<!-- html5gallery JS -->
+<script src="<?php echo $this->basePath('/public/js/html5gallery/html5gallery.js'); ?>"></script>
+
+<!-- ALERTIFY JS -->
+<script src="<?php echo $this->basePath() . '/public/bootstrap-3.3.1/dist/alertify/lib/alertifyCustom.js';?>"></script>
+
+<!-- jquery.postitall JS -->
+<script src="<?php echo $this->basePath('/public/js/PostItAll/plugin/jquery.postitall.js');?>"></script>    
+
+<!--[if lt IE 9]>
+<script src="<?php echo $this->basePath('/public/js/reveal.js-master/lib/js/html5shiv.js'); ?>"></script>
+<![endif]-->
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+
+<!--   <div class="menu-icon"> -->
+<!--     <div class="line"></div> -->
+<!--   </div> -->
+
+    <!-- CAMPO OCULTO -->
+    <input type="hidden" name="idSubtopic" id="idSubtopic" value="<?php echo $this->topics[0]['id_subtopic'] ?>" />
+    </div>
+    <!--
+    
+    ============================================================================================
+    INICIO DE LOGO CTEC
+    ============================================================================================
+    -->
+
+    <div id="logo" class="link-logo">
+        <a href="<?php echo $this->basePath('/horus/welcome/index') ?>" title="Home" class="logo">
+            <img src="<?php echo $this->basePath('/public/img/logo_odisseo_bk.png');?>" class="img-rounded" />
+        </a>
+    </div>
+
+    <div id="idAddDemoPostit2_result" style="position:absolute;left:1%;top:8%;"></div>
+
+    <!--
+    ============================================================================================
+    FIN LOGO CTEC
+    ============================================================================================
+    
+    
+    ============================================================================================
+    INICIO DE NOTAS
+    ============================================================================================
+    -->
+
+    <div id="note" class="link-notes">
+        <a href="#" title="Agregar nota" id="idAddDemoPostit2" class="note">
+            <img src="<?php echo $this->basePath('/public/img/addNote2.png');?>" width="50" height="60"/>
+        </a>
+    </div>
+
+    <div id="idAddDemoPostit2_result" style="position:absolute;left:1%;top:8%;"></div>
+
+    <!--
+    ============================================================================================
+    FIN NOTAS
+    ============================================================================================
+    -->
+
+    <!--
+    ============================================================================================
+    INICIO BOTO REGRESAR
+    ============================================================================================
+    -->
+    
+    <div class="link-back">
+        <a class="index" title="Volver al Indice" href="#">
+            <img src="<?php echo $this->basePath('/public/img/exitP.png');?>" width="50" height="60"/>
+        </a>
+    </div>
+
+    <!--
+    ============================================================================================
+    FIN DE BOTO REGRESAR
+    ============================================================================================
+    -->
+
+   
+
+    <div class="example">
+        <div id="demo1" class="demo" style="display:none;">00:00:00</div>
+    </div>
+
+<div class="reveal">
+
+    <!--
+    ============================================================================================
+    INICIO DE IMAGENES LATERALES
+    ============================================================================================
+    -->
+
+    <div class="centrado-porcentual-left">
+        <?php if ($this->sponsors['left'] != null) : ?>
+            <a href="http://www.coca-cola.com.mx/es/home/">
+                <img src="<?php echo $this->basePath()."/public/".$this->sponsors['left']['imagepath']; ?>" alt="Imagen" />
+            </a>
+        <?php endif; ?>
+    </div>
+
+    <div class="centrado-porcentual-right">
+        <?php if ($this->sponsors['right'] != null) : ?>
+            <a href="http://www.movistar.com.mx/">
+                <img src="<?php echo $this->basePath()."/public/".$this->sponsors['right']['imagepath']; ?>" alt="Imagen" />
+            </a>
+        <?php endif; ?>
+    </div>
+
+    <!--
+    ============================================================================================
+    FIN DE IMAGENES LATERALES
+    ============================================================================================
+    -->
+
+    <!--
+    ============================================================================================
+    INICIO DE IMAGENES VERTICALES
+    ============================================================================================
+    -->
+
+    <div class="centrado-porcentual-top">
+        <?php if ($this->sponsors['top'] != null) : ?>
+            <a href="http://www.coca-cola.com.mx/es/home/">
+            <img src="<?php echo $this->basePath()."/public/".$this->sponsors['top']['imagepath']; ?>" alt="Imagen" />
+            </a>
+        <?php endif; ?>
+    </div>
+
+    <div class="centrado-porcentual-bottom">
+    	<a href="http://www.movistar.com.mx/">
+        <?php if ($this->sponsors['buttom'] != null) : ?>
+            <img src="<?php echo $this->basePath()."/public/".$this->sponsors['buttom']['imagepath']; ?>" alt="Imagen" />
+        <?php endif; ?>
+        </a>
+    </div>
+
+    <!--
+    ============================================================================================
+    FIN DE IMAGENES VERTICALES
+    ============================================================================================
+    -->
+            
+    <div id="slides" class="slides">
+
+    <?php
+    if($this->topics){
+    $i=0; 
+        foreach ($this->topics as $topics):
+        //foreach ($this->containts[$i] as $containts):
+    ?>
+        <section id="contents"  <?php if($this->sponsors['status']){ echo "";}?>>
+            <font size=5>
+                <?php echo $topics['content']; ?>
+            </font>
+        </section>
+    <?php 
+        //endforeach;
+        $i++;
+        endforeach;
+    }else{ ?>
+        <section>
+            <h3>Aun no existe contenido para este tema.</h3>
+        </section>
+    <?php } ?>
+                        
+    </div> <!--/.slides-->
+        
+</div> <!--/.reveal-->
+        
+<!--
+<div class="reveal">        
+    #Any section element inside of this container is displayed as a slide 
+        
+    <aside class="controls" style="display: block;">
+        <div id="" class="navigate-left enabled prev"></div>
+        <div id="" class="navigate-right enabled next"></div>
+               
+    </aside>
+</div>
+-->
+    
+
+<!--
+============================================================================================
+CODE CSS
+============================================================================================
+-->
+            
+<style>
+.navbar-nav > .user-menu .user-image {
+    height: 100%;
+    width: 100%;
+}
+
+/*.dropdown-menu {
+    margin-left:-103px !important;
+}*/
+
+/*@media (max-width: 640px) 
+{
+    .thumbLeft, .thumbRight
+    {
+        display: none;
+    }
+    
+    #note{
+		display: none;    
+    }
+
+}
+
+@media (min-width: 650px) 
+{
+    
+    #contents{
+    	
+    	margin-top:-550px
+    }
+}
+                        
+
+
+.html5gallery{
+	margin-left:150px;
+}
+    
+#note{
+    margin-left: 45px;
+    margin-top : 30px;
+}
+
+.titulo{
+    text-align:right;
+}
+
+                        
+  
+    .thumbLeft{    
+    width: 170px;
+    height: 400px;
+    border: 0;
+    margin-top: 5%;
+    margin-left: 5%;
+    padding: 0;
+    border-radius: 5px;
+    }
+    
+   .thumbRight{    
+     width: 170px;
+    height: 400px;
+    border: 0;
+    margin-top: 5%;
+    margin-left: 68%;
+    padding: 0;
+    border-radius: 5px;
+    }*/
+    
+</style>
+
+<!--
+============================================================================================
+CODE JAVASCRIPT
+============================================================================================
+-->
+
+<script>
+var $basePath = "<?php echo $this->basePath();?>";
+
+document.addEventListener("dragstart", function(e) {
+        var text = e.dataTransfer.getData("text/plain");
+        e.dataTransfer.setData("text/html", text);
+});
+    
+$(document).ready(function(){
+	$('#demo1').stopwatch().stopwatch('start');
+	StartTimers();
+
+	$('body').mousemove(function( event ) {
+		ResetTimers();
+	});
+	
+     document.addEventListener('visibilitychange', function(event) {
+          if (document.hidden) {
+              $('#demo1').stopwatch().stopwatch('stop');
+          }else{
+              $('#demo1').stopwatch().stopwatch('toggle');
+          }
+    });
+
+     Reveal.initialize({
+          controls: true,
+          progress: true,
+          history: true,
+          center: true,
+          slideNumber: false,
+
+          theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+
+    });
+})
+
+	
+$(".index").click(function(e){
+    e.preventDefault();
+//      $('#demo1').stopwatch().stopwatch('stop');
+//      var $time = $("#demo1").text();
+//      $.ajax({
+//             type: 'POST',
+//             url: $basePath + '/classes/studytime/updatetime',
+//             data: {time : $time},
+//             dataType: 'json',
+//             success: function(response){
+                location.href = '<?php echo $this->basePath();?>/classes/class/index/<?php echo $this->parent;?>';
+//             },
+//             //error: function(){ console.log("Fallo, intentalo otra vez"); }
+//         });
+     location.href = '<?php echo $this->basePath();?>/classes/class/index/<?php echo $this->parent;?>';
+//         return false;
+});
+
+$(".logo").click(function(e){
+    e.preventDefault();
+     location.href = '<?php echo $this->basePath('/horus/welcome/index') ?>';
+});
+
+	$("body").on("blur", ".noteContent", function(){
+		var $noteText = $(this).text();
+		var $idNote = $(this).attr("data-id");
+		var $note   = $(this);
+		var $idSubTopic =$("#idSubtopic").val();
+		var $deleteIcon = $(this).parent().find(".deleteNote");
+		if($noteText != ""){
+			if($idNote!=0){
+				$.ajax({
+					type: 'POST',
+					url: $basePath + '/classes/studentnotes/update',
+					data: {idNote : $idNote , note : $noteText ,idSubtopic : $idSubTopic},
+					dataType: 'json',
+					success: function(response){
+						console.log("Nota actualizada");
+					},
+					error: function(){ console.log("Fallo, intentalo otra vez"); }
+				});
+			}else{
+				$.ajax({
+					type: 'POST',
+					url: $basePath + '/classes/studentnotes/add',
+					data: {note : $noteText ,idSubtopic : $idSubTopic},
+					dataType: 'json',
+					success: function(response){
+						$note.attr("data-id",response.data.id_note);
+						$deleteIcon.attr("data-id",response.data.id_note);
+						
+					},
+					error: function(){ console.log("Fallo, intentalo otra vez"); }
+				});
+			}
+		  }
+	})
+
+	
+        $(document).ready(function() {
+            $('a').click(function(e){ 
+                if(!($(this).attr("class"))){
+                e.preventDefault(); 
+                var url = $(this).attr('href'); 
+                window.open(url, '_blank');
+                }
+            }); 
+
+        $('#idAddDemoPostit2').click(function(e) {
+            e.preventDefault();
+            $.PostItAll.new({
+                content: '',
+                onCreated: function(id, options, obj) {
+                    idNewNote = id;
+                    $('#idGetCreated').click();
+                },
+                onDelete: function() {
+                    idNewNote = null;
+                },
+            });
+
+        });
+
+    });
+
+	$(document).on('click', '.PIAdelyes', function(){
+			$idNote = $(this).parent().parent().parent().prev().attr("data-id");
+			if($idNote != 0){
+				$.ajax({
+					type: 'POST',
+					url: $basePath + '/classes/studentnotes/delete',
+					data: {id_note : $idNote},
+					dataType: 'json',
+					success: function(response){
+						console.log("Se elimino correctamente");
+					},
+					error: function(){ console.log("Fallo, intentalo otra vez"); }
+				});
+			}
+	});
+
+
+	$(document).on('click', '.deleteNote', function(){
+		$(this).parent().parent().parent().parent().removeClass('draggable');	
+	});
+
+	$(document).on('click', '.PIAdelno', function(){
+		$(".PIAdelete").parents('div.block').removeClass('draggable');	
+	});
+
+// 	Reveal.addEventListener( 'slidechanged', function( event ) {
+// 		$("#html5gallery-elem-video-0").get(0).stopVideo();
+// 	} );
+	
+	var timoutWarning = 840000; // Display warning in 14 Mins.
+	var timoutNow = 900000; // Timeout in 15 mins.
+	var warningTimer;
+	var timeoutTimer;
+	var logoutUrl = $basePath + '/logout';
+
+	// Start timers.
+	function StartTimers($logoutUrl) {
+	    warningTimer = setTimeout("IdleWarning()", timoutWarning);
+	    timeoutTimer = setTimeout('IdleTimeout()', timoutNow);
+	}
+
+	// Reset timers.
+	function ResetTimers() {
+	    clearTimeout(warningTimer);
+	    clearTimeout(timeoutTimer);
+	    StartTimers();
+	}
+
+	// Show idle timeout warning dialog.
+	function IdleWarning() {
+		$('#demo1').stopwatch().stopwatch('stop');
+	    document.title = 'Alerta';
+		alertify.confirm("Parece que llevas tiempo inactivo, Deseas continuar?", function(e){
+		if (e){
+		    document.title = 'Bachillerato CTEC';
+		    $('#demo1').stopwatch().stopwatch('toggle');
+		}
+		});
+	}
+
+	// Logout the user and save time.
+	function IdleTimeout() {
+// 		var $time = $("#demo1").text();
+// 	     $.ajax({
+// 	            type: 'POST',
+// 	            url: $basePath + '/classes/studytime/updatetime',
+// 	            data: {time : $time},
+// 	            dataType: 'json',
+// 	            success: function(response){
+// 	               location.href = logoutUrl;
+// 	            },
+// 	            error: function(){ console.log("Fallo, intentalo otra vez"); }
+// 	    });
+		 location.href = logoutUrl;   
+	    //window.location = logoutUrl;
+	}
+	
+
+</script>

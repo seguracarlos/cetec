@@ -1,0 +1,60 @@
+<?php 
+	echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/projectsStyle.css'));
+?>
+
+
+<h3 class="centerSis">Resumen del Poyecto Prospecto</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/prospectprojects/index') ?>">
+					<img title="Ver cotizaciones" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png')?>"/>
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n', '<?php echo $helpUser ?>')">
+				<a>
+					<img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<tbody>
+<div id="fieldsetForm" class="forms">
+		
+<?php if($this->projects): ?>
+		<?php foreach ( $this->projects as $project ) :	?> 
+<h3 style="color: navy;">Informaci&oacute;n General</h3>
+<h1 style="border-top: navy 1px solid "></h1>
+<br/>
+<br/>
+<div id="nameCompany" >Cliente: <span class="cont" ><span class="cont" id="nameCompanyS" ><?php  echo $project->getNameCompany(); ?></span></span></div>
+<br/>
+<div id="nameProyect" >Nombre: <span class="cont" ><span class="cont" id="nameProyectS" ><?php  echo $project->getName_project(); ?></span></span></div>
+<br/>
+<div id="description" >Descripci&oacute;n: <span class="cont" ><span class="cont" id="descriptionS" ><?php  echo $project->getDescription(); ?></span></span></div>
+<br/>
+<div id="startDate" >Inicio: <span class="cont" ><span class="cont" id="startDates" ><?php  echo $project->getStart_date(); ?></span></div>
+<br/>
+<div id="endDate" >T&eacute;rmino: <span class="cont" ><span class="cont" id="endDateS" ><?php  echo $project->getEnd_date(); ?></span></span></div>
+<br/>
+<div id="status" >Estatus: <span class="cont" ><span class="cont" id="statusS" ><?php  echo $project->getStatus(); ?></span></span></div>
+<br/>
+
+<h3 style="color: navy;">Informaci&oacute;n Comercial</h3>
+<h1 style="border-top: navy 1px solid "></h1>
+<br/>
+<div id="descuento">Descuento: <span class="cont" ><span class="cont" id="dsctoS" ><?php  echo "$".$project->getDescto().".00"; ?></span></span></div>
+<br/>
+<div id="numberofpayments">N&uacute;mero de Pagos: <span class="cont" ><span class="cont" id="numbreOfPaymentsS" ><?php  echo $project->getNumberofpayments(); ?></span></span></div>
+<br/>
+<div id="avance">Anticipo: <span class="cont" ><span class="cont" id="advanceS" ><?php  echo "$".$project->getAdvance(); ?></span></span></div>
+<br/>
+<div id="iva">IVA: <span class="cont" ><span class="cont" id="ivaS" ><?php  echo $project->getIva()." %"; ?></span></span></div>
+<br/>
+<div id="total">Total: <span class="cont" ><span class="cont" id="totalS" ><?php  echo "$".$project->getTotal(); ?></span></span></div>
+</div>
+		<?php endforeach; endif;?>
+	</tbody>

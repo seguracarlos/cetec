@@ -1,0 +1,111 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Editar servicio</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Ingresos</a>
+			        <a href="#" class="btn btn-default">Servicios</a>
+			        <a href="#" class="btn btn-default">Editar</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+
+	<p class="triangle-border text-size-20 amaranth">Modifica los datos del servicio.</p>
+	
+	<div class="content-forms">
+	
+		<?php 
+		$form = $this->form;
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		echo $this->formElement($form->get('id_service'));
+		?>
+	
+		<div style="text-align:right;">
+			<span style="text-align:right;" class="label label-info">* Datos requeridos</span>
+		</div>
+		
+		<fieldset class="responsive-fieldset fieldset">
+		
+			<legend class="legend amaranth">
+				<span class="glyphicon glyphicon-tag"></span> Datos generales
+			</legend>
+			
+			<div class="col-md-12">
+			
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Clave:</label>
+						<?php echo $this->formElement($form->get('clave')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Nombre:</label>
+						<?php echo $this->formElement($form->get('name_service')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Costo:</label>
+						<?php echo $this->formElement($form->get('cost')); ?>
+					</div>
+				</div>
+				
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="text-amaranth">* Fecha:</label>
+						<?php echo $this->formElement($form->get('dateService')); ?>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="padding-right-30 padding-left-30 col-md-12">
+				<label class="text-amaranth">Descripci&oacute;n:</label>
+				<?php echo $this->formElement($form->get('description')); ?>
+			</div>
+			
+			<hr>
+			
+			<div class="clearfix padding-bottom-20">
+				<div class="col-md-6">
+					<label></label>
+					<?php echo $this->formElement($form->get('submitbutton')); ?>
+				</div>
+				<div class="col-md-6">
+					<label></label>
+					<a href="<?php echo $this->basePath()."/in/services/index";?>" class="btn btn-danger btn-lg btn-block">Cancelar</a>
+				</div>
+			</div>
+			
+		</fieldset>
+		
+		<?php
+		echo $this->form()->closeTag();
+		?>
+		
+	</div>
+
+</div>
+
+<script>
+	var $basePath     = "<?php echo $this->basePath(); ?>";
+</script>

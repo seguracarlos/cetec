@@ -1,0 +1,116 @@
+<script type="text/javascript">
+var creAexp = "<?php if(isset($_GET['CreAnExp'])){echo "true";}else{echo "false";}; ?>";
+
+$(document).ready(function() {
+
+	if(creAexp == "true"){
+		jqueryTable('#docTableCreEnExp',3);	
+	}else{
+		jqueryTable('#documentsTable', 3);
+	}
+	
+});
+</script>
+<h3 class="centerIn">Documentos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/create') ?>">
+					<img title="Crear Documento"  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" />
+				</a>
+			</li>
+			<?php if(isset($_GET['CreAnExp']) == "true"):?>
+				<li class="iconOpacity">
+					<a href="<?php echo $this->baseUrl('/Horus/documents/index') ?>">
+						<img title="Documentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondocgear.png');?>" />
+					</a>
+				</li>
+			<?php else: ?>
+				<li class="iconOpacity">
+					<a href="<?php echo $this->baseUrl('/Horus/documents/index?CreAnExp=true') ?>">
+						<img title="Crear y exportar documento" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconexport.png');?>" />
+					</a>
+				</li>
+			<?php endif;?>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')">
+				<a>
+					<img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<?php if(isset($_GET['CreAnExp']) != "true"):?>
+	<table id="documentsTable" class="display">
+		<thead>
+			<tr>
+				<th>N&deg;</th>
+				<th>NOMBRE</th>
+				<th>DESCRIPCION</th>
+				<th >
+					<a href="<?php echo $this->baseUrl('/Horus/documents/create') ?>"><img alt="crear Documento" title="crear Documento" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>"></a>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($this->documents as $document):?>
+				<tr>
+					<td>
+						<?php echo $document->getId_Document(); ?>
+					</td>
+					<td>
+						<?php echo $document->getName(); ?>
+					</td>
+					<td>
+						<?php echo Application_Util_Tools::getSubString($document->getDescription(), 40); ?>
+					</td>
+					<td>
+					    <a href="<?php echo $this->baseUrl('/Horus/documents/edit?id='.$document->getId_Document())?>"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+						</a>
+					
+						<a onclick="javascript:deleteRecord('documentsTable',this,'<?php echo $document->getId_Document()?>','/Horus/documents/delete')"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+						</a>
+					
+						<a href="<?php echo $this->baseUrl('/Horus/documents/view?idDoc='.$document->getId_Document());?>">Vista</a>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+<?php else: ?>
+	<table id="docTableCreEnExp" class="display">
+		<thead>
+			<tr>
+				<th>N&deg;</th>
+				<th>NOMBRE</th>
+				<th>DESCRIPCION</th>
+				<th ></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($this->documentsCreAnExp as $document):?>
+				<tr>
+					<td>
+						<?php echo $document->getId_Document(); ?>
+					</td>
+					<td>
+						<?php echo $document->getName(); ?>
+					</td>
+					<td>
+						<?php echo Application_Util_Tools::getSubString($document->getDescription(), 40); ?>
+					</td>
+					<td>
+						<a href="<?php echo $this->baseUrl('/Horus/documents/creaexpor?idDoc='.$document->getId_Document());?>">Llenar</a>
+				   
+				    	<a href="<?php echo $this->baseUrl('/Horus/documents/versions?idDoc='.$document->getId_Document());?>">Versiones</a>
+				    </td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+<?php endif;?>
+</div>

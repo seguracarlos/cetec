@@ -1,0 +1,160 @@
+#backgroundCatalog {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupCatalog {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 400px;
+	width: 655px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 99;
+	padding: 10px;
+	font-size: 12px;
+	text-align: left;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	font-family: sans-serif;
+	top:20px;
+}
+
+#formCatalog{
+	width: 100%;	
+}
+
+#tableCover{
+	overflow: auto;
+	height: 800px;
+	width: 650px;
+}
+
+#formCatalog textarea { 
+	resize: none; 
+	width: 90%;
+}
+
+#btnCloseCatalog{
+	right: 2px;
+	top: 2px;
+	padding: 1px 4px;
+}
+
+#btnCloseCatalog {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnCloseCatalog:hover{
+	background: #00539c;
+}
+
+
+
+/* ]]]]]]]]]]]]]]] estilos de subir imagenes }}}}}}}}}}}}}}} */
+
+#loaderEmpl{
+	display: none;
+}
+#loaderRfc{
+	display: none;
+}
+#loaderEmail{
+	display: none;
+}
+#loaderUser{
+	display: none;
+}
+#loaderPass{
+	display: none;
+}
+.title{
+	margin-left: 0px;
+}
+
+// *************** fotografia en actulizar usuario
+.titleFU{
+	margin-left: 0px;
+}
+#contenedorImagenFU{
+	width: 80%;
+	height: 70%;
+	border: 1px solid #ccc;
+	-moz-border-radius: 8px 8px 8px 8px;
+	-webkit-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;
+	margin-bottom: 30px;
+	margin: auto;
+}
+
+/* ------------------ pop jobs --------------- */
+
+#backgroundJobs {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupJobs {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 450px;
+	width: 655px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 10px;
+	font-size: 12px;
+	text-align: left;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	font-family: sans-serif;
+	top:20px;
+}
+
+#btnCloseJobs{
+	right: 2px;
+	top: 2px;
+	padding: 1px 4px;
+}
+
+#btnCloseJobs {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnCloseJobs:hover{
+	background: #00539c;
+}

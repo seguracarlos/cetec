@@ -1,0 +1,11 @@
+<div id="publication">
+<?php if($this->contents) :?>
+	       <?php foreach ($this->contents as $contents): ?>
+	       <h1><?php echo $contents['name_content'];?></h1>
+	        </br>
+	        </br>
+	        	<?php echo $contents['content'];?>
+	        
+	<?php endforeach;?>
+	    	<?php endif;?>
+	    	</div>

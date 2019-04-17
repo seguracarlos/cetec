@@ -1,0 +1,128 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addCategory.js'));
+$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupStockDiscount.css'))
+?>
+<?php
+	$helpUser = $this->helps->finishedproductIndex;
+?>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		jqueryTable('#products', 13);
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerIn">Almac&eacute;n de productos terminados</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl("/In/finishedproduct/add"); ?>">
+					<img  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" alt="Agregar nuevo producto"/>
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="products" class="display">
+	<thead>
+		<tr>
+			<th>Clave</th>
+			<th>Producto</th>
+			<th>Categor&iacute;a</th>
+			<th>Descripci&oacute;n</th>
+			<th>Exist.</th>
+			<th>Exist. m&iacute;n.</th>
+			<th>Exist. m&aacute;x.</th>
+			<th>Registrado</th>
+			<th>Precio</th>
+			<th>Total</th>
+			<th>Revisi&oacute;n</th>
+			<th>Unidad de medida</th>
+			<th>Foto</th>
+			<th>
+			<?php if($this->permissions[KeysGlobalPermissions::INGRESOSSTOCKADD]): ?>
+				<a href="<?php echo $this->baseUrl('/In/finishedproduct/add') ?>"> <img
+				class="iconOpacity"
+				src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar producto"> </a>
+				<?php endif;?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	<?php if($this->products) foreach ($this->products as $product) : ?>
+	
+	<?php 
+		$percentaje = $product['purchase_percentage'] / 100;//porcentaje
+		$priceSale = $product['p_price'] * $percentaje;//ganancia
+		$priceGain = $product['p_price'] + $priceSale;//precio venta
+		
+		//$total = $product['stock'] * $priceGain;//total de dienro en almacen por producto
+		$total = ($product['p_price'] * $product['stock']);
+	?>
+		<tr>
+			<td><?=$product['p_key'] != "" ? $product['p_key'] : Profile::PENDIENTE ?></td>
+			<td><?=$product['p_name'] != "" ? $product['p_name'] : Profile::PENDIENTE?></td>
+			<td><?=$product['c_name'] != "" ? $product['c_name'] : Profile::PENDIENTE?></td>
+			<td><?php echo $product['p_description'] ? $product['p_description'] : Profile::PENDIENTE;?></td>
+			<td class="number"><?=$product['stock'] != "" ? $product['stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['min_stock'] != "" ? $product['min_stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['max_stock'] != "" ? $product['max_stock'] : Profile::PENDIENTE?></td>
+			<td><?=$product['p_record_date'] != "" ? $product['p_record_date'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['p_price'] != "" ? Application_Util_Tools::currency($product['p_price']) : Profile::PENDIENTE?></td>
+			<td class="number"><?php echo Application_Util_Tools::currency($total); ?></td>
+			<td><?=$product['review_product'] == 1 ? "Producto Revisado": Profile::PENDIENTEREVISION?></td>
+			<td><?=$product['unit'] != "" ? $product['unit'] : Profile::PENDIENTE; ?></td>
+			<td>
+				<?php if($product['p_photo'] != null):  ?>
+					<img src="data:image/png;base64,<?php echo $product['p_photo']; ?>" width="35px" height="35px" />
+				<?php else:?>
+					<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/noConozco.png');?>" width="35px" height="35px">
+				<?php endif; ?>
+			</td>
+			<td>
+				<a onclick="javascript:showOptionDiscount(this,'<?=$product['id_product']?>','1')"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png');?>" title="Descontar existencias"	alt="Descontar existencias">
+				</a>
+			
+				<a href="<?php echo $this->baseUrl('/In/finishedproduct/update?p='.$product['id_product'])?>">
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+				</a>
+			
+				<a onclick="javascript:deleteRecord('products', this, '<?=$product['id_product']?>', '/In/finishedproduct/delete')">
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+				</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDiscount" class="popHorus">
+		<div id="btnCloseDiscount" title="Cerrar ventana">X</div>
+		<div id="formDiscount">
+			<div class="center">
+				<?=$this->form;?>	
+			</div>
+		</div>
+	</div>
+<div id="backgroundDiscount"></div>
+<!-- 
+	Termina popup
+-->
+
+
+

@@ -1,0 +1,168 @@
+<?php 
+include_once APPLICATION_PATH . '/util/Tools.php';
+$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addCategory.js')); 
+$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupStockDiscount.css'))
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#products', 16);
+	jqueryTable('#category',3);		
+});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerIn">Productos en el almac&eacute;n</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity info1">
+			<a href="<?php echo $this->baseUrl('/warehouse/index') ?>" class="tooltipcenter" title="Almac&eacute;n materia prima"> 
+				<img  src="<?php echo $this->baseUrl('/public/img/iconbrick.png')?>" > 
+			</a>
+		</li>
+		<li class="iconOpacity info1">
+			<a href="<?php echo $this->baseUrl('/purchaseorder/index') ?>" class="tooltipcenter" title="Ordenes de Compra"> 
+				<img  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconorder.png')?>" > 
+			</a>
+		</li>
+		<li class="iconOpacity info1">
+			<a href="<?php echo $this->baseUrl('/warehouse/historyproduct') ?>" class="tooltipcenter" title="Historial de Productos"> 
+				<img  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las ordenes de compra')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter"><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+
+<div id="overflow">
+<table id="products" class="display">
+	<thead>
+		<tr>
+			<th>Clave</th>
+			<th>Producto</th>
+			<th>Categor&iacute;a</th>
+			<th>Descripci&oacute;n</th>
+			<th>Existencias</th>
+			<th>Existencia minima</th>
+			<th>Existencia m&aacute;xima</th>
+			<th>Registrado</th>
+			<th>Precio Unitario</th>
+			<th>Total</th>
+			<th>Revisi&oacute;n</th>
+			<th>Unidad de medida</th>
+			<th>Estatus de Pedido</th>
+			<th>Foto</th>
+			<th colspan="3">
+				<a href="<?php echo $this->baseUrl('/stock/add') ?>"> <img
+				class="iconOpacity"
+				src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar producto"> </a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	<?php if($this->products) foreach ($this->products as $product) : ?>
+		<tr>
+			<td><?=$product['p_key'] != "" ? $product['p_key'] : Profile::PENDIENTE ?></td>
+			<td><?=$product['p_name'] != "" ? $product['p_name'] : Profile::PENDIENTE?></td>
+			<td><?=$product['c_name'] != "" ? $product['c_name'] : Profile::PENDIENTE?></td>
+			<td><?=$product['p_description'] != "" ? $product['p_description'] : Profile::PENDIENTE?></td>
+			<td><?=$product['stock'] != "" ? $product['stock'] : Profile::PENDIENTE?></td>
+			<td><?=$product['min_stock'] != "" ? $product['min_stock'] : Profile::PENDIENTE?></td>
+			<td><?=$product['max_stock'] != "" ? $product['max_stock'] : Profile::PENDIENTE?></td>
+			<td><?=$product['p_record_date'] != "" ? $product['p_record_date'] : Profile::PENDIENTE?></td>
+			<td><?=$product['p_price'] != "" ? Tools::currency($product['p_price']) : Profile::PENDIENTE?></td>
+			<td><?=$product['stock'] * $product['p_price'] > 0 ? Tools::currency($product['stock'] * $product['p_price']):Tools::currency(0);?></td>
+			<td><?=$product['review_product'] == 1 ? "Producto Revisado": Profile::PENDIENTEREVISION?></td>
+			<td><?=$product['unit'] != "" ? $product['unit'] : Profile::PENDIENTE?></td>
+			<td>
+			<?php
+				$status = $product['quantity'];
+				$stock = $product['stock'];
+				$prod = '0';
+				if (is_null($status)) {
+					$status=$stock;
+				}
+				if ($stock == '0') {
+					$prod = 0;
+				}elseif (($stock < $status)&&($stock != '0')) {
+					$prod = 2;
+				}elseif ($stock == $status) {
+					$prod = 1;
+				}
+				$statusVisual = "";
+				switch ($prod) {
+					case StatusPurchaseOrder::NOT_DELIVERED:
+						$statusVisual = "No entregada";								
+						break;
+					case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+						$statusVisual = "Entrega incompleta";								
+						break;
+					case StatusPurchaseOrder::DELIVERED_COMPLETE:
+						$statusVisual = "Entrega completa";								
+						break;							
+					default:
+						break;
+				}
+				echo $statusVisual;
+			?>
+			</td>
+			<td>
+			<?php if($product['p_photo'] != null):  ?>
+					<img src="data:image/png;base64,<?php echo $product['p_photo']; ?>" width="35px" height="35px" />
+				<?php else:?>
+					<img src="<?php echo $this->baseUrl("img/noConozco.jpg"); ?>" width="35px" height="35px">
+				<?php endif; ?>
+			</td>
+			<td>
+				<a onclick="javascript:showOptionDiscount(this,'<?=$product['id_products'].','.$product['type_product']?>')"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png');?>" title="Descontar existencias"	alt="Descontar existencias">
+				</a>
+			</td>
+			<td>
+				<a href="<?php echo $this->baseUrl('/warehouse/update/id/'.$product['id_products'])?>"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+				</a>
+			</td>
+			<td>
+				<a onclick="javascript:deleteRecord('products',this,'<?=$product['id_products']?>','/stock/delete')"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+				</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDiscount" class="popHorus">
+		<div id="btnCloseDiscount" title="Cerrar ventana">X</div>
+		<div id="formDiscount">
+			<div class="center">
+				<?=$this->form;?>	
+			</div>
+		</div>
+	</div>
+<div id="backgroundDiscount"></div>
+<!-- 
+	Termina popup
+-->
+
+

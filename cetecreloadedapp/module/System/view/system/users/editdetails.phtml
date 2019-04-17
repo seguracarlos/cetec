@@ -1,0 +1,23 @@
+<h3 class="centerHor">Actualizaci&oacute;n a Datos Personales</h3> 
+<ul class="toolbar">
+	<div id="icons">
+		 <li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/System/users/index')?>"><img title="Usuarios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" /></a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Los detalles de usuarios muestran direcci&oacute;nes e informaci&oacute;n de contacto')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<script type="text/javascript">
+	var userName = "<?php echo $this->Name; ?>";
+	var type_user = "<?php echo $this->userType; ?>";
+</script>
+
+    <div id="overflow">
+	<p class="triangle-border" >Edita los datos del usuario.</p>
+	<?php echo $this->form; ?>
+	</div>
+    

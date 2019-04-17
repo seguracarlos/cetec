@@ -1,0 +1,72 @@
+<?php 
+//$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/prospectsprojectFunction.js'));
+$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/functions.js'));
+ ?>
+<INPUT type="hidden" value="<?php echo $this->idClient ?>" name="cli" id="client"> 
+<INPUT type="hidden" value="<?php echo $this->cust_type ?>" name="cus" id="custype"> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var cust_type = "<?php echo ($this->cust_type); ?>";
+	var idCli = "<?php echo ($this->idCli); ?>";
+	/*alert(idCli);
+	alert(cust_type);*/
+if(idCli){
+if (cust_type != null ) {
+		$('input[name=mybrand][value='+ cust_type +']').attr('checked', true);
+		if($("input[name='mybrand']:checked").val() == 1){
+			$("#suppl").html("* Cliente: ");	
+			$("#supplAdd").show();
+			var check = $("input[name='mybrand']:checked").val();
+			$("#mybrand option[value="+ check +"]").attr("selected",true);
+			//chek = 1 - cliente check = 0 - prospecto	
+			getClientOrProspect(1);
+			$('#projectForm').removeAttr('onsubmit');
+			$('#projectForm').attr("onsubmit", "return isEmptyForm('projectForm',5)");
+		}else{
+			var check = $("input[name='mybrand']:checked").val();
+			$("#suppl").html("* Cliente prospecto: ");	
+			$("#supplAdd").show();
+			//chek = 1 - cliente check = 0 - prospecto	
+			getClientOrProspect(0);
+			$('#projectForm').removeAttr('onsubmit');
+			$('#projectForm').attr("onsubmit", "return isEmptyForm('projectForm',5)");
+		}
+		setTimeout(function() {
+			$('#company_ID option[value='+idCli+']').attr('selected','selected')
+			//$('#company_ID').attr('disabled','disabled')
+			//$("#company_ID option:selected").remove();
+			$("#supplAdd").hide();
+			$('input[name=mybrand]').attr("disabled",true);
+		}, 4000);	
+	}
+}
+	
+});
+</script>
+
+<h3 class="centerIn">Agregar Cotizaci&oacute;n de Servicio</h3>
+<?php 
+$helpUser = $this->helps->prospectprojectCreateview;
+?>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/prospectprojects/index')?>">
+					<img title="Cotizaci&oacute;nes de Servicios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icocash.png');?>"/>
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Actualizar los datos de un proyecto')">
+				<a>
+					<img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+				</a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<p class="triangle-border" style="margin-left: 128px">Ingresa los datos de la cotizaci&oacute;n.</p>
+	<?php print $this->form; ?>
+</div>

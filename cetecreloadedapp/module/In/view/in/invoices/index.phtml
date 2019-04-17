@@ -1,0 +1,118 @@
+
+<?php 
+$helpUser = $this->helps->invoicesIndex;
+?>
+
+<?php $util = new StaticTools(); ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		jqueryTableWithTotal('#invoices', 7,null,null,3);
+		
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+
+		var resp = '<?php echo $this->resp;?>';
+		var tax = '<?php echo $this->tax; ?>';
+		
+		//console.log(tax);
+		if(resp){
+			alert("Factura Agregada");
+		}
+	});
+</script>
+
+<h3 class="centerIn">Facturas</h3>
+<ul class="toolbar">
+		<div id="icons">
+				<li class="iconOpacity ">
+					<a href="<?php echo $this->baseUrl('/In/cxc/calendar') ?>">
+						<img title="Calendario de CxC" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcalendar.png');?>" />
+					</a>
+				</li>
+				<li class="iconOpacity ">
+					<a href="<?php echo $this->baseUrl('/In/invoices/xml') ?>">
+						<img title="Calendario de CxC" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/xml.png');?>" />
+					</a>
+				</li>
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser?>')">
+					<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+				<div id="clock"></div>
+		</div>	
+</ul>
+
+<div id="overflow">
+	<table id="invoices" class="display">
+		<thead>
+			<tr>
+				<th>Folio</th>
+				<th>Fecha</th>
+				<th>Concepto</th>
+				<th>Subtotal</th>
+				<th>iva</th>
+				<th>Total</th>
+				<th>Observaciones</th>
+				<th >
+					<?php if($this->permissions[KeysGlobalPermissions::INGRESOSINVOICESCREATEVIEW]) :?>
+					<a href="<?php echo $this->baseUrl() ?>/In/invoices/createview">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>"> 	
+					</a>
+					<?php endif;?>		
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($this->invoices as $facturas) {?>
+		<tr>
+			<td><?=$facturas['ID']; ?></td>
+			<td><?=$facturas['date_invoice']?></td>
+			<td><?=$facturas['concept']?></td>
+			<td><?=$util->currency($facturas['amount']); ?></td>
+			<td><?=$util->currency($facturas['tax']); ?></td>
+			<td><?=$util->currency($facturas['total']); ?></td>
+			<td><?=(strlen($facturas['observation']) > 30) ? substr($facturas['observation'], 0, -40)."  ..." : $facturas['observation'];?></td>
+			<td>
+				<?php 
+				$idReal = explode("-", $facturas['ID']);
+				if($idReal[1] == "C"):?>
+					<span><img src="<?php echo $this->baseUrl('/public/img/warning.png'); ?>" title="acci&oacute;n no permitida"></span>
+				<?php else: ?>
+				  <a href="<?php echo $this->baseUrl() ?>/In/invoices/updateview/ID/<?=$facturas['ID']?>">
+				  	<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Editar Factura">
+				  </a>
+				<?php endif; ?>
+
+			    <?php 
+				$idReal = explode("-", $facturas['ID']);
+				if($idReal[1] == "C"):?>
+					<span><img src="<?php echo $this->baseUrl('/public/img/warning.png'); ?>" title="accion no permitida"></span>
+				<?php else: ?>
+	                <a onclick="javascript:deleteRecord('invoices',this,'<?php echo $facturas['ID']?>','/In/invoices/deleteview')"> 
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+					</a>
+				<?php endif; ?>
+				
+			<?php 
+				$idReal = explode("-", $facturas['ID']);
+				if($idReal[1] == "C"):?>
+					<span><img src="<?php echo $this->baseUrl('/public/img/warning.png'); ?>" title="accion no permitida"></span>
+				<?php else: ?>
+				<a href="<?php echo $this->baseUrl() ?>/In/invoices/details/ID/<?=$facturas['ID']?>">Exportar</a>
+				<?php endif; ?>
+			
+			</td>
+			
+		</tr>
+
+		<?php }?>
+		</tbody>
+	<tfoot>
+		<tr>
+			<th style="text-align:right" colspan="3">Total:</th>
+			<th></th>
+		</tr>
+	</tfoot>	
+	</table>
+</div>

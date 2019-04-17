@@ -1,0 +1,131 @@
+<?php $this->headLink()
+->appendStylesheet($this->baseUrl('/public/css/popupCustomerDetails.css'));
+	  $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js')); 
+?>
+<?php 
+$helpUser = $this->helps->customersHistoryCustomer;
+?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#customerHistory', 10);
+
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+});
+</script>
+<h3 class="centerIn">Consulta Hist&oacute;rica de Clientes</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/In/customers/index');?>">
+					<img title="Clientes" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icongroup.png')?>" />
+				</a>
+			</li>
+			<li class="iconOpacity">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index')?>">
+					<img title="Ver contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser?>')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<div id="overflow">
+<table id="customerHistory" class="display">
+	<thead>
+		<tr>
+			<th>Cliente</th>
+			<th>RFC</th>
+			<th>Calle</th>
+			<th># Exterior</th>
+			<th># Interior</th>
+			<th>Colonia</th>
+			<th>Estado</th>
+			<th>Delegaci&oacute;n</th>
+			<th>C&oacute;digo postal</th>
+			<th>Estatus</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody> 
+        <?php foreach ($this->datacompany as $clientes) : ?>
+            <tr>
+				<td class="alpha">
+                    <?php echo $clientes['name_company']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['rfc']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['street']; ?>
+                </td>
+				<td class="number">
+                    <?php echo $clientes['number']; ?>
+                </td>
+				<td class="number">
+                    <?php echo $clientes['interior']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['colony']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['state']; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $clientes['name']; ?>
+                </td>
+				<td class="number">
+                    <?php echo $clientes['postalcode']; ?>
+                </td>
+                <td class="alpha">
+                	<?php if ($clientes['company_isactive']): ?>
+                    	<?php echo 'Activo'; ?>
+                	<?php else:?>
+                    	<?php echo 'Inactivo'; ?>
+                    <?php endif; ?>
+                 </td>
+                 <td>
+					<a href="<?php echo $this->baseUrl("/In/costumers/enable?id=") . $clientes['id_company'] ?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/thumb_down.png')?>"
+						title="Habilitar cliente" alt="Habilitar cliente">
+					</a> 
+					<a class="viewContact" onclick="viewContact('<?php echo ($clientes['id_company'])?>')"> <img class="iconOpacity"
+						src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" title="Datos de contacto"
+						alt="Datos de contacto">
+					</a>
+				</td>            
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+</table>
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDetails" class="popHorus">
+			<div id="btnClose" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<div id="content">
+			<div id="data">
+				<div id="layer">
+					<div class="center">
+						<img id="load" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundDetails"></div>
+<!-- 
+    termina popup
+-->
+
+<div class="center"><a href="#" class="arriba" id="subPay">Ir arriba</a></div>

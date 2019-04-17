@@ -1,0 +1,141 @@
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+	var costInput = $('#p_price');
+	costInput.formatCurrency();
+
+		var num = $('#purchase_percentage').val();
+		var formPer2 = formatPercentage(num);
+		$('#purchase_percentage').val(formPer2);
+
+	$('#p_price').blur(function() {
+		costInput.formatCurrency();
+	});
+	
+	$('#purchase_percentage').change(function(){
+		var formPer = formatPercentage($('#purchase_percentage').val());
+		$('#purchase_percentage').val(formPer);
+	});
+	
+	$('#stock').change(function(event){
+		var min = $('#min_stock').val();
+		var max = $('#max_stock').val();
+		var stock = $(this).val();
+		if(parseInt(stock) < parseInt(min)){
+			horusAlert("minimo tienen que ser " + min + " existencias");
+			$(this).val("");
+		}else if(parseInt(stock) > parseInt(max)){
+			horusAlert("maximo tienen que ser " + max + " existencias");
+			$(this).val("");
+		}
+	});
+
+	$("#p_key").change(function(){
+		validaClaveProduct($(this).val(), $(this));
+	});
+
+	$('#Guardar').click(function() {
+		var costInput = $('#p_price');
+		costInput.toNumber();
+		var perPo = $('#purchase_percentage');
+		var proPoClea = removePercentage(perPo.val());
+		perPo.val(proPoClea);
+	});
+	
+	if($("#p_photo").val() != ""){
+		$('#fotografia').removeAttr('scr');
+		$('#fotografia').attr('src', 'data:image/png;base64,'+$("#p_photo").val());
+	}else{
+		$('#fotografia').removeAttr('scr');
+		$('#fotografia').attr('src', BASE_URL + '/public/img/noConozco.jpg');	
+	}
+});
+//-->
+</script>
+<div id="fieldsetForm" class="forms">
+<legend id="legendhelp">* Datos requeridos</legend>
+<?=$this->element->getElement('id_products'); ?>
+	<fieldset>
+		<legend>Agregar nuevo producto</legend>
+		<table>
+			<tr>
+				<td>
+					<div class="title">Foto:</div>
+	        		<div id="contenedorImagen">
+			    				<img id="loaderAjax" src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+								<img id="fotografia" style="width: 285px;" class="fotografia" src="<?php echo $this->baseUrl('/public/img/noConozco.jpg'); ?>">
+								<br />
+								<img id="addImage" src="<?php echo $this->baseUrl('/public/img/agregarImg.png');?>" onclick="uploadAjaxImg('addImageProg', 'program', 'fotografiaProg', 'loaderAjaxProg');" />
+			    				<p>M&aacute;ximo: 1000px x 1000px, Formato: jpeg, jpg, png</p>
+			    				<?=$this->element->getElement('p_photo'); ?>
+			    	</div>
+				</td>
+				<td>
+					<table >				
+						<tr>
+							<td>*Clave:</td>
+							<td>
+								<?=$this->element->getElement('p_key'); ?>
+								<img id="loaderClave" style="display: none;" src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+							</td>
+						</tr>
+						<tr>
+							<td>*Nombre:</td>
+							<td><?=$this->element->getElement('p_name'); ?></td>
+						</tr>
+						<tr>
+							<td>*M&iacute;nimo en existencias:</td>
+							<td>*M&aacute;ximo en existencias:</td>
+						</tr>
+						<tr>
+							<td><?=$this->element->getElement('min_stock'); ?></td>
+							<td><?=$this->element->getElement('max_stock'); ?></td>
+						</tr>
+						<tr>
+							<td>*Cantidad:</td>
+							<td><?=$this->element->getElement('stock'); ?></td>
+						</tr>
+						<tr>
+							<td>*Categor&iacute;a:</td>
+							<td><?=$this->element->getElement('id_category'); ?></td>
+						</tr>
+						<tr>
+							<td>Ubicaci&oacute;n de Gaveta:</td>
+							<td><?=$this->element->getElement('location'); ?></td>
+						</tr>
+						<tr>
+							<td>Fecha de Caducidad:</td>
+							<td><?=$this->element->getElement('expiration_date'); ?></td>
+						</tr>
+						<tr>
+							<td>*Precio unitario:</td>
+							<td><?=$this->element->getElement('p_price'); ?></td>
+						</tr>
+						<tr>
+							<td>Porcentaje de Ganancia:</td>
+							<td><?=$this->element->getElement('purchase_percentage'); ?></td>
+						</tr>
+						<tr>
+							<td>*Este producto esta revisado: </td>
+							<td><?=$this->element->getElement('review_product'); ?></td>
+						</tr>
+						<tr>
+							<td>*Unidad de medici&oacute;n del producto: </td>
+							<td><?=$this->element->getElement('id_measuring'); ?></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		<tr class="center">
+			<td colspan="4">Descripci&oacute;n:</td>
+		</tr>
+		<tr class="center">
+			<td colspan="4"><?=$this->element->getElement('p_description'); ?></td>
+		</tr>
+		</table>
+	</fieldset>
+	<div class="center">
+		<?=$this->element->getElement('Guardar'); ?>
+	    <a href="javascript:location.href='<?=$this->baseUrl("/In/finishedproduct/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>

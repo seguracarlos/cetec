@@ -1,0 +1,37 @@
+<script type="text/javascript">
+var separator = "<?php echo SeparatorString::SEPARATOR; ?>";
+</script>
+<div id="fieldsetForm" class="forms">
+	<legend id="legendhelp">* Datos requeridos</legend>
+	<br/><br/>
+    <span>
+    	<a href="javascript:;" onclick="agregar();"><img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/minimal/iconplus.png');?>" title="Agregar departamento"></a>
+    </span>
+        <?=$this->element->getElement('id_document'); ?>
+    	<fieldset>
+				<span>*Nombre del documento :</span>
+				<span><?=$this->element->getElement('name'); ?></span>
+				<br />
+				<br />
+				<div class="center">
+					<span>Descripci&oacute;n del documento:</span>
+					<br />
+					<span><?=$this->element->getElement('description'); ?></span>
+				</div>
+				<br />
+				<div id="load">
+					<img src="<?php echo $this->baseUrl('/public/img/loader.gif')?>" alt="Espere..." />		
+				</div>
+				<ol id="listFields">
+			         <div id="newField"  class="newField-0">
+			         		<?=$this->element->getElement('realField'); ?>
+					        <?=$this->element->getElement('nField');?>
+			        </div>
+		       </ol>
+		</fieldset>
+		<div class="center">
+		   <?=$this->element->getElement('Guardar');?>
+		    <a href="javascript:location.href='<?=$this->baseUrl("/Horus/documents/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+		</div>
+	</div>
+</div>

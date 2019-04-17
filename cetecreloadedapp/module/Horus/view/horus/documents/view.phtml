@@ -1,0 +1,91 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('/public/css/proposalsStyle.css')); ?>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$('a.arriba').click(function(){ //Id del elemento cliqueable
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+	});
+});
+</script>
+<h3 class="centerIn">Documentos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/documents/index') ?>">
+					<img title="Documentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondocgear.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','ayuda')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<div id="fieldsetForm" class="forms">
+	<div id="title" style="margin-bottom: 10px;" class="center">
+		<h1 style="font-size: 34px;position:relative;color: #000;font-weight: 400;text-shadow: 0px 0px 1px rgba(0,0,0,0.3);padding: 20px;text-transform: uppercase;text-align: center;">Vista del Documento</h1>
+		<br />
+	</div>
+	
+	<div style="margin-left: 20px;">
+		<div id="descDoc" style="font-size: 15px; font-weight: bold;">Documento: <span id="contDesc" style=" font-size: 15px; font-weight: normal;"><?php echo $this->document['description']; ?></span></div>
+	</div>
+	<br/>
+	<br/>
+	<div id="contentDoc" style="padding:10px; border: graytext dashed;">
+		<div id="nameDoc" style=" width:60%; font-size: 30px; text-align: center; margin-top: 20px; margin-bottom: 40px; margin-left: 15%;">
+			<span id="nameDocText"><?php echo $this->document['name']; ?></span>
+		</div>
+		<?php 
+			$pos = "";
+			$maxWith = "";
+			$minWith = "";
+			foreach ($this->field as $field): ?>
+			<?php if($field['type'] == 1){ ?>
+			   <?php if($field['position'] == 1):?>
+					<?php $pos = "35%"; ?>
+			   <?php elseif ($field['position'] == 3):?>
+					<?php $pos = "65%"; ?>
+			   <?php else : ?>
+					<?php $pos = "3%"; ?>
+		       <?php endif; ?>
+				<div <?php echo 'style="width: 300px; margin-left:'.$pos.';"'; ?>>
+					<input type="text" placeholder="<?php echo $field['label']; ?>"/>
+				</div>
+				<br />
+		   <?php }elseif ($field['type'] == 2){ ?>
+		  	   <?php if($field['position'] == 2):?>
+					<?php 
+						$pos = "3%;";
+						$maxWith = "250px";
+						$minWith = "250px"; 
+					?>
+			   <?php elseif ($field['position'] == 3):?>
+					<?php 
+						$pos = "60%";
+						$maxWith = "250px";
+						$minWith = "250px";  
+					?>
+			   <?php else : ?>
+					<?php 
+						$pos = "3%";
+						$maxWith = "800px";
+						$minWith = "800px"; 
+					?>
+		       <?php endif; ?>
+		        <div>
+					<textarea style="<?php echo "margin-top:20px; margin-left:$pos; max-width:$maxWith; min-width:$minWith;"?>" placeholder="<?php echo $field['label']; ?>"></textarea>
+				</div>
+				<br />
+			<?php } ?>
+			
+		<?php endforeach; ?>
+	</div>
+	<div class="center" style="margin-top: 40px;">
+		<button id="subPay" onclick="javascript:location.href = BASE_URL + '/Horus/documents/index';">Regresar</button>
+	</div>
+</div>

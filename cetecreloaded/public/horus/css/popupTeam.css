@@ -1,0 +1,197 @@
+#backgroundTeam {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#popupTeam {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 284px;
+	width: 328px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+}
+#popupTeam h1 {
+	text-align: left;
+	color: #6FA5FD;
+	font-size: 22px;
+	font-weight: 700;
+}
+
+#popupTeam h4 {
+	text-align: left;
+	border-bottom: 2px solid #D3D3D3;
+	padding-bottom: 4px;
+	margin-bottom: 10px;
+}
+
+#area{
+	height: 254px;
+	width: 332px;
+	overflow: auto;
+}
+
+#btnXTeam{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXTeam {
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnXTeam:hover{
+	background: #00539c;
+}
+
+#dataTeam{
+	margin: 0;
+	padding: 0;
+	height: 196px;
+	width: 330px;
+	overflow: auto;
+}
+
+#poplist li{
+	font-size: 14px;
+	line-height: 24px;
+}
+
+#poplist .names{
+	text-decoration: none;
+}
+
+#poplist li .names{
+	color: #00539c;
+}
+
+#poplist li span{
+	float: right;
+}
+
+#poplist a:hover{
+	text-decoration: underline;
+}
+
+/* dialogo para registrar citas a los clientes prospecto*/
+
+#addMeetingPopBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#addMeetingPop {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 400px;
+	width: 530px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	border-radius: 16px;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+
+#btnXAddMeeting{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXAddMeeting{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnXAddMeeting:hover{
+	background: #00539c;
+}
+
+/* dialogo para registrar fechas de pagos*/
+
+#paymentsOrderBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#paymentsOrderPop {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 250px;
+	width: 365px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	border-radius: 16px;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+}
+
+#btnXPaymentsOrder{
+	right: 6px;
+	top: 6px;
+	padding: 1px 4px;
+}
+
+#btnXPaymentsOrder{
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnXPaymentsOrder:hover{
+	background: #00539c;
+}

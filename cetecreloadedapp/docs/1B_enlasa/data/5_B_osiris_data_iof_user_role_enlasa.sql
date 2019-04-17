@@ -1,0 +1,60 @@
+CREATE DATABASE  IF NOT EXISTS `osiris` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `osiris`;
+-- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+--
+-- Host: 127.0.0.1    Database: osiris
+-- ------------------------------------------------------
+-- Server version	5.5.36
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `iof_user_role`
+--
+
+INSERT INTO `iof_user_role` (`id`, `user_id`, `role_id`, `role_name`) VALUES
+(1, 1, 1, NULL),
+(2, 2, 2, NULL),
+(3, 3, 3, NULL),
+(4, 4, 2, NULL),
+(5, 5, 2, NULL),
+(6, 6, 3, NULL),
+(7, 7, 3, NULL),
+(8, 8, 1, NULL),
+(9, 9, 2, NULL),
+(10, 10, 1, NULL),
+(11, 11, 2, NULL),
+(12, 12, 1, NULL),
+(13, 13, 1, NULL),
+(14, 14, 1, NULL),
+(15, 15, 1, NULL);
+
+
+/*INSERT INTO `iof_user_role` 
+(`id`,`user_id`,`role_id`,`role_name`)
+VALUES 
+(1,1,1,'Admin'),
+(2,2,2,'Usuario'),
+(3,3,3,'Cliente'),
+(4,4,4,'Maestro'),
+(5,5,5,'Supervisor');*/
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-12-28 12:38:23

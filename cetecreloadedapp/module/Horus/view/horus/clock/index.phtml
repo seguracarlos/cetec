@@ -1,0 +1,56 @@
+<?php
+	$helpUser = $this->helps->clockIndex;
+	$this->headScript()->appendFile('https://www.google.com/jsapi');
+?>
+<h3 class="centerHor">Registro del Reloj Checador</h3>
+	
+<ul class="toolbar">
+	<div id="icons">
+				<?php if (Privilege::ADMINISTRADOR == $this->roleId || Privilege::SUPERADMINISTRADOR == $this->roleId || Privilege::SUPERUSUARIO == $this->roleId): ?> 
+					<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl("/Horus/clock/history");?>">
+							<img title="Historial" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png')?>" />
+						</a>
+					</li>
+				<?php endif; ?>
+				<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+					<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+				</li>
+				<div id="clock"></div>
+		</div>	
+	</ul>
+	
+		<script type="text/javascript">
+			$(document).ready(function() {
+				setInterval(function() {copyDate();},1000);
+			});
+		</script>
+	<div id="overflow">
+		<div class="center">
+		<br>	
+		<div id="copyClock" style="font-size: large;"></div>
+		<br>
+		<?php echo $this->form ?>
+		</div>
+	    <script type="text/javascript">
+	      google.load("visualization", "1", {packages:["corechart"]});
+	
+		function drawVisualization() {
+			    var data = google.visualization.arrayToDataTable(<?php echo json_encode($this->dataCols); ?> );
+		        
+		        var options = {
+		          title : 'Mi hora de entrada vs. Hora de entrada de IOFractal',
+		          vAxis: {title: "Hora"},
+		          hAxis: {title: "Semana"},
+		          seriesType: "bars",
+		          series: {<?php echo $this->yoId; ?>: {type: "line"}}
+		        };
+		
+		        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+		        chart.draw(data, options);
+	      }
+	      google.setOnLoadCallback(drawVisualization);
+	
+	</script>
+	<div id="chart_div"></div>
+</div>

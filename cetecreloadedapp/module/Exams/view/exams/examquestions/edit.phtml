@@ -1,0 +1,174 @@
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath().'/public/css/questions.css'?>">
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Mis ex&aacute;menes</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+<!-- 				<div class="btn-group btn-breadcrumb"> -->
+<!-- 			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a> -->
+<!-- 			        <a href="#" class="btn btn-default">Bachillerato</a> -->
+<!-- 			        <a href="#" class="btn btn-default">Mis examenes</a> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="row">
+	<div id="contenedor" class="contenedor">
+	<center><h2>Edici&oacute;n de Preguntas</h2></center>
+		<hr>
+		</br>
+		<input type="hidden" id="id_resp" name="id_resp" value="<?php echo $this->question['id_resp'];?>">
+		<div id="1" class="contenedorPregunta">
+			<div class="well">
+				<div name="pregunta" class="pregunta principal" id="">
+					<label>Pregunta:</label>
+					<input type="text"  id="<?php echo $this->question['id_question'];?>"  name="title" class="question form-control input-lg marginLeft" placeholder="Redacta tu pregunta" value="<?php echo $this->question['question_name'];?>"/>
+					<div class="imagenQuestion">
+		        		<input type="file" class="fileQuestion" name="fileQuestion" accept="image/*" id="0" />
+		          		<div class="photoQuestion"></div>
+		          		<div></div>
+		       		</div><br><!--Fin div imagenQuestion-->
+		       		<label>Tipo de pregunta:</label>
+					<select class="tipoPregunta form-control input-lg" id="typequestion" name="typequestion" disabled>
+						<option value="0">--seleccione--</option>
+						<option value="2" <?php if($this->question['type_question'] == 2) echo "selected"; ?>>Opci&oacute;n m&uacute;ltiple con una &uacute;nica respuesta </option>
+						<option value="3" <?php if($this->question['type_question'] == 3) echo "selected"; ?>>Verdadero/Falso</option>
+<!-- 						<option value="4">Opci&oacute;n m&uacute;ltiple con más de una respuesta </option> -->
+					</select>
+					<div class="RespuestasPregunta marginLeft">
+							<div id="camposVerdaderoFalso" class="camposVerdaderoFalso">
+							<br><br>
+							<?php foreach($this->answers as $answer){?>
+							<div id="0" class="A">
+							<label>Respuesta</label>
+							<input id="<?php echo $answer['id_opcion'];?>" class="respuesta inputs" type="text" name="opc" value="<?php echo $answer['nombre'];?>" required/>
+						    <div class="imagen">
+					        	<input type="file" class="file" name="file" accept="image/*"/>
+					          	<div class="photo"></div>
+					          	<div></div>
+					       	</div>
+					       	<input id="<?php echo $answer['id_resp'];?>" type="checkbox" class="CheckAnswer" name="CheckAnswer" <?php if($answer['id_resp'] == $this->question['id_resp']) echo "checked";?>>
+							</div>
+							<?php }?>
+							</div>
+					</div><!--Fin div RespuestasPregunta-->
+				</div><!--Fin div pregunta-->
+			</div><!--Fin div well-->
+		</div><!--Fin div contenedorPregunta-->
+	</div><!--Fin div contenedor-->
+		<div class="botones" style="text-align: center; margin: 50px auto; ">
+		<input type="submit" class="btn btn-success btn-lg" name="guardar" id="guardar" value="Guardar">	
+		<input type="button" class="btn btn-danger btn-lg" name="cancelar" id="cancelar" value="Cancelar">
+<!-- 		<input type="button" class="btn btn-primary btn-lg nuevaPagina" name="cancelar" id="nuevaPagina" value="Nueva Pagina"> -->
+	</div><!--Fin div botones-->
+		
+	</div>		
+	</div>
+</div><!--Fin div row-->
+
+   
+</div>
+		
+<script type="text/javascript">
+var $basePath = "<?php echo $this->basePath().'/'?>";
+
+
+$('input[type="checkbox"]').on('change', function() {
+	   $('input[type="checkbox"]').not(this).prop('checked', false);
+});
+
+$(document).on("change", ".CheckAnswer", function(){
+	   if($(this).prop("checked") == true){
+		   $correct = $(this).parent().find('.CheckAnswer').attr("id");
+		   $("#id_resp").val($correct);
+		}
+});
+
+
+$("#guardar").on("click", function(e){
+	var $questions = [];
+	var url = $basePath +  "exams/examquestions/" + <?php echo $this->question['id_topic'];?>;
+	var questionName = $(".question").val();
+	var emptyOptions = 0;
+	var incompleteQuestions = 0;
+	$.each($("#contenedor .contenedorPregunta"), function( index, value ) {
+		var answers = generarOpciones($(this));
+		$questions.push({
+			id_question : $(this).find(".question").attr("id"),
+			question : $(this).find(".question").val(),
+			type     : $(this).find(".tipoPregunta").val(),
+			id_topic : <?php echo $this->question['id_topic'];?>,
+			correct  : $("#id_resp").val(),		
+			answers  : answers,
+		});
+
+		if(!($(this).find(".CheckAnswer").is(":checked"))){
+			incompleteQuestions = 1;
+		}
+	});
+
+	$("#contenedor .contenedorPregunta").find('.RespuestasPregunta .respuesta').each(function(){
+		if($(this).val() == ""){
+			emptyOptions = 1;
+		}
+	});
+	console.log(incompleteQuestions);
+	if(questionName != ""){
+		if(emptyOptions == 0){
+			if(incompleteQuestions == 0){
+				$.ajax({
+					type: 'POST',
+					url: $basePath + 'exams/examquestions/edit',
+					data: {questions : $questions},
+					dataType: 'json',
+					success: function(response){
+						$(location).attr('href',url);
+					},
+					error: function(){ console.log("Fallo, intentalo otra vez"); }
+				});
+			}else{
+				alertify.alert("Debes de marcar una opci\u00F3n correcta");
+			}
+	  }else{
+		alertify.alert("Hay una opci\u00F3n vacia");
+		}
+	}else{
+		alertify.alert("El nombre de la pregunta no puede quedar en blanco");
+	}	
+	});
+
+/*********** Click en el boton cancelar preguntas ***********/
+$("#cancelar").on("click", function(e){
+	e.preventDefault();
+	var survey = $("#id_survey").val();
+	var url = $basePath +  "exams/examquestions/" + <?php echo $this->question['id_topic'];?>;
+	$(location).attr('href',url);
+});
+
+function generarOpciones($contenedor)
+{
+	var ans = [];
+	
+	$($contenedor).find('.RespuestasPregunta .A').each(function(){
+		ans.push({
+			  id      : $(this).find('.respuesta').attr("id"),
+			  answer  : $(this).find('.respuesta').val(),
+			  correct : ($(this).find('.CheckAnswer').is(':checked')) ? 1 : 0,
+		  });
+	});
+	return ans;
+	
+}
+
+</script>

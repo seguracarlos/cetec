@@ -1,0 +1,106 @@
+<?php $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addDepartment.js')); 
+      $this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAdminCategories.css'));?>
+<!-- <script type="text/javascript">
+	var view = "update";
+</script>-->
+<script type="text/javascript">
+var view = "update";
+var BASE_URL = "<?php echo $this->baseUrl();?>";
+var IconSet = "<?php echo $this->iconset; ?>";
+
+$(document).ready(function() {
+	tableDepartment = jqueryTablePopup('#department', 2);
+
+	$("#btnCloseCatalog").click(function(){
+		disablePopup("backgroundCatalog", "popupCatalog");
+	});
+	$("#backgroundCatalog").click(function(){
+		disablePopup("backgroundCatalog", "popupCatalog");
+	});
+});
+</script>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('/public/js/jsFunctions/ajax/getObjectByType.js') ?>"></script>
+<h3 class="centerHor">Modificar Inventario</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Horus/inventory/index')?>"><img title="Inventario" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconeq.png')?>" /></a>
+		</li>			
+		<li class="iconOpacity ">
+			<a href="javascript:;" onclick="javascript:showDepartments()"><img title=" Agregar departamento" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondepartment.png');?>" /></a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser ?>')">
+			<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+	<p class="triangle-border" >Ingresa los datos.</p>
+	<?php echo $this->form ;?>
+</div>
+
+<!-- 
+    Inicia popup departamento
+-->
+<div id="popupCatalog" class="popHorus">
+	<div id="btnCloseCatalog" title="Cerrar ventana">X</div>
+		<h3 class="center">Departamentos</h3>
+		<div id="tableDepartment">
+			<br />
+			
+			<ul class="toolbar">
+				<div id="icons">
+						<li class="iconOpacity ">
+							<a href="javascript:;" onclick="showFormDepartments();"><img title="Agregar Departamento" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" /></a>
+						</li>
+						<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista del inventario de Equipo')">
+							<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+						</li>
+				</div>	
+			</ul>
+			
+			<div class="center">
+				<div id="tableCover">
+					<img style="display:none; width: 36px; height: 36px;" id="loadEditDepartment" alt="cargando..." src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"/>
+					<table id="department" class="display">
+						<thead>
+							<tr>
+								<th>Departamento</th>
+								<th>Descripci&oacute;n</th>
+								<th >
+									<a href="javascript:;" onclick="showFormDepartments();"> 
+										<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar Puesto"> 
+									</a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="formDepartment" class="center">
+			<br />
+			<ul class="toolbar">
+				<div id="icons">
+						<li class="iconOpacity ">
+							<a href="javascript:;" onclick="showlistDepartments();"><img title="Listado de departamentos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/icondepartment.png')?>" /></a>
+						</li>
+						<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista del inventario de Equipo')">
+							<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+						</li>
+				</div>	
+			</ul>
+			<div id="showFormDepartment"></div>
+		</div>
+</div>
+<div id="backgroundCatalog"></div>
+<!-- 
+	Termina popup
+-->

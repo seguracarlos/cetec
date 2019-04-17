@@ -1,0 +1,182 @@
+<?php
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getPrivilege.js')); 
+    $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/userFunction.js'))
+				       ->appendFile($this->baseUrl('/public/js/jsFunctions/UsersCreate.js'))
+				        ->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/1000.js'));
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupAdminCategories.css'));
+
+	$helpUser = $this->helps->userEdit;
+	
+	$nameUser = $this->nameEmploy;
+    $userType = $this->userType;
+	?>
+<script type="text/javascript">
+	//variable con el valor del parametro avatar
+	var avatar = "<?php echo $this->avatar; ?>";
+	//variable con el valor que tiene avatar en la bd 
+	var valueAvatar = "<?php echo $this->valueAvatar; ?>";
+
+ var userisEmploye = "<?php if(isset($_GET['e']) == "1"){echo $_GET['e']; }else{ echo ""; } ?>";
+//var idHost = "<?php echo $this->idHost; ?>";
+//var type = "<?php if(isset($_GET['type']) && $_GET['type'] == "Cliente"){ echo "5"; }elseif(isset($_GET['type']) && $_GET['type'] == "Proveedor"){ echo "6"; }?>"
+$(document).ready(function(){
+	
+	$(".tUsr").hide();
+	var nameUser = "<?php echo $nameUser; ?>";
+	var userType = "<?php echo $userType; ?>";
+	
+	if(nameUser != ""){
+		$("#titleFormUSer").html("Editar a : " + nameUser);
+	}
+	$('#cost').formatCurrency();
+	if($("input[name='user_type']:checked").val() == "Externo"){
+		$("#tdPhoto").show();			
+		$("#photofilename").show();
+		$(".title").show();
+		$("#contenedorImagen").show();
+		$("#numberEmployee").hide();
+		$("tr.hideTr").hide();
+		$("tr.hideThisTr").hide();
+	    $("#emNumLabel").hide();
+	    $("#rfcLabel").html("RFC");
+		$('#dateIng').hide();
+		$("#id_department").hide();
+		$('#depLabel').hide();
+		$('#costLabel').hide();
+		$("#cost").hide();
+		$('.hideme').hide();
+		$('#lPeriod').hide();
+		$("#PLabel").hide();
+		$("#createUser").attr("onSubmit","return isEmptyForm('createUser',5)");
+	}else{
+		$("#tdPhoto").show();
+		$("#company_ID").hide();
+		$("#company_IDLbl").hide();	
+		$("#company_ID").val(1);
+		$("tr.hideThisTr").hide();
+		$("tr.hideTr").show();
+		$('.comp').hide();
+		$("#photofilename").show();
+		$(".title").show();
+		$("#contenedorImagen").show();
+		$("#numberEmployee").show();
+	    $("#emNumLabel").show();
+	    $("#rfcLabel").html("* RFC");
+	    $('#date_admission').show();
+		$('#dateIng').show();
+		$("#id_department").show();
+		$('#depLabel').show();
+		$("#cost").show();
+		$('#costLabel').show();
+		$('.hideme').show();
+		if(userisEmploye == "1"){
+			$("#PLabel").show();
+		}else{
+			$("#PLabel").hide();
+		}
+		
+		$('#lPeriod').show();
+		$("#createUser").attr("onSubmit","return isEmptyForm('createUser',11)");
+	}
+
+	$("#user_type-Externo").click(function(){
+		$("#tdPhoto").show();			
+		$("#photofilename").show();
+		$(".title").show();
+		$("#contenedorImagen").show();
+		$("#numberEmployee").hide();
+		$("tr.hideTr").hide();
+		$("tr.hideThisTr").show();
+	    $("#emNumLabel").hide();
+	    $("#rfcLabel").html("RFC");
+		$('#dateIng').hide();
+		$("#id_department").hide();
+		$('#depLabel').hide();
+		$('#costLabel').hide();
+		$("#cost").hide();
+		$('.hideme').hide();
+		$('#lPeriod').hide();
+		$("#createUser").attr("onSubmit","return isEmptyForm('createUser',5)");
+	});
+
+	$("#user_type-Interno").click(function(){
+		$("#tdPhoto").show();
+		$("#company_ID").hide();
+		$("#company_IDLbl").hide();	
+		$("#company_ID").val(1);
+		$("tr.hideThisTr").hide();
+		$("tr.hideTr").show();
+		$('.comp').hide();
+		$("#photofilename").show();
+		$(".title").show();
+		$("#contenedorImagen").show();
+		$("#numberEmployee").show();
+	    $("#emNumLabel").show();
+	    $("#rfcLabel").html("* RFC");
+	    $('#date_admission').show();
+		$('#dateIng').show();
+		$("#id_department").show();
+		$('#depLabel').show();
+		$("#cost").show();
+		$('#costLabel').show();
+		$('.hideme').show();
+		$('#lPeriod').show();
+		$("#createUser").attr("onSubmit","return isEmptyForm('createUser',11)");
+	});
+	
+	if($('#photofilename').val() != ""){
+		$('#fotografia').removeAttr('scr');
+		$('#fotografia').attr('src', 'data:image/png;base64,'+$('#photofilename').val());
+	}
+});
+</script>
+
+<h3 class="centerHor">Actualizar detalles del <?php if(isset($_GET['e']) == "1"){echo "Empleado"; }else{ echo "Usuario"; } ?></h3>
+<ul class="toolbar">
+	<div id="icons">
+		    <?php if(isset($_GET['e']) == "1"): ?>
+					<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl('/Horus/employee/index')?>"><img title="Empleados" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconemplo.png')?>" /></a>
+					</li>
+			<?php elseif(isset($_GET['emShow']) == "true"): ?>
+			 		<a href="<?php echo $this->baseUrl('/System/profile/index')?>"><img title="Perfil" src="<?php echo $this->baseUrl('/public/img/icons'.$this->iconset.'/iconprofile.png')?>" /> </a>
+			 		<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl('/System/profile/index')?>"><img title="Usuarios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" /></a>
+					</li>
+			<?php else:?>
+					<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl('/System/users/index')?>"><img title="Usuarios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" /></a>
+					</li>
+			<?php endif;?>
+		
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<?php if($this->show == false): ?>
+	<div id="fieldsetForm" class="forms">
+		<h1>Hack?</h1>
+	</div>
+<?php else: ?>
+	
+    <div id="overflow">
+	<p class="triangle-border" >Edita los datos del usuario o empleado.</p>
+		<?php echo $this -> formulario;?>
+	</div>
+
+<?php endif; ?>
+<!--Ventana de dialogo para mostrar información-->
+<div id="dialogInfo">
+	<div id="containernote">
+		<div id="subtitle"></div>
+		<div id="msg"></div>
+		<div id="dialogDivBtn">
+			<input id="dialogBtn" type="button" value="Ok"
+			onclick="closeDialog()">
+		</div>
+	</div>
+</div>
+<!--end dialog-->

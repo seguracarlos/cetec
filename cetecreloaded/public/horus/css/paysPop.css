@@ -1,0 +1,94 @@
+#paysBack {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: #000000;
+	border: none;
+	z-index: 1;
+}
+
+#loaderRfc {
+	display : none;
+}
+
+#loaderUser {
+	display : none;
+}
+
+#paysPop {
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 254px;
+	width: 330px;
+	background: #FFFFFF;
+	border: 10px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+	text-align: left;
+	top: 300px;
+}
+#paysArea{
+	margin: 0;
+	padding: 0;
+	height: 176px;
+	width: 330px;
+	color: black;
+	overflow: auto;
+	text-align: left;
+}
+#paysArea .inputNumber{
+	width: 90px;
+	text-align: right;
+}
+#paysArea .inputDate{
+	width: 90px;
+	text-align: center;
+}
+#paysArea li{
+	padding-bottom: 10px;
+}
+#paysPop h2 {
+	text-align: left;
+	color: #6FA5FD;
+	font-size: 22px;
+	border-bottom: 2px solid #D3D3D3;
+	padding-bottom: 4px;
+	margin-bottom: 4px;
+}
+#paysPop h4 {
+	text-align: left;
+	color: #6FA5FD;
+	border-bottom: 2px solid #D3D3D3;
+	padding-top: 14px;
+	padding-bottom: 4px;
+	margin-bottom: 4px;
+}
+#btnAccept{
+	right: 10px;
+	bottom: 6px;
+	padding: 2px 4px;
+	position: absolute;
+	display: block;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	background: #197fbf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+#btnAccept:hover{
+	background: #00539c;
+}
+#paysCalendar{
+	cursor: pointer;
+}
+#createProspect{
+	display: none;
+}

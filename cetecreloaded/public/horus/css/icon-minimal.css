@@ -1,0 +1,277 @@
+@CHARSET "UTF-8";
+
+.icousers{
+	background-image: url("../img/icons/minimal/iconuser.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoemployee{
+	background-image: url("../img/icons/minimal/iconemplo.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocontact{
+	background-image: url("../img/icons/minimal/iconcontact.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icopayroll{
+	background-image: url("../img/icons/minimal/iconpayr.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoactivities{
+	background-image: url("../img/icons/minimal/iconact.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoclock{
+	background-image: url("../img/icons/minimal/iconclock.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icobank{
+	background-image: url("../img/icons/minimal/iconbank.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocash{
+	background-image: url("../img/icons/minimal/iconmoney.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoaccountmanager{
+	background-image: url("../img/icons/minimal/icoaccountmanager.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoinventory{
+	background-image: url("../img/icons/minimal/iconeq.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icodocuments{
+	background-image: url("../img/icons/minimal/icondocgear.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocustomers{
+	background-image: url("../img/icons/minimal/icongroup.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoprojects{
+	background-image: url("../img/icons/minimal/icongear.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icosales{
+	background-image: url("../img/icons/minimal/iconcart.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocrm{
+	background-image: url("../img/icons/minimal/iconbulb.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocxc{
+	background-image: url("../img/icons/minimal/iconmonadd.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoinvoices{
+	background-image: url("../img/icons/minimal/iconmulti.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoproposals{
+	background-image: url("../img/icons/minimal/iconnote.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icofinishedproduct{
+	background-image: url("../img/icons/minimal/iconpack.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icostock{
+	background-image: url("../img/icons/minimal/iconinventory.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocatalog{
+	background-image: url("../img/icons/minimal/iconcatalog.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;
+}
+
+.icowarehouse{
+	background-image: url("../img/icons/minimal/iconbrick.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icopurchaseorder{
+	background-image: url("../img/icons/minimal/iconorder.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icosupplier{
+	background-image: url("../img/icons/minimal/iconsupp.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocxp{
+	background-image: url("../img/icons/minimal/iconmondel.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoexpenses{
+	background-image: url("../img/icons/minimal/iconcoindel.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoprofile{
+	background-image: url("../img/icons/minimal/iconprofile.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icopermissions{
+	background-image: url("../img/icons/minimal/iconpermis.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocompany{
+	background-image: url("../img/icons/minimal/iconbuilding.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icopreferences{
+	background-image: url("../img/icons/minimal/iconpref.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icobooks{
+	background-image: url("../img/icons/minimal/iconbooks.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocomponents{
+	background-image: url("../img/icons/minimal/iconcomp.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icocourses{
+	background-image: url("../img/icons/minimal/iconcourse.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icolink{
+	background-image: url("../img/icons/minimal/iconbookmark.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icotutorial{
+	background-image: url("../img/icons/minimal/iconman.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoproposal{
+	background-image: url("../img/icons/minimal/iconprops.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icovision{
+	background-image: url("../img/icons/minimal/iconvision.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icominute{
+	background-image: url("../img/icons/minimal/iconminute.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoarrow{
+	background-image: url("../img/icons/minimal/iconarrow.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoaccountmanager{
+	background-image: url("../img/icons/minimal/iconaccman.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icorobot{
+	background-image: url("../img/icons/minimal/iconrobot.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icovitae{
+	background-image: url("../img/icons/minimal/iconvitae.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icoservices{
+	background-image: url("../img/icons/minimal/iconservices.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icotraining{
+	background-image: url("../img/icons/minimal/icontraining.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icosurvey{
+	background-image: url("../img/icons/minimal/iconsurvey.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}
+
+.icodocumentation{
+	background-image: url("../img/icons/minimal/icondoctos.png");
+    background-position: 1px center ;
+    background-repeat: no-repeat;	
+}

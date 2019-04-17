@@ -1,0 +1,11 @@
+<div style="text-align: center;"> 
+<p><h4 style="color: red;">Borrar la visi&oacute;n de: 
+<?php echo $this->escape($this->vision['name_customers']); ?>? 
+</h4></p> 
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post"> 
+<div> 
+  <input type="hidden" name="idvision" value="<?php echo $this->vision['idvision']; ?>" /> 
+  <input type="submit" name="del" value="Si" /> 
+  <input type="submit" name="del" value="No" /> 
+</div> 
+</div>

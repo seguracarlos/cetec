@@ -1,0 +1,82 @@
+<?php
+$service = new TutorialServiceImpl();
+?>
+<!doctype html>
+<head>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		jqueryTable('#tutorial', 8);
+	});
+	</script>
+
+</head>
+<body>
+<h3 class="centerHor">Manuales</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter"><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+<div id="overflow">
+<table id="tutorial" class="display">    
+ <thead>
+ <tr>
+    <th>Nombre</th>
+    <th>Tipo de tutorial</th>
+    <th>Autor</th>
+    <th>URL</th> 
+    <th>Estatus</th>
+    <th>Descripci&oacute;n</th>
+    <th>Lo P&uacute;blico : </th>
+    <th>Feha y Hora</th>
+    <th>
+		<a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Ioteca/tutorial/add') ?>">
+			<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar Nuevo">
+		</a>
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+	
+
+	<?php foreach ($this->tutorial as $tutorial) : ?>
+   
+  <tr>
+
+	<td><?php echo $tutorial->getName();?> </td>
+	<td><?php echo $tutorial->getTipo_id();?> </td>
+	<td><?php echo $tutorial->getAuthor();?> </td>
+	<td><a href="<?php echo $tutorial->getUrl();?>" target="_new" ><?php echo $tutorial->getUrl();?> </a></td>
+	<td><?php echo $tutorial->getStatus();?> </td>
+	<td><?php echo $tutorial->getDescription();?> </td>
+	<td><?php echo $tutorial->getNameUser();?> </td>
+	<td><?php echo $tutorial->getDate_hour();?> </td>
+    <td>
+		<a class="tooltipcenter" title="Actualizar" href="<?php echo $this->baseUrl('/Ioteca/tutorial/update/idtutorial/'.$tutorial->getIdtutorial())?>"> 
+			<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+		</a>	    	
+    
+    	<a class="tooltipcenter" title="Eliminar" onclick="javascript:deleteRecord('tutorial',this,'<?php echo $tutorial->getIdtutorial()?>','/Ioteca/tutorial/delete')"> 
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+		</a>
+     </td>     
+  </tr>
+<?php endforeach;?>
+</tbody>
+</table>
+</div>	
+</body>
+</html>
+
+
+
+
+
+
+
+

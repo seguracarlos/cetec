@@ -1,0 +1,162 @@
+<?php
+	include_once APPLICATION_PATH . '/Constants/Constants.php';
+	
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupStockDiscount.css'));
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/addCategory.js')); 
+    $helpUser = $this->helps->warehouseIndex;
+?>
+
+<script type="text/javascript">
+	var oTableO;
+	$(document).ready(function() {
+		jqueryTable('#products',14);
+		
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerIn">Materias Primas</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/warehouse/add') ?>"> 
+				<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar producto">
+			</a>
+		</li>
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/warehouse/inventory') ?>">
+				<img title="Inventario de productos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconinventory.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl('/In/warehouse/history') ?>">
+				<img title="Historial de Almac&eacute;n" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+	<div class="exito mensajesExito" ></div>
+	<div class="error mensajesError" ></div>
+
+<div id="overflow">
+<table id="products" class="display">
+	<thead>
+		<tr>
+			<th>Clave</th>
+			<th>Producto</th>
+			<th>Categor&iacute;a</th>
+			<th>Descripci&oacute;n</th>
+			<th>Existencias</th>
+			<th>Existencia minima</th>
+			<th>Existencia m&aacute;xima</th>
+			<th>Registrado</th>
+			<th>Precio Unitario</th>
+			<th>Total</th>
+			<th>Revisi&oacute;n</th>
+			<th>Unidad de medida</th>
+			<th>Estatus de Pedido</th>
+			<th>Foto</th>
+			<th>
+				<a href="<?php echo $this->baseUrl('/In/warehouse/add') ?>"> <img
+				class="iconOpacity"
+				src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar producto"> </a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+	<?php if($this->products) foreach ($this->products as $product) : ?>
+		<tr>
+			<td><?=$product['p_key'] != "" ? $product['p_key'] : Profile::PENDIENTE ?></td>
+			<td><?=$product['p_name'] != "" ? $product['p_name'] : Profile::PENDIENTE?></td>
+			<td><?=$product['c_name'] != "" ? $product['c_name'] : Profile::PENDIENTE?></td>
+			<td><?php echo $product['p_description'] ?$product['p_description'] : Profile::PENDIENTE;?></td>
+			<td class="number"><?=$product['stock'] != "" ? $product['stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['min_stock'] != "" ? $product['min_stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['max_stock'] != "" ? $product['max_stock'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['p_record_date'] != "" ? $product['p_record_date'] : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['p_price'] != "" ? Application_Util_Tools::currency($product['p_price']) : Profile::PENDIENTE?></td>
+			<td class="number"><?=$product['stock'] * $product['p_price'] > 0 ? Application_Util_Tools::currency($product['stock'] * $product['p_price']):Application_Util_Tools::currency(0);?></td>
+			<td><?=$product['review_product'] == 1 ? "Producto Revisado": Profile::PENDIENTEREVISION?></td>
+			<td><?=$product['unit'] != "" ? $product['unit'] : Profile::PENDIENTE?></td>
+			<td>
+			<?php
+				$status = $product['quantity'];
+				$stock = $product['stock'];
+				$prod = '0';
+				if (is_null($status)) {
+					$status=$stock;
+				}
+				if ($stock == '0') {
+					$prod = 0;
+				}elseif (($stock < $status)&&($stock != '0')) {
+					$prod = 2;
+				}elseif ($stock == $status) {
+					$prod = 1;
+				}
+				$statusVisual = "";
+				switch ($prod) {
+					case StatusPurchaseOrder::NOT_DELIVERED:
+						$statusVisual = "No entregada";								
+						break;
+					case StatusPurchaseOrder::DELIVERED_INCOMPLETE:
+						$statusVisual = "Entrega incompleta";								
+						break;
+					case StatusPurchaseOrder::DELIVERED_COMPLETE:
+						$statusVisual = "Entrega completa";								
+						break;							
+					default:
+						break;
+				}
+				echo $statusVisual;
+			?>
+			</td>
+			<td>
+				<?php if($product['p_photo'] != null):  ?>
+					<img src="data:image/png;base64,<?php echo $product['p_photo']; ?>" width="35px" height="35px" />
+				<?php else:?>
+					<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/noConozco.png');?>" width="35px" height="35px">
+				<?php endif; ?>
+			</td>
+			<td>
+				<a onclick="javascript:showOptionDiscount(this,'<?=$product['id_products']?>','1')"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png');?>" title="Descontar existencias"	alt="Descontar existencias">
+				</a>
+			
+				<a href="<?php echo $this->baseUrl('/In/warehouse/update/id/'.$product['id_products'])?>"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Actualizar" alt="Actualizar">
+				</a>
+			
+				<a onclick="javascript:deleteRecord('products',this,'<?=$product['id_products']?>','/In/stock/delete')"> 
+					<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png')?>" title="Eliminar"	alt="Eliminar">
+				</a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDiscount" class="popHorus">
+		<div id="btnCloseDiscount" title="Cerrar ventana">X</div>
+		<div id="formDiscount">
+			<div class="center">
+				<?=$this->form;?>	
+			</div>
+		</div>
+	</div>
+<div id="backgroundDiscount"></div>
+<!-- 
+	Termina popup
+-->

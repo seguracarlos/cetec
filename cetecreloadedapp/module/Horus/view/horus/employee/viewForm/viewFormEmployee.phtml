@@ -1,0 +1,290 @@
+
+<script type="text/javascript">
+var typeUpdate = "";
+
+$(document).ready(function(){
+	$('#date_admission').change(function(){
+		var f = new Date();
+		var g = (f.getMonth() +1 < 10)? "0"+(f.getMonth() +1) : f.getMonth() +1;
+		var array = [""+f.getDate(),g,""+f.getFullYear()];	
+		var seleccion = $('#date_admission');
+	});
+	
+	$('#cost').change(function (){
+		$('#cost').formatCurrency();
+	});
+
+	$("input[name='period']").change(function(){
+		var period = $(this).val();
+		 if(period == "7"){
+			 $('#lPeriod').html(" Semanales");
+		 }else if(period == "15"){
+			 $('#lPeriod').html(" Quincenales");
+		 }else if(period == "30"){
+			 $('#lPeriod').html(" Mensuales");
+		 }
+	});
+
+	if($("input[name='period']:checked").val() == "7"){
+		 $('#lPeriod').html(" Semanales");
+	}else if($("input[name='period']:checked").val() == "15"){
+		 $('#lPeriod').html(" Quincenales");
+	}else if($("input[name='period']:checked").val() == "30"){
+		 $('#lPeriod').html(" Mensuales");
+	}
+
+	$("#canlogin").change(function(){
+		if($(this).is(':checked') == false){
+			$(".userPrivilege").hide();
+			typeUpdate = "0";
+		}else{
+			$(".userPrivilege").show();
+			typeUpdate = "1";
+			$("#user_name").val("");
+
+		}
+
+		saveButtonEnable('Guardar');
+	});
+
+	if($("input[name='canlogin']:checked").val() == "1"){
+		$(".userPrivilege").show();
+		$(".pass").hide();
+		typeUpdate = "2";
+	}else{
+		$(".userPrivilege").hide();
+		typeUpdate = "0";
+	}
+
+	$('#subPay1').click(function(){
+		$('#password').val("");
+		$('#confirm_password').val("");
+		$('#key').val("");
+		$('#key').hide();
+		$('#labelkey').hide();
+		$('#subPay1').hide();
+	});
+
+	$('#subPay').click(function(){
+		var a = azar();
+		$('#key').val(a);
+		$('#password').val(a);
+		$('#confirm_password').val(a);
+		$('#key').show();
+		$('#labelkey').show();
+		$('#subPay1').show();
+	});
+	
+	$('#password').change(function(){
+		validpass($(this).val(), $('#Guardar'));
+	});
+	
+	$('#numberEmployee').change(function(){
+		var numberEmployee = $(this).val();
+		validaNumberEmployee(numberEmployee, $(this));
+	});
+	$('#rfc').change(function(){
+		var rfc = $(this).val();
+		validaRfc(rfc, $(this));
+	});
+	$('#mail').change(function(){
+		var mail = $(this).val();
+		validaEmail(mail, $(this));
+	});
+	$('#user_name').change(function(){
+		var user_name = $(this).val();
+		validaUser_Name(user_name, $(this));
+	});
+	
+});
+
+    var caracter="1234567890";
+    caracter+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    caracter+="abcdefghijklmnopqrstuvwxyz";
+    var numero_caracteres=8;
+    var total=caracter.length;
+
+    function azar(){
+    	var clave="";
+    	for(a=0;a<numero_caracteres;a++){
+    		clave+=caracter.charAt(parseInt(total*Math.random(1)));
+    	}
+    	return clave;
+    }
+</script>
+<?=$this->element->getElement('user_type');?>
+<div id="fieldsetForm" class="forms">
+<input id="private" type="hidden" value="<?php echo $_GET['u']; ?>" /> 
+
+
+		<?=$this->element->getElement('company_ID'); ?>
+
+<legend id="legendhelp">* Datos requeridos</legend>
+	<fieldset>
+		<legend id="titleFormUSer">Datos Personales</legend>
+	    <table border="0">
+	      	  <tbody>
+	      	  		<tr>
+	      	  			<td id="tdPhoto" >
+			        		<div class="title">Foto:</div>
+			        		<div id="contenedorImagen">
+					    				<img id="loaderAjax"  src="<?php echo $this->baseUrl('/public/img/default-loader.gif'); ?>">
+										<img id="fotografia" width="500px;"  class="fotografia" src="<?php echo $this->baseUrl('/public/img/nofoto.png'); ?>">
+										<br>
+										<img id="addImage" src="<?php echo $this->baseUrl('/public/img/agregarImg.png');?>" onclick="uploadAjaxImg('addImageProg', 'program', 'fotografiaProg', 'loaderAjaxProg');" />
+								    	<p>M&aacute;ximo: 1000px x 1000px, Formato: jpeg, jpg, png</p>
+								    	<br>
+								    	<?=$this->element->getElement('photofile'); ?>
+										<br>
+										<?=$this->element->getElement('photofilename');?>	
+					    	</div>
+        				</td>
+        				<td>
+        					<table id="usertable" border=0 cellpadding="2" cellspacing="2" bgcolor="#B0B0B0" >
+        						<tbody>
+			            		 <div id="priCheck">
+        								<tr class="hideThisTr">
+	        								<td class="formslabels">Marcar si el usuario ser&aacute; usado como favorito</td>
+	        								<td><?=$this->element->getElement('user_principal'); ?></td>
+        								</tr>
+        					 	 </div>
+					             <tr class="hideTr">
+					            	<td class="formslabels"><label id="emNumLabel">* N&uacute;mero de empleado:</label></td>
+					            	<td>
+					            		<?=$this->element->getElement('numberEmployee');?>
+					            		<img id="loaderEmpl" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					            	</td>
+					              </tr>
+					              <tr>
+					            	<td class="formslabels"><label id="rfcLabel">* RFC:</label></td>
+					            	<td>
+					            		<?=$this->element->getElement('rfc');?>
+					            		<img id="loaderRfc" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					            	</td>
+					              </tr>
+					              <tr>
+					             	<td class="formslabels">* Nombre(s):</td>
+					             	<td><?=$this->element->getElement('real_name'); ?></td>
+					              </tr>
+					              <tr>
+					               	<td class="formslabels">* Ap. Paterno:</td>
+					               	<td><?=$this->element->getElement('surname'); ?></td>
+					              </tr>
+					              <tr>
+					                <td class="formslabels">Ap. Materno:</td>
+					                <td><?=$this->element->getElement('lastname');?></td>
+					              </tr>	
+					              <tr>
+					               	<td class="formslabels">* E-Mail:</td>
+					               	<td><?=$this->element->getElement('mail'); ?>
+					               		<p id="malMail"></p>
+					               		<img id="loaderEmail" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					               	</td>
+					              </tr>	
+					              <tr class="hideTr">
+					   		     	 <td class="formslabels"><label id="dateIng">* Fecha de ingreso:</label></td>
+					                 <td><?=$this->element->getElement('date_admission'); ?></td>
+					              </tr>
+					              <tr class="hideTr">
+				        			 <td class="formslabels"><span id="depLabel">* Departamento:</span></td>
+					        		 <td><?=$this->element->getElement('id_department');?></td>
+					        	   </tr>
+					              <tr>
+					                <td  class="formslabels" id='labeljob'>* Cargo:</td>
+					                <td><?=$this->element->getElement('id_job') ?></td>
+					              </tr>				            				            			            
+					              <tr class="hideTr">
+						            <td class="formslabels"><span id="costLabel">* Sueldo:</span></td>
+						            <td><?=$this->element->getElement('cost');?><span id="lPeriod" ></span></td>
+					              </tr>
+					              <tr class="hideTr">
+						              <td> 
+						              </td>
+						              <td>
+							              <table>
+							              		<thead>
+							              		<tr>
+							              		<td><span ><label id="period">Periodo:</label></span></td>
+							              		<td><span><label id="mannerofpayment">Modo de Pago:</label></span></td>
+							              		</tr>
+							              		</thead>
+							              		<tbody>
+								              <tr>
+									            <td  style="width: 30px;">
+										            <span><?=$this->element->getElement('period');?></span>
+									            </td>
+									            <td style="width: 30px;">
+										            <span><?=$this->element->getElement('mannerofpayment');?></span>
+									            </td>
+								               </tr>
+								               </tbody>
+								          </table>     
+						              </td>
+					              </tr>
+	        			</tbody>
+        			</table>
+        		</td>
+        			</tr>   
+        	  </tbody>
+	    </table>
+	</fieldset>
+		<fieldset id="accesSecurity">
+			<legend>Datos de acceso y seguridad</legend>
+		    <table>
+		        <tbody >
+		        		 <div id="iCan">
+			        			<tr>
+	        						<td>¿Puede entrar a Horus?&nbsp;<?=$this->element->getElement('canlogin'); ?></td>
+	        					</tr>
+						            <tr>
+						          		<td><label id="PLabel">* Privilegio:</label></td>  
+						            </tr>
+						            <tr>
+						            	<td><?=$this->element->getElement('role_id'); ?><img style="display:none" id="loadrol" alt="" height="18" src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"></td>
+						            </tr>
+		        		</div>
+		        				<tr class="userPrivilege">
+					            	<td><label>* Clave de usuario:</label></td>
+					            </tr>            
+					            <tr class="userPrivilege">
+					               	<td>
+					               		<?=$this->element->getElement('user_name'); ?>
+					               		<img id="loaderUser" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					               	</td>
+				           	 	</tr>
+				           	 	
+					            <tr class="userPrivilege pass">
+					            	<td><label>* Contrase&ntilde;a:</label></td>
+					                <td colspan="2"><label>* Confirmar contrase&ntilde;a:</label></td>
+					            </tr>
+					            <tr class="userPrivilege pass">
+					                <td>
+					                	<?=$this->element->getElement('password'); ?>
+					                	<div id="showErrPass" style=" padding: 3px; font-size: 10px; width: auto; height: auto; position: absolute; background-color: #FFEE7C; z-index: 1; float: right; display: none;"></div>
+					                	<img id="loaderPass" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					                </td>
+					               	<td><?=$this->element->getElement('confirm_password'); ?><?=$this->element->getElement('subPay');?></td>
+					            </tr>
+					            
+		        </tbody>
+		    </table>
+		    <table class="userPrivilege">
+		    	<tbody>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><span id="labelkey" hidden="true"> Clave Generada:</span></td>
+		    			<td></td>
+		    		</tr>
+		    		<tr>
+		    			<td></td>
+		    			<td class="center"><?=$this->element->getElement('key');?></td>
+		    			<td><input type="button" id="subPay1" name="reset" value="Limpiar"/></td>
+		    		</tr>
+		    	</tbody>
+		    </table>
+		</fieldset>
+	<div class="center">
+	   <?=$this->element->getElement('Guardar');?>
+	    <?=$this->element->getElement('Cancelar');?>
+	</div>
+</div>

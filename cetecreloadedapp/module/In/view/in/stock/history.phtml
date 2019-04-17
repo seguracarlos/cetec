@@ -1,0 +1,83 @@
+<?php
+$helpUser = $this->helps->stockHistory;
+?> 
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#historyTable');
+});
+
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+</script>
+
+<h3 class="centerOut">Historial de Productos</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl("/In/stock/index");?>" >
+				<img title="Inventario" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconinventory.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<div id="overflow">
+	
+	<table id="historyTable" class="display">
+		<thead>
+			<tr>
+				<th>Fecha de Ingreso</th>
+				<th>Producto</th>
+				<th>M&iacute;nimo de producto</th>
+				<th>M&aacute;ximo de producto</th>
+				<th>Precio Unitario</th>
+				<th>Cantidad en almacen</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php $i = 1;?>
+		<?php if($this->products != 0) : ?>
+			<?php foreach ($this->products as $product): ?>
+				<tr>
+		     		<td><?=$product['p_record_date'] != "" ? $product['p_record_date'] : Profile::PENDIENTE?></td>
+					<td><?=$product['p_name'] != "" ? $product['p_name'] : Profile::PENDIENTE?></td>
+					<td><?=$product['min_stock'] != "" ? $product['min_stock'] : Profile::PENDIENTE?></td>
+			        <td><?=$product['max_stock'] != "" ? $product['max_stock'] : Profile::PENDIENTE?></td>
+				    <td><?=$product['p_price'] != "" ? Application_Util_Tools::currency($product['p_price']) : Profile::PENDIENTE?></td>
+			        <td><?=$product['stock'] != "" ? $product['stock'] : Profile::PENDIENTE?></td>
+				</tr>
+			<?php endforeach; ?>
+		<?php endif; ?>
+		</tbody>
+	</table>
+	
+</div>
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDiscount" class="popHorus">
+		<div id="btnCloseDiscount" title="Cerrar ventana">X</div>
+		<div id="formDiscount">
+			<div class="center">
+				<?=$this->form;?>	
+			</div>
+		</div>
+	</div>
+<div id="backgroundDiscount"></div>
+<!-- 
+	Termina popup
+
+	-->
+	
+

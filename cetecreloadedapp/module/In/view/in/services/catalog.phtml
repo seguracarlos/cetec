@@ -1,0 +1,142 @@
+<script type="text/javascript">
+var IconSet = "<?php echo $this->iconset; ?>";
+</script>
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/masonry/style.css'));
+?>
+<?php 
+	echo $this->headScript()->appendFile($this->baseUrl('/public/masonry/jquery.masonry.min.js'))
+					   ->appendFile($this->baseUrl('/public/masonry/jquery.imagesloaded.js'))
+					   ->appendFile($this->baseUrl('/public/masonry/modernizr-transitions.js'))
+					   ->appendFile($this->baseUrl('/public/masonry/loadService.js'));
+?>
+
+<script>
+	$(document).ready(function(){
+		$(".nextProd").click(function(){
+			$("#load").show();
+			morServices();
+		});
+
+		howManyItemsInCar();
+
+		oTableCar = jqueryTablePopup("#carTableShop", 4);
+
+		$("#detailProduct").click(function(){
+			disablePopup("detailProductBack", "detailProduct");
+		});
+		
+		$("#detailProductBack").click(function(){
+			disablePopup("detailProductBack", "detailProduct");
+		});
+		
+		$("#btnXDetailsProd").click(function(){
+			disablePopup("detailProductBack", "detailProduct");
+		});
+		
+	})
+</script>
+<h3 class="centerHor">Cat&aacute;logo de Servicios</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a href="<?php echo $this->baseUrl("/In/services/add"); ?>">
+				<img title="Agregar Servicio"  src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>"/>
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','Lista de las oredenes de compra')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<input id="next" type="hidden" value="5">
+
+<div id="overflow">
+	<?php $count = 0;?>
+	<div id="cCatalog">
+		<div id="shopcarrDiv">
+			<div id="imgShop" onclick="showShopCarService();">
+					<div class="TitleCart">Carrito de compras</div>
+				 	<img id="shop" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcart.png');?>"> <span id="myCarServ">mi carro (0)</span>
+					<div class="TitleCart">Total en Carrito <span id="totalCartAmount">$0.00</span></div>
+					<input id="servicesIncar" type="hidden" >
+			</div>
+		</div>
+		
+		<div id="catalogContainer" class="transitions-enabled infinite-scroll clearfix">
+			<?php foreach ($this->services as $service):?>
+				<?php 
+					$percentaje = $service['percentageGain'] / 100;//porcentaje
+					$priceSale = $service['cost'] * $percentaje;//ganancia
+					$priceGain = $service['cost'] + $priceSale;//precio venta
+				?>
+				<div class="box col4" onmouseover="showLincks('<?php echo $count;?>')" onmouseout="hideLincks('<?php echo $count;?>')">
+						<div id="titleProd">
+							<div id="infS">
+								<div id="<?php echo $count;?>" class="carS">
+										<img title="Agregar al carrito" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcart.png');?>" onclick="addServiceCar('<?php echo $service['id_service']; ?>');" height="40px">
+								</div>
+								<span class="Tps">Nombre: </span><?php echo $service['name']?>
+								<br />
+								<span class="Tps">Clave: </span><?php echo $service['clave']?>
+								<br />
+								<span class="Tps">Precio: </span><span class="priceS"><?php echo Application_Util_Tools::currency($priceGain);?></span>
+								<br />
+								<span class="Tps">Descripci&oacute;n:<span class="priceS"><?php echo $service['description']; ?></span> </span>
+							</div>
+						</div>
+					</div>
+					<?php $count++; ?>
+			<?php endforeach; ?>
+		</div>
+	
+	</div>
+	
+	<div class="center">
+		<img id="load" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+	</div>
+	
+			<div class="center">
+				<button class="nextProd btn btn-info" type="button">M&aacute;s</button>
+				<?php if(isset($_GET['nProd'])): ?>
+					<button class="back"  class="nextProd btn btn-warning" onclick="javascript:history.back();">Regresar</button>
+				<?php endif;?>
+			</div>
+</div>		
+		
+		<!-- 
+    Inicia popup
+-->
+	<div id="shopcarPop" class="popHorus">
+		<div id="btnXtablecar" title="Cerrar ventana">X</div>
+		<h1 id="titleTable">Servicios en el Carrito</h1>
+		<div >Total en Carrito <span id="totalCart">$0.00</span></div>
+			<img id="loadTable" style="display:none;" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+			<div id="tableCar" >
+	    		<table class="display" id="carTableShop">
+	    			<thead>
+	    				<tr>
+	    					<th>Clave</th>
+	    					<th>Nombre</th>
+	    					<th>Cantidad</th>
+	    					<th>Precio</th>
+	    				<!-- <th>Fecha</th> -->
+	    					<th></th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    			</tbody>
+	    		</table>	
+		     </div>
+		 <div class="center">
+		     <div>
+		     	<button type="button" class="btn btn-info" id="btnAcceptar">Aceptar</button>
+		     </div>
+	     </div>
+	</div>
+	<div id="shopcarBack"></div>
+<!-- 
+    termina popup
+-->

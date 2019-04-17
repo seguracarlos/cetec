@@ -1,0 +1,294 @@
+<?php 
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/1000.js'));
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/paysPop.css')); 
+?>
+<script>
+$(document).ready(function(){
+
+	if($('#canlogin').is(':checked')){
+		$('#seguridad').show("slow");
+		$('#user_name').removeAttr('class');
+		$('#password').attr("class", "Required::canBeNull");
+		$('#passwordCon').attr("class", "Required::canBeNull");
+		$('.contHid').hide();
+		$('#subPay').hide();
+		$('input[name=user_principal]').attr('checked', true);
+		$('#icompanyForm').removeAttr('onSubmit');
+		$('#icompanyForm').attr("onSubmit", "return isEmptyForm('icompanyForm',19)");
+		
+	}else{
+		$('#icompanyForm').removeAttr('onSubmit');
+		$('#icompanyForm').attr("onSubmit", "return isEmptyForm('icompanyForm',18)");
+	}
+	
+	$('#canlogin').change(function(){
+	if($('#canlogin').is(':checked')){
+		$('#seguridad').show("slow");
+		$('#user_name').removeAttr('class');
+		$('#password').removeAttr('class');
+		$('#passwordCon').removeAttr('class');
+		$('#icompanyForm').removeAttr('onSubmit');
+		$('#icompanyForm').attr("onSubmit", "return isEmptyForm('icompanyForm',21)");
+	}else{
+		$('#seguridad').hide("slow");
+		$('#user_name').attr("class", "Required::canBeNull");
+		$('#password').attr("class", "Required::canBeNull");
+		$('#passwordCon').attr("class", "Required::canBeNull");
+		$('#icompanyForm').removeAttr('onSubmit');
+		$('#icompanyForm').attr("onSubmit", "return isEmptyForm('icompanyForm',18)");
+		
+	}
+});
+
+$('#rfc').change(function(){
+	var rfc = $(this).val();
+	validaRfcSupplier(rfc, $(this));
+});
+
+$('#user_name').change(function(){
+	var user_name = $(this).val();
+	validaUser_Name(user_name, $(this));
+});
+	
+	$('#subPay1').click(function(){
+		$('#password').val("");
+		$('#passwordCon').val("");
+		$('#key').val("");
+		$('#key').hide();
+		$('#labelkey').hide();
+		$('#subPay1').hide();
+	});
+
+	$('#subPay').click(function(){
+		var a = azar();
+		$('#key').val(a);
+		$('#password').val(a);
+		$('#passwordCon').val(a);
+		$('#key').show();
+		$('#labelkey').show();
+		$('#subPay1').show();
+	});
+
+	$('#mail_contact').change(function(){
+		var mail = $(this).val();
+		validaEmail(mail, $(this));
+	});
+	
+	$('#password').change(function(){
+		validpass($(this).val(), $('#submitbutton'));
+	});
+});
+
+var caracter="1234567890";
+caracter+="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+caracter+="abcdefghijklmnopqrstuvwxyz";
+var numero_caracteres=8;
+var total=caracter.length;
+
+function azar(){
+	var clave="";
+	for(a=0;a<numero_caracteres;a++){
+		clave+=caracter.charAt(parseInt(total*Math.random(1)));
+	}
+	return clave;
+}
+</script>
+<div id="fieldsetForm" class="forms">
+<?=$this->element->getElement('id_company'); ?>
+<?=$this->element->getElement('id_address'); ?>
+<?=$this->element->getElement('action'); ?>
+<?=$this->element->getElement('id_contact'); ?>
+<?=$this->element->getElement('id_user'); ?>
+<fieldset>
+<legend>Informaci&oacute;n comercial</legend>
+    <table  >
+        <tbody>
+            <tr>
+            
+                <td>* Raz&oacute;n social:</td>
+                <td>* Marca:</td>
+            </tr>
+            <tr>
+                <td><?=$this->element->getElement('name_company'); ?></td>
+                <td><?=$this->element->getElement('brand'); ?></td>
+            </tr>
+            <tr>
+            	 <td>* RFC:</td>
+                 <td>Sitio web:</td>
+                 <td>* Giro de la empresa:</td>
+            </tr> 
+            <tr>
+            	<td><?=$this->element->getElement('rfc_host'); ?></td>
+                <td><?=$this->element->getElement('website'); ?></td>
+                <td><?=$this->element->getElement('business'); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset>
+<legend>Datos de la cuenta bancaria</legend>
+    <table  >
+        <tbody>
+            <tr>
+            
+                <td>* Nombre de banco:</td>
+                <td>* No. de cuenta:</td>
+            </tr>
+            <tr>
+                <td><?=$this->element->getElement('name_bank'); ?></td>
+                <td><?=$this->element->getElement('number_acount'); ?></td>
+            </tr>
+            <tr>
+            	<td>* CLABE interbancaria:</td>
+                <td>* Sucursal:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('interbank_clabe'); ?></td>
+                <td><?=$this->element->getElement('sucursal_name'); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset id="fieldset-address">
+<legend>Direcci&oacute;n de la empresa</legend>
+    <table>
+        <tbody>
+         <tr>
+             	<td>* Calle:</td>
+                <td>* N&uacute;mero exterior:</td>
+                <td>N&uacute;mero interior:</td>
+            </tr>
+            <tr>
+	            <td><?=$this->element->getElement('street'); ?></td>
+               	<td><?=$this->element->getElement('number'); ?></td>
+               	<td><?=$this->element->getElement('interior'); ?></td>
+            </tr>
+        	 <tr>
+              	<td>* Estado:</td>
+                <td>* Delegaci&oacute;n o Municipio:</td>
+            	<td>* Colonia:</td>
+            	<td>* C&oacute;digo Postal:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('state_id');?></td>
+               	<td ><?=$this->element->getElement('district'); ?><img style="display:none" id="load" alt="" height="18" src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"></td>
+               	<td><?=$this->element->getElement('neighborhood'); ?><img style="display:none" id= "load_neighborhood" alt="" height="18" src="<?php echo $this->baseUrl('/public/img/load.gif') ?>"></td>
+               	<td><?=$this->element->getElement('postalcode'); ?></td>
+            </tr>
+            <tr>
+            	<td>Tel&eacute;fono conmutador:</td>
+            	<td>Extensi&oacute;n:</td>
+            	<td>URL Mapa:</td>
+            </tr>
+            <tr>
+               	<td><?=$this->element->getElement('phone'); ?></td>
+               	<td><?=$this->element->getElement('ext'); ?></td>
+               	<td><?=$this->element->getElement('url_map'); ?></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset>
+<legend>Informaci&oacute;n de contacto</legend>
+    <table>
+        <tbody>
+        	 <tr>
+            	<!-- <td><?=$this->element->getElement('type_principal'); ?> Contacto Principal<br /><br /></td> -->
+            </tr>
+             <tr>
+             	<td>* Nombre:</td>
+                <td>* Ap. Paterno:</td>
+                <td>Ap. Materno:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('name_contact'); ?></td>
+               	<td><?=$this->element->getElement('surname_contact'); ?></td>
+               	<td><?=$this->element->getElement('lastname_contact'); ?></td>
+            </tr>
+             <tr>
+                <td>* Puesto:</td>
+                <td>Tel&eacute;fono local:</td>
+            </tr>
+            <tr>
+               	<td><?=$this->element->getElement('id_job');?></td>
+               	<td><?=$this->element->getElement('phone_contact'); ?></td>
+            </tr>
+             <tr>
+            	<td>M&oacute;vil:</td>
+            	<td>* E-Mail:</td>
+            </tr>
+            <tr>
+            	<td><?=$this->element->getElement('cellphone_contact'); ?><br></td>
+               	<td><?=$this->element->getElement('mail_contact'); ?>
+               		<img id="loaderEmail" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+               		<br>
+               	</td>       	
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset>
+		<legend>Agregar Usuario</legend>	
+			<table>
+				<tbody>
+					<tr>
+						<td><?=$this->element->getElement('canlogin'); ?> ¿Puede entrar a Horus?<br /><br /></td>
+					</tr>
+				</tbody>
+			</table>
+</fieldset>	
+<fieldset id="seguridad" style="display: none">
+		<legend>Datos de acceso y seguridad</legend>	
+			<table>
+				<tbody>
+					<tr>
+						<td>Privilegio:</td>
+					</tr>
+					<tr>
+						<td><h2>Administrador</h2></td>
+					</tr>
+					<tr>
+					<td>* Clave de usuario:</td>
+					</tr>
+					
+					<tr>
+					<td><?=$this->element->getElement('user_name'); ?>
+						<img id="loaderUser" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					</td>
+					</tr>
+					
+					<tr>
+					<td><label class="contHid">* Contrase&ntilde;a:</label></td>
+					<td><label class="contHid">* Confirmar Contrase&ntilde;a:</label></td>
+					</tr>
+					
+					<tr>
+					<td>
+						<span class="contHid"><?=$this->element->getElement('password'); ?></span>
+						<div id="showErrPass" style=" padding: 3px; font-size: 10px; width: auto; height: auto; position: absolute; background-color: #FFEE7C; z-index: 1; float: right; display: none;"></div>
+                		<img id="loaderPass" style="display: none;" src="<?php echo $this->baseUrl('/public/img/loader.gif'); ?>">
+					</td>
+					<td><span class="contHid"><?=$this->element->getElement('passwordCon'); ?> <?=$this->element->getElement('subPay');?></span></td>
+					</tr>
+				</tbody>
+			</table>
+			<table>
+    	<tbody>
+    		<tr>
+    			<td></td>
+    			<td class="center"><span id="labelkey" hidden="true">Clave Generada:</span></td>
+    			<td></td>
+    		</tr>
+    		<tr>
+    			<td></td>
+    			<td class="center"><?=$this->element->getElement('key');?></td>
+    			<td><input type="button" id="subPay1" name="reset" value="Limpiar"/></td>
+    		</tr>
+    	</tbody>
+    </table>
+</fieldset>		
+	<div class="center">
+		<?=$this->element->getElement('Guardar'); ?>
+		<a href="javascript:location.href='<?=$this->baseUrl("/System/users/index")?>'" class="horusCancelBtn big icon-iconcancel">Cancelar</a>	
+	</div>
+</div>

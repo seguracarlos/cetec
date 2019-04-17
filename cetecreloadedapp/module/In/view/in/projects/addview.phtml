@@ -1,0 +1,32 @@
+<div>
+    <a href="/projects/index">
+        <img style="opacity:0.4;filter:alpha(opacity=40);width: 50px; height: 50px; text-align: right;" 
+             onmouseover="this.style.opacity=1;this.filters.alpha.opacity=100" 
+             onmouseout="this.style.opacity=0.4;this.filters.alpha.opacity=40" 
+             src="<?php echo $this->baseUrl('/public/img/returnIOF.png') ?>" title="Regresar al menú anterior">
+    </a>
+</div>
+
+<div>
+    <h2>Da de alta un projecto</h2>
+    <form name="alta" action="<?php echo $this->baseUrl() ?>/projects/addview" method="post">
+        <div>
+            <span>
+                <i>
+                    (Selecciona la compañia  y Presiona el boton validar para verificar que la compañia sea correcta)
+                </i>
+            </span>
+        </div>
+        <span><b>Compañia*</b></span>
+        <select name="company_ID" onchange="customers.value = this.options[this.selectedIndex].text">
+            <option >Gracias por tu selección</option>
+            <?php foreach ($this->customers as $cust): ?>
+                <option value="<?php echo $this->escape($cust->id_company); ?>"><?php echo $this->escape($cust->name_company); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <input type="submit" name="guardar" value="Validar">
+    </form>
+    <?php echo $this->form; ?>
+</div>
+
+

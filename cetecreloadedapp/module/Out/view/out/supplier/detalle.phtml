@@ -1,0 +1,171 @@
+<?php 
+	$this->headLink()->appendStylesheet($this->baseUrl('/public/css/popupMaps.css'))
+								 ->appendStylesheet($this->baseUrl('/public/css/popupCustomerDetails.css')); 
+	
+	$this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getContact.js'));
+	$helpUser = $this->helps->supplierDetalle;
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#supplierDetail', 10);	
+});
+</script>
+<h3 class="centerOut">Direcci&oacute;n del Proveedor</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/index') ?>"> 
+				<img src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconsupp.png');?>" title="Proveedores"> 
+			</a>
+		</li>
+		<?php if ($this->byId): ?>
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index/id/'.$this->byId)?>">
+					<img title="Ver contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" />
+				</a>
+			</li>
+		<?php else:?>
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Horus/contact/index/')?>">
+					<img title="Ver contactos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcontact.png');?>" />
+				</a>
+			</li>
+		<?php endif;?>
+		<li class="iconOpacity ">
+			<a href="<?php echo $this->baseUrl('/Out/supplier/historysupplier')?>" >
+				<img title="Historial" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconhistory.png');?>" />
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda"  src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+
+<div id="overflow">
+<table id="supplierDetail" class="display">
+	<thead>
+		<tr>
+			<th>Raz&oacute;n Social</th>
+			<th>RFC</th>
+			<th>Calle</th>
+			<th># Exterior</th>
+			<th># Interior</th>
+			<th>Colonia</th>									
+			<th>Delegaci&oacute;n</th>
+			<th>C&oacute;digo postal</th>			
+			<th>Estado</th>
+			<th>Estatus</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody> 
+        <?php foreach ($this->dataSupplier as $proveedor) : ?>
+            <tr>
+				<td class="alpha">
+                    <?php echo $proveedor['name_company'] ? $proveedor['name_company'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['rfc'] ? $proveedor['rfc'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['street'] ? $proveedor['street'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $proveedor['number'] ? $proveedor['number'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $proveedor['interior'] ? $proveedor['interior'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['colony'] ? $proveedor['colony'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="alpha">
+                    <?php echo $proveedor['name'] ? $proveedor['name'] : Profile::PENDIENTE; ?>
+                </td>
+				<td class="number">
+                    <?php echo $proveedor['postalcode'] ? $proveedor['postalcode'] : Profile::PENDIENTE; ?>
+                </td>                                                                                
+				<td class="alpha">
+                    <?php echo $proveedor['state'] ? $proveedor['state'] : Profile::PENDIENTE; ?>
+                </td>
+                <td class="alpha">
+                    <?php echo 'Activo'; ?>
+                </td>
+				<td>
+					<?php if ( isset($proveedor['state_id']) && isset($proveedor['district']) && $proveedor['state_id'] != 0 && $proveedor['district'] != 0  ):?>
+						<a href="<?php echo $this->baseUrl('/Out/supplier/update/id/'.$proveedor['id_company'].'/state/'.$proveedor['state_id'].'/district/'.$proveedor['district'])?>">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Editar detalles" alt="Editar detalles">
+						</a> 
+					<?php else:?>
+						<a href="<?php echo $this->baseUrl('/Out/supplier/update/id/'.$proveedor['id_company'])?>">
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png')?>" title="Editar Proveedor" alt="Editar Proveedor">
+						</a> 
+					<?php endif;?>
+						<a class="viewContact" onclick="viewContact('<?php echo ($proveedor['id_company'])?>')"> 
+							<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" title="Datos de contacto" alt="Datos de contacto">
+						</a>
+					<?php if ($proveedor['url_map']): ?>
+						 <a class="viewMaps" onclick="viewMaps('<?php echo ($proveedor['id_company'])?>', '<?php echo $proveedor['url_map']; ?>')"> 
+						 	<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/maps.png')?>" title="Ver mapa" alt="Ver mapa">
+						</a>
+					<?php else:?>
+						<a class="disabled">
+					 		<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/maps.png')?>" title="No existe mapa relacionado" alt="No existe mapa relacionado" >
+					 	</a>
+					<?php endif;?>
+				</td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+</table>
+</div>
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupDetails" class="popHorus">
+			<div id="btnClose" title="Cerrar ventana">X</div>
+		<h1 id="title"></h1>
+		<div id="content">
+			<div id="data">
+				<div id="layer">
+					<div class="center">
+						<img id="load" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundDetails"></div>
+<!-- 
+    termina popup
+-->
+	
+
+<!-- 
+    Inicia popup
+-->
+	<div id="popupMaps" class="popHorus">
+			<div id="btnXPopup" title="Cerrar ventana">X</div>
+		<h1 id="title_maps"></h1>
+		<div id="content_maps">
+			<div id="data_maps">
+				<div id="layer_maps">
+					<div class="center_maps">
+						<img id="load_maps" src="<?php echo $this->baseUrl('/public/img/load.gif')?>">
+					</div>
+					<div id="div_maps">
+						<iframe id="iframe" src="#" width="700px;" height="450px;"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="backgroundMaps"></div>
+<!-- 
+    termina popup
+-->	

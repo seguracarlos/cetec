@@ -1,0 +1,104 @@
+ <script>
+  $(document).ready(function(){
+     $('#jstree').jstree({ 'core' : {
+       'data' : 
+       <?php
+       	echo $this->consult;
+       ?>
+     },
+     "types" : {
+ 	    "#" : {
+ 	      "max_children" : 1, 
+ 	      "max_depth" : 4, 
+ 	      "valid_children" : ["root"]
+ 	    },
+ 	    "root" : {
+ 	      "icon" : "<?php echo  $this->baseUrl('/public/js/jstree/docs/assets/images/tree_icon.png') ?>",
+ 	      "valid_children" : ["default"]
+ 	    },
+ 	    "default" : {
+ 	      "valid_children" : ["default","file"]
+ 	    },
+ 	    "file" : {
+ 	      "icon" : "glyphicon glyphicon-file",
+ 	      "valid_children" : []
+ 	    }
+ 	  },
+ 	  "plugins" : [
+  	              "types","wholerow"
+  	            ]});
+     $('#jstree').on("changed.jstree", function (e, data) {
+         var $c = data.selected;
+    	 location.href="contents/consult?c=" + $c;
+     });
+   });
+  $(document).ready(function(){
+	  $('#jstree').jstree("open_node", $('#1'));
+	  $('#jstree').jstree("open_all");
+//     $("#table").dataTable();
+  });
+  </script>
+<h3 class="centerHor">Documentador</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Nueva Vision" href="<?php echo $this->baseUrl('/Gutenberg/vision/add') ?>" > 
+				<img class="iconOpacity" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Nuevo" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a href="javascript:;" title="Ayuda" class="tooltipcenter"><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+<div id="overflow">
+<table height="500px">
+  <tr>
+    <td width="22%" valign="top">
+      <div>
+        <div id="jstree">
+        </div>
+      </div>
+    </td>
+    <td width="78%" valign="top">
+      <div class="container">
+
+		<div id="contenido">
+		<?php if($this->contents){
+			 foreach ($this->parents as $parents): ?>
+			<div id="temario">
+				<h2>
+					<?php echo $parents['theme_name'];?>
+				</h2>
+			</div>
+			<?php endforeach; 
+			foreach ($this->contents as $contents): ?>
+			<h3>
+				<p>
+					<?php echo $contents['content'];?>
+				</p>
+			</h3>
+			<?php endforeach;
+		} 
+		if($this->themes){ ?>
+			<div id="temario">
+			<?php foreach ($this->themes as $themes): ?>
+			<h3>
+				<a href="../contents/consult?c=<?php echo $themes['id_theme']; ?>" ><?php echo $themes['theme_name'];?></a>
+			</h3>
+		<?php endforeach; ?>
+		</div>
+		</br>
+		<?php
+		}
+		if(!$this->contents and !$this->themes){ ?>
+		<h3>Aun no existe contenido.</h3>
+		<?php } ?>
+		</div>
+
+      </div>
+    </td>
+  </tr>
+</table>
+</div>

@@ -1,0 +1,62 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#components', 4);	
+});
+</script>
+<h3 class="centerHor">Componentes</h3>
+<ul class="toolbar">
+	<div id="icons">
+		<li class="iconOpacity">
+			<a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Ioteca/components/add') ?>" > 
+				<img class="iconOpacity" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png')?>" title="Agregar Nuevo" > 
+			</a>
+		</li>
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+			<a href="javascript:;" title="Ayuda" class="tooltipcenter">
+				<img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>">
+			</a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+<div id="overflow">
+	<table id="components" class="display"> 
+	    <thead>
+	    	<tr>    	
+	        	<th>Componente</th>
+	        	<th>Tipo</th>
+	        	<th>Descripci&oacute;n</th> 
+	        	<th>Registrado por</th>
+	        	<th>Fecha y hora</th> 
+	        	<th >     
+	  				<a class="tooltipcenter" title="Agregar Nuevo" href="<?php echo $this->baseUrl('/Ioteca/components/add') ?>">
+						<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconplus.png');?>" title="Agregar Nuevo">
+					</a>
+	        	</th>  
+	    	</tr>
+	    </thead>
+	    <tbody>
+	    	<?php if($this->components != 0) :?>
+	    		<?php foreach ($this->components as $component):?>
+	    			<tr>
+	    				<td><?php echo $component->getNameComponent(); ?></td>
+	    				<td><?php echo $component->getTypeComponent(); ?></td>
+	    				<td><?php echo $component->getDescription(); ?></td>
+	    				<td><?php echo $component->getNameUser(); ?></td>
+	    				<td><?php echo $component->getDate_hour(); ?></td>
+	    				<td>
+	    					<a class="tooltip" title="Actualizar" href="<?php echo $this->baseUrl() ?>/Ioteca/components/update?c=<?= $component->getIdComponent(); ?>">
+                    			<img src=" <?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconedit.png') ?>" title="Editar">
+                    		</a>
+	    				
+	    					 <a class="tooltip" title="Eliminar" href="javascript:;" onclick="javascript:deleteRecord('components',this,'<?php echo $component->getIdComponent(); ?>','/Ioteca/components/delete')">
+                    			<img class="iconOpacity" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconminus.png') ?>" title="Eliminar">
+                			 </a>
+                			 
+	    				</td>
+	    			</tr>
+	    		<?php endforeach;?>
+	    	<?php endif;?>
+	    </tbody>
+	</table>
+</div>

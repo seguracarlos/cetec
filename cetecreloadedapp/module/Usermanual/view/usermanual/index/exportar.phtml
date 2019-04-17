@@ -1,0 +1,65 @@
+<?php
+	$time = time();
+	$fileName = $this->name;
+	$archivo = $_SERVER['DOCUMENT_ROOT'].'/gutenberg/public/temp/'.$fileName.'__'.$time.'.pdf';
+
+	$html = '<html>
+	<head>
+	<meta charset="UTF-8">
+	<style type="text/css">
+
+	.content{
+	page-break-before: always;
+	size: letter;
+	}
+
+	</style>
+	</head>
+	<body>';
+
+	$html .= '<div align="center"><h1>'.$fileName.'</h1></div>';
+	foreach($this->contenidos as $contenidos):
+	$html .= '<div class="content">'.$contenidos[0]["content"].'</div>';
+	endforeach;
+	$html .='</body></html>';
+
+	$dompdf = new DOMPDF();
+	$dompdf->load_html($html,"utf-8");
+	$dompdf->render();
+	$pdf = $dompdf->output();
+
+	file_put_contents( $archivo, $pdf);
+
+	download_file($archivo);
+
+	function download_file($archivo, $downloadfilename = null) {
+
+		if (file_exists($archivo)) {
+
+			$downloadfilename = $downloadfilename !== null ? $downloadfilename : basename($archivo);
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename=' . $downloadfilename);
+			header('Content-Transfer-Encoding: binary');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($archivo));
+
+			ob_clean();
+			flush();
+			readfile($archivo);
+			exit;
+
+		}else {
+
+			if ( ! file_exists($archivo)) {
+
+				throw new Exception(sprintf('File not found: %s', $archivo));
+
+			}
+
+		}
+
+	}
+?>

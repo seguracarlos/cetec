@@ -1,0 +1,75 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	jqueryTable('#expenses', 5);
+	currencyField("amount_of_expenses", "Guardar");
+
+	$(document).ready(function() {
+		$('a.arriba').click(function(){
+			$('html, body').animate({scrollTop:0}, 1250);
+			return false;
+		});
+	});
+});
+</script>
+
+<?php 	
+	$helpUser = $this->helps->expensesHistory;
+?>
+
+<h3 class="centerOut"> Gastos</h3>
+<ul class="toolbar">
+	<div id="icons">
+			<li class="iconOpacity ">
+				<a href="<?php echo $this->baseUrl('/Out/expenses/index') ?>">
+					<img title="Gastos" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconcoindel.png');?>" />
+				</a>
+			</li>
+			<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser ?>')">
+				<a><img title="Ayuda" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+			</li>
+			<div id="clock"></div>
+	</div>	
+</ul>
+
+<div id="overflow">
+<table id="expenses" class="display">
+	<thead>
+		<tr>
+			<th>Fecha de Gasto</th>
+			<th>Monto</th>
+			<th>Descripci&oacute;n</th>
+			<th>Referencia</th>
+			<th>Causa de Pago</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($this->expenses as $expense) :?>
+			<tr>
+				<td class="date"><?php echo $expense->getDate()	?></td>
+				<td class="number"><?php echo Tools::currency($expense->getAmount()) ?></td>
+				<td class="alpha"><?php echo $expense->getDescription() ?></td>
+				<td class="alpha">
+					<?php if($expense->getReference() == 1): ?>
+						Gasto fijo
+					<?php else: ?>
+						Gasto variable
+					<?php endif; ?>
+				</td>
+				<td>
+					<?php if($expense->getExpenses_type() == ExpensesType::GADMIN):?>
+						Gastos administrativos
+					<?php elseif ($expense->getExpenses_type() == ExpensesType::GPROD):?>
+						Gastos de producci&oacute;n
+					<?php elseif ($expense->getExpenses_type() == ExpensesType::GDIV) :?>
+						Gastos diversos
+					<?php endif; ?>
+				</td>
+				<td></td>
+			</tr> 
+	<?php endforeach;?>		
+	</tbody>
+</table>
+</div>
+
+

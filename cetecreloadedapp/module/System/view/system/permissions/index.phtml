@@ -1,0 +1,98 @@
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Permisos</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<!--<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Sistema</a>
+			        <a href="#" class="btn btn-default">Permisos</a>
+			        <a href="#" class="btn btn-default">Inicio</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title amaranth text-size-20">Informaci&oacute;n de permisos</h3>
+		</div>
+		<div class="panel-body">
+			<p>La siguiente tabla contiene cierta informaci&oacute;n sobre los roles de usuarios.</p>
+	
+		<!-- Table -->
+			<table class="table table-striped table-hover table-condensed table-bordered" id="tablePermissions">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Rol</th>
+						<th>Status</th>
+						<th></th>
+						<th><a href="<?php echo $this->basePath() . "/system/permissions/add";?>" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span></a></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($this->permissions as $permi) : ?>
+					<tr>
+						<td><?php echo $permi['rid']; ?></td>
+						<td><?php echo $permi['role_name']; ?></td>
+						<td>
+							<?php
+							if($permi['status'] == 'Active'){
+								echo "<span class='text-info'><strong>Activo</strong></span>";
+							}else{
+								echo "<span class='text-danger'><strong>Inactivo</strong></span>";
+							}
+							?>
+						</td>
+						<td><a href="<?php echo $this->basePath()."/system/permissions/edit/".$permi['rid']; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+						<td><a href="<?php echo $this->basePath()."/system/permissions/delete/".$permi['rid']; ?>" class="btn btn-danger deletePermission"><span class="glyphicon glyphicon-trash"></span></a></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody> 
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	$('#tablePermissions').dataTable({
+		"aoColumnDefs" : [ {
+	    	'bSortable' : false,
+	        'aTargets' : [ 3, 4 ]
+		} ]
+	});
+});
+
+function msgCancel(){
+	alertify.set({ delay: 2000 });
+	alertify.error("<h5 style='text-align:center;'>No borraste el rol</h5>");
+}
+
+/*$(".deletePermission").on("click", function(event){
+	event.preventDefault();
+	//var $href = this.href;
+	var $href = $(this).attr("href");
+	
+	alertify.confirm("Estas seguro de eliminar este role?", function (e) {
+		if(e){
+			window.location.href = $href;
+		}else{
+			msgCancel();
+		}	
+    });
+});*/
+</script>

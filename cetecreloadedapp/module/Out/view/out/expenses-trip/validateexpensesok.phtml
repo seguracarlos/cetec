@@ -1,0 +1,478 @@
+<?php
+use Iofractal\Module;
+$validResource = new Module(); 
+?>
+<script type="text/javascript">
+var basePath = "<?php echo $this->basePath(); ?>";
+var id_shipingAdd = "<?php echo $this->journey['id_journey']; ?>";
+var initialDiferentExpenses = "<?php echo $this->expensesAll['totalViat']-($this->expensesAll['totalGas']+$this->expensesAll['totalCas']+$this->expensesAll['totalAlim']+$this->expensesAll['totalVar']); ?>";
+var deletingExpenses = [];
+function showaddgas(){
+	if( $('#addGas').is(":visible") ){
+	    $('#addGas').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addGas').fadeIn("slow");
+	}
+}
+function showaddcas(){
+	if( $('#addCas').is(":visible") ){
+	    $('#addCas').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addCas').fadeIn("slow");
+	}
+}
+function showaddfood(){
+	if( $('#addFood').is(":visible") ){
+	    $('#addFood').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addFood').fadeIn("slow");
+	}
+}
+function showaddVarios(){
+	if( $('#addVarios').is(":visible") ){
+	    $('#addVarios').fadeOut(500);
+	}else{
+		$(".closeExpensesTable").fadeOut(300);
+	    $('#addVarios').fadeIn("slow");
+	}
+}
+function deleteExpenseOfJourney(id_expense,amount_less,type_expense){
+	alertify.confirm("¿Seguro que deseas eliminar este gasto?", function(e){
+		if(e){
+			deletingExpenses.push(id_expense);
+			var totalExpensesFinal = $('#totalExpensesFinal').text();
+				var newTotalExpensesFinal = parseInt(totalExpensesFinal)-amount_less;
+				$('#totalExpensesFinal').html(newTotalExpensesFinal);
+				totalViat = $('#viaticSum').val();
+				difViatExp = totalViat - newTotalExpensesFinal;
+				$('#difViatExp').html(difViatExp);
+				if(type_expense == 1){
+					var totalGas = $('#totalGas').val();
+					var newTotalGas = parseInt(totalGas)-amount_less;
+					$('#totalGas').val(newTotalGas);
+					if($("#redimientoViaje").length){
+						var end_mileage = parseInt("<?php echo $this->journey['end_mileage']; ?>");
+						var startMileage = parseInt("<?php echo $this->journey['starting_mileage']; ?>");
+						var gasol = parseFloat("<?php echo $this->journey['type_gasoline_value']; ?>");
+						var valFinalEndShipingG = parseInt($('#labelFinalGasolineEndJourney').text());
+						var rendimiento = (end_mileage - startMileage)/((newTotalGas+valFinalEndShipingG)/gasol)
+						$('#redimientoViaje').html(rendimiento);
+					}
+				}else if(type_expense == 2){
+					var totalCas = $('#totalCas').val();
+					var newTotalCas = parseInt(totalCas)-amount_less;
+					$('#totalCas').val(newTotalCas);
+				}else if(type_expense == 3){
+					var totalAlim = $('#totalAlim').val();
+					var newTotalAlim = parseInt(totalAlim)-amount_less;
+					$('#totalAlim').val(newTotalAlim);
+				}else if(type_expense == 4){
+					var totalVar = $('#totalVar').val();
+					var newTotalVar = parseInt(totalVar)-amount_less;
+					$('#totalVar').val(newTotalVar);
+				}
+				$('#tableDateExpense'+id_expense).remove();
+		}
+	});
+}
+function saveBondDiscount(){
+	var bonoDescuento = $('#difViatExp').text();
+	var rend = $('#redimientoViaje').text();
+	var baseurl = basePath+'/out/expenses-trip/addstatusbonddiscount';
+	var operatorTrip = "<?php echo $this->journey['operador']['id']; ?>";
+	var cambio = "<?php echo $this->journey['return_viatic_rest']; ?>";
+	if(bonoDescuento != ''){
+		var dateShipping = "<?php echo $this->journey['fecha'] ?>";
+			 $.ajax({
+			type: "POST",
+			url: baseurl,
+			data: {'id_viaje': id_shipingAdd,'bonoDescuento':bonoDescuento,'operator': operatorTrip,'dateShipping':dateShipping,'rend': rend,'cambio':cambio, 'initialDiferentExpenses':initialDiferentExpenses,'deletingExpenses':deletingExpenses},
+			dataType: "json",
+			success: function(response){
+				$('#buttonStatusSaveExpenses').remove();
+				$('.statusExpenseDeleteButton').remove();
+				<?php if($this->journey['sinister'] == null){ ?>
+				window.location.href = "<?php echo $this->basePath('/out/expenses-trip/validatingexpenses'); ?>";
+				<?php }else{ ?>
+					window.location.href = "<?php echo $this->basePath('/out/expenses-trip/validatingexpenses'); ?>";
+				<?php } ?>
+			},
+			error: function(){
+				alert("Fallo, intentalo otra vez");
+			}
+		 });
+	}
+}
+$(document).ready(
+		function () {
+			$('#amountGas').numeric();
+		 }
+);
+</script>
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="col-md-4"><div class="row"><p class="title-breadcrumbs">Gastos por viaje</p></div></div>
+		<div class="col-md-4">
+			<div class="row">
+				<ul class="toolbar">
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Uno </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Dos </a></li>
+					<li><a href="#" class="btn"> <span class="glyphicon glyphicon-home"></span> Tres </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div style="line-height: 38px" class="row text-right">
+				<div class="btn-group btn-breadcrumb">
+			    	<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+			        <a href="#" class="btn btn-default">Egresos</a>
+			        <a href="#" class="btn btn-default">Gastos por viaje</a>
+			        <a href="#" class="btn btn-default">Agregar</a>
+				</div>
+			</div>
+		</div>
+    </div> <!-- end container -->
+</div> <!-- end breadcrumbs -->
+<div class="container">
+	<div class="content-forms">
+		<?php if($this->journey){?>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="panel panel-info">
+  					<div class="panel-heading">
+  						<div class="row">
+  							<div class="col-xs-12 col-sm-6 col- col-md-6">
+  								Gastos por viajes for&aacute;neos<br>
+  								Folio-Cliente: <?php
+  								if($this->journey['client_folio']){
+  									echo $this->journey['client_folio']; 
+  								}else{
+  									echo Util_Tools::format($this->journey['internal_folio'], 5);
+  								}
+  								?>
+  							</div>
+  							<div class="col-xs-12 col-sm-4 col-md-4"></div>
+  							<div class="col-xs-12 col-sm-2 col-md-2">
+  							<?php if($this->journey['status_saveExpenses'] == null){ ?>
+  								<button class="btn btn-success" onclick="saveBondDiscount()" id="buttonStatusSaveExpenses">Guardar gastos</button>
+  							<?php } ?>
+  							</div>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div class="panel panel-primary">
+  					<ul class="list-group">
+  						<li class="list-group-item">Operador: <?php echo $this->journey['operador']['name']." ".$this->journey['operador']['surname']." ".$this->journey['operador']['lastname']; ?></li>
+  						<li class="list-group-item">Ayudante(s): <?php foreach($this->journey['ayudantes'] as $ayudante): echo "<br>".$ayudante['name']." ".$ayudante['surname']." ".$ayudante['lastname']; endforeach;?></li>
+  						<li class="list-group-item">Cliente: <?php echo $this->journey['cliente']; ?></li>
+  						<li class="list-group-item">Unidad: <?php  echo $this->journey['unidad']; ?></li>
+  						<li class="list-group-item">Destino(s): <?php echo $this->journey['destino']; ?></li>
+  						<?php if($this->journey['sinister'] == null){ ?>
+  						<li class="list-group-item">
+  						<div class="row">
+  							<div class="col-md-4">
+  								Rendimiento:
+  							</div>
+  							<div class="col-md-8" id="redimientoViaje">
+  								<?php $gas = $this->journey['type_gasoline_value']; echo ($this->journey['end_mileage']-$this->journey['starting_mileage'])/(($this->expensesAll['totalGas']+$this->journey['end_gasoline_end_journey'])/$gas); ?>
+  							</div>
+  						</div>
+  						</li>
+  						<?php }else{ ?>
+  						<li class="list-group-item">Imposible calcular el rendimiento</li>
+  						<?php } ?>
+  					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div class="panel panel-primary"> 
+  					<ul class="list-group">
+  						<li class="list-group-item">Depositos: <label id="countDepositos"><?php echo count($this->expensesAll['viaticos']); ?></label></li>
+  						<li class="list-group-item">
+  							<div class="row">
+  								<div class="col-xs-2 col-sm-2 col-md-2">
+  									Viaticos:
+  								</div>
+  								<div class="col-xs-7 col-sm-7 col-md-7" id="viaticList">
+  									<?php if(count($this->expensesAll['viaticos']) > 0){
+  										$listViaticos = $this->expensesAll['viaticos']; 
+  										for($j = 0; $j < count($listViaticos);$j++){
+  											if($j > 0){
+  												echo ",";
+  											}
+  											echo " $".$listViaticos[$j]['amount_expensestrip'];
+  										}
+  									}?>
+  								</div>
+  							</div>
+  						</li>
+  						<li class="list-group-item">
+  							<div class="row">
+  								<div class="col-xs-4 col-sm-4 col-md-4">
+  									Total de viaticos:
+  								</div>
+  								<div class="col-xs-7 col-sm-7 col-md-7 input-group">
+  									<div class="input-group-addon">$</div>
+  									<input type="text" class="form-control" placeholder="Total de viaticos" id="viaticSum" value="<?php echo $this->expensesAll['totalViat']; ?>" disabled />
+  								</div>
+  							</div> 
+  						</li>
+  						<li class="list-group-item">Total de gastos: $<label id="totalExpensesFinal"><?php echo $totalExpenses = $this->expensesAll['totalGas']+$this->expensesAll['totalCas']+$this->expensesAll['totalAlim']+$this->expensesAll['totalVar']; ?></label></li>
+  						<li class="list-group-item">Diferencia entre viaticos y gastos: $<label id="difViatExp"><?php echo  $res = $this->expensesAll['totalViat']-($this->expensesAll['totalGas']+$this->expensesAll['totalCas']+$this->expensesAll['totalAlim']+$this->expensesAll['totalVar']);?></label>
+  						</li>
+  					</ul>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div class="panel panel-primary">
+  					<ul class="list-group">
+  						<li class="list-group-item">Fecha inicial: <?php echo $this->journey['fecha']; ?></li>
+  						<li class="list-group-item">Kilometraje inicial: <?php echo $this->journey['starting_mileage']; ?></li>
+  						<li class="list-group-item" id="divEndKm">
+  							Kilometraje Final: <?php echo $this->journey['end_mileage']; ?>
+  						</li>
+  						<li class="list-group-item" id="divFinalGasolineEndJourney">
+  								Carga final de gasolina: <label id="labelFinalGasolineEndJourney"><?php echo $this->journey['end_gasoline_end_journey']; ?></label>
+  						</li>
+  						<li class="list-group-item"><div class="row">
+  						<div class="col-md-5">Tipo de gasolina:</div>
+  						<div class="col-md-7" id="textTypeGasoline">
+  						<?php 
+  							if($this->journey['type_gasoline'] == 'GASOLINE_DISEL'){
+  								echo "Disel";
+  							}else if($this->journey['type_gasoline'] == 'GASOLINE_MAGNA'){
+  								echo "Magna";
+  							}else if($this->journey['type_gasoline'] == 'GASOLINE_PREMIUM'){
+  								echo "Premium";
+  							}
+  						?>
+  						</div>
+  						</div>
+  						</li>
+  						<li class="list-group-item">
+  							<div class="row">
+  								<div class="col-md-5">
+  									Devolvio cambio: 
+  								</div>
+  								<div class="col-md-2">
+  									<?php 
+  									if($this->journey['return_viatic_rest'] == 1){
+  										echo "Si";
+  									}else if($this->journey['return_viatic_rest'] == 0){
+  										echo "No";
+  									}
+  									?>
+  								</div>
+  							</div>
+  						</li>
+  					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<br>
+		
+		<div class="row">
+		
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" type="button" onclick="showaddgas()" class="btn btn-primary">Gastos de Gasolina</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable" style="display:none;background: #F5FFFA;" id="addGas">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos en gasolina:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalGas" name="totalGas" value="<?php echo $this->expensesAll['totalGas']; ?>" disabled="true"/></div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddGas">
+							<tr class="info">
+								<th>#</th>
+								<th>Folio Factura</th>
+								<th>Total</th>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<th class="statusExpenseDeleteButton">Eliminar gasto</th>
+								<?php } ?>
+							</tr>
+							<?php if($this->expensesAll['gasolina']){
+								foreach($this->expensesAll['gasolina'] as $gasolinaExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $gasolinaExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $gasolinaExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $gasolinaExpenses['amount_expensestrip']; ?></td>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<td class="statusExpenseDeleteButton" ><button class="btn btn-danger" onclick="deleteExpenseOfJourney(<?php echo $gasolinaExpenses['id_expensestrip']; ?>,<?php echo $gasolinaExpenses['amount_expensestrip']; ?>,<?php echo $gasolinaExpenses['type_expensestrip']; ?>)"><span class="glyphicon glyphicon-remove"></span></button></td>
+								<?php } ?>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" type="button" onclick="showaddcas()" class="btn btn-success">Gastos de Casetas</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable" style="display:none;background: #F5FFFA;" id="addCas">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos en casetas:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalCas" name="totalCas" value="<?php echo $this->expensesAll['totalCas']; ?>" disabled="true"/></div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddCas">
+							<tr class="success">
+								<th>#</th>
+								<th>Fol.Tiket</th>
+								<th>Total</th>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<th class="statusExpenseDeleteButton" >Eliminar gasto</th>
+								<?php } ?>
+							</tr>
+							<?php if($this->expensesAll['casetas']){
+									foreach($this->expensesAll['casetas'] as $casetaExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $casetaExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $casetaExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $casetaExpenses['amount_expensestrip']; ?></td>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<td class="statusExpenseDeleteButton" ><button class="btn btn-danger" onclick="deleteExpenseOfJourney(<?php echo $casetaExpenses['id_expensestrip']; ?>,<?php echo $casetaExpenses['amount_expensestrip']; ?>,<?php echo $casetaExpenses['type_expensestrip']; ?>)"><span class="glyphicon glyphicon-remove"></span></button></td>
+								<?php } ?>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" onclick="showaddfood()" type="button" class="btn btn-info">Gastos de Alimentos</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable" style="display:none;background: #F5FFFA;" id="addFood">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos en alimentos:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalAlim" name="totalAlim" value="<?php echo $this->expensesAll['totalAlim']; ?>" disabled="true"/></div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddFood">
+							<tr class="info">
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>Fol.Factura</th>
+								<th>Total</th>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<th class="statusExpenseDeleteButton" >Eliminar gasto</th>
+								<?php } ?>
+							</tr>
+							<?php if($this->expensesAll['alimentos']){
+								foreach($this->expensesAll['alimentos'] as $alimentosExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $alimentosExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $alimentosExpenses['description_expensestrip']; ?></td>
+								<td><?php echo $alimentosExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $alimentosExpenses['amount_expensestrip']; ?></td>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<td class="statusExpenseDeleteButton" ><button class="btn btn-danger" onclick="deleteExpenseOfJourney(<?php echo $alimentosExpenses['id_expensestrip']; ?>,<?php echo $alimentosExpenses['amount_expensestrip']; ?>,<?php echo $alimentosExpenses['type_expensestrip']; ?>)"><span class="glyphicon glyphicon-remove"></span></button></td>
+								<?php } ?>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<button style="width: 100%" onclick="showaddVarios()" type="button" class="btn btn-warning">Varios</button>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 closeExpensesTable"  style="display:none;background: #F5FFFA;" id="addVarios">
+				<br>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="col-xs-6 col-sm-2 col-md-2"><label>Total de gastos variados:</label></div><div class="col-xs-5 col-sm-4 col-md-4 input-group"><div class="input-group-addon">$</div><input class="form-control" type="text" id="totalVar" name="totalVar" value="<?php echo $this->expensesAll['totalVar']; ?>" disabled="true"/></div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed" id="tableAddVarios">
+							<tr class="warning">
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>Fol.Factura</th>
+								<th>Total</th>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<th class="statusExpenseDeleteButton" >Eliminar gasto</th>
+								<?php } ?>
+							</tr>
+							<?php if($this->expensesAll['varios']){
+								foreach($this->expensesAll['varios'] as $variosExpenses): 
+							?>
+							<tr id="tableDateExpense<?php echo $variosExpenses['id_expensestrip']; ?>">
+								<td>1</td>
+								<td><?php echo $variosExpenses['description_expensestrip']; ?></td>
+								<td><?php echo $variosExpenses['reference_expensestrip']; ?></td>
+								<td><?php echo $variosExpenses['amount_expensestrip']; ?></td>
+								<?php if($this->journey['status_saveExpenses'] == null){ ?>
+								<td class="statusExpenseDeleteButton" ><button class="btn btn-danger" onclick="deleteExpenseOfJourney(<?php echo $variosExpenses['id_expensestrip']; ?>,<?php echo $variosExpenses['amount_expensestrip']; ?>,<?php echo $variosExpenses['type_expensestrip']; ?>)"><span class="glyphicon glyphicon-remove"></span></button></td>
+								<?php } ?>
+							</tr>
+							<?php
+								endforeach; 
+								}else{ 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?php }
+							?>
+						</table>
+					</div>				
+				</div>
+			</div>
+		</div>
+		<?php }else{ ?>
+		<div class="row">
+			<h1>Porfavor seleccione un viaje.</h1>
+		</div>
+		<?php }?>
+	</div>	
+</div>

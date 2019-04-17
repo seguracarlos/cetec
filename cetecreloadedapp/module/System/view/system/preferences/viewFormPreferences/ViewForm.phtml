@@ -1,0 +1,23 @@
+<?=$this->element->getElement('id'); ?>
+<fieldset>
+	<legend>Editar: </legend>
+	<table>
+		<tbody>
+			<tr>
+				<td>Valor: </td>
+			</tr>
+			<tr>
+				<td><?=$this->element->getElement('value'); ?></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="center">
+		<?=$this->element->getElement('guardar'); ?>
+     	<?=$this->element->getElement('Cancelar'); ?>
+	</div>
+</fieldset>
+<script>
+	$("#Cancelar").click(function() {
+		disablePopup("preferencesPopBack","preferencesPop");
+	});
+</script>

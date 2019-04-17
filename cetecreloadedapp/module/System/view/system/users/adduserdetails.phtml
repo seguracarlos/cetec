@@ -1,0 +1,37 @@
+	<?php 
+		 $helpUser = $this->helps->addUserDetails;
+		 $this->headScript()->appendFile($this->baseUrl('/public/js/jsFunctions/ajax/getProjectsByCompany.js'));
+
+    ?>
+    
+<h3 class="centerHor"> Agregar detalles </h3>
+<ul class="toolbar">
+	<div id="icons">
+		    <?php if(isset($_GET['employee']) == "true"): ?>
+					<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl('/employee/index')?>"><img title="Empleados" src="<?php echo $this->baseUrl('/public/img/iconemplo.png')?>" /></a>
+					</li>
+			<?php else:?>
+					<li class="iconOpacity">
+						<a href="<?php echo $this->baseUrl('/users/index')?>"><img title="Usuarios" src="<?php echo $this->baseUrl('/public/img/icons/'.$this->iconset.'/iconuser.png')?>" /></a>
+					</li>
+			<?php endif;?>
+		
+		<li class="iconOpacity" onclick="openDialog('Ayuda','Informaci&oacute;n','<?php echo $helpUser; ?>')">
+				<a><img title="Ayuda" style="height: 16px; width: 16px;" src="<?php echo $this->baseUrl('/public/img/icons/icoquestion.png')?>"></a>
+		</li>
+		<div id="clock"></div>
+	</div>	
+</ul>
+
+<script type="text/javascript">
+	var userName = "<?php echo $this->Name; ?>";
+	var type_user = "<?php echo $this->userType; ?>";
+</script>
+
+
+<div class="center">
+    <h4>Los campos con * son obligatorios</h4>
+</div>    
+    <?php echo $this->form; ?>
+
